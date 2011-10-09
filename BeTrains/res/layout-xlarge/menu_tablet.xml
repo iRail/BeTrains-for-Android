@@ -39,7 +39,7 @@
 
 		<Button android:id="@+id/btn_donate" style="@style/HomeButton"
 			android:text="Donation" android:drawableTop="@drawable/home_btn_donate"
-			android:onClick="onDonateClick" />
+			android:onClick="onDonateClick" android:visibility="gone" />
 
 	</LinearLayout>
 

@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -106,6 +108,26 @@ public class WelcomeActivity extends GDListActivity {
 		return true;
 	}
 
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(0, 0, 0, getString(R.string.gd_help)).setIcon(
+				android.R.drawable.ic_menu_help);
+
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case 0:
+
+			MyOtherAlertDialog.create(WelcomeActivity.this).show();
+			return true;
+		}
+
+		return false;
+	}
+	
 	private void showResults(String query) {
 		try {
 			Integer.valueOf(query);

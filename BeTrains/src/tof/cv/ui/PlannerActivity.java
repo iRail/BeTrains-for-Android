@@ -7,6 +7,9 @@ import greendroid.widget.NormalActionBarItem;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import tof.cv.adapters.ConnectionAdapter;
 import tof.cv.bo.Connection;
@@ -39,6 +42,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -206,8 +210,6 @@ public class PlannerActivity extends GDListActivity implements
 
 		// fill the ListView with data in DB.
 		mDbHelper = new ConnectionDbAdapter(this);
-
-		registerForContextMenu(getListView());
 
 		setBtnSearchListener();
 		setBtnInvertListener();
@@ -426,8 +428,54 @@ public class PlannerActivity extends GDListActivity implements
 				new ArrayList<Connection>(), myConnectionCursor);
 		setListAdapter(connAdapter);
 
-		if (myConnectionCursor.getCount() > 0)
+		if (myConnectionCursor.getCount() > 0){
+			registerForContextMenu(getListView());
 			fillAllNewConnections(myConnectionCursor, myViaCursor);
+		}
+			
+		else{
+			List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+			// iterate over all messages
+			// create a map for each message
+			// fill the map with data
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("tip",getString(R.string.tipa));
+			map.put("title",getString(R.string.tipatitle));
+			list.add(map);
+			
+			map = new HashMap<String, String>();
+			map.put("tip",getString(R.string.tipb));
+			map.put("title",getString(R.string.tipbtitle));
+			list.add(map);
+			
+			map = new HashMap<String, String>();
+			map.put("tip",getString(R.string.tipc));
+			map.put("title",getString(R.string.tipctitle));
+			list.add(map);
+			
+			map = new HashMap<String, String>();
+			map.put("tip",getString(R.string.tipd));
+			map.put("title",getString(R.string.tipdtitle));
+			list.add(map);
+			
+			map = new HashMap<String, String>();
+			map.put("tip",getString(R.string.tipe));
+			map.put("title",getString(R.string.tipetitle));
+			list.add(map);
+			
+			// the from array specifies which keys from the map
+			// we want to view in our ListView
+			String[] from = {"tip","title"};
+			 
+			// the to array specifies the TextViews from the xml layout
+			// on which we want to display the values defined in the from array
+			int[] to = {R.id.tiptitle, R.id.tiptext};
+
+			// create the adapter and assign it to the listview
+			SimpleAdapter adapter = new SimpleAdapter(this.getApplicationContext(), list, R.layout.row_tip, from, to);
+			setListAdapter(adapter);
+		}
+			
 
 		//mDbHelper.close();
 	}
@@ -746,7 +794,11 @@ public class PlannerActivity extends GDListActivity implements
 				noDataClick(positionClicked);
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
 			noDataClick(positionClicked);
+			} catch (Exception f) {
+				f.printStackTrace();
+			}
 
 		}
 

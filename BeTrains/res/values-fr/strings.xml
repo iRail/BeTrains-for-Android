@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
 
+	<string name="tipa">Débuter avec BeTrains</string>
+	<string name="tipatitle">Il suffit de cliquer sur le bouton "Chercher" pour
+		commencer.</string>
+
+	<string name="tipb">Changer de gare</string>
+	<string name="tipbtitle">Pour trouver un autre itinéraire, cliquer sur le
+		nom des gares pour le schanger. </string>
+
+	<string name="tipc">Changer la date et l\'heure</string>
+	<string name="tipctitle">La bannière du dessus permet de changer la date et
+		l\'heure de votre recherche.</string>
+
+	<string name="tipd">Menu principal</string>
+	<string name="tipdtitle">Cliquer sur l\'icone "Home" dans le coin supérieur
+		gauche pour arriver au menu principal.</string>
+
+	<string name="tipe">Ecran de démarrage</string>
+	<string name="tipetitle">Dans les paramètres, il sera facile de choisir
+		l\écran sur lequel vous arrivez en lancant l\'application.</string>
+
+
 	<string name="app_name">BeTrains</string>
-<string name="fuck">Suite à des modifs du site de la SNCB, BeTrains souffre un peu. Je vais essayer de trouver quelques heures de mes temps libres pour un correctif avant le 9 septembre. Merci de votre patience et scrutez l\'Android Market pour une mise à jour.</string>
+	<string name="fuck">Suite à des modifs du site de la SNCB, BeTrains
+		souffre un peu. Je vais essayer de trouver quelques heures de mes
+		temps libres pour un correctif avant le 9 septembre. Merci de votre
+		patience et scrutez l\'Android Market pour une mise à jour.</string>
 	<string name="btn_home_planner">Demande d\'itinéraire</string>
 	<string name="btn_home_chat">Chat</string>
-			<string name="btn_home_notif">Notifications</string>
+	<string name="btn_home_notif">Notifications</string>
 	<string name="btn_home_traffic">Perturbations trafic</string>
 	<string name="btn_home_settings">Préférences</string>
 	<string name="btn_home_help">Aide</string>
@@ -28,7 +52,9 @@
 	<string name="settings_activity">Premier écran.</string>
 	<string name="settings_activity_summary">Où démarrer l\'application?</string>
 	<string name="txt_load_message">Chargement du dernier message en cours</string>
-		<string name="txt_infrabel">Les infos de cette page proviennent du site Infrabel/Railtime. Les délais inférieurs à 5 minutes sont cachés et peuvent être différents de la page précédente.</string>
+	<string name="txt_infrabel">Les infos de cette page proviennent du site
+		Infrabel/Railtime. Les délais inférieurs à 5 minutes sont cachés et
+		peuvent être différents de la page précédente.</string>
 	<string name="txt_no_message">Pas de message.</string>
 	<string name="wid_empty">Pas de train sélectionné. Ouvrez BETrains et
 		choisissez-en un.</string>
@@ -103,14 +129,16 @@
 	<string name="txt_sort">Tri en cours.</string>
 	<string name="txt_location">Si ce processus prend trop de temps, vous pouvez
 		activer les options de localisation en cliquant ici:</string>
-		
-			<string name="pref_selectTrain">Votre train</string>
+
+	<string name="pref_selectTrain">Votre train</string>
 	<string name="pref_stations">Gares à vérifier</string>
-		<string name="pref_weekdays">Jours de vérification</string>
+	<string name="pref_weekdays">Jours de vérification</string>
 	<string name="pref_selectStartHour">Commence à:</string>
 	<string name="pref_selectEndHour">Termine à:</string>
 	<string name="pref_selectFreq">Fréquence des vérifications</string>
-	<string name="pref_selectStartHour_sum">Pour la batterie, évitez les connections durant la nuit</string>
-	<string name="pref_selectEndHour_sum">Pour la batterie, évitez les connections durant la nuit</string>
+	<string name="pref_selectStartHour_sum">Pour la batterie, évitez les connections durant la
+		nuit</string>
+	<string name="pref_selectEndHour_sum">Pour la batterie, évitez les connections durant la
+		nuit</string>
 	<string name="pref_selectFreq_sum">1 heure</string>
 </resources>

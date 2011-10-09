@@ -879,7 +879,12 @@ public class ConnectionMaker {
 		}
 		Log.v(TAG, "Affiche les infos train depuis la page: " + mon_url);
 		String txt = "";
-
+		mDbHelper.open();
+		if (isDb) {
+			mDbHelper.deleteAllWidgetStops();
+			mDbHelper.createWidgetStop(vid, "" + pos, "", fromto);
+		}
+		
 		try {
 			// Log.i("MY INFO", "Json Parser started..");
 			Gson gson = new Gson();
@@ -888,7 +893,7 @@ public class ConnectionMaker {
 			TrainLiveboard obj = gson.fromJson(r, TrainLiveboard.class);
 			// TODO DISTANCE
 			Log.i("NAME", "NAME" + obj.getName());
-
+			
 			for (Stop stop : obj.getStops().getStop()) {
 
 				if (isDb)
@@ -898,7 +903,7 @@ public class ConnectionMaker {
 					maliste.add(new TrainStop(""+Html.fromHtml(stop.station), formatDate(stop.time,false,false),
 							formatDate(stop.delay, true, true), " "));
 
-				Log.i(TAG, "adding: " + stop.station);
+				Log.i(TAG, "adding: " + stop.station+" - "+isDb);
 			}
 
 		} catch (Exception ex) {
@@ -910,12 +915,8 @@ public class ConnectionMaker {
 
 		Log.i(TAG, "Scrapping time for train list: " + (actualtime - oldTime)
 				+ "ms");
-		mDbHelper.open();
 
-		if (isDb) {
-			mDbHelper.deleteAllWidgetStops();
-			mDbHelper.createWidgetStop(vid, "" + pos, "", fromto);
-		}
+
 
 		if (isDb) {
 			Toast.makeText(context, "Update OK", Toast.LENGTH_SHORT).show();

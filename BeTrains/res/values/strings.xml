@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
 
+<string name="tipa">Getting started</string>
+<string name="tipatitle">If you want to start immediately, click on the search button</string>
+
+<string name="tipb">Change stations</string>
+<string name="tipbtitle">If you want to look for an other trip, click on a station name and pick up an other one. </string>
+
+<string name="tipc">Change date/Time</string>
+<string name="tipctitle">Click on the date and time fields in the upper part to change your desired trip time.</string>
+
+<string name="tipd">Main menu</string>
+<string name="tipdtitle">Use the \nHome\n icon in the upper left part to go the the main menu.</string>
+
+<string name="tipe">Change first screen</string>
+<string name="tipetitle">If you want to start on other screen, you can configure that in the settings.</string>
+
 	<string name="app_name">BeTrains</string>
 	<string name="btn_home_planner">Route Planner</string>
 	<string name="btn_home_chat">Chat</string>
@@ -27,7 +42,7 @@
 	<string name="txt_load_message">Loading last Message</string>
 	<string name="txt_no_message">No message.</string>
 	<string name="api_key_debug">0K7Fau7cA-paYlUgd1I0OkvAE0xc8tN04C6qcMA</string>
-	<string name="wid_empty">No train selected. Open BETrains and select one.
+	<string name="wid_empty">Open your train information and click \'Add to widget\'".
 	</string>
 	<string name="wid_confirm">Add to Widget?</string>
 	<string name="wid_added">%s added to widget</string>

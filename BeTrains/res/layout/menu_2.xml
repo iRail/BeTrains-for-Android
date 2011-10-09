@@ -19,7 +19,7 @@
 		<Button android:id="@+id/btn_iRail" style="@style/HomeButton"
 			android:text="Liveboards" android:drawableTop="@drawable/home_btn_irail"
 			android:onClick="onIrailClick" />
-		<Button android:id="@+id/btn_donate" style="@style/HomeButton"
+		<Button android:visibility="invisible" style="@style/HomeButton"
 			android:text="Donation" android:drawableTop="@drawable/home_btn_donate"
 			android:onClick="onDonateClick" />
 	</LinearLayout>

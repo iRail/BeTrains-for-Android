@@ -122,7 +122,7 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 					ConnectionMaker.getTrainLiveboard("", context, true);
 				else
 					Toast.makeText(context, R.string.wid_empty,
-							Toast.LENGTH_SHORT).show();
+							Toast.LENGTH_LONG).show();
 				int[] ids = AppWidgetManager.getInstance(context)
 						.getAppWidgetIds(
 								new ComponentName(context,
@@ -266,9 +266,9 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 
 				updateViews.setTextViewText(R.id.tid, "BETrains");
 
-				updateViews.setTextViewText(R.id.text1, "");
+				updateViews.setTextViewText(R.id.text1, "Widget");
 
-				updateViews.setTextViewText(R.id.text2, "");
+				updateViews.setTextViewText(R.id.text2, "Add your train.");
 
 				updateViews.setTextViewText(R.id.text3, "");
 

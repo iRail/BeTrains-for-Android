@@ -19,6 +19,7 @@ package tof.cv.ui;
 import greendroid.app.GDListActivity;
 import greendroid.widget.GDActionBar;
 import greendroid.widget.GDActionBarItem;
+import greendroid.widget.NormalActionBarItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,8 +108,10 @@ public class InfoTrainActivity extends GDListActivity {
 			setFullscreen();
 
 		GDActionBar mABar = getGDActionBar();
+		 addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_more),R.id.action_bar_more);
+		
 		//mABar.addItem(R.drawable.ic_title_more);
-		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_more),R.id.action_bar_more);
+		//addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_more),R.id.action_bar_more);
 		mABar.setTitle(getString(R.string.txt_your_train));
 
 		mTitleText = (TextView) findViewById(R.id.title);
@@ -309,7 +312,7 @@ public class InfoTrainActivity extends GDListActivity {
 		// adds an item to the badge and defines the quick action to be
 		// triggered
 		// when the item is clicked on
-		qa.addItem(getResources().getDrawable(
+		/*qa.addItem(getResources().getDrawable(
 				android.R.drawable.ic_menu_mapmode), context
 				.getString(R.string.txt_map), new OnClickListener() {
 			public void onClick(View v) {
@@ -346,7 +349,7 @@ public class InfoTrainActivity extends GDListActivity {
 				qa.dismiss();
 			}
 		});
-
+*/
 		qa.addItem(getResources().getDrawable(
 				android.R.drawable.ic_menu_sort_alphabetically), context
 				.getString(R.string.txt_messages), new OnClickListener() {
