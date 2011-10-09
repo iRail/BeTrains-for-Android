@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="planner_da_entries">
+		<item>Depart</item>
+		<item>Arrivée</item>
+	</string-array>
+
+
+	<string-array name="planner_da_values">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string-array name="activity_entries">
+		<item>Demande d\'itinéraire</item>
+		<item>Accueil</item>
+		<item>Favoris</item>
+		<item>Perturbations trafic</item>
+		<item>Gares à proximité</item>
+		<item>Chat</item>
+	</string-array>
+
+
+	<string-array name="activity_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+	</string-array>
+	
+	
+
+	<string-array name="listArray">
+		<item>Lundi</item>
+		<item>Mardi</item>
+		<item>Mercredi</item>
+		<item>Jeudi</item>
+		<item>Vendredi</item>
+		<item>Samedi</item>
+		<item>Dimanche</item>
+	</string-array>
+
+
+	<string-array name="listValues">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+	</string-array>
+
+
+</resources>

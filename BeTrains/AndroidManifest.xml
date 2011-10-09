@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest android:installLocation="auto" package="tof.cv.mpp"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionName="2.2.3" android:versionCode="5087">
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:name="greendroid.app.GDApplication" android:theme="@style/Theme.GreenDroid.NoTitleBar">
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.WelcomeActivity">
+			<!-- Receives the search request. -->
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+
+			</intent-filter>
+
+			<!-- Points to searchable meta data. -->
+			<meta-data android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
+		</activity>
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.TrafficActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.PlannerActivity"
+			android:configChanges="keyboardHidden|orientation">
+			<!-- Receives the search request. -->
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<!-- Points to searchable meta data. -->
+			<meta-data android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
+		</activity>
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.TwitterSettingsActivity"
+			android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Dialog" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.MessagesActivity"
+			android:windowSoftInputMode="stateAlwaysHidden" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.InfoTrainActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.InfoStationActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.SearchStationActivity"
+			android:windowSoftInputMode="stateAlwaysHidden" />
+		<activity android:label="@string/app_name"
+			android:name="tof.cv.ui.SearchFavTrainStationActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name"
+			android:name="tof.cv.ui.SearchEuroTrainStationActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.StationMapActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.TrainMapActivity"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.BETrainsTabActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:theme="@style/Theme.BeTrains.Preference"
+			android:name="tof.cv.ui.SettingsActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:theme="@style/Theme.BeTrains.Preference"
+			android:name="tof.cv.ui.TwitterActivity" android:windowSoftInputMode="stateAlwaysHidden"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:theme="@style/Theme.BeTrains.Preference"
+			android:name="tof.cv.ui.PlannerSettingsActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:configChanges="keyboardHidden|orientation" />
+		<activity android:label="@string/app_name" android:name="tof.cv.ui.StarredActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:configChanges="keyboardHidden|orientation" />
+		<!-- Provides search suggestions for words and their definitions. -->
+		<provider android:authorities="tof.cv.search.SearchProvider"
+			android:name="tof.cv.search.SearchProvider" />
+		<!--
+			Points to searchable activity so the whole app can invoke search.
+			<meta-data android:name="android.app.default_searchable"
+			android:value=".Activity_Welcome" />
+		-->
+		<receiver android:name="tof.cv.widget.TrainAppWidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="BETRAIN_WIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/appwidget_info" />
+		</receiver>
+		<uses-library android:name="com.google.android.maps" />
+		<activity android:name="tof.cv.ui.GetClosestStationsActivity"
+			android:configChanges="keyboardHidden|orientation" />
+			
+<service android:enabled="true" android:name="tof.cv.misc.MyUpdateService" />
+
+		<activity android:name="tof.cv.ui.NotificationActivity"
+			android:label="@string/app_name" android:theme="@android:style/Theme.Dialog"
+			android:configChanges="keyboardHidden|orientation">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+			</intent-filter>
+		</activity>			
+	</application>
+	<uses-sdk android:minSdkVersion="4" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<supports-screens android:anyDensity="true"
+		android:largeScreens="true" android:normalScreens="true"
+		android:smallScreens="true" android:xlargeScreens="true" />
+</manifest>
+	<!--  android:theme="@style/Theme.BETrains"-->

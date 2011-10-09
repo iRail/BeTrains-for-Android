@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="/Users/Tof162/Documents/workspace/Lib/commons-httpclient-3.1/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/Tof162/Documents/workspace/GoogleAnalyticsAndroid_0.7/libGoogleAnalytics.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="/Users/Tof162/Documents/workspace/Lib/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/Tof162/Desktop/google-gson-1.7.1/gson-1.7.1.jar"/>
+	<classpathentry kind="src" path="com_cyrilmottier_android_greendroid_src"/>
+	<classpathentry kind="src" path="uk_co_jasonfry_android_tools_src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

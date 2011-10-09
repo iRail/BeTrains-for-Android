@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="planner_da_entries">
+		<item>Vertrek</item>
+		<item>Aankomst</item>
+	</string-array>
+
+
+	<string-array name="planner_da_values">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string-array name="activity_entries">
+		<item>Route Planner</item>
+		<item>Welcome</item>
+		<item>Favorieten</item>
+		<item>Verkeershinder</item>
+		<item>dichtste station</item>
+		<item>Chat</item>
+	</string-array>
+
+
+	<string-array name="activity_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+	</string-array>
+
+	<string-array name="listArray">
+		<item>Maandag</item>
+		<item>Dinsdag</item>
+		<item>Woensdag</item>
+		<item>Donderdag</item>
+		<item>Vrijdag</item>
+		<item>Zaterdag</item>
+		<item>zondag</item>
+	</string-array>
+
+
+	<string-array name="listValues">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+	</string-array>
+
+</resources>

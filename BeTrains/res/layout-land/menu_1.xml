@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:layout_weight="2"
+	android:padding="6dip">
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dip"
+		android:layout_weight="1">
+		<Button android:id="@+id/btn_home_planner" style="@style/HomeButton"
+			android:text="@string/btn_home_planner" android:drawableTop="@drawable/home_btn_planner"
+			android:onClick="onPlannerClick" />
+		<Button android:id="@+id/btn_home_traffic" style="@style/HomeButton"
+			android:text="@string/btn_home_traffic" android:drawableTop="@drawable/home_btn_traffic"
+			android:onClick="onTrafficClick" />
+		<!--
+			<Button android:id="@+id/btn_home_notif" style="@style/HomeButton"
+			android:text="@string/btn_home_notif"
+			android:drawableTop="@drawable/home_btn_notif"
+			android:onClick="onNotifClick" />
+		-->
+
+		<Button android:id="@+id/btn_home_chat" style="@style/HomeButton"
+			android:text="@string/btn_home_chat" android:drawableTop="@drawable/home_btn_chat"
+			android:onClick="onChatClick" />
+	</LinearLayout>
+
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dip"
+		android:layout_weight="1">
+		<Button android:id="@+id/btn_home_starred" style="@style/HomeButton"
+			android:text="@string/btn_home_starred" android:drawableTop="@drawable/home_btn_starred"
+			android:onClick="onStarredClick" />
+		<Button android:id="@+id/btn_home_closest" style="@style/HomeButton"
+			android:text="@string/btn_closest_stations" android:drawableTop="@drawable/home_btn_closest"
+			android:onClick="onClosestClick" />
+		<Button android:id="@+id/btn_twit" style="@style/HomeButton"
+			android:text="Twitter" android:drawableTop="@drawable/home_btn_twit"
+			android:onClick="onTwitClick" />
+
+
+	</LinearLayout>
+
+</LinearLayout>
