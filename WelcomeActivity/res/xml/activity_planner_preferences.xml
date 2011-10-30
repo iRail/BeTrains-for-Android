@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+ <ListPreference android:key="@string/key_planner_da"
+		android:title="@string/settings_planner_da" android:summary="@string/settings_planner_da_summary"
+		android:entries="@array/planner_da_entries" android:entryValues="@array/planner_da_values"
+		android:defaultValue="1" />
+
+	<CheckBoxPreference android:title="@string/settings_train_only"
+		android:defaultValue="true" android:summary="@string/settings_train_only_summary"
+		android:key="@string/key_train_only" />
+
+</PreferenceScreen>

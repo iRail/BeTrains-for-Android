@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Train">
+		<EditTextPreference android:name="prefNotifTrain"
+			android:summary="" android:defaultValue="" android:title="@string/pref_selectTrain"
+			android:key="prefNotifTrain" android:inputType="numberSigned"  />
+		<be.irail.classes.ListPreferenceMultiSelect android:name="prefNotifStations"
+			android:summary="" android:defaultValue="" android:title="@string/pref_stations"
+			android:key="prefNotifStations" android:entries="@array/listArray" android:entryValues="@array/listValues"/>
+	</PreferenceCategory>
+
+
+
+	<PreferenceCategory android:title="Date and Time">
+		<be.irail.classes.ListPreferenceMultiSelect  android:summary=""
+			android:key="listPref" android:defaultValue="" android:title="@string/pref_weekdays"
+			android:entries="@array/listArray" android:entryValues="@array/listValues" />
+		
+		<be.irail.classes.TimePickerPreference android:name="prefSelectStartHour"
+			android:summary="@string/pref_selectEndHour_sum" android:defaultValue="00:00"
+			android:title="@string/pref_selectStartHour" android:key="prefSelectStartHour" />
+
+		<be.irail.classes.TimePickerPreference android:name="prefSelectEndHour"
+			android:summary="@string/pref_selectEndHour_sum" android:defaultValue="23:59" android:title="@string/pref_selectEndHour"
+			android:key="prefSelectEndHour" />
+
+		<EditTextPreference android:name="prefFreq"
+			android:summary="@string/pref_selectFreq_sum" android:defaultValue="1" android:title="@string/pref_selectFreq"
+			android:key="prefFreq" />
+
+	</PreferenceCategory>
+
+
+</PreferenceScreen>
