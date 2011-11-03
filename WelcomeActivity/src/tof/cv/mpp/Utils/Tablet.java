@@ -11,7 +11,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import tof.cv.mpp.R;
 import tof.cv.mpp.adapter.TweetItemAdapter;
 import tof.cv.mpp.bo.Tweet;
 import android.app.Activity;

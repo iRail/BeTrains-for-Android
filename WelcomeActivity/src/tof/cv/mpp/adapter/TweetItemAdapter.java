@@ -3,7 +3,6 @@ package tof.cv.mpp.adapter;
 import java.net.URL;
 import java.util.ArrayList;
 
-import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.ImageLoader;
 import tof.cv.mpp.bo.Tweet;
 import android.app.Activity;

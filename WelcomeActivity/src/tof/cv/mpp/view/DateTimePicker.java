@@ -19,7 +19,6 @@ package tof.cv.mpp.view;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import tof.cv.mpp.R;
 import android.content.Context;
 import android.support.v4.app.ActionBar;
 import android.util.AttributeSet;
