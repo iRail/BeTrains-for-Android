@@ -1,33 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<greendroid.widget.GDActionBarHost
-	xmlns:android="http://schemas.android.com/apk/res/android" android:id="@id/gd_action_bar_host"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-
-	<!--
-		Layout height/width and background are set here. This is a hack to
-		apply a default style to the ActionBar. Indeed, no style can be
-		applied to a LinearLayout
-	-->
-	<greendroid.widget.GDActionBar android:id="@id/gd_action_bar"
-		android:layout_height="?attr/gdActionBarHeight" android:layout_width="fill_parent"
-		android:background="?attr/gdActionBarBackground" />
-
-	<FrameLayout android:id="@id/gd_action_bar_content_view"
-		android:layout_height="0dp" android:layout_width="fill_parent"
-		android:layout_weight="1">
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="vertical" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:background="#FFFFFFFF">
-			<include layout="@layout/colorstrip" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_height="0dp" android:layout_width="fill_parent"
+	android:layout_weight="1">
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:background="#FFFFFFFF">
+		<include layout="@layout/colorstrip" />
 
 
-			<ListView android:id="@android:id/list"
-				android:layout_width="fill_parent" android:layout_height="0dip"
-				android:layout_weight="1" android:layout_marginTop="3px"
-				android:cacheColorHint="#00000000" />
+		<ListView android:id="@android:id/list" android:layout_width="fill_parent"
+			android:layout_height="0dip" android:layout_weight="1"
+			android:layout_marginTop="3px" android:cacheColorHint="#00000000" />
 
-		</LinearLayout>
-	</FrameLayout>
-</greendroid.widget.GDActionBarHost>
+	</LinearLayout>
+</FrameLayout>

@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<greendroid.widget.GDActionBarHost
-	xmlns:android="http://schemas.android.com/apk/res/android" android:id="@id/gd_action_bar_host"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
 
-	<!--
-		Layout height/width and background are set here. This is a hack to
-		apply a default style to the ActionBar. Indeed, no style can be
-		applied to a LinearLayout
-	-->
-	<greendroid.widget.GDActionBar
-		android:id="@id/gd_action_bar" android:layout_height="?attr/gdActionBarHeight"
-		android:layout_width="fill_parent" android:background="?attr/gdActionBarBackground" />
-		<FrameLayout android:id="@id/gd_action_bar_content_view"
-			android:layout_height="0dp" android:layout_width="fill_parent"
-			android:layout_weight="1">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/home_root" android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:background="#FFFFFFFF">
-		<include layout="@layout/colorstrip" />
-		<TextView android:id="@+id/fail" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:text="@string/txt_connection"
-			android:textColor="@color/darkblue" android:visibility="gone" />
-
-		<ListView android:cacheColorHint="#00000000" android:id="@android:id/list"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" />
-
-		<RelativeLayout style="@style/GenericProgressBackground"
-			android:id="@android:id/empty">
-			<ProgressBar style="@style/GenericProgressIndicator" />
-
-		</RelativeLayout>
-
-	</LinearLayout>
-	</FrameLayout>
-</greendroid.widget.GDActionBarHost>
-	<!--
+<FrameLayout android:layout_height="fill_parent"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+	<fragment  android:name="tof.cv.mpp.TwitterFragment"
+		android:id="@+id/fragment" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
 </FrameLayout>
-</greendroid.widget.ActionBarHost>-->
+

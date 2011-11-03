@@ -8,16 +8,16 @@
 		<Button android:id="@+id/btn_home_planner" style="@style/HomeButton"
 			android:text="@string/btn_home_planner" android:drawableTop="@drawable/home_btn_planner"
 			android:onClick="onPlannerClick" />
+		<Button android:id="@+id/btn_twit" style="@style/HomeButton"
+			android:text="Twitter" android:drawableTop="@drawable/home_btn_twit"
+			android:onClick="onTwitClick" />
 		<Button android:id="@+id/btn_home_traffic" style="@style/HomeButton"
 			android:text="@string/btn_home_traffic" android:drawableTop="@drawable/home_btn_traffic"
 			android:onClick="onTrafficClick" />
-		<!--
-			<Button android:id="@+id/btn_home_notif" style="@style/HomeButton"
-			android:text="@string/btn_home_notif"
-			android:drawableTop="@drawable/home_btn_notif"
-			android:onClick="onNotifClick" />
-		-->
-			
+		<!-- <Button android:id="@+id/btn_home_notif" style="@style/HomeButton" 
+			android:text="@string/btn_home_notif" android:drawableTop="@drawable/home_btn_notif" 
+			android:onClick="onNotifClick" /> -->
+
 		<Button android:id="@+id/btn_home_chat" style="@style/HomeButton"
 			android:text="@string/btn_home_chat" android:drawableTop="@drawable/home_btn_chat"
 			android:onClick="onChatClick" />
@@ -39,7 +39,7 @@
 
 		<Button android:id="@+id/btn_donate" style="@style/HomeButton"
 			android:text="Donation" android:drawableTop="@drawable/home_btn_donate"
-			android:onClick="onDonateClick" android:visibility="gone"/>
+			android:onClick="onDonateClick" android:visibility="gone" />
 
 	</LinearLayout>
 

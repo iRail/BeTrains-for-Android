@@ -1,97 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-	<greendroid.widget.GDActionBarHost
-		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@id/gd_action_bar_host"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:orientation="vertical">
-
-		<!--
-			Layout height/width and background are set here. This is a hack to
-			apply a default style to the ActionBar. Indeed, no style can be
-			applied to a LinearLayout
-		-->
-		<greendroid.widget.GDActionBar android:id="@id/gd_action_bar"
-			android:layout_height="?attr/gdActionBarHeight" android:layout_width="fill_parent"
-			android:background="?attr/gdActionBarBackground" />
-
-		<FrameLayout android:id="@id/gd_action_bar_content_view"
-			android:layout_height="0dp" android:layout_width="fill_parent"
-			android:layout_weight="1">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="vertical" android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:background="#FFFFFFFF">
-				<include layout="@layout/colorstrip" />
-				<LinearLayout android:id="@+id/Ly_Pannel_Sup"
-					android:orientation="vertical" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:gravity="center"
-					android:paddingLeft="10dip" android:paddingRight="10dip"
-					android:paddingTop="5dip" android:paddingBottom="10dip">
-
-					<LinearLayout android:layout_marginBottom="10dip"
-						android:id="@+id/Ly_start" android:orientation="horizontal"
-						android:layout_width="fill_parent" android:layout_height="35dip"
-						android:gravity="center">
-						<TextView style="@style/HomeButton" android:id="@+id/tv_start"
-							android:text="City START" android:layout_width="0dip"
-							android:layout_height="wrap_content" android:layout_weight="1"
-							android:gravity="center" android:maxLines="1" />
-						<Button android:id="@+id/btn_infos_departure"
-							android:layout_width="wrap_content" android:layout_height="fill_parent"
-							android:layout_gravity="center" android:text="info"></Button>
-					</LinearLayout>
-
-					<LinearLayout android:layout_marginBottom="10dip"
-						android:id="@+id/Ly_stop" android:orientation="horizontal"
-						android:layout_width="fill_parent" android:layout_height="35dip"
-						android:gravity="center">
-						<TextView style="@style/HomeButton" android:id="@+id/tv_stop"
-							android:text="City STOP" android:layout_width="0dip"
-							android:layout_height="wrap_content" android:layout_weight="1"
-							android:gravity="center" android:maxLines="1" />
-						<Button android:id="@+id/btn_info_arrival"
-							android:layout_width="wrap_content" android:layout_height="fill_parent"
-							android:layout_gravity="center" android:text="info"></Button>
-					</LinearLayout>
-					<LinearLayout android:id="@+id/boutonweb"
-						android:orientation="horizontal" android:layout_width="fill_parent"
-						android:layout_height="wrap_content">
-						<Button android:id="@+id/mybuttonBefore"
-							android:layout_width="0dip" android:layout_height="35dip"
-							android:layout_weight="1" android:layout_marginRight="3dip"
-							android:text="&lt;&lt;" android:textStyle="bold"></Button>
-						<Button android:id="@+id/mybuttonSearch"
-							android:layout_width="0dip" android:layout_height="35dip"
-							android:layout_weight="3" android:layout_marginRight="3dip"
-							android:text="@string/txt_search" android:textStyle="bold"></Button>
-						<Button android:id="@+id/mybuttonInvert"
-							android:layout_width="0dip" android:layout_height="35dip"
-							android:layout_weight="3" android:layout_marginRight="3dip"
-							android:text=">&lt;" android:textStyle="bold"></Button>
-						<Button android:id="@+id/mybuttonAfter"
-							android:layout_width="0dip" android:layout_height="35dip"
-							android:layout_weight="1" android:text=">>" android:textStyle="bold"></Button>
-						<Button android:visibility="gone" android:id="@+id/mybuttonInfo"
-							android:layout_width="0dip" android:layout_height="35dip"
-							android:layout_weight="1" android:layout_marginLeft="0dip"
-							android:text="Info" android:textStyle="bold"></Button>
-					</LinearLayout>
-				</LinearLayout>
-
-				<ListView android:id="@android:id/list"
-					android:layout_width="fill_parent" android:layout_height="0dip"
-					android:layout_weight="1" android:layout_marginTop="3px"
-					android:cacheColorHint="#00000000" />
-				<TextView android:id="@+id/message_header"
-					android:visibility="gone" android:textColor="#FFFFFF"
-					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:gravity="center" android:layout_gravity="bottom" />
-				<TextView android:id="@+id/message_body" android:maxLines="3"
-					android:visibility="gone" android:textColor="#FFFFFF"
-					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:gravity="center" android:layout_gravity="bottom" />
+    <fragment
+        android:id="@+id/fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:name="tof.cv.mpp.PlannerFragment" />
 
 
-			</LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#000000">
 
-		</FrameLayout>
-	</greendroid.widget.GDActionBarHost>
+
+        <CalendarView
+            android:id="@+id/calendarView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</FrameLayout>

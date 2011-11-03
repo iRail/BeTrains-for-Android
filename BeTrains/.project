@@ -32,9 +32,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>com_cyrilmottier_android_greendroid_src</name>
+			<name>com_actionbarsherlock_src</name>
 			<type>2</type>
-			<locationURI>_android_com_cyrilmottier_android_greendroid_e3e350b5/src</locationURI>
+			<locationURI>_android_com_actionbarsherlock_22abb7cc/src</locationURI>
 		</link>
 		<link>
 			<name>uk_co_jasonfry_android_tools_src</name>
