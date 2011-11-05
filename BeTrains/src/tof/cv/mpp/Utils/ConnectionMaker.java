@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 import tof.cv.mpp.R;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.ConnectionOld;
-import tof.cv.mpp.bo.Station;
+import tof.cv.mpp.bo.StationOld;
 import tof.cv.mpp.bo.Train;
 import tof.cv.mpp.bo.Via;
 import android.app.Activity;
@@ -360,10 +360,10 @@ public class ConnectionMaker {
 	}
 
 	@SuppressWarnings("finally")
-	public static ArrayList<ConnectionOld> newSearchTrains(String year,
+	public static Connections newSearchTrains(String year,
 			String month, String day, String hour, String minutes,
 			String language, String departure, String arrival,
-			String departureArrival, String trainsOnly, Context context) {
+			String departureArrival, String trainsOnly, final Context context) {
 		String TAG = "BETRAINS";
 
 		mDbHelper = new ConnectionDbAdapter(context);
@@ -383,7 +383,7 @@ public class ConnectionMaker {
 				+ arrival + "&from=" + departure + "&date=" + day + month
 				+ year + "&time=" + hour + minutes + "&timeSel="
 				+ departureArrival + "&lang=" + language + "&typeOfTransport="
-				+ trainsOnly;
+				+ trainsOnly+"&format=json";
 		url = url.replace(" ", "%20");
 		Log.v(TAG, url);
 		
@@ -397,7 +397,6 @@ public class ConnectionMaker {
 			mDbHelper.close();
 		}
 
-		ArrayList<ConnectionOld> listOfConnections = null;
 		try {
 
 			//TODO USER-AGENT
@@ -407,8 +406,18 @@ public class ConnectionMaker {
 			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains","connection.txt");
 			
 			Gson gson = new Gson();
-			Reader reader = new InputStreamReader(is);
-			Connections connection = gson.fromJson(reader,Connections.class);
+			final Reader reader = new InputStreamReader(is);
+			
+			((Activity) context).runOnUiThread(new Runnable() {
+				public void run() {
+					Toast.makeText(context, reader.toString(),
+							Toast.LENGTH_LONG).show();
+				}
+			});
+			
+			return gson.fromJson(reader,Connections.class);
+			
+			
 			
 			/*
 			DocumentBuilderFactory factory = DocumentBuilderFactory
@@ -452,14 +461,15 @@ public class ConnectionMaker {
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
+			Log.i("","*******");
 			mDbHelper.close();
-			return listOfConnections;
-		}
+			return null;
+		} 
 	}
 	
 	public class Connections{
-		public List<Connection> connections;
+		public String version;
+		public List<Connection> connection;
 	}
 
 	public static ArrayList<ConnectionOld> parseConnections(Document document) {
@@ -501,8 +511,8 @@ public class ConnectionMaker {
 			String delayD = "x";
 			String delayA = "x";
 
-			Station departureStation = null;
-			Station arrivalStation = null;
+			StationOld departureStation = null;
+			StationOld arrivalStation = null;
 			ArrayList<Via> vias = new ArrayList<Via>();
 
 			Node connection = multipleconnection.item(j);
@@ -543,7 +553,7 @@ public class ConnectionMaker {
 								listTrains.add(vehicle);
 							}
 						}
-						departureStation = new Station("", platform.trim(),
+						departureStation = new StationOld("", platform.trim(),
 								platformNormal, time, station,
 								stationCoordinates, delayD, "");
 
@@ -573,7 +583,7 @@ public class ConnectionMaker {
 							}
 
 						}
-						arrivalStation = new Station(vehicle, platform.trim(),
+						arrivalStation = new StationOld(vehicle, platform.trim(),
 								platformNormal, time, station,
 								stationCoordinates, delayA, "");
 
@@ -682,7 +692,7 @@ public class ConnectionMaker {
 	}
 
 	// TODO -> rewrite !!! -__- with HTML parser !
-	public static ArrayList<Station> afficheGareL(String mon_url,
+	public static ArrayList<StationOld> afficheGareL(String mon_url,
 			Context context) {
 		String TAG = "BETRAINS";
 		mon_url += "&format=JSON&fast=true";
@@ -692,7 +702,7 @@ public class ConnectionMaker {
 
 		long actualtime = new Date().getTime();
 
-		ArrayList<Station> listOfStations = new ArrayList<Station>();
+		ArrayList<StationOld> listOfStations = new ArrayList<StationOld>();
 		listOfStations.clear();
 /*
 		try {

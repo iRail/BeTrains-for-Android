@@ -7,10 +7,10 @@ import java.util.List;
 
 import tof.cv.mpp.Utils.ConnectionDbAdapter;
 import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.ConnectionMaker.Connections;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.ConnectionOld;
-import tof.cv.mpp.bo.Station;
+import tof.cv.mpp.bo.StationOld;
 import tof.cv.mpp.bo.Via;
 import tof.cv.mpp.view.DateTimePicker;
 import android.app.Activity;
@@ -58,7 +58,7 @@ public class PlannerFragment extends ListFragment implements
 
 	int positionClicked;
 
-	private static ArrayList<ConnectionOld> allConnections = new ArrayList<ConnectionOld>();
+	private static Connections allConnections;
 	// ArrayList<Message> listOfMessages;
 
 	private static final int ACTIVITY_DISPLAY = 0;
@@ -192,13 +192,13 @@ public class PlannerFragment extends ListFragment implements
 			public void onClick(View v) {
 
 				String station = tvArrival.getText().toString();
-				//Intent i = new Intent(getActivity(),
-				//		InfoStationActivity.class);
-				//i.putExtra("gare_name", station);
-				//i.putExtra("gare_id", getStationNumber(station));
-				//i.putExtra("gare_heure", mHour);
-				//i.putExtra("gare_minute", mMinute);
-				//startActivityForResult(i, ACTIVITY_STATION);
+				// Intent i = new Intent(getActivity(),
+				// InfoStationActivity.class);
+				// i.putExtra("gare_name", station);
+				// i.putExtra("gare_id", getStationNumber(station));
+				// i.putExtra("gare_heure", mHour);
+				// i.putExtra("gare_minute", mMinute);
+				// startActivityForResult(i, ACTIVITY_STATION);
 
 			}
 		});
@@ -405,7 +405,7 @@ public class PlannerFragment extends ListFragment implements
 		 * we have to take each cursor and look it it has any vias , normally
 		 * the rowId will be the same as the index of the cursor
 		 */
-		allConnections = new ArrayList<ConnectionOld>();
+		ArrayList<ConnectionOld> allConnections = new ArrayList<ConnectionOld>();
 		myConnectionCursor.moveToFirst();
 
 		// Log.i(TAG,"Cursor size is: "+myConnectionCursor.getCount());
@@ -534,10 +534,10 @@ public class PlannerFragment extends ListFragment implements
 				}
 			}
 			try {
-				allConnections.add(new ConnectionOld(new Station("",
+				allConnections.add(new ConnectionOld(new StationOld("",
 						departurePlatform, true, departureTime,
 						departureStation, "stationCoordinates", delayDStr,
-						"status"), vias, new Station(lastTrain,
+						"status"), vias, new StationOld(lastTrain,
 						arrivalPlatform, true, arrivalTime, arrivalStation,
 						"stationCoordinates", delayAStr, "status"), duration,
 						delayDStr, delayAStr));
@@ -562,8 +562,8 @@ public class PlannerFragment extends ListFragment implements
 				Toast.makeText(getActivity(),
 						getString(R.string.txt_create_connections),
 						Toast.LENGTH_LONG).show();
-				Log.i("BETRAINS", allConnections.size() + " - "
-						+ positionClicked);
+				// Log.i("BETRAINS", allConnections.size() + " - "
+				// + positionClicked);
 				e.printStackTrace();
 			}
 
@@ -616,12 +616,13 @@ public class PlannerFragment extends ListFragment implements
 		// Log.v(TAG,"click");
 		try {
 
-			ConnectionOld currentConnection = allConnections.get(positionClicked);
+			// ConnectionOld currentConnection =
+			// allConnections.get(positionClicked);
 			// Log.v(TAG,"size: "+currentConnection.getVias().size());
-			if (currentConnection.getVias().size() > 0) {
-				getActivity().showDialog(CONNECTION_DIALOG_ID);
-			} else
-				noDataClick(positionClicked);
+			// if (currentConnection.getVias().size() > 0) {
+			// getActivity().showDialog(CONNECTION_DIALOG_ID);
+			// } else
+			// noDataClick(positionClicked);
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -713,7 +714,7 @@ public class PlannerFragment extends ListFragment implements
 		myStart = tvDeparture.getText().toString();
 		myArrival = tvArrival.getText().toString();
 
-		//TODO Improve all this piece of spaghetti.
+		// TODO Improve all this piece of spaghetti.
 		int item = 0;
 		for (String x : ConnectionMaker.LIST_OF_STATIONS) {
 			if (x.compareToIgnoreCase(myStart) == 0) {
@@ -761,11 +762,13 @@ public class PlannerFragment extends ListFragment implements
 		else
 			trainOnly = "train;bus";
 
-		//allConnections = new Connections();
-		
-		 allConnections = ConnectionMaker.newSearchTrains(""+(mDate.getYear()-100),""+(mDate.getMonth()+1), ""+mDate.getDate(),
-				 ""+mDate.getHours(), ""+mDate.getMinutes(), langue, myStart, myArrival, dA, trainOnly,
-		 getActivity());
+		// allConnections = new Connections();
+
+		allConnections = ConnectionMaker.newSearchTrains(""
+				+ (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
+				+ mDate.getDate(), "" + mDate.getHours(),
+				"" + mDate.getMinutes(), langue, myStart, myArrival, dA,
+				trainOnly, getActivity());
 
 		if (allConnections == null) {
 			Log.e(TAG, "API failure!!!");
