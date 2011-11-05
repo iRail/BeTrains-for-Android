@@ -245,7 +245,6 @@ public class PlannerFragment extends ListFragment implements
 		Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
 		btnSearch.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				makeApiRequest();
 				mySearchThread();
 				fillData();
 
@@ -767,8 +766,6 @@ public class PlannerFragment extends ListFragment implements
 
 		if (allConnections == null) {
 			Log.e(TAG, "API failure!!!");
-			// tracker.trackEvent("Error API", myStart + " - " + myArrival, "",
-			// 0);
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
 					Toast.makeText(getActivity(), R.string.txt_error,
@@ -777,8 +774,6 @@ public class PlannerFragment extends ListFragment implements
 			});
 
 		}
-		// tracker.dispatch();
-
 	}
 
 	public void onDestroy() {

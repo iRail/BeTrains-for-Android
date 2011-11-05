@@ -75,6 +75,33 @@ public class WelcomeActivity extends FragmentActivity {
 
 	}
 
+	public void onTrafficClick(View v) {
+		if (findViewById(R.id.fragment) != null) {
+			setFragment(new RssFragment());
+		} else {
+			Log.i("tag", "NULL");
+			startActivity(new Intent(this, RssActivity.class));
+		}
+	}
+	
+	public void onStarredClick(View v) {
+		if (findViewById(R.id.fragment) != null) {
+			setFragment(new FavFragment());
+		} else {
+			Log.i("tag", "NULL");
+			startActivity(new Intent(this, FavActivity.class));
+		}
+	}
+	
+	public void onClosestClick(View v) {
+		if (findViewById(R.id.fragment) != null) {
+			setFragment(new ClosestFragment());
+		} else {
+			Log.i("tag", "NULL");
+			startActivity(new Intent(this, ClosestActivity.class));
+		}
+	}
+	
 	public void onPlannerClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new PlannerFragment());
