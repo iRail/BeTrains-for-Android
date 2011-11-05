@@ -1,6 +1,8 @@
 package tof.cv.mpp.Utils;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
@@ -11,9 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -21,8 +20,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.google.gson.Gson;
+
 import tof.cv.mpp.R;
 import tof.cv.mpp.bo.Connection;
+import tof.cv.mpp.bo.ConnectionOld;
 import tof.cv.mpp.bo.Station;
 import tof.cv.mpp.bo.Train;
 import tof.cv.mpp.bo.Via;
@@ -39,7 +41,6 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class ConnectionMaker {
@@ -359,7 +360,7 @@ public class ConnectionMaker {
 	}
 
 	@SuppressWarnings("finally")
-	public static ArrayList<Connection> newSearchTrains(String year,
+	public static ArrayList<ConnectionOld> newSearchTrains(String year,
 			String month, String day, String hour, String minutes,
 			String language, String departure, String arrival,
 			String departureArrival, String trainsOnly, Context context) {
@@ -367,6 +368,14 @@ public class ConnectionMaker {
 
 		mDbHelper = new ConnectionDbAdapter(context);
 		mDbHelper.open();
+		
+		if (day.length()==1)
+				day="0"+day;
+		
+		if (month.length()==1)
+			month="0"+month;
+		if (month.contentEquals("13"))
+			month="01";
 
 		// DefaultHttpClient httpclient = new DefaultHttpClient();
 		String url = "http://api.irail.be/connections.php?to="
@@ -377,6 +386,8 @@ public class ConnectionMaker {
 				+ trainsOnly;
 		url = url.replace(" ", "%20");
 		Log.v(TAG, url);
+		
+		
 		String myVersion = "0.0";
 		PackageManager manager = context.getPackageManager();
 		try {
@@ -385,15 +396,21 @@ public class ConnectionMaker {
 			e.printStackTrace();
 			mDbHelper.close();
 		}
-		/*
-		 * NEW CODE FROM JAN
-		 */
-		ArrayList<Connection> listOfConnections = null;
+
+		ArrayList<ConnectionOld> listOfConnections = null;
 		try {
-			URL railTimesRequest = new URL(url);
-			URLConnection yc = railTimesRequest.openConnection();
-			yc.setRequestProperty("User-Agent", "BeTrains " + myVersion
-					+ " for Android - " + System.getProperty("http.agent"));
+
+			//TODO USER-AGENT
+			//("User-Agent", "BeTrains " + myVersion
+			//		+ " for Android - " + System.getProperty("http.agent"));
+			
+			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains","connection.txt");
+			
+			Gson gson = new Gson();
+			Reader reader = new InputStreamReader(is);
+			Connections connection = gson.fromJson(reader,Connections.class);
+			
+			/*
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -420,7 +437,7 @@ public class ConnectionMaker {
 				/*
 				 * THIS WAS CHANGED FROM CREATECONNECTION TO
 				 * CREATECONNECTIONWITHVIAS
-				 */
+				
 
 				//mDbHelper.createConnectionWithVias(conn.getDepartureStation()
 					//	.getStation(), conn.getArrivalStation().getStation(),
@@ -431,7 +448,7 @@ public class ConnectionMaker {
 								//.getPlatform(), conn.getArrivalStation()
 								//.getPlatform(), listStation, conn.getVias());
 
-			}
+			}*/
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -440,10 +457,14 @@ public class ConnectionMaker {
 			return listOfConnections;
 		}
 	}
+	
+	public class Connections{
+		public List<Connection> connections;
+	}
 
-	public static ArrayList<Connection> parseConnections(Document document) {
+	public static ArrayList<ConnectionOld> parseConnections(Document document) {
 
-		ArrayList<Connection> listConnections = new ArrayList<Connection>();
+		ArrayList<ConnectionOld> listConnections = new ArrayList<ConnectionOld>();
 		NodeList root = document.getElementsByTagName("connections");
 		System.out.println("connections : " + root.getLength());
 
@@ -638,7 +659,7 @@ public class ConnectionMaker {
 					}
 
 				}
-				listConnections.add(new Connection(departureStation, vias,
+				listConnections.add(new ConnectionOld(departureStation, vias,
 						arrivalStation, durationAll, delayD, delayA));
 			}
 		}

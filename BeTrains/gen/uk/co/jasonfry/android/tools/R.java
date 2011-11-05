@@ -453,18 +453,19 @@ containing a value of this type.
         public static final int stub=0x7f020098;
         public static final int tab_bottom_left=0x7f020099;
         public static final int tab_bottom_right=0x7f02009a;
-        public static final int title_logo=0x7f02009b;
-        public static final int title_logo_default=0x7f02009c;
-        public static final int title_logo_pressed=0x7f02009d;
-        public static final int title_logo_selected=0x7f02009e;
-        public static final int train=0x7f02009f;
-        public static final int transparent_button_background=0x7f0200a0;
-        public static final int w_button_down=0x7f0200a1;
-        public static final int w_button_up=0x7f0200a2;
-        public static final int whats_on_background=0x7f0200a3;
-        public static final int whats_on_separator=0x7f0200a4;
-        public static final int wrefresh=0x7f0200a5;
-        public static final int wtrain=0x7f0200a6;
+        public static final int tip=0x7f02009b;
+        public static final int title_logo=0x7f02009c;
+        public static final int title_logo_default=0x7f02009d;
+        public static final int title_logo_pressed=0x7f02009e;
+        public static final int title_logo_selected=0x7f02009f;
+        public static final int train=0x7f0200a0;
+        public static final int transparent_button_background=0x7f0200a1;
+        public static final int w_button_down=0x7f0200a2;
+        public static final int w_button_up=0x7f0200a3;
+        public static final int whats_on_background=0x7f0200a4;
+        public static final int whats_on_separator=0x7f0200a5;
+        public static final int wrefresh=0x7f0200a6;
+        public static final int wtrain=0x7f0200a7;
     }
     public static final class id {
         public static final int Button_next=0x7f05002a;
@@ -513,7 +514,7 @@ containing a value of this type.
         public static final int arret2=0x7f050077;
         public static final int arret3=0x7f050079;
         public static final int arret4=0x7f050078;
-        public static final int avatar=0x7f050093;
+        public static final int avatar=0x7f050095;
         public static final int boutonweb=0x7f050053;
         public static final int btn_closest_stations=0x7f050061;
         public static final int btn_donate=0x7f050067;
@@ -598,8 +599,8 @@ containing a value of this type.
         public static final int thirdline=0x7f05008a;
         public static final int tid=0x7f05009e;
         public static final int time=0x7f05007d;
-        public static final int tiptext=0x7f050095;
-        public static final int tiptitle=0x7f050094;
+        public static final int tiptext=0x7f050094;
+        public static final int tiptitle=0x7f050093;
         public static final int title=0x7f05002b;
         public static final int title_container=0x7f050009;
         public static final int title_logo=0x7f05000a;

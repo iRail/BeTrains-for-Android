@@ -9,6 +9,7 @@ import tof.cv.mpp.Utils.ConnectionDbAdapter;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Connection;
+import tof.cv.mpp.bo.ConnectionOld;
 import tof.cv.mpp.bo.Station;
 import tof.cv.mpp.bo.Via;
 import tof.cv.mpp.view.DateTimePicker;
@@ -25,13 +26,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.SupportActivity;
 import android.support.v4.view.Menu;
-import android.view.MenuInflater;
 import android.support.v4.view.MenuItem;
 import android.support.v4.view.Window;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class PlannerFragment extends ListFragment implements
 
 	int positionClicked;
 
-	private static ArrayList<Connection> allConnections = new ArrayList<Connection>();
+	private static ArrayList<ConnectionOld> allConnections = new ArrayList<ConnectionOld>();
 	// ArrayList<Message> listOfMessages;
 
 	private static final int ACTIVITY_DISPLAY = 0;
@@ -105,7 +106,7 @@ public class PlannerFragment extends ListFragment implements
 
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		context = this.getSupportActivity();
-		Date mDate = new Date();
+		mDate = new Date();
 
 		getSupportActivity().getSupportActionBar().setTitle(
 				Utils.formatDate(mDate, datePattern));
@@ -404,7 +405,7 @@ public class PlannerFragment extends ListFragment implements
 		 * we have to take each cursor and look it it has any vias , normally
 		 * the rowId will be the same as the index of the cursor
 		 */
-		allConnections = new ArrayList<Connection>();
+		allConnections = new ArrayList<ConnectionOld>();
 		myConnectionCursor.moveToFirst();
 
 		// Log.i(TAG,"Cursor size is: "+myConnectionCursor.getCount());
@@ -533,7 +534,7 @@ public class PlannerFragment extends ListFragment implements
 				}
 			}
 			try {
-				allConnections.add(new Connection(new Station("",
+				allConnections.add(new ConnectionOld(new Station("",
 						departurePlatform, true, departureTime,
 						departureStation, "stationCoordinates", delayDStr,
 						"status"), vias, new Station(lastTrain,
@@ -615,7 +616,7 @@ public class PlannerFragment extends ListFragment implements
 		// Log.v(TAG,"click");
 		try {
 
-			Connection currentConnection = allConnections.get(positionClicked);
+			ConnectionOld currentConnection = allConnections.get(positionClicked);
 			// Log.v(TAG,"size: "+currentConnection.getVias().size());
 			if (currentConnection.getVias().size() > 0) {
 				getActivity().showDialog(CONNECTION_DIALOG_ID);
@@ -712,6 +713,7 @@ public class PlannerFragment extends ListFragment implements
 		myStart = tvDeparture.getText().toString();
 		myArrival = tvArrival.getText().toString();
 
+		//TODO Improve all this piece of spaghetti.
 		int item = 0;
 		for (String x : ConnectionMaker.LIST_OF_STATIONS) {
 			if (x.compareToIgnoreCase(myStart) == 0) {
@@ -759,10 +761,11 @@ public class PlannerFragment extends ListFragment implements
 		else
 			trainOnly = "train;bus";
 
-		allConnections = new ArrayList<Connection>();
-		// allConnections = ConnectionMaker.newSearchTrains(mYear, mMonth, mDay,
-		// mHour, mMinute, langue, myStart, myArrival, dA, trainOnly,
-		// getActivity());
+		//allConnections = new Connections();
+		
+		 allConnections = ConnectionMaker.newSearchTrains(""+(mDate.getYear()-100),""+(mDate.getMonth()+1), ""+mDate.getDate(),
+				 ""+mDate.getHours(), ""+mDate.getMinutes(), langue, myStart, myArrival, dA, trainOnly,
+		 getActivity());
 
 		if (allConnections == null) {
 			Log.e(TAG, "API failure!!!");

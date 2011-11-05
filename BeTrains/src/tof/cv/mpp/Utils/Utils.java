@@ -7,9 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,23 +20,20 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.Environment;
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 public class Utils {
 
-	public void DownloadJsonFromUrlParseItandCachetoSdCard(String url,
-			String dirName,String fileName, Class<Object> classToParse) {
+	public static InputStream DownloadJsonFromUrlAndCacheToSd(String url,
+			String dirName,String fileName) {
 
 		InputStream source = retrieveStream(url);
 
 		// Petite entourloupe pour éviter des soucis de InputSTream qui se ferme
 		// apres la premiere utilisation.
-		CopyInputStream cis = new CopyInputStream(source);
-		InputStream source1 = cis.getCopy();
-		InputStream source2 = cis.getCopy();
-		
-		//Display the feed from the web
-		parseJson(source1,classToParse);
+		Utils test=new Utils();
+		CopyInputStream cis = test.new CopyInputStream(source);
+		InputStream sourcetoReturn = cis.getCopy();
+		InputStream sourceCopy = cis.getCopy();
+	
 		
 		File memory = Environment.getExternalStorageDirectory();
 		File dir = new File(memory.getAbsolutePath() + dirName);
@@ -51,7 +46,7 @@ public class Utils {
 			byte[] buffer = new byte[32768];
 			int read;
 			try {
-				while ((read = source2.read(buffer, 0, buffer.length)) > 0) {
+				while ((read = sourceCopy.read(buffer, 0, buffer.length)) > 0) {
 					f.write(buffer, 0, read);
 				}
 			} catch (IOException e) {
@@ -63,21 +58,7 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-
-	public static Class<Object> parseJson(InputStream source,Class<Object> myClass) {
-		Gson gson = new Gson();
-		Reader reader = new InputStreamReader(source);
-		 
-		Object response =  gson.fromJson(reader,myClass);
-		return null;
-
-		//for (Object event : events) {
-		//	Log.i(""," // " + event.Timestamp);
-			//Do something with each item
-		//}
-
+		return sourcetoReturn;
 	}
 	
 	public static  InputStream retrieveStream(String url) {
