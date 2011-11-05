@@ -17,29 +17,31 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
 import android.util.Log;
 
 public class Utils {
 
 	public static InputStream DownloadJsonFromUrlAndCacheToSd(String url,
-			String dirName,String fileName) {
+			String dirName, String fileName, Context context) {
 
-		InputStream source = retrieveStream(url);
+		InputStream source = retrieveStream(url, context);
 
 		// Petite entourloupe pour éviter des soucis de InputSTream qui se ferme
 		// apres la premiere utilisation.
-		Utils test=new Utils();
+		Utils test = new Utils();
 		CopyInputStream cis = test.new CopyInputStream(source);
 		InputStream sourcetoReturn = cis.getCopy();
 		InputStream sourceCopy = cis.getCopy();
-	
-		
+
 		File memory = Environment.getExternalStorageDirectory();
 		File dir = new File(memory.getAbsolutePath() + dirName);
 		dir.mkdirs();
 		File file = new File(dir, fileName);
-		
+
 		// Write to SDCard
 		try {
 			FileOutputStream f = new FileOutputStream(file);
@@ -60,17 +62,28 @@ public class Utils {
 		}
 		return sourcetoReturn;
 	}
-	
-	public static  InputStream retrieveStream(String url) {
+
+	public static InputStream retrieveStream(String url, Context context) {
 
 		DefaultHttpClient client = new DefaultHttpClient();
 
-		HttpGet getRequest = new HttpGet(url);
+		HttpGet request = new HttpGet(url);
+
+		//TODO: stocker la version pour ne pas faire un appel à chaque fois.
+		String myVersion = "0.0";
+		PackageManager manager = context.getPackageManager();
+		try {
+			myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		request.setHeader("User-Agent", "Waza_Be: BeTrains " + myVersion
+				+ " for Android");
 
 		try {
-
-			HttpResponse getResponse = client.execute(getRequest);
-			final int statusCode = getResponse.getStatusLine().getStatusCode();
+			HttpResponse response = client.execute(request);
+			final int statusCode = response.getStatusLine().getStatusCode();
 
 			if (statusCode != HttpStatus.SC_OK) {
 				Log.w("getClass().getSimpleName()", "Error " + statusCode
@@ -78,19 +91,18 @@ public class Utils {
 				return null;
 			}
 
-			HttpEntity getResponseEntity = getResponse.getEntity();
-			Log.w("getClass().getSimpleName()", "No error for URL " + url);
+			HttpEntity getResponseEntity = response.getEntity();
+			Log.w("getClass().getSimpleName()", "Read the url:  " + url);
 			return getResponseEntity.getContent();
 
 		} catch (IOException e) {
-			getRequest.abort();
-			Log.w("getClass().getSimpleName()"," Error for URL " + url, e);
+			Log.w("getClass().getSimpleName()", " Error for URL " + url, e);
 		}
 
 		return null;
 
 	}
-	
+
 	public class CopyInputStream {
 		private InputStream _is;
 		private ByteArrayOutputStream _copy = new ByteArrayOutputStream();
@@ -125,7 +137,6 @@ public class Utils {
 			return (InputStream) new ByteArrayInputStream(_copy.toByteArray());
 		}
 	}
-
 
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;

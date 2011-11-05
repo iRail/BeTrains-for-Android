@@ -386,16 +386,6 @@ public class ConnectionMaker {
 				+ trainsOnly+"&format=json";
 		url = url.replace(" ", "%20");
 		Log.v(TAG, url);
-		
-		
-		String myVersion = "0.0";
-		PackageManager manager = context.getPackageManager();
-		try {
-			myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-			mDbHelper.close();
-		}
 
 		try {
 
@@ -403,7 +393,7 @@ public class ConnectionMaker {
 			//("User-Agent", "BeTrains " + myVersion
 			//		+ " for Android - " + System.getProperty("http.agent"));
 			
-			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains","connection.txt");
+			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains","connection.txt",context);
 			
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
