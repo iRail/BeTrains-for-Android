@@ -77,10 +77,10 @@ public class WelcomeActivity extends FragmentActivity {
 
 	public void onTrafficClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
-			setFragment(new RssFragment());
+			setFragment(new TrafficFragment());
 		} else {
 			Log.i("tag", "NULL");
-			startActivity(new Intent(this, RssActivity.class));
+			startActivity(new Intent(this, TrafficActivity.class));
 		}
 	}
 	

@@ -15,6 +15,10 @@
 		<activity android:label="@string/app_name" android:name=".TwitterActivity"
 			android:windowSoftInputMode="stateAlwaysHidden"
 			android:configChanges="keyboardHidden|orientation" />
+		
+				<activity android:label="@string/app_name" android:name=".TrafficActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:configChanges="keyboardHidden|orientation" />
 
 		<activity android:label="@string/app_name" android:name=".PlannerActivity"
 			android:configChanges="keyboardHidden|orientation">
