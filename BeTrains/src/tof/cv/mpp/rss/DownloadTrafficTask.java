@@ -34,6 +34,7 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 	}
 
 	protected void onPostExecute(Long result) {
+		try{
 		if (myRssFeed != null) {
 			if (myRssFeed.getList().size() > 0) {
 				TrafficAdapter adapter = new TrafficAdapter(context,
@@ -50,6 +51,9 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 			TextView feedEmpty = (TextView) trafFrag.getActivity()
 					.findViewById(android.R.id.empty);
 			feedEmpty.setText(trafFrag.getString(R.string.txt_connection));
+		}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 

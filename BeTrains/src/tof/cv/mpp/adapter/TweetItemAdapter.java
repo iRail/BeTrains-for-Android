@@ -68,10 +68,10 @@ public class TweetItemAdapter extends ArrayAdapter<Tweet> {
 
 		final Tweet tweet = tweets.get(position);
 		if (tweet != null) {
-			holder.username.setText(tweet.username);
-			holder.message.setText(tweet.message);
-	        holder.image.setTag(tweet.image_url);
-	        imageLoader.DisplayImage(tweet.image_url, activity, holder.image);
+			holder.username.setText(tweet.from_user);
+			holder.message.setText(tweet.text);
+	        holder.image.setTag(tweet.profile_image_url);
+	        imageLoader.DisplayImage(tweet.profile_image_url, activity, holder.image);
 
 		}
 		return v;

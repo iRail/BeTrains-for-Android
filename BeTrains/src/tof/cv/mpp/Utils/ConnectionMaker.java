@@ -302,67 +302,13 @@ public class ConnectionMaker {
 		Log.v(TAG, url);
 
 		try {
-
-			//TODO USER-AGENT
-			//("User-Agent", "BeTrains " + myVersion
-			//		+ " for Android - " + System.getProperty("http.agent"));
-			
 			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains","connection.txt",context);
 			
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
-			
-			((Activity) context).runOnUiThread(new Runnable() {
-				public void run() {
-					Toast.makeText(context, reader.toString(),
-							Toast.LENGTH_LONG).show();
-				}
-			});
-			
 			return gson.fromJson(reader,Connections.class);
+
 			
-			
-			
-			/*
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(yc.getInputStream());
-			// Log.i(TAG,url);
-			listOfConnections = parseConnections(document);
-			mDbHelper.deleteAllConnections();
-			mDbHelper.deleteAllVias();
-
-			for (Connection conn : listOfConnections) {
-				ArrayList<String> listStation = new ArrayList<String>();
-				for (Via aVia : conn.getVias()) {
-					listStation.add(aVia.getVehicle());
-				}
-				listStation.add(conn.getArrivalStation().getVehicle());
-
-				/*
-				 * public long createConnectionWithVias(String departureStation,
-				 * String arrivalStation, String departureTime, String
-				 * arrivalTime, String tripTime, boolean delay, String
-				 * departureDate, String arrivalDate, ArrayList<String>
-				 * trains,ArrayList<Via> Vias) {
-				 */
-				/*
-				 * THIS WAS CHANGED FROM CREATECONNECTION TO
-				 * CREATECONNECTIONWITHVIAS
-				
-
-				//mDbHelper.createConnectionWithVias(conn.getDepartureStation()
-					//	.getStation(), conn.getArrivalStation().getStation(),
-						//conn.getDepartureStation().getTime(), conn
-							//	.getArrivalStation().getTime(), conn
-								//.getDuration(), conn.getDDelay(), conn
-								//.getADelay(), conn.getDepartureStation()
-								//.getPlatform(), conn.getArrivalStation()
-								//.getPlatform(), listStation, conn.getVias());
-
-			}*/
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Log.i("","*******");

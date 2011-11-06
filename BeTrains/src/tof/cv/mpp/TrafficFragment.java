@@ -5,10 +5,12 @@ import tof.cv.mpp.rss.DownloadTrafficTask;
 import tof.cv.mpp.rss.RSSFeed;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.MenuItem;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ public class TrafficFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		setHasOptionsMenu(true);
 
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
@@ -42,7 +46,6 @@ public class TrafficFragment extends ListFragment {
 		// GDActionBar mABar = getGDActionBar();
 		// mABar.setTitle(getString(R.string.app_name));
 
-		// TODO: language will be a parameter within the Intent.
 		lang = this.getString(R.string.url_lang_2);
 		if (settings.getBoolean("prefnl", false))
 			lang = "nl";
@@ -77,5 +80,18 @@ public class TrafficFragment extends ListFragment {
 				});
 		alertbox.show();
     }
-
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case (android.R.id.home):
+			// app icon in ActionBar is clicked; Go home
+			Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

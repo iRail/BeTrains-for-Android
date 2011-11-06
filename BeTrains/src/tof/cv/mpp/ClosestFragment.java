@@ -3,7 +3,6 @@ package tof.cv.mpp;
 
 import java.io.File;
 
-import tof.cv.mpp.Utils.Tablet;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ public class ClosestFragment extends ListFragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		//setContentView(R.layout.activity_twitter);
-		Tablet.loadTweets(getActivity(),getListView());
+		//Tablet.loadTweets(getActivity(),getListView());
 		//GDActionBar mActionBar = getGDActionBar();
 		//mActionBar.addItem(R.drawable.ic_title_settings);
 		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_settings),R.id.action_bar_settings);
