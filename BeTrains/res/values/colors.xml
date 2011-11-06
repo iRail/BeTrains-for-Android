@@ -12,7 +12,8 @@
 		License.
 	-->
 <resources>
-
+	<color name="action_bar_tint">#FFbbbbbb</color>
+	
 	<color name="title_background">#ff999999</color>
 
 	<color name="buttons">#cc000000</color>

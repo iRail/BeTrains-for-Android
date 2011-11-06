@@ -3,6 +3,7 @@ package tof.cv.mpp;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,9 @@ public class WelcomeActivity extends FragmentActivity {
 				.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("preffullscreen", false))
 			ConnectionMaker.setFullscreen(this);
+		
+		//TODO: This should work!!!!
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.action_bar_tint));
 
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 

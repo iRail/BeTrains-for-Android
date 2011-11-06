@@ -29,7 +29,7 @@
 		<TextView android:orientation="horizontal"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:text="Contact: christophe.versieux@gmail.com"
-			android:textColor="#FF000000">
+			android:textColor="#FF000000" android:background="@color/action_bar_tint">
 		</TextView>
 
 	</LinearLayout>
