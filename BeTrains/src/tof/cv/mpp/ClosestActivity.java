@@ -8,7 +8,7 @@ public class ClosestActivity extends FragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_planner);
+		setContentView(R.layout.activity_closest);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 

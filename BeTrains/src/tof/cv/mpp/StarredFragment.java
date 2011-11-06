@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class ClosestFragment extends ListFragment {
-	protected static final String TAG = "ClosestFragment";
+public class StarredFragment extends ListFragment {
+	protected static final String TAG = "StarredFragment";
 
 
 	@Override
@@ -28,7 +28,7 @@ public class ClosestFragment extends ListFragment {
 				.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
 			ConnectionMaker.setFullscreen(getActivity());
-		return inflater.inflate(R.layout.fragment_closest, null);
+		return inflater.inflate(R.layout.fragment_starred, null);
 	}
 
 	/** Called when the activity is first created. */

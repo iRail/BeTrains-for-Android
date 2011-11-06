@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:layout_height="0dp" android:layout_width="fill_parent"
-	android:layout_weight="1">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:background="#FFFFFFFF">
-		<include layout="@layout/colorstrip" />
+    <fragment
+        android:id="@+id/fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:name="tof.cv.mpp.StarredFragment" />
 
 
-		<ListView android:id="@android:id/list" android:layout_width="fill_parent"
-			android:layout_height="0dip" android:layout_weight="1"
-			android:layout_marginTop="3px" android:cacheColorHint="#00000000" />
-
-	</LinearLayout>
 </FrameLayout>

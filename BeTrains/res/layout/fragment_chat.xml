@@ -52,9 +52,9 @@
 			<EditText android:id="@+id/yourmessage"
 				xmlns:android="http://schemas.android.com/apk/res/android"
 				android:layout_width="0dip" android:layout_height="wrap_content"
-				android:layout_weight="5" />
+				android:layout_weight="1" />
 			<Button android:id="@+id/send" android:text="send"
-				android:layout_width="0dip" android:layout_weight="1"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" />
 		</LinearLayout>
 

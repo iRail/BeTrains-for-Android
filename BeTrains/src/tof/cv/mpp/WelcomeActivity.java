@@ -86,10 +86,10 @@ public class WelcomeActivity extends FragmentActivity {
 	
 	public void onStarredClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
-			setFragment(new FavFragment());
+			setFragment(new StarredFragment());
 		} else {
 			Log.i("tag", "NULL");
-			startActivity(new Intent(this, FavActivity.class));
+			startActivity(new Intent(this, StarredActivity.class));
 		}
 	}
 	
@@ -108,6 +108,15 @@ public class WelcomeActivity extends FragmentActivity {
 		} else {
 			Log.i("tag", "NULL");
 			startActivity(new Intent(this, PlannerActivity.class));
+		}
+	}
+	
+	public void onChatClick(View v) {
+		if (findViewById(R.id.fragment) != null) {
+			setFragment(new ChatFragment());
+		} else {
+			Log.i("tag", "NULL");
+			startActivity(new Intent(this, ChatActivity.class));
 		}
 	}
 

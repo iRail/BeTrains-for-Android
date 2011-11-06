@@ -7,7 +7,7 @@
         android:id="@+id/fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:name="tof.cv.mpp.ClosestFragment" />
+        android:name="tof.cv.mpp.ChatFragment" />
 
 
 </FrameLayout>
