@@ -13,5 +13,17 @@ public class Station {
 		return this.station;
 	}
 	
+	public String getDelay() {
+		return this.delay;
+	}
+	
+	public String getPlatform() {
+		return this.platform;
+	}
+	
+	public String getTime() {
+		return this.time;
+	}
+	
 
 }

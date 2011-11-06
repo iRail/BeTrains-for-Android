@@ -11,6 +11,12 @@ public class Connection {
 	public Station getArrival() {
 		return this.arrival;
 	}
+	public Station getDeparture() {
+		return this.departure;
+	}
+	public String getDuration() {
+		return this.duration;
+	}
 
 
 }

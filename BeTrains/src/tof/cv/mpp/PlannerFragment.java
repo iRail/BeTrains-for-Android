@@ -7,13 +7,13 @@ import java.util.List;
 
 import tof.cv.mpp.Utils.ConnectionDbAdapter;
 import tof.cv.mpp.Utils.ConnectionMaker;
-import tof.cv.mpp.Utils.ConnectionMaker.Connections;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.ConnectionOld;
+import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.bo.StationOld;
 import tof.cv.mpp.bo.Via;
 import tof.cv.mpp.view.DateTimePicker;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -37,7 +37,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -46,6 +45,8 @@ import android.widget.Toast;
 
 public class PlannerFragment extends ListFragment implements
 		DialogInterface.OnClickListener, Dialog.OnCancelListener {
+
+	// First part is cleaned
 
 	boolean isDebug = false;
 
@@ -58,8 +59,17 @@ public class PlannerFragment extends ListFragment implements
 
 	int positionClicked;
 
-	private static Connections allConnections;
-	// ArrayList<Message> listOfMessages;
+	private static Connections allConnections = new Connections();
+
+	private TextView tvDeparture;
+	private TextView tvArrival;
+
+	private ConnectionAdapter connAdapter;
+
+	private String TAG = "BETRAINS";
+	private SupportActivity context;
+
+	// Second part need to be cleaned
 
 	private static final int ACTIVITY_DISPLAY = 0;
 	private static final int ACTIVITY_STOP = 1;
@@ -68,28 +78,12 @@ public class PlannerFragment extends ListFragment implements
 	private static final int ACTIVITY_GETSTOPSTATION = 4;
 	private static final int ACTIVITY_INFO = 6;
 
-	private Cursor myConnectionCursor;
-	private Cursor myViaCursor;
-	private static ConnectionDbAdapter mDbHelper;
-
 	private static final int CONNECTION_DIALOG_ID = 0;
 
 	private static SharedPreferences settings;
 	private SharedPreferences.Editor editor;
 
-	private TextView tvDeparture;
-	private TextView tvArrival;
-
-	private LinearLayout linLayoutDate;
-	private LinearLayout linLayoutTime;
-	private TextView txtViewAB;
-
-	private ConnectionDbAdapter connAdapter;
-
 	private ProgressDialog progressDialog;
-
-	private String TAG = "BETRAINS";
-	private SupportActivity context;
 
 	public void onStart() {
 		super.onStart();
@@ -112,11 +106,6 @@ public class PlannerFragment extends ListFragment implements
 				Utils.formatDate(mDate, datePattern));
 		setHasOptionsMenu(true);
 
-		// mActionBar.addItem(R.drawable.ic_title_settings);
-		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_settings),R.id.action_bar_settings);
-
-		mDbHelper = new ConnectionDbAdapter(getActivity());
-
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null) {
 			tvDeparture.setText(extras.getString("Departure"));
@@ -133,7 +122,6 @@ public class PlannerFragment extends ListFragment implements
 		super.onActivityCreated(savedInstanceState);
 
 		setBtnSearchListener();
-		setActionBarListener();
 		setBtnInvertListener();
 		setTvArrivalListener();
 		setTvDepartureListener();
@@ -262,6 +250,8 @@ public class PlannerFragment extends ListFragment implements
 		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Add to Fav.")
 				.setIcon(R.drawable.icon)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+		// TODO: Add settings
 	}
 
 	@Override
@@ -281,16 +271,6 @@ public class PlannerFragment extends ListFragment implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	private void setActionBarListener() {
-		txtViewAB = (TextView) context.findViewById(R.id.abs__action_bar_title);
-
-		// txtViewAB.setOnClickListener(new Button.OnClickListener() {
-		// public void onClick(View v) {
-		// showDateTimeDialog();
-		// }
-		// });
 	}
 
 	private void setBtnBeforeListener() {
@@ -339,21 +319,15 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	private void fillData() {
-		// Get all of the rows from the database and create the item list
-		mDbHelper.open();
-		myConnectionCursor = mDbHelper.fetchAllConnections();
-		// Log.i(TAG,"Cursor size is: "+myConnectionCursor.getCount());
-		myViaCursor = mDbHelper.fetchAllVias();
-		getActivity().startManagingCursor(myConnectionCursor);
-		getActivity().startManagingCursor(myViaCursor);
+		// TODO: get from SDCARD if list is empty
 
-		// connAdapter = new ConnectionAdapter(this, R.layout.row_planner,
-		// new ArrayList<Connection>(), myConnectionCursor);
-		// setListAdapter(connAdapter);
-
-		if (myConnectionCursor.getCount() > 0) {
+		if (allConnections.connection!=null) {
 			registerForContextMenu(getListView());
-			fillAllNewConnections(myConnectionCursor, myViaCursor);
+			connAdapter = new ConnectionAdapter(this.getActivity()
+					.getBaseContext(), R.layout.row_planner,
+					allConnections.connection);
+
+			setListAdapter(connAdapter);
 		}
 
 		else {
@@ -573,35 +547,6 @@ public class PlannerFragment extends ListFragment implements
 
 	}
 
-	public static int getStationNumber(String stationToFind) {
-		stationToFind = stationToFind.replace("-", " ");
-		boolean found = false;
-		int z = 0;
-
-		stationToFind = stationToFind.replace(" [B]", "");
-		stationToFind = stationToFind.replace(" [b]", "");
-
-		for (String x : ConnectionMaker.LIST_OF_STATIONS) {
-			if (x.compareToIgnoreCase(stationToFind) == 0) {
-				found = true;
-				break;
-			}
-			z++;
-		}
-
-		if (found) {
-			Log.i("BETRAINS", stationToFind + " = "
-					+ ConnectionMaker.LIST_ID[z]);
-			return Integer.valueOf(ConnectionMaker.LIST_ID[z]);
-		}
-
-		else {
-			Log.i("BETRAINS", stationToFind + " not found");
-			return -1;
-		}
-
-	}
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -714,42 +659,11 @@ public class PlannerFragment extends ListFragment implements
 		myStart = tvDeparture.getText().toString();
 		myArrival = tvArrival.getText().toString();
 
-		// TODO Improve all this piece of spaghetti.
-		int item = 0;
-		for (String x : ConnectionMaker.LIST_OF_STATIONS) {
-			if (x.compareToIgnoreCase(myStart) == 0) {
-				myStart = ConnectionMaker.LIST_OF_STATIONS[item];
-				break;
-			}
-			item++;
-		}
-
-		item = 0;
-
-		for (String x : ConnectionMaker.LIST_OF_STATIONS) {
-			if (x.compareToIgnoreCase(myArrival) == 0) {
-				myArrival = ConnectionMaker.LIST_OF_STATIONS[item];
-				break;
-			}
-			item++;
-		}
-
-		if (myStart.contains("/")) {
-			String[] foreign = myStart.split("/");
-			myStart = foreign[1] + "%20(" + foreign[0] + ")";
-		}
-
-		if (myArrival.contains("/")) {
-			String[] etranger = myArrival.split("/");
-			myArrival = etranger[1] + "%20(" + etranger[0] + ")";
-		}
-
 		String langue = getString(R.string.url_lang);
+		// There is a setting to force dutch when Android is in English.
 		if (settings.getBoolean("prefnl", false))
 			langue = "NL";
 
-		Log.d(TAG, settings.getString(
-				context.getString(R.string.key_planner_da), "1"));
 		String dA = "depart";
 		if (settings.getString(context.getString(R.string.key_planner_da), "1")
 				.contentEquals("2"))
@@ -800,65 +714,6 @@ public class PlannerFragment extends ListFragment implements
 
 	}
 
-	/*
-	 * public boolean onHandleActionBarItemClick(GDActionBarItem item, int
-	 * position) {
-	 * 
-	 * switch (position) { case 0: Intent i = new Intent(PlannerActivity.this,
-	 * PlannerSettingsActivity.class); startActivity(i); break;
-	 * 
-	 * default: return super.onHandleActionBarItemClick(item,position); } return
-	 * true; }
-	 */
-
-	public static int getActivityInfo() {
-		return ACTIVITY_INFO;
-	}
-
-	public void setLinearLayoutDate(LinearLayout linLayoutDate) {
-		this.linLayoutDate = linLayoutDate;
-	}
-
-	public LinearLayout getLinearLayoutDate() {
-		return linLayoutDate;
-	}
-
-	public void setLinearLayoutTime(LinearLayout linLayoutTime) {
-		this.linLayoutTime = linLayoutTime;
-	}
-
-	public LinearLayout getLinearLayoutTime() {
-		return linLayoutTime;
-	}
-
-	public Activity getContext() {
-		return getActivity();
-	}
-
-	public void setTAG(String tAG) {
-		TAG = tAG;
-	}
-
-	public String getTAG() {
-		return TAG;
-	}
-
-	public void onClick(DialogInterface dialog, int which) {
-		if (which == DialogInterface.BUTTON1) {
-			// OK button
-
-		}
-
-		// Remove the dialog, it won't be used again
-		getActivity().removeDialog(CONNECTION_DIALOG_ID);
-
-	}
-
-	public void onCancel(DialogInterface dialog) {
-		getActivity().removeDialog(CONNECTION_DIALOG_ID);
-
-	}
-
 	protected void onPrepareDialog(int dialogId, Dialog dialog) {
 		switch (dialogId) {
 		case CONNECTION_DIALOG_ID: {
@@ -868,9 +723,8 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	public void noDataClick(int position) {
-		Cursor c = myConnectionCursor;
-		c.moveToPosition(position);
-		// If there were no results, launch browser to check connection.
+
+		//TODO If there were no results, launch browser to check connection.
 
 		/*
 		 * Intent i = new Intent(this, InfoTrainActivity.class);
@@ -938,6 +792,18 @@ public class PlannerFragment extends ListFragment implements
 		mDateTimeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mDateTimeDialog.setContentView(mDateTimeDialogView);
 		mDateTimeDialog.show();
+	}
+
+	@Override
+	public void onCancel(DialogInterface arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
