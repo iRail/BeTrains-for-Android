@@ -23,9 +23,6 @@ public class WelcomeActivity extends FragmentActivity {
 		if (settings.getBoolean("preffullscreen", false))
 			ConnectionMaker.setFullscreen(this);
 		
-		//TODO: This should work!!!!
-		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.action_bar_tint));
-
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
@@ -66,6 +63,10 @@ public class WelcomeActivity extends FragmentActivity {
 			setContentView(R.layout.activity_welcome);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
+		
+		//TODO: This should work!!!!
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.action_bar_tint));
+
 
 	}
 
