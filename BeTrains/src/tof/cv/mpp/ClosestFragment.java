@@ -19,28 +19,34 @@ import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ClosestFragment extends ListFragment {
 	protected static final String TAG = "ClosestFragment";
@@ -88,6 +94,26 @@ public class ClosestFragment extends ListFragment {
 		// mActionBar.addItem(android.R.drawable.ic_menu_help);
 		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(android.R.drawable.ic_menu_help),R.id.action_bar_help);
 
+		m_ProgressDialog = new MyProgressDialog(getActivity());
+		mDbHelper = new LocationDbHelper(getActivity());
+		tvEmpty = (TextView) getActivity().findViewById(R.id.empty_tv);
+		btEmpty = (Button) getActivity().findViewById(R.id.empty_bt);
+		btEmpty.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				Intent myIntent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+				startActivity(myIntent);
+			}
+		});
+		btnUpdate = (Button) getActivity().findViewById(R.id.btn_update);
+		btnUpdate.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				updateListToLocation(lastLocation);
+			}
+		});
+
+		
 		locationManager = (LocationManager) getActivity().getSystemService(
 				Context.LOCATION_SERVICE);
 		locationGpsListener = new MyGPSLocationListener();
@@ -113,6 +139,68 @@ public class ClosestFragment extends ListFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	//TODO
+	/*
+	public void setQuickAction(View v) {
+		int[] xy = new int[2];
+		v.getLocationInWindow(xy);
+		Rect rect = new Rect(xy[0], xy[1], xy[0] + v.getWidth(), xy[1]
+				+ v.getHeight());
+		final QuickActionWindow qa = new QuickActionWindow(this, v, rect);
+
+		qa.addItem(getResources().getDrawable(
+				android.R.drawable.ic_menu_directions), this
+				.getString(R.string.txt_nav), new OnClickListener() {
+			public void onClick(View v) {
+				try {
+					Uri uri = Uri.parse("google.navigation:q="
+							+ ((double) clickedItem.getLat() / 1E6) + ","
+							+ ((double) clickedItem.getLon() / 1E6));
+					Intent it = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(it);
+				} catch (ActivityNotFoundException e) {
+					(Toast.makeText(context, "Navigation not found",
+							Toast.LENGTH_LONG)).show();
+				}
+				qa.dismiss();
+			}
+		});
+
+		qa.addItem(getResources().getDrawable(
+				android.R.drawable.ic_menu_mapmode), this
+				.getString(R.string.txt_map), new OnClickListener() {
+			public void onClick(View v) {
+				try {
+					Intent i = new Intent(GetClosestStationsActivity.this,
+							StationMapActivity.class);
+
+					i.putExtra("nom", clickedItem.getStation());
+					i.putExtra("lat", "" + (clickedItem.getLat() / 1E6));
+
+					i.putExtra("lon", "" + (clickedItem.getLon() / 1E6));
+
+					startActivity(i);
+				} catch (ActivityNotFoundException e) {
+					(Toast.makeText(context, "GoogleMap not found",
+							Toast.LENGTH_LONG)).show();
+				}
+
+				qa.dismiss();
+			}
+		});
+
+		qa.addItem(getResources().getDrawable(
+				android.R.drawable.ic_menu_myplaces), this
+				.getString(R.string.txt_info_station), new OnClickListener() {
+			public void onClick(View v) {
+				Toast.makeText(context, clickedItem.getStation(),
+						Toast.LENGTH_SHORT).show();
+				qa.dismiss();
+			}
+		});
+		qa.show();
+
+	}*/
 
 	private class MyGPSLocationListener implements LocationListener
 
