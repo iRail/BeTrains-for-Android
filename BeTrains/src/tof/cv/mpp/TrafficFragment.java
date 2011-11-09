@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+
 public class TrafficFragment extends ListFragment {
 	protected static final String TAG = "ActivityTraffic";
 	private RSSFeed myRssFeed = null;

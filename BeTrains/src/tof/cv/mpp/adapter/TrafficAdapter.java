@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+
 public class TrafficAdapter extends ArrayAdapter<RSSItem>{
 
 	private LayoutInflater myLayoutInflater;

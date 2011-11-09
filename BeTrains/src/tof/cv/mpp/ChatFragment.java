@@ -1,21 +1,18 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
-import tof.cv.mpp.rss.DownloadTrafficTask;
-import tof.cv.mpp.rss.RSSFeed;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+
 
 public class ChatFragment extends ListFragment {
 	protected static final String TAG = "ChatFragment";

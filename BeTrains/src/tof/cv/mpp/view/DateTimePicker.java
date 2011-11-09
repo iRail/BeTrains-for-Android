@@ -21,7 +21,6 @@ import java.util.Calendar;
 
 import tof.cv.mpp.R;
 import android.content.Context;
-import android.support.v4.app.ActionBar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;

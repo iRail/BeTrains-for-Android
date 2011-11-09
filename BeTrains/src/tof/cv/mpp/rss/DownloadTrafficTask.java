@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.TrafficActivity;
 import tof.cv.mpp.TrafficFragment;
 import tof.cv.mpp.adapter.TrafficAdapter;
 import android.content.Context;

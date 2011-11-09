@@ -43,6 +43,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class PlannerFragment extends ListFragment implements
 		DialogInterface.OnClickListener, Dialog.OnCancelListener {
 
