@@ -19,7 +19,6 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 		super(context, textViewResourceId, (ArrayList<Connection>) items);
 	}
 
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -43,27 +42,23 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			TextView numberoftrains = (TextView) v
 					.findViewById(R.id.numberoftrains);
 
-			if (delayD != null) {
+			String delayStr = "+"
+					+ (Integer.valueOf(conn.getDeparture().getDelay()) / 60)
+					+ "'";
+			if (!conn.getDeparture().getDelay().contentEquals("0"))
+				delayD.setText(delayStr);
+			else
+				// delayD.setText(delayStr);
+				delayD.setVisibility(View.GONE);
 
-				String delayStr = "+"
-						+ (Integer.valueOf(conn.getDeparture().getDelay()) / 60) + "'";
-				if (!conn.getDeparture().getDelay().contentEquals("0"))
-					delayD.setText(delayStr);
-				else
-					// delayD.setText(delayStr);
-					delayD.setVisibility(View.GONE);
-			}
-
-			if (delayA != null) {
-
-				String delayStr = "+"
-						+ (Integer.valueOf(conn.getArrival().getDelay()) / 60) + "'";
-				if (conn.getArrival().getDelay().contentEquals("0"))
-					delayA.setText(delayStr);
-				else
-					// delayA.setText(delayStr);
-					delayA.setVisibility(View.GONE);
-			}
+			delayStr = "+"
+					+ (Integer.valueOf(conn.getArrival().getDelay()) / 60)
+					+ "'";
+			if (!conn.getArrival().getDelay().contentEquals("0"))
+				delayA.setText(delayStr);
+			else
+				// delayA.setText(delayStr);
+				delayA.setVisibility(View.GONE);
 
 			if (departure != null) {
 				departure.setText(conn.getDeparture().getStation());
@@ -73,10 +68,10 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			}
 
 			if (quai1 != null) {
-				quai1.setText(conn.getDeparture().getPlatform());
+				quai1.setText(" ("+conn.getDeparture().getPlatform()+")");
 			}
 			if (quai2 != null) {
-				quai2.setText(conn.getArrival().getPlatform());
+				quai2.setText(" ("+conn.getArrival().getPlatform()+")");
 			}
 
 			if (triptime != null) {
@@ -92,17 +87,17 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 				arrivaltime.setText(ConnectionMaker.formatDate(conn
 						.getArrival().getTime(), false, false));
 			}
-			
-			//TODO: Vias
-			/*if (numberoftrains != null) {
-				// Log.i("BETRAINS","number"+conn.getTrains());
-				if (conn.getVias().size() > 1)
-					numberoftrains.setText(Html.fromHtml("Trains: <b>"
-							+ conn.getVias().size() + "</b>"));
-				else
-					numberoftrains.setText(Html.fromHtml(ConnectionMaker
-							.getTrainId(conn.getVias().get(0).getVehicle())));
-			}*/
+
+			// TODO: Vias
+			/*
+			 * if (numberoftrains != null) { //
+			 * Log.i("BETRAINS","number"+conn.getTrains()); if
+			 * (conn.getVias().size() > 1)
+			 * numberoftrains.setText(Html.fromHtml("Trains: <b>" +
+			 * conn.getVias().size() + "</b>")); else
+			 * numberoftrains.setText(Html.fromHtml(ConnectionMaker
+			 * .getTrainId(conn.getVias().get(0).getVehicle()))); }
+			 */
 
 			int color1 = 0x00101010;
 			int color2 = 0xfff5f5f5;

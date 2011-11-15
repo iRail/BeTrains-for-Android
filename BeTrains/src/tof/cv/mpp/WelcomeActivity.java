@@ -22,7 +22,7 @@ public class WelcomeActivity extends FragmentActivity {
 				.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("preffullscreen", false))
 			ConnectionMaker.setFullscreen(this);
-		
+
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
@@ -63,14 +63,12 @@ public class WelcomeActivity extends FragmentActivity {
 			setContentView(R.layout.activity_welcome);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
-		//getSupportActionBar().setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.action_bar_tint)));
 	}
 
 	public void onTwitClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new TwitterFragment());
 		} else {
-			Log.i("tag", "NULL");
 			startActivity(new Intent(this, TwitterActivity.class));
 		}
 
@@ -80,54 +78,49 @@ public class WelcomeActivity extends FragmentActivity {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new TrafficFragment());
 		} else {
-			Log.i("tag", "NULL");
 			startActivity(new Intent(this, TrafficActivity.class));
 		}
 	}
-	
+
 	public void onStarredClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new StarredFragment());
 		} else {
-			Log.i("tag", "NULL");
 			startActivity(new Intent(this, StarredActivity.class));
 		}
 	}
-	
+
 	public void onClosestClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new ClosestFragment());
 		} else {
-			Log.i("tag", "NULL");
 			startActivity(new Intent(this, ClosestActivity.class));
 		}
 	}
-	
+
 	public void onPlannerClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new PlannerFragment());
 		} else {
-			Log.i("tag", "NULL");
 			startActivity(new Intent(this, PlannerActivity.class));
 		}
 	}
-	
+
 	public void onChatClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			Log.i("tag", "NULL");
 			startActivity(new Intent(this, ChatActivity.class));
 		}
 	}
 
-	//Display the Fragment when the user does not want the dashboard as his start screen.
+	// Display the Fragment when the user does not want the dashboard as his
+	// start screen.
 	public void setFragment(Fragment fragment) {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.replace(R.id.fragment, fragment);
 		ft.commit();
 	}
-	
-	
+
 }
