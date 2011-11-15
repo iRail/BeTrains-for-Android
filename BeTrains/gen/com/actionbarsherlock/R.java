@@ -804,27 +804,21 @@ containing a value of this type.
         public static final int wid_empty=0x7f080025;
     }
     public static final class style {
-        public static final int CustomBg=0x7f09001f;
-        public static final int GenericProgressBackground=0x7f090027;
-        public static final int GenericProgressIndicator=0x7f090028;
-        public static final int HomeButton=0x7f090022;
+        public static final int GenericProgressBackground=0x7f090022;
+        public static final int GenericProgressIndicator=0x7f090023;
+        public static final int HomeButton=0x7f09001f;
         public static final int Internal_Widget_Sherlock_ActionBar=0x7f09001c;
         public static final int Internal_Widget_Sherlock_Light_ActionBar=0x7f09001d;
+        public static final int MyTheme=0x7f090024;
+        public static final int MyTheme_ActionBar_TitleTextStyle=0x7f090026;
+        public static final int MyTheme_ActionBarStyle=0x7f090025;
         public static final int TextAppearance_Widget_Subtitle=0x7f09001b;
         public static final int TextAppearance_Widget_Title=0x7f09001a;
-        public static final int TextElement=0x7f090024;
-        public static final int TextHeader2=0x7f090020;
-        /**  Base application theme is the default theme. 
-         */
-        public static final int Theme=0x7f09001e;
-        /**  Variation on the Light theme that turns off the title 
-         */
-        public static final int Theme_BETrains=0x7f090021;
+        public static final int TextElement=0x7f090021;
+        public static final int TextHeader2=0x7f09001e;
         public static final int Theme_Sherlock=0x7f090000;
         public static final int Theme_Sherlock_Light=0x7f09000d;
-        public static final int Title=0x7f090023;
-        public static final int TitleBar=0x7f090026;
-        public static final int TitleBarLogo=0x7f090025;
+        public static final int Title=0x7f090020;
         public static final int Widget_Sherlock_ActionBar_TabBar=0x7f090001;
         public static final int Widget_Sherlock_ActionBar_TabText=0x7f090003;
         public static final int Widget_Sherlock_ActionBar_TabView=0x7f090002;
