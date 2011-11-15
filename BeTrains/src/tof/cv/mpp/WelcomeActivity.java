@@ -27,7 +27,7 @@ public class WelcomeActivity extends FragmentActivity {
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment
-		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+		/*if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			switch (Integer.valueOf(settings.getString("Activitypref", "1"))) {
 			case 1:
 				setContentView(R.layout.activity_welcome_with_fragment);
@@ -63,11 +63,11 @@ public class WelcomeActivity extends FragmentActivity {
 			setContentView(R.layout.activity_welcome);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
-		
+		*/
 		//TODO: This should work!!!!
-		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.action_bar_tint));
-
-
+		setContentView(R.layout.activity_welcome);
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.action_bar_tint)));
 	}
 
 	public void onTwitClick(View v) {

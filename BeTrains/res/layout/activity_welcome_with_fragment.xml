@@ -2,9 +2,9 @@
 
 <FrameLayout android:layout_height="fill_parent"
 	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-	<fragment  android:name="tof.cv.mpp.EmptyFragment"
+	 <fragment  android:name="tof.cv.mpp.EmptyFragment"
 		android:id="@+id/fragment" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
+		android:layout_height="fill_parent" /> 
 </FrameLayout>
 
 

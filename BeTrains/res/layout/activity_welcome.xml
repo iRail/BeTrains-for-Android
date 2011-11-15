@@ -11,7 +11,7 @@
 		<FrameLayout
 			android:layout_height="0dp" android:layout_width="fill_parent"
 			android:layout_weight="1">
-			<uk.co.jasonfry.android.tools.ui.PageControl
+			<!-- <uk.co.jasonfry.android.tools.ui.PageControl
 				android:id="@+id/page_control" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:orientation="horizontal"
 				android:gravity="center_horizontal" />
@@ -23,7 +23,7 @@
 				<include layout="@layout/menu_1" />
 				<include layout="@layout/menu_2" />
 
-			</uk.co.jasonfry.android.tools.ui.SwipeView>
+			</uk.co.jasonfry.android.tools.ui.SwipeView> -->
 		</FrameLayout>
 		<include layout="@layout/colorstrip" />
 		<TextView android:orientation="horizontal"

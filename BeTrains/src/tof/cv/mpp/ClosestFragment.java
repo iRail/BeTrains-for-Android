@@ -366,7 +366,6 @@ public class ClosestFragment extends ListFragment {
 			super(context);
 		}
 
-		@Override
 		public void onBackPressed() {
 			super.onBackPressed();
 			mDbHelper.close();
