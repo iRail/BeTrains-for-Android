@@ -13,158 +13,145 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-*/
+ */
 package tof.cv.mpp.view;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import tof.cv.mpp.PlannerFragment;
 import tof.cv.mpp.R;
+import tof.cv.mpp.Utils.Utils;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
-import android.widget.ViewSwitcher;
 
-public class DateTimePicker extends RelativeLayout implements View.OnClickListener, OnDateChangedListener, OnTimeChangedListener {
+public class DateTimePicker extends RelativeLayout implements
+		OnDateChangedListener, OnTimeChangedListener {
 
-        // DatePicker reference
-        private DatePicker              datePicker;
-        // TimePicker reference
-        private TimePicker              timePicker;
-        // ViewSwitcher reference
-        private ViewSwitcher    viewSwitcher;
-        // Calendar reference
-        private Calendar                mCalendar;
+	// DatePicker reference
+	private DatePicker datePicker;
+	// TimePicker reference
+	private TimePicker timePicker;
+	// Calendar reference
+	private Calendar mCalendar;
+	// Dialog title
+	private TextView mTitle;
 
+	// Constructor start
+	public DateTimePicker(Context context) {
+		this(context, null);
+	}
 
+	public DateTimePicker(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
 
-        // Constructor start
-        public DateTimePicker(Context context) {
-                this(context, null);
-        }
+	public DateTimePicker(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
 
-        public DateTimePicker(Context context, AttributeSet attrs) {
-                this(context, attrs, 0);
-        }
+		// Get LayoutInflater instance
+		final LayoutInflater inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		// Inflate myself
+		inflater.inflate(R.layout.dtp_datetimepicker, this, true);
 
-        public DateTimePicker(Context context, AttributeSet attrs, int defStyle) {
-                super(context, attrs, defStyle);
+		// Grab a Calendar instance
+		mCalendar = Calendar.getInstance();
+		// Grab the ViewSwitcher so we can attach our picker views to it
 
-                // Get LayoutInflater instance
-                final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                // Inflate myself
-                inflater.inflate(R.layout.dtp_datetimepicker, this, true);
+		// Init date picker
+		datePicker = (DatePicker) this.findViewById(R.id.DatePicker);
+		datePicker.init(mCalendar.get(Calendar.YEAR),
+				mCalendar.get(Calendar.MONTH),
+				mCalendar.get(Calendar.DAY_OF_MONTH), this);
 
-                // Inflate the date and time picker views
-                final LinearLayout datePickerView = (LinearLayout) inflater.inflate(R.layout.dtp_datepicker, null);
-                final LinearLayout timePickerView = (LinearLayout) inflater.inflate(R.layout.dtp_timepicker, null);
+		// Init time picker
+		timePicker = (TimePicker) this.findViewById(R.id.TimePicker);
+		timePicker.setOnTimeChangedListener(this);
 
-                // Grab a Calendar instance
-                mCalendar = Calendar.getInstance();
-                // Grab the ViewSwitcher so we can attach our picker views to it
-                viewSwitcher = (ViewSwitcher) this.findViewById(R.id.DateTimePickerVS);
+		mTitle = (TextView) this.findViewById(R.id.DateTimePickerTitle);
+		setTitle();
 
-                // Init date picker
-                datePicker = (DatePicker) datePickerView.findViewById(R.id.DatePicker);
-                datePicker.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH), this);
+	}
 
-                // Init time picker
-                timePicker = (TimePicker) timePickerView.findViewById(R.id.TimePicker);
-                timePicker.setOnTimeChangedListener(this);
+	// Constructor end
 
-                // Handle button clicks
-                ((Button) findViewById(R.id.SwitchToTime)).setOnClickListener(this); // shows the time picker
-                ((Button) findViewById(R.id.SwitchToDate)).setOnClickListener(this); // shows the date picker
+	public void setTitle() {
+		mTitle.setText(Utils.formatDate(mCalendar.getTime(), PlannerFragment.datePattern));
+		mTitle.setSelected(true);
+	}
 
-                // Populate ViewSwitcher
-                viewSwitcher.addView(timePickerView, 0);
-                viewSwitcher.addView(datePickerView, 1);
-                
-               
-        }
-        // Constructor end
+	// Called every time the user changes DatePicker values
+	public void onDateChanged(DatePicker view, int year, int monthOfYear,
+			int dayOfMonth) {
+		// Update the internal Calendar instance
+		mCalendar.set(year, monthOfYear, dayOfMonth,
+				mCalendar.get(Calendar.HOUR_OF_DAY),
+				mCalendar.get(Calendar.MINUTE));
+		setTitle();
 
-        // Called every time the user changes DatePicker values
-        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // Update the internal Calendar instance
-                mCalendar.set(year, monthOfYear, dayOfMonth, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE));
-                
-        }
+	}
 
-        // Called every time the user changes TimePicker values
-        public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                // Update the internal Calendar instance
-                mCalendar.set(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
-                
-        }
+	// Called every time the user changes TimePicker values
+	public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+		// Update the internal Calendar instance
+		mCalendar.set(mCalendar.get(Calendar.YEAR),
+				mCalendar.get(Calendar.MONTH),
+				mCalendar.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+		setTitle();
+	}
 
-        // Handle button clicks
-        public void onClick(View v) {
-                switch (v.getId()) {
-                        case R.id.SwitchToDate:
-                                v.setEnabled(false);
-                                findViewById(R.id.SwitchToTime).setEnabled(true);
-                                viewSwitcher.showPrevious();
-                                break;
+	// Convenience wrapper for internal Calendar instance
+	public int get(final int field) {
+		return mCalendar.get(field);
+	}
 
-                        case R.id.SwitchToTime:
-                                v.setEnabled(false);
-                                findViewById(R.id.SwitchToDate).setEnabled(true);
-                                viewSwitcher.showNext();
-                                break;
-                }
-        }
+	// Reset DatePicker, TimePicker and internal Calendar instance
+	public void reset() {
+		final Calendar c = Calendar.getInstance();
+		updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+				c.get(Calendar.DAY_OF_MONTH));
+		updateTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+		setTitle();
+	}
 
-        // Convenience wrapper for internal Calendar instance
-        public int get(final int field) {
-                return mCalendar.get(field);
-        }
+	// Convenience wrapper for internal Calendar instance
+	public long getDateTimeMillis() {
+		return mCalendar.getTimeInMillis();
+	}
 
-        // Reset DatePicker, TimePicker and internal Calendar instance
-        public void reset() {
-                final Calendar c = Calendar.getInstance();
-                updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-                updateTime(c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE));
-        }
+	// Convenience wrapper for internal TimePicker instance
+	public void setIs24HourView(boolean is24HourView) {
+		timePicker.setIs24HourView(is24HourView);
+	}
 
-        // Convenience wrapper for internal Calendar instance
-        public long getDateTimeMillis() {
-                return mCalendar.getTimeInMillis();
-        }
+	// Convenience wrapper for internal TimePicker instance
+	public boolean is24HourView() {
+		return timePicker.is24HourView();
+	}
 
-        // Convenience wrapper for internal TimePicker instance
-        public void setIs24HourView(boolean is24HourView) {
-                timePicker.setIs24HourView(is24HourView);
-        }
-        
-        // Convenience wrapper for internal TimePicker instance
-        public boolean is24HourView() {
-                return timePicker.is24HourView();
-        }
+	// Convenience wrapper for internal DatePicker instance
+	public void updateDate(int year, int monthOfYear, int dayOfMonth) {
+		datePicker.updateDate(year, monthOfYear, dayOfMonth);
+	}
 
-        // Convenience wrapper for internal DatePicker instance
-        public void updateDate(int year, int monthOfYear, int dayOfMonth) {
-                datePicker.updateDate(year, monthOfYear, dayOfMonth);
-        }
+	// Convenience wrapper for internal TimePicker instance
+	public void updateTime(int currentHour, int currentMinute) {
+		timePicker.setCurrentHour(currentHour);
+		timePicker.setCurrentMinute(currentMinute);
+	}
 
-        // Convenience wrapper for internal TimePicker instance
-        public void updateTime(int currentHour, int currentMinute) {
-                timePicker.setCurrentHour(currentHour);
-                timePicker.setCurrentMinute(currentMinute);
-        }
-        
-        //Set ActionBar Title
-        public String getFormatedDate(String pattern) {
-        	SimpleDateFormat sdf= new SimpleDateFormat(pattern);
-        	return sdf.format(mCalendar.getTime());
-        }
-        
+	// Set ActionBar Title
+	public String getFormatedDate(String pattern) {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		return sdf.format(mCalendar.getTime());
+	}
+
 }

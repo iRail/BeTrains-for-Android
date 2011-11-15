@@ -50,7 +50,7 @@ public class PlannerFragment extends ListFragment implements
 
 	Date mDate;
 
-	String datePattern = "EEE ddMMM HH:mm";
+	public static String datePattern = "EEE dd MMM HH:mm";
 
 	int positionClicked;
 
