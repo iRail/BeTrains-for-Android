@@ -5,14 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import tof.cv.mpp.Utils.ConnectionDbAdapter;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
-import tof.cv.mpp.bo.ConnectionOld;
 import tof.cv.mpp.bo.Connections;
-import tof.cv.mpp.bo.StationOld;
-import tof.cv.mpp.bo.Via;
 import tof.cv.mpp.view.DateTimePicker;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -20,7 +16,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
@@ -42,7 +37,6 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 public class PlannerFragment extends ListFragment implements
 		DialogInterface.OnClickListener, Dialog.OnCancelListener {
@@ -316,18 +310,17 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	private void fillData() {
-		// TODO: get from SDCARD if list is empty
-
-		if (allConnections.connection!=null) {
+		if (allConnections!=null && allConnections.connection!=null ) {
 			registerForContextMenu(getListView());
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
 
 			setListAdapter(connAdapter);
-		}
+		} else 
+			allConnections = ConnectionMaker.getCachedConnections();
 
-		else {
+		if (allConnections == null) {
 			List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
 			// fill the map with data
@@ -363,161 +356,6 @@ public class PlannerFragment extends ListFragment implements
 					R.layout.row_tip, from, to);
 			setListAdapter(adapter);
 		}
-
-		// mDbHelper.close();
-	}
-
-	/*
-	 * database -> overloaded
-	 */
-	private void fillAllNewConnections(Cursor myConnectionCursor,
-			Cursor myViaCursor) {
-		/*
-		 * we have to take each cursor and look it it has any vias , normally
-		 * the rowId will be the same as the index of the cursor
-		 */
-		ArrayList<ConnectionOld> allConnections = new ArrayList<ConnectionOld>();
-		myConnectionCursor.moveToFirst();
-
-		// Log.i(TAG,"Cursor size is: "+myConnectionCursor.getCount());
-
-		int firstRowId = myConnectionCursor.getInt(myConnectionCursor
-				.getColumnIndex(ConnectionDbAdapter.KEY_ROWID));
-
-		for (int i = 0; i < myConnectionCursor.getCount(); i++) {
-			myConnectionCursor.moveToPosition(i);
-
-			ArrayList<String> trains = new ArrayList<String>();
-			String departureStation = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_DEPARTURE));
-			String arrivalStation = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_ARRIVAL));
-
-			String departureTime = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_DEPARTTIME));
-			String arrivalTime = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_ARRIVALTIME));
-
-			String departurePlatform = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_DEPARTURE_PLATFORM));
-			String arrivalPlatform = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_ARRIVAL_PLATFORM));
-
-			String duration = myConnectionCursor.getString(myConnectionCursor
-					.getColumnIndex(ConnectionDbAdapter.KEY_TRIPTIME));
-			String delayDStr = myConnectionCursor.getString(myConnectionCursor
-					.getColumnIndex(ConnectionDbAdapter.KEY_DELAY_DEPARTURE));
-			String delayAStr = myConnectionCursor.getString(myConnectionCursor
-					.getColumnIndex(ConnectionDbAdapter.KEY_DELAY_ARRIVAL));
-
-			/*
-			 * parse the trains from the TRAINS field, and add them , after
-			 * splitting , to the trainslist of connection
-			 */
-			String trainsConcatenated = myConnectionCursor
-					.getString(myConnectionCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_TRAINS));
-			String[] trainsParsed = trainsConcatenated.split(";");
-			String lastTrain = "";
-			for (int j = 0; j < trainsParsed.length; j++) {
-				lastTrain = trainsParsed[j];
-				trains.add(lastTrain);
-
-			}
-			/*
-			 * String vehicle, String platform, boolean platformNormal, String
-			 * time, String station, String stationCoordinates, boolean
-			 * delay,String strDelay,String status
-			 */
-
-			/*
-			 * now the via's we have to go through all the vias, and put the
-			 * cursor back in its begin position afterwards
-			 */
-			ArrayList<Via> vias = new ArrayList<Via>();
-
-			for (int j = 0; j < myViaCursor.getCount(); j++) {
-				if (myViaCursor.moveToPosition(j)) {
-
-					int index = myViaCursor
-							.getColumnIndex(ConnectionDbAdapter.KEY_VIA_ROWIDOFCONNECTION);
-					int rowId = myViaCursor.getInt(index);
-
-					if (rowId == i + firstRowId) {
-
-						/*
-						 * String arrivalPlatform, String arrivalTime, String
-						 * departurePlatform, String departureTime, String
-						 * timeBetween, String coordinates, String stationName,
-						 * String vehicle, String duration
-						 */
-						String viaArrivalPlatform;
-						String viaArrivalTime;
-						String viaDeparturePlatform;
-						String viaDepartureTime;
-						String timeBetween;
-						String viaCoordinates;
-						String viaDelay;
-						String viaStationName;
-						String viaVehicle;
-						String viaDuration;
-						viaArrivalPlatform = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_ARRIVALPLATFORM));
-						viaArrivalTime = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_ARRIVALTIME));
-						viaDeparturePlatform = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_DEPARTUREPLATFORM));
-						viaDepartureTime = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_DEPARTURETIME));
-						timeBetween = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_TIMEBETWEEN));
-						viaStationName = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_STATIONNAME));
-						viaVehicle = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_VEHICLE));
-						viaDelay = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_DELAY));
-						viaCoordinates = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_COORDINATES));
-						viaDuration = myViaCursor
-								.getString(myViaCursor
-										.getColumnIndex(ConnectionDbAdapter.KEY_VIA_DURATION));
-						vias.add(new Via(viaArrivalPlatform, viaArrivalTime,
-								viaDeparturePlatform, viaDepartureTime,
-								timeBetween, viaCoordinates, viaStationName,
-								viaVehicle, viaDuration, viaDelay));
-					}
-				}
-			}
-			try {
-				allConnections.add(new ConnectionOld(new StationOld("",
-						departurePlatform, true, departureTime,
-						departureStation, "stationCoordinates", delayDStr,
-						"status"), vias, new StationOld(lastTrain,
-						arrivalPlatform, true, arrivalTime, arrivalStation,
-						"stationCoordinates", delayAStr, "status"), duration,
-						delayDStr, delayAStr));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-
 	}
 
 	protected Dialog onCreateDialog(int id) {
@@ -637,8 +475,6 @@ public class PlannerFragment extends ListFragment implements
 								getString(R.string.txt_patient), true);
 					}
 				});
-
-				// TODO
 				makeApiRequest();
 				getActivity().runOnUiThread(dismissPd);
 			}
@@ -675,9 +511,9 @@ public class PlannerFragment extends ListFragment implements
 
 		// allConnections = new Connections();
 
-		allConnections = ConnectionMaker.newSearchTrains(""
-				+ (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
-				+ mDate.getDate(), "" + mDate.getHours(),
+		allConnections = ConnectionMaker.getAPIConnections(
+				"" + (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
+						+ mDate.getDate(), "" + mDate.getHours(),
 				"" + mDate.getMinutes(), langue, myStart, myArrival, dA,
 				trainOnly, getActivity());
 
@@ -721,7 +557,7 @@ public class PlannerFragment extends ListFragment implements
 
 	public void noDataClick(int position) {
 
-		//TODO If there were no results, launch browser to check connection.
+		// TODO If there were no results, launch browser to check connection.
 
 		/*
 		 * Intent i = new Intent(this, InfoTrainActivity.class);
@@ -793,14 +629,10 @@ public class PlannerFragment extends ListFragment implements
 
 	@Override
 	public void onCancel(DialogInterface arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

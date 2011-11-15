@@ -1,5 +1,8 @@
 package tof.cv.mpp.Utils;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -31,6 +34,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.os.Environment;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -56,6 +60,8 @@ public class ConnectionMaker {
 	final static String STATION = "station";
 	final static String VIAS = "vias";
 	final static String VIA = "via";
+	final static String DIRPATH = "/Android/data/BeTrains";
+	final static String FILENAMECONN = "connections.txt";
 
 	public final static String[] LIST_OF_EURO_STATIONS = new String[] {
 			"FR/LILLE", "FR/PARIS", "FR/STRASBOURG", "DE/AACHEN HBF",
@@ -273,8 +279,7 @@ public class ConnectionMaker {
 
 	}
 
-	@SuppressWarnings("finally")
-	public static Connections newSearchTrains(String year,
+	public static Connections getAPIConnections(String year,
 			String month, String day, String hour, String minutes,
 			String language, String departure, String arrival,
 			String departureArrival, String trainsOnly, final Context context) {
@@ -302,7 +307,7 @@ public class ConnectionMaker {
 		Log.v(TAG, url);
 
 		try {
-			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains","connection.txt",context);
+			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,DIRPATH,FILENAMECONN,context);
 			
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
@@ -317,212 +322,28 @@ public class ConnectionMaker {
 		} 
 	}
 	
-	public static ArrayList<ConnectionOld> parseConnections(Document document) {
+	public static Connections getCachedConnections() {
 
-		ArrayList<ConnectionOld> listConnections = new ArrayList<ConnectionOld>();
-		NodeList root = document.getElementsByTagName("connections");
-		System.out.println("connections : " + root.getLength());
+		try {
+			File memory = Environment.getExternalStorageDirectory();
+			File dir = new File(memory.getAbsolutePath() +DIRPATH);
+			dir.mkdirs();
+			File file = new File(dir, FILENAMECONN);
+			//TODO IS from SD 
+			InputStream is=new BufferedInputStream(new FileInputStream(file));
+			
+			Gson gson = new Gson();
+			final Reader reader = new InputStreamReader(is);
+			return gson.fromJson(reader,Connections.class);
 
-		Node rootconnections = root.item(0);
-		NodeList multipleconnection = rootconnections.getChildNodes(); // level
-		// of
-		// departure,
-		// arrival ,
-		// etc.
-
-		// System.out.println("connection children # = "+
-		// multipleconnection.getLength());
-		ArrayList<String> listTrains = new ArrayList<String>();
-
-		for (int j = 0; j < multipleconnection.getLength(); j++) {
-			// System.out.println("connection children " + j + " / "+
-			// multipleconnection.getLength());
-
-			String vehicle = "";
-			String platform = "";
-			String time = "";
-			String station = "";
-			String duration = "";
-			String arrivalPlatform = "";
-			String departurePlatform = "";
-			String arrivalTime = "";
-			String departureTime = "";
-			String durationAll = "";
-
-			// TODO
-			String stationCoordinates = "00000000 00000000";
-			boolean platformNormal = true;
-			// String delay = "x";
-			String delayD = "x";
-			String delayA = "x";
-
-			StationOld departureStation = null;
-			StationOld arrivalStation = null;
-			ArrayList<Via> vias = new ArrayList<Via>();
-
-			Node connection = multipleconnection.item(j);
-
-			if (connection.getNodeName().equals(ConnectionMaker.CONNECTION)) {
-				NodeList properties = connection.getChildNodes();
-				for (int l = 0; l < properties.getLength(); l++) {
-
-					Node property = properties.item(l);
-
-					/*
-					 * extract departure information of the xml stream
-					 */
-					if (property.getNodeName()
-							.equals(ConnectionMaker.DEPARTURE)) {
-						delayD = property.getAttributes().getNamedItem(
-								ConnectionMaker.DELAY).getNodeValue();
-
-						NodeList props = property.getChildNodes();
-						for (int k = 0; k < props.getLength(); k++) {
-							Node prop = props.item(k);
-							if (prop.getNodeName().equals(
-									ConnectionMaker.STATION)) {
-								station = prop.getFirstChild().getNodeValue();
-							} else if (prop.getNodeName().equals(
-									ConnectionMaker.TIME)) {
-								time = prop.getFirstChild().getNodeValue();
-							} else if (prop.getNodeName().equals(
-									ConnectionMaker.PLATFORM)) {
-								if (prop.getFirstChild() != null)
-									platform = prop.getFirstChild()
-											.getNodeValue();
-								else
-									platform = "";
-							} else if (prop.getNodeName().equals(
-									ConnectionMaker.TRAINS)) {
-								vehicle = prop.getFirstChild().getNodeValue();
-								listTrains.add(vehicle);
-							}
-						}
-						departureStation = new StationOld("", platform.trim(),
-								platformNormal, time, station,
-								stationCoordinates, delayD, "");
-
-					} else if (property.getNodeName().equals(
-							ConnectionMaker.ARRIVAL)) {
-						delayA = property.getAttributes().getNamedItem(
-								ConnectionMaker.DELAY).getNodeValue();
-						NodeList props = property.getChildNodes();
-						for (int k = 0; k < props.getLength(); k++) {
-							Node prop = props.item(k);
-							if (prop.getNodeName().equals(
-									ConnectionMaker.STATION)) {
-								station = prop.getFirstChild().getNodeValue();
-							} else if (prop.getNodeName().equals(
-									ConnectionMaker.TIME)) {
-								time = prop.getFirstChild().getNodeValue();
-							} else if (prop.getNodeName().equals(
-									ConnectionMaker.PLATFORM)) {
-								if (prop.getFirstChild() != null)
-									platform = prop.getFirstChild()
-											.getNodeValue();
-								else
-									platform = "";
-							} else if (prop.getNodeName().equals(
-									ConnectionMaker.TRAINS)) {
-								vehicle = prop.getFirstChild().getNodeValue();
-							}
-
-						}
-						arrivalStation = new StationOld(vehicle, platform.trim(),
-								platformNormal, time, station,
-								stationCoordinates, delayA, "");
-
-					} else if (property.getNodeName().equals(
-							ConnectionMaker.DURATION)) {
-						durationAll = property.getFirstChild().getNodeValue();
-					} else if (property.getNodeName().equals(
-							ConnectionMaker.VIAS)) {
-						NodeList props = property.getChildNodes();
-						for (int k = 0; k < props.getLength(); k++) {
-							Node prop = props.item(k);
-							NodeList proper = prop.getChildNodes();
-							for (int m = 0; m < proper.getLength(); m++) {
-								Node propVia = proper.item(m);
-								if (propVia.getNodeName().equals(
-										ConnectionMaker.TRAINS)) {
-									vehicle = propVia.getFirstChild()
-											.getNodeValue();
-								} else if (propVia.getNodeName().equals(
-										ConnectionMaker.STATION)) {
-									station = propVia.getFirstChild()
-											.getNodeValue();
-								} else if (propVia.getNodeName().equals(
-										ConnectionMaker.TIMEBETWEEN)) {
-									duration = propVia.getFirstChild()
-											.getNodeValue();
-								} else if (propVia.getNodeName().equals(
-										ConnectionMaker.ARRIVAL)) {
-									NodeList propArrival = propVia
-											.getChildNodes();
-									for (int u = 0; u < propArrival.getLength(); u++) {
-										Node nodeArrival = propArrival.item(u);
-										if (nodeArrival.getNodeName().equals(
-												ConnectionMaker.PLATFORM)) {
-											if (nodeArrival.getFirstChild() != null)
-												arrivalPlatform = nodeArrival
-														.getFirstChild()
-														.getNodeValue();
-											else
-												arrivalPlatform = "";
-										} else if (nodeArrival.getNodeName()
-												.equals(ConnectionMaker.TIME)) {
-											arrivalTime = nodeArrival
-													.getFirstChild()
-													.getNodeValue();
-										}
-
-									}
-								} else if (propVia.getNodeName().equals(
-										ConnectionMaker.DEPARTURE)) {
-									NodeList propDeparture = propVia
-											.getChildNodes();
-									for (int u = 0; u < propDeparture
-											.getLength(); u++) {
-										Node nodeDeparture = propDeparture
-												.item(u);
-										if (nodeDeparture.getNodeName().equals(
-												ConnectionMaker.PLATFORM)) {
-											if (nodeDeparture.getFirstChild() != null)
-												departurePlatform = nodeDeparture
-														.getFirstChild()
-														.getNodeValue();
-											else
-												departurePlatform = "";
-										} else if (nodeDeparture.getNodeName()
-												.equals(ConnectionMaker.TIME)) {
-											departureTime = nodeDeparture
-													.getFirstChild()
-													.getNodeValue();
-										}
-
-									}
-								}
-
-							}
-							vias.add(new Via(departurePlatform.trim(),
-									departureTime, arrivalPlatform.trim(),
-									arrivalTime, time, "00000000 00000000",
-									station, vehicle, duration, "x"));
-
-						}
-
-					}
-
-				}
-				listConnections.add(new ConnectionOld(departureStation, vias,
-						arrivalStation, durationAll, delayD, delayA));
-			}
-		}
-
-		return listConnections;
-
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Log.i("","*******");
+			return null;
+		} 
 	}
-
+	
 	public static String capitalize(String inputWord) {
 		String firstLetter = inputWord.substring(0, 1); // Get first letter
 		String remainder = inputWord.substring(1); // Get remainder of word.
