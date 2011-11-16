@@ -65,7 +65,6 @@
 
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light">
     	<item name="abBackground">@color/action_bar_tint</item>
-    	<item name="abTitle">Custom Style!</item>
     	<item name="abTitleTextStyle">@style/CustomTitle</item>
     	<!--<item name="abSubtitle">100% set from the style attributes</item>-->
     </style>

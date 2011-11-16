@@ -1,15 +1,15 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.adapter.MenuAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 public class WelcomeActivity extends FragmentActivity {
@@ -55,14 +55,22 @@ public class WelcomeActivity extends FragmentActivity {
 				// startActivity(i);
 				break;
 			default:
-				setContentView(R.layout.activity_welcome);
-				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+				setWelcomeContent();
 				break;
 			}
 		} else {
-			setContentView(R.layout.activity_welcome);
-			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+			setWelcomeContent();
 		}
+	}
+	
+	public void setWelcomeContent(){
+		setContentView(R.layout.activity_welcome);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		
+		ViewPager vp=(ViewPager) this.findViewById(R.id.pager);
+		MenuAdapter adapter= new MenuAdapter(this);
+		vp.setAdapter(adapter);
+		
 	}
 
 	public void onTwitClick(View v) {

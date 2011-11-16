@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout 
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	 xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout android:layout_height="fill_parent"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
 	<LinearLayout android:id="@+id/home_root"
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:background="#FFFFFFFF">
 
 		<include layout="@layout/colorstrip" />
-		<FrameLayout
-			android:layout_height="0dp" android:layout_width="fill_parent"
-			android:layout_weight="1">
-			<!-- <uk.co.jasonfry.android.tools.ui.PageControl
-				android:id="@+id/page_control" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:orientation="horizontal"
-				android:gravity="center_horizontal" />
 
-			<uk.co.jasonfry.android.tools.ui.SwipeView
-				android:id="@+id/swipe_view" android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:layout_weight="2">
+		<LinearLayout android:layout_height="0dp"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:orientation="vertical">
 
-				<include layout="@layout/menu_1" />
-				<include layout="@layout/menu_2" />
+			<android.support.v4.view.ViewPager
+				android:id="@+id/pager" android:layout_width="fill_parent"
+				android:layout_height="0dp" android:layout_weight="1" />
+		
+		</LinearLayout>
 
-			</uk.co.jasonfry.android.tools.ui.SwipeView> -->
-		</FrameLayout>
+
+		<!-- 
+		
+		
+			<com.viewpagerindicator.CirclePageIndicator
+				android:id="@+id/indicator" android:padding="10dip"
+				android:layout_height="wrap_content" android:layout_width="fill_parent" />
+		
+		
+		
+		<FrameLayout android:layout_height="0dp" android:layout_width="fill_parent" 
+			android:layout_weight="1"> <uk.co.jasonfry.android.tools.ui.PageControl android:id="@+id/page_control" 
+			android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" 
+			android:gravity="center_horizontal" /> <uk.co.jasonfry.android.tools.ui.SwipeView 
+			android:id="@+id/swipe_view" android:layout_width="fill_parent" android:layout_height="fill_parent" 
+			android:layout_weight="2"> <include layout="@layout/menu_1" /> <include layout="@layout/menu_2" 
+			/> </uk.co.jasonfry.android.tools.ui.SwipeView> </FrameLayout> -->
 		<include layout="@layout/colorstrip" />
 		<TextView android:orientation="horizontal"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
