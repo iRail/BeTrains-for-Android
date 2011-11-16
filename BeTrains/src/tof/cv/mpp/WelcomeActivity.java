@@ -1,5 +1,8 @@
 package tof.cv.mpp;
 
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.R;
+
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.adapter.MenuAdapter;
 import android.content.Intent;
@@ -67,9 +70,13 @@ public class WelcomeActivity extends FragmentActivity {
 		setContentView(R.layout.activity_welcome);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		
-		ViewPager vp=(ViewPager) this.findViewById(R.id.pager);
+		ViewPager mPager=(ViewPager) this.findViewById(R.id.pager);
 		MenuAdapter adapter= new MenuAdapter(this);
-		vp.setAdapter(adapter);
+		mPager.setAdapter(adapter);
+		
+		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		indicator.setViewPager(mPager);
+		indicator.setSnap(true);
 		
 	}
 

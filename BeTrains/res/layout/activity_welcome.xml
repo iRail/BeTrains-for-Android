@@ -9,33 +9,19 @@
 
 		<include layout="@layout/colorstrip" />
 
-		<LinearLayout android:layout_height="0dp"
-			android:layout_width="fill_parent" android:layout_weight="1"
-			android:orientation="vertical">
+		<FrameLayout android:layout_height="0dp"
+			android:layout_width="fill_parent" android:layout_weight="1">
+
+			<com.viewpagerindicator.CirclePageIndicator
+				android:id="@+id/indicator" android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:padding="10dip"/>
 
 			<android.support.v4.view.ViewPager
 				android:id="@+id/pager" android:layout_width="fill_parent"
-				android:layout_height="0dp" android:layout_weight="1" />
-		
-		</LinearLayout>
+				android:layout_height="fill_parent" android:layout_weight="1" />
 
+		</FrameLayout>
 
-		<!-- 
-		
-		
-			<com.viewpagerindicator.CirclePageIndicator
-				android:id="@+id/indicator" android:padding="10dip"
-				android:layout_height="wrap_content" android:layout_width="fill_parent" />
-		
-		
-		
-		<FrameLayout android:layout_height="0dp" android:layout_width="fill_parent" 
-			android:layout_weight="1"> <uk.co.jasonfry.android.tools.ui.PageControl android:id="@+id/page_control" 
-			android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" 
-			android:gravity="center_horizontal" /> <uk.co.jasonfry.android.tools.ui.SwipeView 
-			android:id="@+id/swipe_view" android:layout_width="fill_parent" android:layout_height="fill_parent" 
-			android:layout_weight="2"> <include layout="@layout/menu_1" /> <include layout="@layout/menu_2" 
-			/> </uk.co.jasonfry.android.tools.ui.SwipeView> </FrameLayout> -->
 		<include layout="@layout/colorstrip" />
 		<TextView android:orientation="horizontal"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
