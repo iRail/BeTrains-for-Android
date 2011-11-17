@@ -52,6 +52,8 @@ public class PlannerFragment extends ListFragment implements
 	Date mDate;
 
 	public static String datePattern = "EEE dd MMM HH:mm";
+	public static String abDatePattern = "EEE dd MMM";
+	public static String abTimePattern = "HH:mm";
 
 	int positionClicked;
 
@@ -103,7 +105,9 @@ public class PlannerFragment extends ListFragment implements
 		mDate = new Date();
 
 		getSupportActivity().getSupportActionBar().setTitle(
-				Utils.formatDate(mDate, datePattern));
+				Utils.formatDate(mDate, abTimePattern));
+		getSupportActivity().getSupportActionBar().setSubtitle(
+				Utils.formatDate(mDate, abDatePattern));
 		setHasOptionsMenu(true);
 
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -133,7 +137,6 @@ public class PlannerFragment extends ListFragment implements
 		String defaultStart = settings.getString("pStart", "MONS");
 		String defaultStop = settings.getString("pStop", "TOURNAI");
 		fillStations(defaultStart, defaultStop);
-
 
 	}
 
@@ -234,14 +237,16 @@ public class PlannerFragment extends ListFragment implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, MENU_DT, Menu.NONE, "Date/Time")
-				.setIcon(R.drawable.icon)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+				.setIcon(R.drawable.ic_menu_ab_time)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Add to Fav.")
-				.setIcon(R.drawable.icon)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+				.setIcon(R.drawable.ic_menu_ab_fav)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		// TODO: Add settings
+		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Settings")
+				.setIcon(R.drawable.ic_menu_ab_fav)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	@Override
@@ -307,10 +312,10 @@ public class PlannerFragment extends ListFragment implements
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
-			setListAdapter(connAdapter);	
+			setListAdapter(connAdapter);
 			registerForContextMenu(getListView());
-			
-		} else{
+
+		} else {
 			allConnections = ConnectionMaker.getCachedConnections();
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
@@ -542,7 +547,7 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	public void onResume() {
-		super.onResume();		
+		super.onResume();
 
 		try {
 			fillData();
