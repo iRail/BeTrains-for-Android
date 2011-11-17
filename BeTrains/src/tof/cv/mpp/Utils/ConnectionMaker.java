@@ -45,6 +45,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+/*
+ * 
+ * THIS IS GARBAGE AND WILL BE CLEANED/DELETED SOON!!!!!!
+ * 
+ */
+
 public class ConnectionMaker {
 
 	private static ConnectionDbAdapter mDbHelper;
@@ -67,6 +73,9 @@ public class ConnectionMaker {
 			"FR/LILLE", "FR/PARIS", "FR/STRASBOURG", "DE/AACHEN HBF",
 			"DE/KOLN HBF", "LU/LUXEMBOURG", "NL/DEN HAAG", "NL/AMSTERDAM",
 			"NL/MAASTRICHT", "NL/ROTTERDAM" };
+	
+	public final static String[] LIST_OF_FAV_STATIONS = new String[] {
+		"FAV1","FAV2","FAV3","FAV4","FAV5"  };
 
 	public final static String[] LIST_OF_STATIONS = new String[] {
 			"'S GRAVENBRAKEL", "AALST", "AALST KERREBROEK", "AALTER", "AARLEN",

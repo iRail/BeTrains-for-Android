@@ -26,8 +26,6 @@ public class WelcomeActivity extends FragmentActivity {
 		if (settings.getBoolean("preffullscreen", false))
 			ConnectionMaker.setFullscreen(this);
 
-		settings = PreferenceManager.getDefaultSharedPreferences(this);
-
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {

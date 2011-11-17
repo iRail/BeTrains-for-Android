@@ -97,6 +97,7 @@ public class PlannerFragment extends ListFragment implements
 		super.onCreate(savedInstanceState);
 
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		editor=settings.edit();
 		context = this.getSupportActivity();
 		mDate = new Date();
 
@@ -157,15 +158,9 @@ public class PlannerFragment extends ListFragment implements
 				R.id.btn_infos_departure);
 		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				String station = tvDeparture.getText().toString();
-				// 0);
-				/*
-				 * Intent i = new Intent(PlannerActivity.this,
-				 * InfoStationActivity.class); i.putExtra("gare_name", station);
-				 * i.putExtra("gare_id", getStationNumber(station));
-				 * i.putExtra("gare_heure", mHour); i.putExtra("gare_minute",
-				 * mMinute); startActivityForResult(i, ACTIVITY_STATION);
-				 */
+			
+//TODO
+				 
 			}
 		});
 	}
@@ -196,9 +191,9 @@ public class PlannerFragment extends ListFragment implements
 		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 		tvArrival.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				// Intent i = new Intent(PlannerActivity.this,
-				// BETrainsTabActivity.class);
-				// startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
+				  Intent i = new Intent(getActivity(),
+				  StationPickerActivity.class); 
+				  startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
 			}
 		});
 
@@ -208,9 +203,9 @@ public class PlannerFragment extends ListFragment implements
 		tvDeparture = (TextView) getActivity().findViewById(R.id.tv_start);
 		tvDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				// Intent i = new Intent(PlannerActivity.this,
-				// BETrainsTabActivity.class);
-				// startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
+				  Intent i = new Intent(getActivity(),
+				  StationPickerActivity.class); 
+				  startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
 			}
 		});
 
