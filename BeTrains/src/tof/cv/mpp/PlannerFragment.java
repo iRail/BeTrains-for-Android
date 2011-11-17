@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -97,7 +98,7 @@ public class PlannerFragment extends ListFragment implements
 		super.onCreate(savedInstanceState);
 
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		editor=settings.edit();
+		editor = settings.edit();
 		context = this.getSupportActivity();
 		mDate = new Date();
 
@@ -133,16 +134,12 @@ public class PlannerFragment extends ListFragment implements
 		String defaultStop = settings.getString("pStop", "TOURNAI");
 		fillStations(defaultStart, defaultStop);
 
-		fillData();
 
 	}
 
 	public void fillStations(String departure, String arrival) {
-		final TextView textStart = (TextView) context
-				.findViewById(R.id.tv_start);
-		final TextView textStop = (TextView) context.findViewById(R.id.tv_stop);
-		textStart.setText(departure);
-		textStop.setText(arrival);
+		tvDeparture.setText(departure);
+		tvArrival.setText(arrival);
 
 	}
 
@@ -158,9 +155,9 @@ public class PlannerFragment extends ListFragment implements
 				R.id.btn_infos_departure);
 		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-			
-//TODO
-				 
+
+				// TODO
+
 			}
 		});
 	}
@@ -191,21 +188,21 @@ public class PlannerFragment extends ListFragment implements
 		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 		tvArrival.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				  Intent i = new Intent(getActivity(),
-				  StationPickerActivity.class); 
-				  startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
+				Intent i = new Intent(getActivity(),
+						StationPickerActivity.class);
+				startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
 			}
 		});
 
 	}
 
 	private void setTvDepartureListener() {
-		tvDeparture = (TextView) getActivity().findViewById(R.id.tv_start);
+		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
 		tvDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				  Intent i = new Intent(getActivity(),
-				  StationPickerActivity.class); 
-				  startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
+				Intent i = new Intent(getActivity(),
+						StationPickerActivity.class);
+				startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
 			}
 		});
 
@@ -305,17 +302,25 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	private void fillData() {
-		if (allConnections!=null && allConnections.connection!=null ) {
-			registerForContextMenu(getListView());
+		if (allConnections != null && allConnections.connection != null) {
+			Log.i(TAG, "*** Remplis avec les infos");
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
-
-			setListAdapter(connAdapter);
-		} else 
+			setListAdapter(connAdapter);	
+			registerForContextMenu(getListView());
+			
+		} else{
 			allConnections = ConnectionMaker.getCachedConnections();
+			connAdapter = new ConnectionAdapter(this.getActivity()
+					.getBaseContext(), R.layout.row_planner,
+					allConnections.connection);
+			setListAdapter(connAdapter);
+			registerForContextMenu(getListView());
+		}
 
 		if (allConnections == null) {
+			Log.i(TAG, "*** Remplis avec les tips");
 			List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
 			// fill the map with data
@@ -423,20 +428,25 @@ public class PlannerFragment extends ListFragment implements
 			break;
 
 		case ACTIVITY_GETSTARTSTATION:
-			String gare = intent.getStringExtra("GARE");
-			if (!gare.contentEquals("")) {
-				tvDeparture.setText(gare);
-				editor.putString("pStart", gare);
-				editor.commit();
+			if (intent != null) {
+				String gare = intent.getStringExtra("GARE");
+				if (!gare.contentEquals("")) {
+					tvDeparture.setText(gare);
+					editor.putString("pStart", gare);
+					editor.commit();
+				}
 			}
+
 			break;
 
 		case ACTIVITY_GETSTOPSTATION:
-			gare = intent.getStringExtra("GARE");
-			if (!gare.contentEquals("")) {
-				tvArrival.setText(gare);
-				editor.putString("pStop", gare);
-				editor.commit();
+			if (intent != null) {
+				String gare = intent.getStringExtra("GARE");
+				if (!gare.contentEquals("")) {
+					tvArrival.setText(gare);
+					editor.putString("pStop", gare);
+					editor.commit();
+				}
 			}
 			break;
 
@@ -532,7 +542,8 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	public void onResume() {
-		super.onResume();
+		super.onResume();		
+
 		try {
 			fillData();
 		} catch (Exception e) {

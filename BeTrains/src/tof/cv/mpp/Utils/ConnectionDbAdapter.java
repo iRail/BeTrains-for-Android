@@ -50,11 +50,10 @@ public class ConnectionDbAdapter {
 	 */
 
 	private static final String DATABASE_NAME = "betraindata";
-	private static final String DATABASE_TABLE_CONNECTIONS = "connections";
 	private static final String DATABASE_FAV_TABLE = "favorits";
 	private static final String DATABASE_WIDGET_STOP_TABLE = "widget_stops";
 	private static final String DATABASE_INFO_TABLE = "infotrain";
-	private final static String DATABASE_TABLE_VIAS = "vias";
+	
 	/*
 	 * Connection properties
 	 */
@@ -92,35 +91,6 @@ public class ConnectionDbAdapter {
 	public final static String KEY_VIA_DELAY = "delay";
 	public final static String KEY_VIA_ROWIDOFCONNECTION = "rowidofconnection";
 	
-	/*ublic Via(String arrivalPlatform, String arrivalTime,
-			String departurePlatform, String departureTime, String timeBetween,
-			String coordinates, String stationName, String vehicle, String duration ) {	*/	
-	
-	//TODO we have to add a couple of things from the connection table to the via table
-	//so that we know what VIA is for what connection !
-	private static final String CREATE_VIAS_DATABASE = "create table " + DATABASE_TABLE_VIAS +"(" + KEY_ROWID  + " integer primary key autoincrement, "
-	+ KEY_VIA_ARRIVALPLATFORM+ " text not null, " + KEY_VIA_ARRIVALTIME  + " text not null, "
-	+ KEY_VIA_DEPARTUREPLATFORM   + " text not null, " +  KEY_VIA_DEPARTURETIME + " text not null, "
-	+ KEY_VIA_TIMEBETWEEN + " text not null, " + KEY_VIA_COORDINATES       + " text not null, "
-	+ KEY_VIA_STATIONNAME + " text not null, " + KEY_VIA_VEHICLE + " text not null, "+ KEY_VIA_DELAY + " text not null, "
-	+ KEY_VIA_DURATION    + " text not null, " + KEY_VIA_ROWIDOFCONNECTION + " integer not null);";
-	
-	/*
-	 public final static String KEY_DEPARTURE_PLATFORM = "departureplatform";
-	public final static String KEY_ARRIVAL_PLATFORM = "arrivalplatform";
-	public final static String KEY_DEPARTURE_COORD = "departurecoordinates";
-	public final static String KEY_ARRIVAL_COORD = "arrivalcoordinates";
-	public final static String KEY_ARRIVAL_STATUS = "arrivalstatus";
-	public final static String KEY_DEPARTURE_STATUS = "departurestatus";
-	 */
-	private static final String CREATE_CONNECTIONS_DATABASE = "create table " +  DATABASE_TABLE_CONNECTIONS +"(" + KEY_ROWID  + " integer primary key autoincrement, "
-			+ KEY_DEPARTURE + " text not null, " + KEY_DEPARTTIME  + " text not null, "
-			+ KEY_ARRIVAL   + " text not null, " + KEY_ARRIVALTIME + " text not null, "
-			+ KEY_TRIPTIME  + " text not null, " + KEY_DELAY_DEPARTURE + " text not null, "+ KEY_DELAY_ARRIVAL + " text not null, "
-			+ KEY_DEPARTUREDATE + " text not null, " + KEY_ARRIVALDATE + " text not null, "
-			+ KEY_TRAINS        + " text not null, " + KEY_DEPARTURE_PLATFORM + " text not null , " + KEY_ARRIVAL_PLATFORM + " text not null , "
-			+ KEY_DEPARTURE_COORD + " text not null ," + KEY_ARRIVAL_COORD + " text not null ,"+ KEY_ARRIVAL_STATUS + " text not null ," 
-			+ KEY_DEPARTURE_STATUS + " text not null);";
 
 	private static final String CREATE_FAV_DATABASE = "create table "
 			+ DATABASE_FAV_TABLE + " (_id integer primary key autoincrement, "
@@ -151,8 +121,6 @@ public class ConnectionDbAdapter {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			System.out.println("CREATING DATABASE TABLES");
-			db.execSQL(CREATE_VIAS_DATABASE);
-			db.execSQL(CREATE_CONNECTIONS_DATABASE);
 			db.execSQL(CREATE_FAV_DATABASE);
 			db.execSQL(CREATE_WIDGET_STOP_DATABASE);
 			db.execSQL(CREATE_INFO_DATABASE);
@@ -163,11 +131,9 @@ public class ConnectionDbAdapter {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 					+ newVersion + ", which will destroy all old data");
-			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_CONNECTIONS);
 			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_FAV_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_WIDGET_STOP_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_INFO_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_VIAS);
 			onCreate(db);
 		}
 
@@ -216,79 +182,6 @@ public class ConnectionDbAdapter {
 	 * @return rowId or -1 if failed
 	 */
 
-	public long createConnectionWithVias(String departureStation, String arrivalStation,
-			String departureTime, String arrivalTime, String tripTime,
-			String delayd,String delaya, String departurePlatform, String arrivalPlatform,
-			ArrayList<String> trains,ArrayList<Via> Vias) {
-		/*
-		    + DEPARTURE +"text not null,"+ DEPARTTIME + " text not null,"
-			+ ARRIVAL + " text not null,"+ ARRIVALTIME + " text not null"
-			+ TRIPTIME + " text not null," + DELAY + " text not null "
-			+ DEPARTUREDATE + " text not null," + ARRIVALDATE + " text not null"
-			+ TRAINS + " text not null"
-			+ ")";
-		 */
-		//System.out.println("putting connection variables into the database");
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_DEPARTURE, departureStation);
-		initialValues.put(KEY_DEPARTTIME, departureTime );
-		initialValues.put(KEY_ARRIVAL, arrivalStation );
-		initialValues.put(KEY_ARRIVALTIME, arrivalTime  );
-		initialValues.put(KEY_TRIPTIME, tripTime );
-		initialValues.put(KEY_DELAY_DEPARTURE, delayd );
-		initialValues.put(KEY_DELAY_ARRIVAL, delaya );
-		initialValues.put(KEY_DEPARTUREDATE, "" );
-		initialValues.put(KEY_ARRIVALDATE, "" );
-		initialValues.put(KEY_TRAINS, "" );
-		initialValues.put(KEY_DEPARTURE_PLATFORM, departurePlatform );
-		initialValues.put(KEY_ARRIVAL_PLATFORM, arrivalPlatform );
-		initialValues.put(KEY_DEPARTURE_COORD, "" );
-		initialValues.put(KEY_ARRIVAL_COORD, "" );
-		initialValues.put(KEY_ARRIVAL_STATUS, "" );
-		initialValues.put(KEY_DEPARTURE_STATUS, "" );
-		
-		/*
-		 * we concatenate all the trains with an ";" 
-		 *  //TODO make separate table of trains 
-		 */
-		String concatTrains = "";
-		for(String train : trains){
-			concatTrains+=train.toString()+";";
-		}
-		initialValues.put(KEY_TRAINS, concatTrains );
-		long rowId = mDb.insert(DATABASE_TABLE_CONNECTIONS, null, initialValues);
-		
-		//Log.v(TAG,"add connection in DB: "+concatTrains);
-		
-		long result = rowId;
-		/*
-		 * put the vias into the database
-		 */
-		/*KEY_VIA_ARRIVALPLATFORM+ " text not null, " + KEY_VIA_ARRIVALTIME  + " text not null, "
-		+ KEY_VIA_DEPARTUREPLATFORM   + " text not null, " +  KEY_VIA_DEPARTURETIME + " text not null, "
-		+ KEY_VIA_TIMEBETWEEN + " text not null, " + KEY_VIA_COORDINATES       + " text not null, "
-		+ KEY_VIA_STATIONNAME + " text not null, " + KEY_VIA_VEHICLE + " text not null, "
-		+ KEY_VIA_DURATION    + " text not null, " + KEY_VIA_ROWIDOFCONNECTION + " integer not null);";*/
-		
-		for(Via via : Vias){
-			ContentValues viaValues = new ContentValues();
-			viaValues.put(KEY_VIA_ARRIVALPLATFORM, via.getArrivalPlatform());
-			viaValues.put(KEY_VIA_ARRIVALTIME, via.getArrivalTime());
-			viaValues.put(KEY_VIA_DEPARTUREPLATFORM, via.getDeparturePlatform());
-			viaValues.put(KEY_VIA_DEPARTURETIME, via.getDepartureTime());
-			viaValues.put(KEY_VIA_TIMEBETWEEN, via.getTimeBetween());
-			viaValues.put(KEY_VIA_COORDINATES, via.getCoordinates());
-			viaValues.put(KEY_VIA_STATIONNAME, via.getStationName());
-			viaValues.put(KEY_VIA_VEHICLE, via.getVehicle());
-			viaValues.put(KEY_VIA_DELAY, via.getDelay());
-			viaValues.put(KEY_VIA_DURATION, via.getDuration());
-			viaValues.put(KEY_VIA_ROWIDOFCONNECTION,rowId);
-			//Log.i("BETRAINS","add in via Db: "+via.getVehicle());
-			result = mDb.insert(DATABASE_TABLE_VIAS, null, viaValues);			
-		}
-		
-		return result;
-	}
 
 	public long createFav(String name, String nameTwo, int type) {
 		ContentValues initialValues = new ContentValues();
@@ -317,9 +210,7 @@ public class ConnectionDbAdapter {
 	 *            id of note to delete
 	 * @return true if deleted, false otherwise
 	 */
-	public boolean deleteConnection(long rowId) {
-		return mDb.delete(DATABASE_TABLE_CONNECTIONS, KEY_ROWID + "=" + rowId, null) > 0;
-	}
+
 
 	public boolean deleteFav(long rowId) {
 		return mDb.delete(DATABASE_FAV_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
@@ -331,14 +222,6 @@ public class ConnectionDbAdapter {
 
 	public boolean deleteInfo(long rowId) {
 		return mDb.delete(DATABASE_INFO_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
-	}
-
-	public boolean deleteAllConnections() {
-		return mDb.delete(DATABASE_TABLE_CONNECTIONS, null, null) > 0;
-	}
-	
-	public boolean deleteAllVias(){
-		return mDb.delete(DATABASE_TABLE_VIAS, null, null) > 0;
 	}
 
 	public boolean deleteAllFav() {
@@ -359,19 +242,6 @@ public class ConnectionDbAdapter {
 	 * 
 	 * @return Cursor over all notes
 	 */
-
-	public Cursor fetchAllConnections() {	
-		System.out.println("fetch all connections ");
-		return mDb.query(DATABASE_TABLE_CONNECTIONS, new String[] { KEY_ROWID, KEY_DEPARTURE,
-				KEY_DEPARTTIME,KEY_ARRIVAL, KEY_ARRIVALTIME, KEY_TRIPTIME, KEY_DELAY_DEPARTURE,KEY_DELAY_ARRIVAL, KEY_DEPARTUREDATE, KEY_ARRIVALDATE,KEY_TRAINS, KEY_DEPARTURE_PLATFORM,KEY_ARRIVAL_PLATFORM }, null, null, null, null, null);
-	}
-	
-	public Cursor fetchAllVias(){
-		System.out.println("fetch all vias ");
-		return mDb.query(DATABASE_TABLE_VIAS, new String[]{ KEY_ROWID ,KEY_VIA_ARRIVALPLATFORM, 
-				KEY_VIA_ARRIVALTIME ,KEY_VIA_DEPARTUREPLATFORM  ,KEY_VIA_DEPARTURETIME, KEY_VIA_TIMEBETWEEN
-				, KEY_VIA_COORDINATES  ,KEY_VIA_STATIONNAME , KEY_VIA_VEHICLE ,KEY_VIA_DELAY , KEY_VIA_DURATION , KEY_VIA_ROWIDOFCONNECTION}, null, null, null, null, null);
-	}
 
 	public Cursor fetchAllFav() {
 
@@ -411,15 +281,6 @@ public class ConnectionDbAdapter {
 	 * @throws SQLException
 	 *             if note could not be found/retrieved
 	 */
-	public Cursor fetchConnection(long rowId) throws SQLException {
-		Cursor mCursor = mDb.query(true, DATABASE_TABLE_CONNECTIONS, new String[] {
-				KEY_ROWID, KEY_TITLE, KEY_BODY }, KEY_ROWID + "=" + rowId,
-				null, null, null, null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
-		}
-		return mCursor;
-	}
 
 	public Cursor fetchFav(long rowId) throws SQLException {
 		Cursor mCursor = mDb.query(true, DATABASE_FAV_TABLE, new String[] {
@@ -467,13 +328,6 @@ public class ConnectionDbAdapter {
 	 *            value to set note body to
 	 * @return true if the note was successfully updated, false otherwise
 	 */
-	public boolean updateConnection(long rowId, String title, String body,
-			String number) {
-		ContentValues args = new ContentValues();
-		args.put(KEY_TITLE, title);
-		args.put(KEY_BODY, body);
-		return mDb.update(DATABASE_TABLE_CONNECTIONS, args, KEY_ROWID + "=" + rowId, null) > 0;
-	}
 
 	public boolean updateFav(long rowId, String name, String nameTwo, int type) {
 		ContentValues args = new ContentValues();

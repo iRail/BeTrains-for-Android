@@ -126,6 +126,14 @@ public class WelcomeActivity extends FragmentActivity {
 			startActivity(new Intent(this, ChatActivity.class));
 		}
 	}
+	
+	public void onSettingsClick(View v) {
+		if (findViewById(R.id.fragment) != null) {
+			setFragment(new ChatFragment());
+		} else {
+			startActivity(new Intent(this, SettingsActivity.class));
+		}
+	}
 
 	// Display the Fragment when the user does not want the dashboard as his
 	// start screen.

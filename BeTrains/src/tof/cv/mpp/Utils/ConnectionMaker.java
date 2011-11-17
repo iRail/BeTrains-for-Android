@@ -338,17 +338,14 @@ public class ConnectionMaker {
 			File dir = new File(memory.getAbsolutePath() +DIRPATH);
 			dir.mkdirs();
 			File file = new File(dir, FILENAMECONN);
-			//TODO IS from SD 
 			InputStream is=new BufferedInputStream(new FileInputStream(file));
-			
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
 			return gson.fromJson(reader,Connections.class);
 
 			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			Log.i("","*******");
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		} 
 	}
