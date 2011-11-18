@@ -313,7 +313,6 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	private void fillData() {
-		Log.i("", "***" + allConnections);
 		if (allConnections != null && allConnections.connection != null) {
 			Log.i(TAG, "*** Remplis avec les infos");
 			connAdapter = new ConnectionAdapter(this.getActivity()
@@ -324,52 +323,59 @@ public class PlannerFragment extends ListFragment implements
 
 		}
 
-		if (allConnections != null) {
+		else{
+			Log.i(TAG, "*** Remplis avec le Cache");
 			allConnections = ConnectionMaker.getCachedConnections();
-			connAdapter = new ConnectionAdapter(this.getActivity()
-					.getBaseContext(), R.layout.row_planner,
-					allConnections.connection);
-			setListAdapter(connAdapter);
-			registerForContextMenu(getListView());
+			if (allConnections != null) {
+				connAdapter = new ConnectionAdapter(this.getActivity()
+						.getBaseContext(), R.layout.row_planner,
+						allConnections.connection);
+				setListAdapter(connAdapter);
+				registerForContextMenu(getListView());
+			} else {
+				Log.i(TAG, "*** Erreur avec le Cache");
+				fillWithTips();
+			}
+
 		}
+	}
 
-		else {
-			Log.i(TAG, "*** Remplis avec les tips");
-			List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+	public void fillWithTips() {
+		Log.i(TAG, "*** Remplis avec les tips");
+		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
-			// fill the map with data
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("tip", getString(R.string.tipa));
-			map.put("title", getString(R.string.tipatitle));
-			list.add(map);
+		// fill the map with data
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("tip", getString(R.string.tipa));
+		map.put("title", getString(R.string.tipatitle));
+		list.add(map);
 
-			map = new HashMap<String, String>();
-			map.put("tip", getString(R.string.tipb));
-			map.put("title", getString(R.string.tipbtitle));
-			list.add(map);
+		map = new HashMap<String, String>();
+		map.put("tip", getString(R.string.tipb));
+		map.put("title", getString(R.string.tipbtitle));
+		list.add(map);
 
-			map = new HashMap<String, String>();
-			map.put("tip", getString(R.string.tipc));
-			map.put("title", getString(R.string.tipctitle));
-			list.add(map);
+		map = new HashMap<String, String>();
+		map.put("tip", getString(R.string.tipc));
+		map.put("title", getString(R.string.tipctitle));
+		list.add(map);
 
-			map = new HashMap<String, String>();
-			map.put("tip", getString(R.string.tipd));
-			map.put("title", getString(R.string.tipdtitle));
-			list.add(map);
+		map = new HashMap<String, String>();
+		map.put("tip", getString(R.string.tipd));
+		map.put("title", getString(R.string.tipdtitle));
+		list.add(map);
 
-			map = new HashMap<String, String>();
-			map.put("tip", getString(R.string.tipe));
-			map.put("title", getString(R.string.tipetitle));
-			list.add(map);
+		map = new HashMap<String, String>();
+		map.put("tip", getString(R.string.tipe));
+		map.put("title", getString(R.string.tipetitle));
+		list.add(map);
 
-			// Use a SimpleAdapter to display tips
-			String[] from = { "tip", "title" };
-			int[] to = { R.id.tiptitle, R.id.tiptext };
-			SimpleAdapter adapter = new SimpleAdapter(getActivity(), list,
-					R.layout.row_tip, from, to);
-			setListAdapter(adapter);
-		}
+		// Use a SimpleAdapter to display tips
+		String[] from = { "tip", "title" };
+		int[] to = { R.id.tiptitle, R.id.tiptext };
+		SimpleAdapter adapter = new SimpleAdapter(getActivity(), list,
+				R.layout.row_tip, from, to);
+		setListAdapter(adapter);
 	}
 
 	protected Dialog onCreateDialog(int id) {

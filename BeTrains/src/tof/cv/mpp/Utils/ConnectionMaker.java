@@ -1,6 +1,7 @@
 package tof.cv.mpp.Utils;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -336,6 +337,20 @@ public class ConnectionMaker {
 			InputStream is=new BufferedInputStream(new FileInputStream(file));
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
+			
+			//TEST
+			/*
+			String chaine="";
+			BufferedReader br=new BufferedReader(reader);
+			String ligne;
+			while ((ligne=br.readLine())!=null){
+				System.out.println(ligne);
+				chaine+=ligne+"\n";
+			}
+			br.close(); 
+			Log.i("TAG", "***"+chaine);
+			*/
+			
 			return gson.fromJson(reader,Connections.class);
 
 			
