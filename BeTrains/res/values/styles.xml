@@ -81,7 +81,7 @@
     </style>
 
     <style name="CustomCirclePageIndicator">
-        <item name="fillColor">#FF888888</item>
+        <item name="fillColor">#BB888888</item>
         <item name="strokeColor">#FF000000</item>
     </style>
 

@@ -48,6 +48,7 @@ public class PlannerFragment extends ListFragment implements
 
 	private static final int MENU_DT = 0;
 	private static final int MENU_FAV = 1;
+	private static final int MENU_PREF = 2;
 
 	Date mDate;
 
@@ -244,7 +245,7 @@ public class PlannerFragment extends ListFragment implements
 				.setIcon(R.drawable.ic_menu_star)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Settings")
+		menu.add(Menu.NONE, MENU_PREF, Menu.NONE, "Settings")
 				.setIcon(R.drawable.ic_menu_preferences)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
@@ -262,6 +263,10 @@ public class PlannerFragment extends ListFragment implements
 			showDateTimeDialog();
 			return true;
 		case (MENU_FAV):
+			startActivity(new Intent(getActivity(), StarredActivity.class));
+			return true;
+		case (MENU_PREF):
+			startActivity(new Intent(getActivity(), SettingsActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

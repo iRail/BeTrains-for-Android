@@ -22,7 +22,7 @@
 				android:paddingBottom="10dip" android:paddingTop="10dip" />
 			<Button android:id="@+id/btn_update" android:text="@string/txt_change"
 				android:layout_width="wrap_content" android:visibility="gone"
-				android:layout_height="fill_parent" android:layout_gravity="center"
+				android:layout_height="wrap_content" android:layout_gravity="center"
 				android:gravity="center" />
 		</LinearLayout>
 

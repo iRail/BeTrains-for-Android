@@ -84,19 +84,19 @@ public class ClosestFragment extends ListFragment {
 
 		setHasOptionsMenu(true);
 
-		// TODO
-		// Initialization of ACtionBar, buttons, etc...
-		// GDActionBar mActionBar = getGDActionBar();
-		// mActionBar.setTitle(getString(R.string.btn_closest_stations));
-		// mActionBar.addItem(android.R.drawable.ic_menu_help);
-		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(android.R.drawable.ic_menu_help),R.id.action_bar_help);
+
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 
 		m_ProgressDialog = new MyProgressDialog(getActivity());
 		mDbHelper = new LocationDbHelper(getActivity());
 		tvEmpty = (TextView) getActivity().findViewById(R.id.empty_tv);
 		btEmpty = (Button) getActivity().findViewById(R.id.empty_bt);
+		
 		btEmpty.setOnClickListener(new OnClickListener() {
-			
 			public void onClick(View arg0) {
 				Intent myIntent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
 				startActivity(myIntent);
@@ -117,6 +117,7 @@ public class ClosestFragment extends ListFragment {
 		locationNetworkListener = new MyNetworkLocationListener();
 
 	}
+
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
@@ -429,6 +430,7 @@ public class ClosestFragment extends ListFragment {
 		mDbHelper.open();
 		final Cursor locationCursor = mDbHelper.fetchAllLocations();
 		if (locationCursor.getCount() > 0) {
+			//TODO refresh list
 			mDbHelper.close();
 			/*startActivity(new Intent(GetClosestStationsActivity.this,
 					GetClosestStationsActivity.class));
@@ -541,6 +543,12 @@ public class ClosestFragment extends ListFragment {
 			mDbHelper.deleteAllLocations();
 			InputSource myInputSource = new InputSource(url.openStream());
 			myXMLReader.parse(myInputSource);
+			Collections.sort(stationList);
+			Looper.prepare();
+			StationLocationAdapter locationAdapter = new StationLocationAdapter(
+					getActivity(), R.layout.row_closest, stationList);
+			myLocationAdapter = locationAdapter;
+			getActivity().runOnUiThread(hideProgressdialog);
 			Log.v(TAG, "Finish to parse");
 			isFirst = false;
 			
