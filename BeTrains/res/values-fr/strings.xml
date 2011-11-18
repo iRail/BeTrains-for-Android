@@ -141,4 +141,5 @@
 	<string name="pref_selectEndHour_sum">Pour la batterie, évitez les connections durant la
 		nuit</string>
 	<string name="pref_selectFreq_sum">1 heure</string>
+	<string name="stationpicker">Choisissez votre gare</string>
 </resources>

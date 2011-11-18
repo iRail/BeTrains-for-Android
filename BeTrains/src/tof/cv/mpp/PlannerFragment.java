@@ -237,15 +237,15 @@ public class PlannerFragment extends ListFragment implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, MENU_DT, Menu.NONE, "Date/Time")
-				.setIcon(R.drawable.ic_menu_ab_time)
+				.setIcon(R.drawable.ic_menu_time)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Add to Fav.")
-				.setIcon(R.drawable.ic_menu_ab_fav)
+				.setIcon(R.drawable.ic_menu_star)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Settings")
-				.setIcon(R.drawable.ic_menu_ab_fav)
+				.setIcon(R.drawable.ic_menu_preferences)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
@@ -607,8 +607,11 @@ public class PlannerFragment extends ListFragment implements
 				.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View v) {
+
 						getSupportActivity().getSupportActionBar().setTitle(
-								mDateTimePicker.getFormatedDate(datePattern));
+								mDateTimePicker.getFormatedDate(abTimePattern));
+						getSupportActivity().getSupportActionBar().setSubtitle(
+								mDateTimePicker.getFormatedDate(abDatePattern));
 						mDateTimeDialog.cancel();
 
 					}

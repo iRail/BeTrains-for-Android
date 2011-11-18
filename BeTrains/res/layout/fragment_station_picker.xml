@@ -23,13 +23,14 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="0dip" >
-
+<include layout="@layout/colorstrip" />
+    
    <com.viewpagerindicator.TitlePageIndicator
         android:id="@+id/indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="0dip" />
-<include layout="@layout/colorstrip" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"

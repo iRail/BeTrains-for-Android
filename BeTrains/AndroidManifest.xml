@@ -14,7 +14,8 @@
         android:theme="@style/Theme.MyTheme" >
         <activity
             android:label="@string/app_name"
-            android:name=".WelcomeActivity" >
+            android:name=".WelcomeActivity"
+            android:theme="@style/StyledIndicators" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,8 +49,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="@string/stationpicker"
             android:name=".StationPickerActivity"
+            android:theme="@style/StyledIndicators"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:configChanges="keyboardHidden|orientation"

@@ -1,8 +1,5 @@
 package tof.cv.mpp;
 
-import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.R;
-
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.adapter.MenuAdapter;
 import android.content.Intent;
@@ -14,6 +11,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.R;
 
 public class WelcomeActivity extends FragmentActivity {
 	/** Called when the activity is first created. */

@@ -17,8 +17,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:drawable/gallery_thumb">
+    android:layout_height="match_parent">
 
     <!-- The frame layout is here since we will be showing either
     the empty view or the list view.  -->

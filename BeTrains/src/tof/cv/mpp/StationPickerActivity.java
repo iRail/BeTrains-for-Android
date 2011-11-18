@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +43,8 @@ public class StationPickerActivity extends FragmentActivity {
 			ConnectionMaker.setFullscreen(this);
 
 		setContentView(R.layout.fragment_station_picker);
-
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		mAdapter = new MyAdapter(getSupportFragmentManager());
 
 		mPager = (ViewPager) findViewById(R.id.pager);
@@ -53,6 +55,20 @@ public class StationPickerActivity extends FragmentActivity {
 
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case (android.R.id.home):
+			// app icon in ActionBar is clicked; Go home
+			Intent intent = new Intent(this, PlannerActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
 	public static class ArrayListFragment extends ListFragment {
 		static int mNum;
 
@@ -119,6 +135,8 @@ public class StationPickerActivity extends FragmentActivity {
 			getActivity().setResult(RESULT_OK,i);
 			getActivity().finish();
 		}
+		
+
 	}
 
 	public static class MyAdapter extends FragmentPagerAdapter implements
