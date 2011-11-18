@@ -17,16 +17,11 @@ import java.util.TimeZone;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.bo.ConnectionOld;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.bo.StationOld;
 import tof.cv.mpp.bo.Train;
-import tof.cv.mpp.bo.Via;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

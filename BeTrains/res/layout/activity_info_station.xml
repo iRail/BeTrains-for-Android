@@ -1,45 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
+    <fragment
+        android:id="@+id/fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:name="tof.cv.mpp.InfoStationFragment" />
 
-<FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="0dp" android:layout_width="fill_parent"
-	android:layout_weight="1">
-
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		<include layout="@layout/colorstrip" android:id="@+id/top"></include>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:paddingBottom="5dip">
-			<ImageButton android:background="@drawable/myleftarrow"
-				android:id="@+id/Button_prev" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"></ImageButton>
-
-			<Button android:layout_width="0dip" android:layout_height="wrap_content"
-				android:layout_weight="1" android:background="#00000000" />
-
-			<TextView android:id="@+id/hours"
-				xmlns:android="http://schemas.android.com/apk/res/android"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:layout_gravity="center" android:gravity="center"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:textColor="@color/darkblue" android:text="@string/txt_loading"></TextView>
-			<Button android:layout_width="0dip" android:layout_height="wrap_content"
-				android:layout_weight="1" android:background="#00000000" />
-
-			<ImageButton android:background="@drawable/myrightarrow"
-				android:id="@+id/Button_next" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"></ImageButton>
-		</LinearLayout>
-		<include layout="@layout/colorstrip" />
-		<ListView android:paddingTop="10dip" android:id="@android:id/list"
-			android:layout_width="fill_parent" android:layout_height="0dip"
-			android:layout_weight="1" />
-
-
-	</LinearLayout>
 </FrameLayout>
-
-    

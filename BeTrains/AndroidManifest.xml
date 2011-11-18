@@ -40,6 +40,16 @@
         <activity
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
+            android:name=".InfoStationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:name=".InfoTrainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
             android:name=".ChatActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity

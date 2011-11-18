@@ -8,6 +8,7 @@ import java.util.List;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
+import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
 import android.app.Dialog;
@@ -32,7 +33,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -159,8 +159,12 @@ public class PlannerFragment extends ListFragment implements
 				R.id.btn_infos_departure);
 		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-
-				// TODO
+				String station = tvDeparture.getText().toString();
+				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				i.putExtra("Name", station);
+				i.putExtra("Hour", mDate.getHours());
+				i.putExtra("Minute", mDate.getMinutes());
+				startActivityForResult(i, ACTIVITY_STATION);
 
 			}
 		});
@@ -174,13 +178,11 @@ public class PlannerFragment extends ListFragment implements
 			public void onClick(View v) {
 
 				String station = tvArrival.getText().toString();
-				// Intent i = new Intent(getActivity(),
-				// InfoStationActivity.class);
-				// i.putExtra("gare_name", station);
-				// i.putExtra("gare_id", getStationNumber(station));
-				// i.putExtra("gare_heure", mHour);
-				// i.putExtra("gare_minute", mMinute);
-				// startActivityForResult(i, ACTIVITY_STATION);
+				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				i.putExtra("Name", station);
+				i.putExtra("Hour", mDate.getHours());
+				i.putExtra("Minute", mDate.getMinutes());
+				startActivityForResult(i, ACTIVITY_STATION);
 
 			}
 		});
@@ -229,7 +231,6 @@ public class PlannerFragment extends ListFragment implements
 		btnSearch.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				mySearchThread();
-				fillData();
 
 			}
 		});
@@ -312,6 +313,7 @@ public class PlannerFragment extends ListFragment implements
 	}
 
 	private void fillData() {
+		Log.i("", "***" + allConnections);
 		if (allConnections != null && allConnections.connection != null) {
 			Log.i(TAG, "*** Remplis avec les infos");
 			connAdapter = new ConnectionAdapter(this.getActivity()
@@ -320,7 +322,9 @@ public class PlannerFragment extends ListFragment implements
 			setListAdapter(connAdapter);
 			registerForContextMenu(getListView());
 
-		} else {
+		}
+
+		if (allConnections != null) {
 			allConnections = ConnectionMaker.getCachedConnections();
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
@@ -329,7 +333,7 @@ public class PlannerFragment extends ListFragment implements
 			registerForContextMenu(getListView());
 		}
 
-		if (allConnections == null) {
+		else {
 			Log.i(TAG, "*** Remplis avec les tips");
 			List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
@@ -404,17 +408,28 @@ public class PlannerFragment extends ListFragment implements
 		positionClicked = position;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
 		// Log.v(TAG,"click");
+		Intent i = new Intent(getActivity(), InfoStationActivity.class);
 		try {
+			Connection currentConnection = allConnections.connection
+					.get(positionClicked);
+			try {
+				i.putExtra("Name", currentConnection.getDeparture()
+						.getVehicle());
+				i.putExtra("Hour", mDate.getHours());
+				i.putExtra("Minute", mDate.getMinutes());
+				startActivity(i);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-			// ConnectionOld currentConnection =
-			// allConnections.get(positionClicked);
-			// Log.v(TAG,"size: "+currentConnection.getVias().size());
-			// if (currentConnection.getVias().size() > 0) {
-			// getActivity().showDialog(CONNECTION_DIALOG_ID);
-			// } else
-			// noDataClick(positionClicked);
+			noDataClick(positionClicked);
 		} catch (Exception e) {
 			e.printStackTrace();
+			e.printStackTrace();
+			i.putExtra("Name", "Train 999");
+			i.putExtra("Hour", mDate.getHours());
+			i.putExtra("Minute", mDate.getMinutes());
+			startActivity(i);
 			try {
 				noDataClick(positionClicked);
 			} catch (Exception f) {
@@ -557,7 +572,7 @@ public class PlannerFragment extends ListFragment implements
 		try {
 			fillData();
 		} catch (Exception e) {
-			Log.i(TAG, "Impossible to fecth Database:\n" + e.getMessage());
+			Log.i(TAG, "Impossible to fill Data:\n" + e.getMessage());
 			e.printStackTrace();
 		}
 
