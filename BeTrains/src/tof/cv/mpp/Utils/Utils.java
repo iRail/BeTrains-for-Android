@@ -61,7 +61,9 @@ public class Utils {
 							.getResources().getBoolean(R.bool.navetteurs)))
 						url += "%20OR%20navetteurs";
 					
-					InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains",null,a);
+					url+="&rpp=50";
+					
+					InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains/Twitter",null,a);
 					Gson gson = new Gson();
 					final Reader reader = new InputStreamReader(is);
 					final Tweets tweets= gson.fromJson(reader,Tweets.class);

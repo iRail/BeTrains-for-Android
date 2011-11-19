@@ -67,8 +67,8 @@
         <item name="abBackground">@color/action_bar_tint</item>
         <item name="abTitleTextStyle">@style/CustomTitle</item>
         <item name="textColor">@color/darkblue</item>
-        
-        <!-- <item name="abSubtitle">100% set from the style attributes</item> -->
+        <item name="android:listViewStyle">@style/MyListViewTheme</item>
+
     </style>
 
     <style name="CustomTitle" parent="TextAppearance.Widget.Title">
@@ -91,6 +91,12 @@
         <item name="textColor">#FF999999</item>
         <item name="selectedColor">@color/darkblue</item>
         <item name="selectedBold">true</item>
+        <item name="footerColor">@color/darkblue</item>
+    </style>
+
+    <style name="MyListViewTheme" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>

@@ -1,35 +1,22 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ActionBar.LayoutParams;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.Gravity;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.viewpagerindicator.R;
-import com.viewpagerindicator.TitlePageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 public class SettingsActivity extends FragmentActivity {
 
-	MyAdapter mAdapter;
-
-	ViewPager mPager;
-
-	protected static final String[] TITLES = new String[] { "FAVOURITE",
-			"BELGIUM", "EUROPE" };
+	
 
 	/** Called when the activity is first created. */
 	@Override
@@ -41,107 +28,19 @@ public class SettingsActivity extends FragmentActivity {
 		if (settings.getBoolean("preffullscreen", false))
 			ConnectionMaker.setFullscreen(this);
 
-		setContentView(R.layout.fragment_station_picker);
+	    TextView label = new TextView(this);
+	    label.setText("A FAIRE");
+	    label.setTextSize(20);
+	    label.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		mAdapter = new MyAdapter(getSupportFragmentManager());
-
-		mPager = (ViewPager) findViewById(R.id.pager);
-		mPager.setAdapter(mAdapter);
-
-		TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-		indicator.setViewPager(mPager,1);
+	    LinearLayout ll = new LinearLayout(this);
+	    ll.setOrientation(LinearLayout.VERTICAL);
+	    ll.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+	    ll.setGravity(Gravity.CENTER);
+	    ll.addView(label);
+	    setContentView(ll);
 
 	}
 
-	public static class ArrayListFragment extends ListFragment {
-		static int mNum;
-
-		/**
-		 * Create a new instance of CountingFragment, providing "num" as an
-		 * argument.
-		 */
-		static ArrayListFragment newInstance(int num) {
-			ArrayListFragment f = new ArrayListFragment();
-			// Supply num input as an argument.
-			Bundle args = new Bundle();
-			args.putInt("num", num);
-			f.setArguments(args);
-
-			return f;
-		}
-
-		/**
-		 * When creating, retrieve this instance's number from its arguments.
-		 */
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			// Notifier au créateur de ActionBarSherlock que le mNum doit être défini dans la onCreateView (cf Fragment lifeCycle)
-			//mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View v = inflater.inflate(R.layout.fragment_station_list,
-					container, false);
-			mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-			return v;
-		}
-
-		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-			
-			String[] list = null;
-			switch (mNum) {
-			case 0:
-				list = ConnectionMaker.LIST_OF_FAV_STATIONS;
-				break;
-			case 1:
-				list = ConnectionMaker.LIST_OF_STATIONS;
-				break;
-			case 2:
-				list = ConnectionMaker.LIST_OF_EURO_STATIONS;
-				break;
-			}
-
-			this.setListAdapter(new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, list));
-		}
-
-		@Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			Bundle bundle=new Bundle();
-			bundle.putString("GARE", l.getItemAtPosition(position).toString());
-			Intent i=new Intent();
-			i.putExtras(bundle);
-			getActivity().setResult(RESULT_OK,i);
-			getActivity().finish();
-		}
-	}
-
-	public static class MyAdapter extends FragmentPagerAdapter implements
-			TitleProvider {
-		private int mCount = TITLES.length;
-
-		public MyAdapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		@Override
-		public int getCount() {
-			return mCount;
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return ArrayListFragment.newInstance(position);
-		}
-
-		@Override
-		public String getTitle(int position) {
-			return TITLES[position % TITLES.length];
-		}
-	}
+	
 }

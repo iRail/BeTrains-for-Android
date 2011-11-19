@@ -64,7 +64,7 @@ public class TwitterFragment extends ListFragment{
             super.onDestroy(); 
             try {
                 File file= new File(android.os.Environment.getExternalStorageDirectory(),
-                		"/Android/data/BeTrains");
+                		"/Android/data/BeTrains/Twitter");
                 File[] files=file.listFiles();
                 for(File f:files)
                     f.delete();
