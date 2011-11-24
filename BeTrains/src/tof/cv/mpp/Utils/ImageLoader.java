@@ -30,7 +30,7 @@ public class ImageLoader {
         
         //Find the dir to save cached images
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-            cacheDir=new File(android.os.Environment.getExternalStorageDirectory(),"/Android/data/BeTrains");
+            cacheDir=new File(android.os.Environment.getExternalStorageDirectory(),"/Android/data/BeTrains/Twitter");
         else
             cacheDir=context.getCacheDir();
         if(!cacheDir.exists())

@@ -29,11 +29,7 @@ public class TwitterFragment extends ListFragment{
 		
 		return inflater.inflate(R.layout.fragment_twitter, null);
 	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		Utils.loadTweets(getActivity(),getListView());
+
 		
 		//TODO ActionBar
 		//GDActionBar mActionBar = getGDActionBar();
@@ -41,7 +37,7 @@ public class TwitterFragment extends ListFragment{
 		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_settings),R.id.action_bar_settings);
 		//mActionBar.setTitle("Twitter");
 
-	}
+	
 	
 /*	
 	public boolean onHandleActionBarItemClick(GDActionBarItem item, int position) {

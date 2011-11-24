@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import tof.cv.mpp.Utils.ConnectionDialog;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
@@ -39,8 +40,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PlannerFragment extends ListFragment implements
-		DialogInterface.OnClickListener, Dialog.OnCancelListener {
+public class PlannerFragment extends ListFragment {
 
 	// First part is cleaned
 
@@ -323,7 +323,7 @@ public class PlannerFragment extends ListFragment implements
 
 		}
 
-		else{
+		else {
 			Log.i(TAG, "*** Remplis avec le Cache");
 			allConnections = ConnectionMaker.getCachedConnections();
 			if (allConnections != null) {
@@ -385,8 +385,8 @@ public class PlannerFragment extends ListFragment implements
 			// Log.i("BETRAINS","clicked on: "+allConnections
 			// .get(positionClicked).getArrivalStation().getVehicle());
 			try {
-				// return new ConnectionDialog(this, allConnections
-				// .get(positionClicked));
+				return new ConnectionDialog(getActivity(),
+						allConnections.connection.get(positionClicked));
 			} catch (Exception e) {
 				Toast.makeText(getActivity(),
 						getString(R.string.txt_create_connections),
@@ -414,35 +414,37 @@ public class PlannerFragment extends ListFragment implements
 		positionClicked = position;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
 		// Log.v(TAG,"click");
-		Intent i = new Intent(getActivity(), InfoStationActivity.class);
 		try {
+
 			Connection currentConnection = allConnections.connection
 					.get(positionClicked);
-			try {
-				i.putExtra("Name", currentConnection.getDeparture()
-						.getVehicle());
-				i.putExtra("Hour", mDate.getHours());
-				i.putExtra("Minute", mDate.getMinutes());
-				startActivity(i);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			noDataClick(positionClicked);
+			// Log.v(TAG,"size: "+currentConnection.getVias().size());
+			if (currentConnection.getVias().size() > 0) {
+				getActivity().showDialog(CONNECTION_DIALOG_ID);
+			} else
+				noDataClick(positionClicked);
 		} catch (Exception e) {
 			e.printStackTrace();
-			e.printStackTrace();
-			i.putExtra("Name", "Train 999");
-			i.putExtra("Hour", mDate.getHours());
-			i.putExtra("Minute", mDate.getMinutes());
-			startActivity(i);
-			try {
-				noDataClick(positionClicked);
-			} catch (Exception f) {
-				f.printStackTrace();
-			}
-
 		}
+
+		// Log.v(TAG,"click");
+		/*
+		 * Intent i = new Intent(getActivity(), InfoStationActivity.class); try
+		 * { Connection currentConnection = allConnections.connection
+		 * .get(positionClicked); try { i.putExtra("Name",
+		 * currentConnection.getDeparture() .getVehicle()); i.putExtra("Hour",
+		 * mDate.getHours()); i.putExtra("Minute", mDate.getMinutes());
+		 * startActivity(i); } catch (Exception e) { e.printStackTrace(); }
+		 * 
+		 * noDataClick(positionClicked); } catch (Exception e) {
+		 * e.printStackTrace(); e.printStackTrace(); i.putExtra("Name",
+		 * "Train 999"); i.putExtra("Hour", mDate.getHours());
+		 * i.putExtra("Minute", mDate.getMinutes()); startActivity(i); try {
+		 * noDataClick(positionClicked); } catch (Exception f) {
+		 * f.printStackTrace(); }
+		 * 
+		 * }
+		 */
 
 	}
 
@@ -665,14 +667,6 @@ public class PlannerFragment extends ListFragment implements
 		mDateTimeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mDateTimeDialog.setContentView(mDateTimeDialogView);
 		mDateTimeDialog.show();
-	}
-
-	@Override
-	public void onCancel(DialogInterface arg0) {
-	}
-
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
 	}
 
 }
