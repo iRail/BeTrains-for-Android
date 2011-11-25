@@ -12,8 +12,10 @@ import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -413,20 +415,21 @@ public class PlannerFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		positionClicked = position;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
-		// Log.v(TAG,"click");
+		 Log.v(TAG,"click");
 		try {
 
 			Connection currentConnection = allConnections.connection
 					.get(positionClicked);
-			// Log.v(TAG,"size: "+currentConnection.getVias().size());
-			if (currentConnection.getVias().size() > 0) {
-				getActivity().showDialog(CONNECTION_DIALOG_ID);
+			Log.v(TAG,"size: "+currentConnection.getVias().via.size());
+			if (currentConnection.getVias().via.size() > 0) {
+				new ConnectionDialog(getActivity(), allConnections.connection
+						.get(positionClicked)).show();
 			} else
 				noDataClick(positionClicked);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		// Log.v(TAG,"click");
 		/*
 		 * Intent i = new Intent(getActivity(), InfoStationActivity.class); try
@@ -585,11 +588,23 @@ public class PlannerFragment extends ListFragment {
 		}
 
 	}
+	
+	
 
 	protected void onPrepareDialog(int dialogId, Dialog dialog) {
 		switch (dialogId) {
 		case CONNECTION_DIALOG_ID: {
-
+			try {
+				new ConnectionDialog(getActivity(), allConnections.connection
+						.get(positionClicked)).show();
+			} catch (Exception e) {
+				Toast.makeText(getActivity(),
+						getString(R.string.txt_create_connections),
+						Toast.LENGTH_LONG).show();
+				Log.i("BETRAINS", allConnections.connection.size() + " - "
+						+ positionClicked);
+				e.printStackTrace();
+			}
 		}
 		}
 	}

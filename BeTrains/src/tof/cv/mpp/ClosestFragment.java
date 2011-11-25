@@ -543,7 +543,7 @@ public class ClosestFragment extends ListFragment {
 			mDbHelper.deleteAllLocations();
 			InputSource myInputSource = new InputSource(url.openStream());
 			myXMLReader.parse(myInputSource);
-			Collections.sort(stationList);
+			
 			Looper.prepare();
 			StationLocationAdapter locationAdapter = new StationLocationAdapter(
 					getActivity(), R.layout.row_closest, stationList);
@@ -563,9 +563,6 @@ public class ClosestFragment extends ListFragment {
 
 	private class StationHandler extends DefaultHandler {
 
-		final int stateUnknown = 0;
-		//final int stateStation = 1;
-		int state = stateUnknown;
 		int lat = 0;
 		int lon = 0;
 
@@ -589,14 +586,14 @@ public class ClosestFragment extends ListFragment {
 			}			
 			
 			else {
-				state = stateUnknown;
+				//state = stateUnknown;
 			}
 		}
 
 		@Override
 		public void endElement(String uri, String localName, String qName)
 				throws SAXException {
-			state = stateUnknown;
+			//state = stateUnknown;
 		}
 
 		@Override

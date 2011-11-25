@@ -1,7 +1,6 @@
 package tof.cv.mpp.Utils;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -21,7 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.bo.Connections;
-import tof.cv.mpp.bo.StationOld;
+import tof.cv.mpp.bo.Station;
 import tof.cv.mpp.bo.Train;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -374,7 +373,7 @@ public class ConnectionMaker {
 	}
 
 	// TODO -> rewrite !!! -__- with HTML parser !
-	public static ArrayList<StationOld> afficheGareL(String mon_url,
+	public static ArrayList<Station> afficheGareL(String mon_url,
 			Context context) {
 		String TAG = "BETRAINS";
 		mon_url += "&format=JSON&fast=true";
@@ -384,7 +383,7 @@ public class ConnectionMaker {
 
 		long actualtime = new Date().getTime();
 
-		ArrayList<StationOld> listOfStations = new ArrayList<StationOld>();
+		ArrayList<Station> listOfStations = new ArrayList<Station>();
 		listOfStations.clear();
 /*
 		try {

@@ -77,7 +77,7 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		setLlArrivalListener();
 
 		stationAdapter = new ViaAdapter(plannerActivity, R.layout.row_via,
-				connection.getVias());
+				connection.getVias().via);
 		if (stationAdapter != null) {
 			listview.setAdapter(stationAdapter);
 		}
@@ -169,7 +169,7 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 
 	private void showViaDialog(final int position) {
 
-		final Via currentVia=currentConnection.getVias().get(position);
+		final Via currentVia=currentConnection.getVias().via.get(position);
 		final String vehicle="ConnectionMaker.getTrainId(currentConnection.getVias().via.get(position).getVehicle())";
 		final CharSequence[] items = {
 				"currentVia.getStationName()",

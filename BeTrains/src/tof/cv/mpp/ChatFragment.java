@@ -222,7 +222,6 @@ public class ChatFragment extends ListFragment {
 	private Runnable returnRes = new Runnable() {
 
 		public void run() {
-			int i = 0;
 			TextView messagesEmpty = (TextView) getActivity().findViewById(
 					android.R.id.empty);
 			if (listOfMessage != null) {

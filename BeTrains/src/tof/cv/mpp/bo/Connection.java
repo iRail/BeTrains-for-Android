@@ -8,7 +8,7 @@ public class Connection {
 	public String duration;
 	private Station departure;
 	private Station arrival;
-	private ArrayList<Via> vias;
+	private Vias vias;
 	
 	public Station getArrival() {
 		return this.arrival;
@@ -19,7 +19,7 @@ public class Connection {
 	public String getDuration() {
 		return this.duration;
 	}
-	public ArrayList<Via> getVias() {
+	public Vias getVias() {
 		return this.vias;
 	}
 

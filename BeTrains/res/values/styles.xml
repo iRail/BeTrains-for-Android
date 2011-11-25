@@ -76,8 +76,8 @@
     </style>
 
     <style name="StyledIndicators" parent="@style/Theme.MyTheme">
-        <item name="circlePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
-        <item name="titlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+       <!--  <item name="circlePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
+        <item name="titlePageIndicatorStyle">@style/CustomTitlePageIndicator</item> -->
     </style>
 
     <style name="CustomCirclePageIndicator">
