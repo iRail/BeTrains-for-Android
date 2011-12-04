@@ -4,31 +4,31 @@ h3. Git clone in Eclipse
 
 h4. ActionBarSherlock
 
-# Git clone from: https://github.com/JakeWharton/ActionBarSherlock
-# Create a new project with the library/ folder
-# Use Android 3.2 API
-# Include android-support-v13.jar from Android SDK
+# Git clone from: "https://github.com/JakeWharton/ActionBarSherlock":https://github.com/JakeWharton/ActionBarSherlock
+# Create a new project with the *library/* folder
+# Use Android *3.2* API
+# Include *android-support-v13.jar* from Android SDK
 
 h4. ViewPagerIndicator
 
-# Git clone from: https://github.com/JakeWharton/Android-ViewPagerIndicator
-# Create a new project with the library/ folder
-# Use Android 1.6 API
-# Include android-support-v4.jar from Android SDK
+# Git clone from: "https://github.com/JakeWharton/Android-ViewPagerIndicator":https://github.com/JakeWharton/Android-ViewPagerIndicator
+# Create a new project with the *library/* folder
+# Use Android *1.6* API
+# Include *android-support-v4.jar* from Android SDK
 
 h3. Clone BeTrains repository
 
-* https://github.com/iRail/BeTrains-for-Android
+* "https://github.com/iRail/BeTrains-for-Android":https://github.com/iRail/BeTrains-for-Android
 
 h3. In the properties of your BeTrains project
 
 h4. In "android" menu
 
-# Select Google APIs 4.0
+# Select Google APIs *4.0*
 # Include ActionBarSherlock and ViewPagerIndicator in the library section
 
 h4. In "java build path" menu
 
 # Select "Library" tab
-# Include gson-X-X.jar: http://code.google.com/p/google-gson/
-# Include actionbarsherlock-plugin-maps-X.X.X.jar: https://github.com/JakeWharton/ActionBarSherlock/downloads
+# Include gson-X-X.jar: "http://code.google.com/p/google-gson/":http://code.google.com/p/google-gson/
+# Include actionbarsherlock-plugin-maps-X.X.X.jar: "https://github.com/JakeWharton/ActionBarSherlock/downloads":https://github.com/JakeWharton/ActionBarSherlock/downloads
