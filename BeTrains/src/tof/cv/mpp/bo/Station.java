@@ -7,7 +7,7 @@ public class Station {
 	private String time;
 	private String platform;
 	//private String direction;
-	//private String vehicle;
+	private String vehicle;
 
 	public String getStation() {
 		return this.station;
@@ -26,7 +26,7 @@ public class Station {
 	}
 
 	public String getVehicle() {
-		return "this.vehicle";
+		return this.vehicle;
 	}
 
 	public String getDirection() {

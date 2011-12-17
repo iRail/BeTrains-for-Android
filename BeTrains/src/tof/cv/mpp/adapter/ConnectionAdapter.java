@@ -7,6 +7,8 @@ import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.bo.Connection;
 import android.content.Context;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +70,13 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			}
 
 			if (quai1 != null) {
-				quai1.setText(" ("+conn.getDeparture().getPlatform()+")");
+				quai1.setText(" (" + conn.getDeparture().getPlatform() + ")");
 			}
 			if (quai2 != null) {
-				quai2.setText(" ("+conn.getArrival().getPlatform()+")");
+				quai2.setText(" (" + conn.getArrival().getPlatform() + ")");
 			}
 
 			if (triptime != null) {
-				// System.out.println("triptime : " + conn.getTripTime());
 				triptime.setText(ConnectionMaker.formatDate(conn.getDuration(),
 						true, false));
 			}
@@ -88,16 +89,15 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 						.getArrival().getTime(), false, false));
 			}
 
-			// TODO: Vias
-			/*
-			 * if (numberoftrains != null) { //
-			 * Log.i("BETRAINS","number"+conn.getTrains()); if
-			 * (conn.getVias().size() > 1)
-			 * numberoftrains.setText(Html.fromHtml("Trains: <b>" +
-			 * conn.getVias().size() + "</b>")); else
-			 * numberoftrains.setText(Html.fromHtml(ConnectionMaker
-			 * .getTrainId(conn.getVias().get(0).getVehicle()))); }
-			 */
+			if (numberoftrains != null) { //
+				//Log.i("BETRAINS", "number" + conn.getVias()));
+				if (conn.getVias()!=null)
+					numberoftrains.setText(Html.fromHtml("Trains: <b>"
+							+ (conn.getVias().getNumberOfVias()+1) + "</b>"));
+				else
+					numberoftrains.setText(Html.fromHtml(ConnectionMaker
+							.getTrainId(conn.getDeparture().getVehicle())));
+			}
 
 			int color1 = 0x00101010;
 			int color2 = 0xfff5f5f5;

@@ -26,8 +26,12 @@ public class TwitterFragment extends ListFragment{
 			ConnectionMaker.setFullscreen(getActivity());
 		
 		setHasOptionsMenu(true);
-		
 		return inflater.inflate(R.layout.fragment_twitter, null);
+	}
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		Utils.loadTweets(getActivity(), getListView());
 	}
 
 		

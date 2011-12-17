@@ -48,7 +48,7 @@ public class ViaAdapter extends AbstractAdapter<Via> {
 
 			TextView tvArrivalPlatform = (TextView) v
 					.findViewById(R.id.tv_arrival_platform);
-			tvArrivalPlatform.setText("via.getArrivalPlatform()");
+			tvArrivalPlatform.setText(via.getArrival().getPlatform());
 
 			TextView tvDelay = (TextView) v
 			.findViewById(R.id.tv_delay);
@@ -62,24 +62,24 @@ public class ViaAdapter extends AbstractAdapter<Via> {
 			
 			TextView tvDeparturePlatform = (TextView) v
 					.findViewById(R.id.tv_departure_platform);
-			tvDeparturePlatform.setText("via.getDeparturePlatform()");
+			tvDeparturePlatform.setText(via.getDeparture().getPlatform());
 
 			TextView tvArrivalTime = (TextView) v
 					.findViewById(R.id.tv_arrival_time);
-			tvArrivalTime.setText("ConnectionMaker.formatDate(via.getArrivalTime(), false,false)");
+			tvArrivalTime.setText(ConnectionMaker.formatDate(via.getArrival().getTime(), false,false));
 
 			TextView tvDepartureTime = (TextView) v
 					.findViewById(R.id.tv_departure_time);
-			tvDepartureTime.setText("ConnectionMaker.formatDate(via.getDepartureTime(), false,false)");
+			tvDepartureTime.setText(ConnectionMaker.formatDate(via.getDeparture().getTime(), false,false));
 
 			TextView tvTrain = (TextView) v.findViewById(R.id.tv_train);
-			tvTrain.setText("ConnectionMaker.getTrainId(ConnectionMaker.getTrainId(via.getVehicle()))");
+			tvTrain.setText(ConnectionMaker.getTrainId(ConnectionMaker.getTrainId(via.getVehicle())));
 
 			TextView tvStation = (TextView) v.findViewById(R.id.tv_station);
-			tvStation.setText("via.getStationName()");
+			tvStation.setText(via.getName());
 
 			TextView tvDuration = (TextView) v.findViewById(R.id.tv_duration);
-			tvDuration.setText("ConnectionMaker.formatDate(via.getDuration(),true,false)");
+			tvDuration.setText(ConnectionMaker.formatDate(via.getTimeBetween(),true,false));
 
 		}
 		return v;
