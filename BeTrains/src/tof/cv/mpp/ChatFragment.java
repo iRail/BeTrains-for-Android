@@ -71,6 +71,8 @@ public class ChatFragment extends ListFragment {
 				true);
 		
 		setHasOptionsMenu(true);
+		
+		context=getActivity();
 
 
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -380,8 +382,8 @@ public class ChatFragment extends ListFragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		if (!txt.equals("")) {
+		
+		if (txt!=null && !txt.equals("")) {
 			String[] messages = txt.split("<message>");
 
 			int i = 1;

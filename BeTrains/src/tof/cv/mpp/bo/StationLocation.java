@@ -1,7 +1,6 @@
 package tof.cv.mpp.bo;
 
-@SuppressWarnings("unchecked")
-public class StationLocation implements Comparable  {
+public class StationLocation implements Comparable<Object>  {
 
 	private String station;
 	private double lat;

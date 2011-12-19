@@ -98,7 +98,7 @@ public class ClosestFragment extends ListFragment {
 		
 		btEmpty.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				Intent myIntent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+				Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 				startActivity(myIntent);
 			}
 		});

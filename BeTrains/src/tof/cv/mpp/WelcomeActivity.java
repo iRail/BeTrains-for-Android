@@ -1,12 +1,8 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.ConnectionDialog;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.adapter.MenuAdapter;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +14,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.viewpagerindicator.CirclePageIndicator;
 

@@ -7,12 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBar.LayoutParams;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.viewpagerindicator.R;
 
 public class SettingsActivity extends FragmentActivity {
 

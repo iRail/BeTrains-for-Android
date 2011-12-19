@@ -12,12 +12,9 @@ import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -77,8 +74,7 @@ public class PlannerFragment extends ListFragment {
 	private static final int ACTIVITY_STATION = 2;
 	private static final int ACTIVITY_GETSTARTSTATION = 3;
 	private static final int ACTIVITY_GETSTOPSTATION = 4;
-	private static final int ACTIVITY_INFO = 6;
-
+	
 	private static final int CONNECTION_DIALOG_ID = 0;
 
 	private static SharedPreferences settings;
