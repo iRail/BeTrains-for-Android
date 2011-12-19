@@ -415,40 +415,29 @@ public class PlannerFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		positionClicked = position;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
-		 Log.v(TAG,"click");
+		Log.v(TAG, "click"+allConnections.connection
+				.get(positionClicked).getDuration());
 		try {
 
 			Connection currentConnection = allConnections.connection
 					.get(positionClicked);
-			Log.v(TAG,"size: "+currentConnection.getVias().via.size());
-			if (currentConnection.getVias().via.size() > 0) {
-				new ConnectionDialog(getActivity(), allConnections.connection
-						.get(positionClicked)).show();
-			} else
-				noDataClick(positionClicked);
+			
+			if (currentConnection.getVias()!=null && currentConnection.getVias().via.size() > 0) {
+				new ConnectionDialog(getActivity(),
+						allConnections.connection.get(positionClicked)).show();
+			} else {
+				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				i.putExtra("Name", currentConnection.getDeparture()
+						.getVehicle());
+				i.putExtra("Hour", mDate.getHours());
+				i.putExtra("Minute", mDate.getMinutes());
+				startActivity(i);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
+			//noDataClick(positionClicked);
 		}
-		
-		// Log.v(TAG,"click");
-		/*
-		 * Intent i = new Intent(getActivity(), InfoStationActivity.class); try
-		 * { Connection currentConnection = allConnections.connection
-		 * .get(positionClicked); try { i.putExtra("Name",
-		 * currentConnection.getDeparture() .getVehicle()); i.putExtra("Hour",
-		 * mDate.getHours()); i.putExtra("Minute", mDate.getMinutes());
-		 * startActivity(i); } catch (Exception e) { e.printStackTrace(); }
-		 * 
-		 * noDataClick(positionClicked); } catch (Exception e) {
-		 * e.printStackTrace(); e.printStackTrace(); i.putExtra("Name",
-		 * "Train 999"); i.putExtra("Hour", mDate.getHours());
-		 * i.putExtra("Minute", mDate.getMinutes()); startActivity(i); try {
-		 * noDataClick(positionClicked); } catch (Exception f) {
-		 * f.printStackTrace(); }
-		 * 
-		 * }
-		 */
-
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -588,15 +577,13 @@ public class PlannerFragment extends ListFragment {
 		}
 
 	}
-	
-	
 
 	protected void onPrepareDialog(int dialogId, Dialog dialog) {
 		switch (dialogId) {
 		case CONNECTION_DIALOG_ID: {
 			try {
-				new ConnectionDialog(getActivity(), allConnections.connection
-						.get(positionClicked)).show();
+				new ConnectionDialog(getActivity(),
+						allConnections.connection.get(positionClicked)).show();
 			} catch (Exception e) {
 				Toast.makeText(getActivity(),
 						getString(R.string.txt_create_connections),
