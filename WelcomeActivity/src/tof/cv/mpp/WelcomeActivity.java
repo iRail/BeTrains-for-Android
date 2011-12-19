@@ -21,6 +21,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 public class WelcomeActivity extends FragmentActivity {
 	/** Called when the activity is first created. */
+	//TEST CVE
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
