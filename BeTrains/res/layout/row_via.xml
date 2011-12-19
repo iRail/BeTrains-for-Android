@@ -1,61 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="vertical" android:paddingRight="6dip" android:background="@android:drawable/list_selector_background">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/list_selector_background"
+    android:orientation="vertical"
+    android:paddingRight="6dip" 
+    android:paddingTop="6dip"
+    android:paddingBottom="6dip">
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content" android:text="+X'"
-			android:textSize="16dip" android:layout_height="wrap_content"
-			android:gravity="right" android:id="@+id/tv_delay" android:textColor="#FF0000" 
-			android:textStyle="bold"/>
-		<TextView android:layout_width="0dip" android:gravity="left"
-			android:layout_weight="1" android:textColor="#FFFFFF" android:text="Station"
-			android:layout_height="wrap_content" android:id="@+id/tv_station"
-			android:ellipsize="marquee" android:singleLine="true"
-			android:textStyle="bold" android:textSize="16dip"
-			android:paddingLeft="4dip" />
-		<TextView android:layout_width="wrap_content" android:text="IC XXXX"
-			android:textSize="16dip" android:layout_height="wrap_content"
-			android:gravity="right" android:id="@+id/tv_train" android:textColor="#FFFFFF" />
-	</LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal">
-		<TextView android:layout_width="33dip" android:text="X"
-			android:textSize="16dip" android:layout_height="wrap_content"
-			android:id="@+id/tv_departure_platform" android:textStyle="bold"
-			android:gravity="center" android:textColor="@color/lightblue" />
+        <TextView
+            android:id="@+id/tv_delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="+X&apos;"
+            android:textColor="#FF0000"
+            android:textSize="16dip"
+            android:textStyle="bold" />
 
-		<TextView android:layout_width="wrap_content" android:text="XX:XX"
-			android:textSize="16dip" android:layout_height="wrap_content"
-			android:id="@+id/tv_departure_time" android:textColor="#FFFF00"
-			android:gravity="right" />
+        <TextView
+            android:id="@+id/tv_station"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="marquee"
+            android:gravity="left"
+            android:paddingLeft="4dip"
+            android:singleLine="true"
+            android:text="Station"
+            android:textSize="16dip"
+            android:textStyle="bold" />
 
-		<TextView android:layout_width="0dip" android:layout_weight="1"
-			android:textColor="#FFFFFF" android:text="00:00"
-			android:layout_height="wrap_content" android:id="@+id/tv_duration"
-			android:textStyle="bold" android:textSize="16dip" android:gravity="right" />
-	</LinearLayout>
+        <TextView
+            android:id="@+id/tv_train"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="IC XXXX"
+            android:textSize="16dip" />
+    </LinearLayout>
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal">
-		<TextView android:layout_width="33dip" android:text="X"
-			android:textSize="16dip" android:layout_height="wrap_content"
-			android:id="@+id/tv_arrival_platform" android:textStyle="bold"
-			android:gravity="center" android:textColor="@color/lightblue" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-		<TextView android:layout_width="wrap_content" android:text="XX:XX"
-			android:textSize="16dip" android:layout_height="wrap_content"
-			android:id="@+id/tv_arrival_time" android:textColor="#FFFF00" />
+        <TextView
+            android:id="@+id/tv_departure_platform"
+            android:layout_width="33dip"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="X"
+            android:textColor="@color/lightblue"
+            android:textSize="16dip"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_departure_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/timebg"
+            android:gravity="right"
+            android:text="XX:XX"
+            android:textColor="@color/darkyellow"
+            android:textSize="16dip" />
 
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="00:00"
+            android:textSize="16dip"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-	</LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
+        <TextView
+            android:id="@+id/tv_arrival_platform"
+            android:layout_width="33dip"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="X"
+            android:textColor="@color/lightblue"
+            android:textSize="16dip"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_arrival_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/timebg"
+            android:text="XX:XX"
+            android:textColor="@color/darkyellow"
+            android:textSize="16dip" />
+    </LinearLayout>
 
 </LinearLayout>

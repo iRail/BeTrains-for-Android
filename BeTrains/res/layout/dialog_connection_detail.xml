@@ -8,4 +8,5 @@
 		android:layout_width="fill_parent" android:layout_height="wrap_content"/>
 		
 	<include layout="@layout/row_station" android:id="@+id/view_arrival" />
+
 </LinearLayout>

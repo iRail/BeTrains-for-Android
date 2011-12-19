@@ -1,9 +1,6 @@
 package tof.cv.mpp.Utils;
 
 
-import java.util.ArrayList;
-
-import tof.cv.mpp.bo.Via;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

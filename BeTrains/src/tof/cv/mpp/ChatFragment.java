@@ -276,7 +276,7 @@ public class ChatFragment extends ListFragment {
 	 * default: return super.onHandleActionBarItemClick(item,position); } }
 	 */
 	@Override
-	public void onListItemClick(ListView l, View v, final int position, long id) {
+	public void onListItemClick(ListView l, final View v, final int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
 		if (trainId == null) {
@@ -290,11 +290,12 @@ public class ChatFragment extends ListFragment {
 							Bundle bundle = new Bundle();
 							bundle.putString("ID", listOfMessage.get(position)
 									.gettrain_id());
-							// Intent mIntent = new
-							// Intent(MessagesActivity.this,
-							// MessagesActivity.class);
-							// mIntent.putExtras(bundle);
-							// startActivity(mIntent);
+							Intent mIntent = new
+							Intent(v.getContext(),
+									ChatActivity.class);
+							mIntent.putExtras(bundle);
+							startActivityForResult(mIntent,0);
+							
 						}
 					});
 

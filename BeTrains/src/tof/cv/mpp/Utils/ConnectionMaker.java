@@ -375,13 +375,13 @@ public class ConnectionMaker {
 	// TODO -> rewrite !!! -__- with HTML parser !
 	public static ArrayList<Station> afficheGareL(String mon_url,
 			Context context) {
-		String TAG = "BETRAINS";
+		//String TAG = "BETRAINS";
 		mon_url += "&format=JSON&fast=true";
 		// Toast.makeText(context,mon_url, 1).show();
 		System.out
 				.println("Affiche les infos train depuis la page: " + mon_url);
 
-		long actualtime = new Date().getTime();
+		//long actualtime = new Date().getTime();
 
 		ArrayList<Station> listOfStations = new ArrayList<Station>();
 		listOfStations.clear();
@@ -572,7 +572,7 @@ public class ConnectionMaker {
 			mDbHelper.close();
 		}
 		Log.v(TAG, "Affiche les infos train depuis la page: " + mon_url);
-		String txt = "";
+		//String txt = "";
 		mDbHelper.open();
 		if (isDb) {
 			mDbHelper.deleteAllWidgetStops();
@@ -626,39 +626,6 @@ public class ConnectionMaker {
 		// "ms");
 
 		return maliste;
-	}
-
-	public class TrainLiveboard {
-
-		private Stops stops;
-		private String vehicle;
-
-		public String getName() {
-			return vehicle;
-		}
-
-		public Stops getStops() {
-			return stops;
-		}
-
-	}
-
-	public class Stops {
-
-		private String number;
-		private ArrayList<Stop> stop;
-
-		public ArrayList<Stop> getStop() {
-			return stop;
-		}
-	}
-
-	public class Stop {
-
-		private String time;
-		private String station;
-		private String delay;
-
 	}
 
 	public static ArrayList<Message> requestPhpRead(String trainId, int start,

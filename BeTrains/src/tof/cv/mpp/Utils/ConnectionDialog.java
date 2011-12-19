@@ -39,11 +39,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 /**
  * A dialog that can edit a shortcut intent. For now the icon is displayed, and
- * only the name may be edited. 
- * This dialog is created when a user clicks on a connection found in the list of the search results
+ * only the name may be edited. This dialog is created when a user clicks on a
+ * connection found in the list of the search results
  */
 public class ConnectionDialog extends Dialog implements OnClickListener {
 
@@ -54,19 +53,18 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	private View arrivalRow;
 	private Connection currentConnection;
 
-	public ConnectionDialog(Activity plannerActivity,
-			Connection connection) {
+	public ConnectionDialog(Activity plannerActivity, Connection connection) {
 		super(plannerActivity);
-		
+
 		currentConnection = connection;
 
 		// Setup the dialog
 		View finalView = getLayoutInflater().inflate(
 				R.layout.dialog_connection_detail, null, false);
 		departureRow = (View) finalView.findViewById(R.id.view_departure);
-		fillDetailRow(departureRow, connection.getDeparture());
+		fillDetailRow(departureRow, connection.getDeparture(), true);
 		arrivalRow = (View) finalView.findViewById(R.id.view_arrival);
-		fillDetailRow(arrivalRow, connection.getArrival());
+		fillDetailRow(arrivalRow, connection.getArrival(), false);
 		listview = (ListView) finalView.findViewById(R.id.listConnections);
 
 		setTitle(connection.getDeparture().getStation() + " - "
@@ -89,7 +87,6 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	public void onClick(DialogInterface dialog, int which) {
 	}
 
-	
 	public Bundle onSaveInstanceState() {
 		Bundle state = super.onSaveInstanceState();
 		return state;
@@ -108,32 +105,36 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		// Do nothing
 	}
 
-	public void fillDetailRow(View row, Station station) {
+	public void fillDetailRow(View row, Station station, Boolean isDeparture) {
 		TextView tvStation = (TextView) row.findViewById(R.id.tv_station);
 		tvStation.setText(station.getStation());
 
 		TextView tvTrain = (TextView) row.findViewById(R.id.tv_train);
-		tvTrain.setText(ConnectionMaker.getTrainId(station.getVehicle()));
-
+		if (isDeparture) 
+			tvTrain.setText("");
+		
+		else
+			tvTrain.setText(ConnectionMaker.getTrainId(station.getVehicle()));
+		
 		TextView tvPlatform = (TextView) row.findViewById(R.id.tv_platform);
 		tvPlatform.setText(station.getPlatform());
 
 		TextView tvTime = (TextView) row.findViewById(R.id.tv_time);
-		tvTime.setText(ConnectionMaker.formatDate(station.getTime(), false,false));
+		tvTime.setText(ConnectionMaker.formatDate(station.getTime(), false,
+				false));
 
 		TextView tvDelay = (TextView) row.findViewById(R.id.tv_delay);
-		if(!station.getDelay().contentEquals("0")){
-			Log.i(TAG,"delay: "+Integer.valueOf(station.getDelay()));
-			tvDelay.setText("+"+(int)(Integer.valueOf(station.getDelay())/60)+"'");
+		if (!station.getDelay().contentEquals("0")) {
+			Log.i(TAG, "delay: " + Integer.valueOf(station.getDelay()));
+			tvDelay.setText("+"
+					+ (int) (Integer.valueOf(station.getDelay()) / 60) + "'");
 		}
-
 
 	}
 
 	private void setOnListListener() {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
-		
 			public void onItemClick(AdapterView<?> arg0, View aView, int aInt,
 					long aLong) {
 
@@ -147,8 +148,7 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		departureRow.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				final CharSequence[] items = { getDeparture() };
-				showStationDialog(currentConnection.getDeparture(),
-						items);
+				showStationDialog(currentConnection.getDeparture(), items);
 
 			}
 		});
@@ -169,24 +169,22 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 
 	private void showViaDialog(final int position) {
 
-		final Via currentVia=currentConnection.getVias().via.get(position);
-		final String vehicle="ConnectionMaker.getTrainId(currentConnection.getVias().via.get(position).getVehicle())";
-		final CharSequence[] items = {
-				"currentVia.getStationName()",
-				vehicle };
-		
+		final String vehicle = ConnectionMaker.getTrainId(currentConnection
+				.getVias().via.get(position).getVehicle());
+		final Via currentVia = currentConnection.getVias().via.get(position);
+		final CharSequence[] items = { currentVia.getName(), vehicle };
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 		// builder.setTitle("title");
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				if (item == 1){
-
+				if (item == 1) {
 					startTrainInfoActivity(vehicle);
-					
 				}
 
-				else if (item == 0){
-					startStationInfoActivity("currentVia.getStationName()","currentVia.getDepartureTime()");
+				else if (item == 0) {
+					startStationInfoActivity(currentVia.getName(), currentVia
+							.getDeparture().getTime());
 				}
 
 			}
@@ -202,52 +200,53 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				if (item == 1)
-					startTrainInfoActivity(ConnectionMaker.getTrainId(station.getVehicle()));
+					startTrainInfoActivity(ConnectionMaker.getTrainId(station
+							.getVehicle()));
 				if (item == 0)
-					startStationInfoActivity(station.getStation(),station.getTime());
+					startStationInfoActivity(station.getStation(),
+							station.getTime());
 			}
 		});
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
-	
+
 	private String getDeparture() {
 		return currentConnection.getDeparture().getStation();
 	}
-	
+
 	private String getArrival() {
 		return currentConnection.getArrival().getStation();
 	}
-	
-	private String getDepartureVehicle() {
-		return currentConnection.getDeparture().getVehicle();
-	}
-	
-	private String getArrivalVehicle() {
-		return currentConnection.getArrival().getVehicle();
-	}
-	
-	private void startStationInfoActivity(String station,String time ) {
-		Intent i = new Intent(getContext(),
-				InfoStationActivity.class);
-		i.putExtra("gare_name", station);
-		i.putExtra("gare_heure", ConnectionMaker.getHourFromDate(time,false));
-		i.putExtra("gare_minute",ConnectionMaker.getMinutsFromDate(time,false));
+
+	/*
+	 * private String getDepartureVehicle() { return
+	 * currentConnection.getDeparture().getVehicle(); }
+	 * 
+	 * private String getArrivalVehicle() { return
+	 * currentConnection.getArrival().getVehicle(); }
+	 */
+
+	private void startStationInfoActivity(String station, String time) {
+		Intent i = new Intent(getContext(), InfoStationActivity.class);
+		i.putExtra("Name", station);
+		i.putExtra("Hour", ConnectionMaker.getHourFromDate(time, false));
+		i.putExtra("Minute", ConnectionMaker.getMinutsFromDate(time, false));
 		getContext().startActivity(i);
 	}
-	
+
 	private void startTrainInfoActivity(String vehicle) {
-		Intent i = new Intent(getContext(),
-				InfoTrainActivity.class);
-		i.putExtra("fromto",getDeparture()+" - "+getArrival());
-		try{
-			
-			i.putExtra(ConnectionDbAdapter.KEY_TRAINS,vehicle );
-			getContext().startActivity(i);	
-		}catch(Exception e){
+		Intent i = new Intent(getContext(), InfoTrainActivity.class);
+		i.putExtra("fromto", getDeparture() + " - " + getArrival());
+		try {
+
+			i.putExtra("Name", vehicle);
+			// i.putExtra("Hour", mDate.getHours());
+			// i.putExtra("Minute", mDate.getMinutes());
+			getContext().startActivity(i);
+		} catch (Exception e) {
 			e.printStackTrace();
-			Toast.makeText(getContext(), "Error",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
 		}
 	}
 

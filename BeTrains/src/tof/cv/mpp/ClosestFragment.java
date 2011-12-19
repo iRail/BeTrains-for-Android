@@ -312,7 +312,7 @@ public class ClosestFragment extends ListFragment {
 	 * The thread that is launched to read the database and compare each Station
 	 * location to my current location.
 	 */
-	@SuppressWarnings("unchecked")
+
 	private void updateListToLocationThread(double lat, double lon) {
 
 		mDbHelper.open();
