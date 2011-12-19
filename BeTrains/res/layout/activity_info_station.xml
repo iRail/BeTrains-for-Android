@@ -7,6 +7,8 @@
         android:id="@+id/fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:name="tof.cv.mpp.InfoStationFragment" />
+        android:name="tof.cv.mpp.InfoStationFragment" >
+        <!-- Preview: layout=@layout/fragment_info_station -->
+    </fragment>
 
 </FrameLayout>

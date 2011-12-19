@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 
 public class InfoStationFragment extends ListFragment {
-	protected static final String TAG = "ChatFragment";
+	protected static final String TAG = "InfoStationFragment";
 
 
 	@Override
