@@ -1,7 +1,5 @@
 package tof.cv.mpp;
 
-import java.util.Date;
-
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.WebUtils;
 import tof.cv.mpp.Utils.WebUtils.Vehicle;
@@ -13,14 +11,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-
-
 
 public class InfoTrainFragment extends ListFragment {
 	protected static final String TAG = "ChatFragment";
@@ -41,102 +36,73 @@ public class InfoTrainFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setHasOptionsMenu(true);
 	}
-	
-	public void displayInfo(String vehicle){
+
+	public void displayInfo(String vehicle) {
+		progressDialog = ProgressDialog.show(getActivity(), "",
+				getString(R.string.txt_patient), true);
 		myTrainSearchThread(vehicle);
 	}
-	
+
 	private void myTrainSearchThread(final String vehicle) {
 		Runnable trainSearch = new Runnable() {
-
 			public void run() {
-
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						progressDialog = ProgressDialog.show(getActivity(), "",
-								getString(R.string.txt_patient), true);
-					}
-				});
-				currentVehicle=makeApiVehicleRequest(vehicle);
+				currentVehicle = WebUtils.getAPIvehicle(vehicle, getActivity());
 				getActivity().runOnUiThread(dismissPd);
 				getActivity().runOnUiThread(displayResult);
 			}
 		};
-
 		Thread thread = new Thread(null, trainSearch, "MyThread");
 		thread.start();
-
 	}
-	
-	public Vehicle makeApiVehicleRequest(String vehicle) {
-		// allConnections = new Connections();
-		Log.e("Test", "Check");
-		Date mDate = new Date();
-		return WebUtils.getAPIvehicle(
-				"" + (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
-						+ mDate.getDate(), "" + mDate.getHours(),
-				"" + mDate.getMinutes(), "langue",vehicle, getActivity());
-		
-		/*if (allConnections == null) {
-			
-			getActivity().runOnUiThread(new Runnable() {
-				public void run() {
-					Toast.makeText(getActivity(), R.string.txt_error,
-							Toast.LENGTH_LONG).show();
-				}
-			});
-			return null;
 
-		}*/
-	}
-	
+
 	private Runnable dismissPd = new Runnable() {
 		public void run() {
 			fillData();
 			progressDialog.dismiss();
 		}
 	};
-	
+
 	private Runnable displayResult = new Runnable() {
 		public void run() {
-			
-			String txt="";
-			try{
-				for (VehicleStop aStop:currentVehicle.getVehicleStops().getVehicleStop()){
-					txt+=aStop.getStation()+" - "+aStop.getTime()+"\n";
+
+			String txt = "";
+			try {
+				for (VehicleStop aStop : currentVehicle.getVehicleStops()
+						.getVehicleStop()) {
+					txt += aStop.getStation() + " - " + aStop.getTime() + "\n";
 				}
-				
-			}catch(Exception e){
-				txt=e.getMessage();
+
+			} catch (Exception e) {
+				txt = getString(R.string.txt_error)+"\n\n"+e.toString();
 				e.printStackTrace();
 			}
-			TextView tv=(TextView)getActivity().findViewById(android.R.id.empty);
+			TextView tv = (TextView) getActivity().findViewById(
+					android.R.id.empty);
 			tv.setText(txt);
-			
-			//Toast.makeText(getActivity(),txt,Toast.LENGTH_LONG).show();
 		}
 	};
-	
-	private void fillData() {
-		/*if (allConnections != null && allConnections.connection != null) {
-			Log.i(TAG, "*** Remplis avec les infos");
-			connAdapter = new ConnectionAdapter(this.getActivity()
-					.getBaseContext(), R.layout.row_planner,
-					allConnections.connection);
-			setListAdapter(connAdapter);
-			registerForContextMenu(getListView());
 
-		}*/
+	private void fillData() {
+		/*
+		 * if (allConnections != null && allConnections.connection != null) {
+		 * Log.i(TAG, "*** Remplis avec les infos"); connAdapter = new
+		 * ConnectionAdapter(this.getActivity() .getBaseContext(),
+		 * R.layout.row_planner, allConnections.connection);
+		 * setListAdapter(connAdapter); registerForContextMenu(getListView());
+		 * 
+		 * }
+		 */
 	}
-	
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-       
-    }
-    
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -150,6 +116,5 @@ public class InfoTrainFragment extends ListFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-    
-	
+
 }
