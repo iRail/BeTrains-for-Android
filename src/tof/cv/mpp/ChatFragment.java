@@ -16,7 +16,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import tof.cv.mpp.Utils.ConnectionDbAdapter;
-import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
@@ -146,7 +145,7 @@ public class ChatFragment extends ListFragment {
 							.contentEquals(""))
 						Toast.makeText(getActivity(), "Please write something",
 								Toast.LENGTH_LONG).show();
-					else if (ConnectionMaker.requestPhpSend(pseudo,
+					else if (requestPhpSend(pseudo,
 							messageTxtField.getText().toString(), trainId)) {
 						Toast.makeText(getActivity(),
 								getString(android.R.string.ok),
@@ -417,10 +416,11 @@ public class ChatFragment extends ListFragment {
 		}
 
 	}
-/*
+
 	public static boolean requestPhpSend(String pseudo, String message,
 			String trainId) {
-
+		String txt = "";
+		/*
 		ArrayList<Message> maliste = new ArrayList<Message>();
 		// On cree le client
 		HttpClient client = new HttpClient();
@@ -474,9 +474,9 @@ public class ChatFragment extends ListFragment {
 				}
 			}
 		}
-
+*/
 		return txt.contains("true");
-	}*/
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

@@ -114,13 +114,13 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 			tvTrain.setText("");
 		
 		else
-			tvTrain.setText(ConnectionMaker.getTrainId(station.getVehicle()));
+			tvTrain.setText(Utils.getTrainId(station.getVehicle()));
 		
 		TextView tvPlatform = (TextView) row.findViewById(R.id.tv_platform);
 		tvPlatform.setText(station.getPlatform());
 
 		TextView tvTime = (TextView) row.findViewById(R.id.tv_time);
-		tvTime.setText(ConnectionMaker.formatDate(station.getTime(), false,
+		tvTime.setText(Utils.formatDate(station.getTime(), false,
 				false));
 
 		TextView tvDelay = (TextView) row.findViewById(R.id.tv_delay);
@@ -160,7 +160,7 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 
 				final CharSequence[] items = {
 						getArrival(),
-						ConnectionMaker.getTrainId(currentConnection
+						Utils.getTrainId(currentConnection
 								.getArrival().getVehicle()) };
 				showStationDialog(currentConnection.getArrival(), items);
 			}
@@ -169,7 +169,7 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 
 	private void showViaDialog(final int position) {
 
-		final String vehicle = ConnectionMaker.getTrainId(currentConnection
+		final String vehicle = Utils.getTrainId(currentConnection
 				.getVias().via.get(position).getVehicle());
 		final Via currentVia = currentConnection.getVias().via.get(position);
 		final CharSequence[] items = { currentVia.getName(), vehicle };
@@ -200,7 +200,7 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				if (item == 1)
-					startTrainInfoActivity(ConnectionMaker.getTrainId(station
+					startTrainInfoActivity(Utils.getTrainId(station
 							.getVehicle()));
 				if (item == 0)
 					startStationInfoActivity(station.getStation(),
@@ -230,8 +230,8 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	private void startStationInfoActivity(String station, String time) {
 		Intent i = new Intent(getContext(), InfoStationActivity.class);
 		i.putExtra("Name", station);
-		i.putExtra("Hour", ConnectionMaker.getHourFromDate(time, false));
-		i.putExtra("Minute", ConnectionMaker.getMinutsFromDate(time, false));
+		i.putExtra("Hour", Utils.getHourFromDate(time, false));
+		i.putExtra("Minute", Utils.getMinutsFromDate(time, false));
 		getContext().startActivity(i);
 	}
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Connection;
 import android.content.Context;
 import android.text.Html;
@@ -76,15 +76,15 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			}
 
 			if (triptime != null) {
-				triptime.setText(ConnectionMaker.formatDate(conn.getDuration(),
+				triptime.setText(Utils.formatDate(conn.getDuration(),
 						true, false));
 			}
 			if (departtime != null) {
-				departtime.setText(ConnectionMaker.formatDate(conn
+				departtime.setText(Utils.formatDate(conn
 						.getDeparture().getTime(), false, false));
 			}
 			if (arrivaltime != null) {
-				arrivaltime.setText(ConnectionMaker.formatDate(conn
+				arrivaltime.setText(Utils.formatDate(conn
 						.getArrival().getTime(), false, false));
 			}
 
@@ -94,7 +94,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 					numberoftrains.setText(Html.fromHtml("Trains: <b>"
 							+ (conn.getVias().getNumberOfVias()+1) + "</b>"));
 				else
-					numberoftrains.setText(Html.fromHtml(ConnectionMaker
+					numberoftrains.setText(Html.fromHtml(Utils
 							.getTrainId(conn.getDeparture().getVehicle())));
 			}
 

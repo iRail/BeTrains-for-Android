@@ -3,7 +3,7 @@ package tof.cv.mpp.adapter;
 import java.util.ArrayList;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Via;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -66,20 +66,20 @@ public class ViaAdapter extends AbstractAdapter<Via> {
 
 			TextView tvArrivalTime = (TextView) v
 					.findViewById(R.id.tv_arrival_time);
-			tvArrivalTime.setText(ConnectionMaker.formatDate(via.getArrival().getTime(), false,false));
+			tvArrivalTime.setText(Utils.formatDate(via.getArrival().getTime(), false,false));
 
 			TextView tvDepartureTime = (TextView) v
 					.findViewById(R.id.tv_departure_time);
-			tvDepartureTime.setText(ConnectionMaker.formatDate(via.getDeparture().getTime(), false,false));
+			tvDepartureTime.setText(Utils.formatDate(via.getDeparture().getTime(), false,false));
 
 			TextView tvTrain = (TextView) v.findViewById(R.id.tv_train);
-			tvTrain.setText(ConnectionMaker.getTrainId(ConnectionMaker.getTrainId(via.getVehicle())));
+			tvTrain.setText(Utils.getTrainId(via.getVehicle()));
 
 			TextView tvStation = (TextView) v.findViewById(R.id.tv_station);
 			tvStation.setText(via.getName());
 
 			TextView tvDuration = (TextView) v.findViewById(R.id.tv_duration);
-			tvDuration.setText(ConnectionMaker.formatDate(via.getTimeBetween(),true,false));
+			tvDuration.setText(Utils.formatDate(via.getTimeBetween(),true,false));
 
 		}
 		return v;

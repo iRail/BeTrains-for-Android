@@ -3,6 +3,7 @@ package tof.cv.mpp;
 import java.io.File;
 
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.Utils.WebUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class TwitterFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Utils.loadTweets(getActivity(), getListView());
+		WebUtils.loadTweets(getActivity(), getListView());
 	}
 
 		

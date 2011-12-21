@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import tof.cv.mpp.Utils.ConnectionDialog;
-import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.Utils.WebUtils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
@@ -323,7 +323,7 @@ public class PlannerFragment extends ListFragment {
 
 		else {
 			Log.i(TAG, "*** Remplis avec le Cache");
-			allConnections = ConnectionMaker.getCachedConnections();
+			allConnections = Utils.getCachedConnections();
 			if (allConnections != null) {
 				connAdapter = new ConnectionAdapter(this.getActivity()
 						.getBaseContext(), R.layout.row_planner,
@@ -537,7 +537,7 @@ public class PlannerFragment extends ListFragment {
 
 		// allConnections = new Connections();
 
-		allConnections = ConnectionMaker.getAPIConnections(
+		allConnections = WebUtils.getAPIConnections(
 				"" + (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
 						+ mDate.getDate(), "" + mDate.getHours(),
 				"" + mDate.getMinutes(), langue, myStart, myArrival, dA,

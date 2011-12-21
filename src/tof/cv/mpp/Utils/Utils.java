@@ -1,8 +1,10 @@
 package tof.cv.mpp.Utils;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,8 +12,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,26 +23,22 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import tof.cv.mpp.R;
-import tof.cv.mpp.adapter.TweetItemAdapter;
-import tof.cv.mpp.bo.Tweets;
+import tof.cv.mpp.bo.Connections;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 public class Utils {
+	
+	final static String FILENAMECONN = "connections.txt";
+	final static String DIRPATH = "/Android/data/BeTrains";
 	
 	public static void setFullscreen(Activity context) {
 		context.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -46,62 +46,103 @@ public class Utils {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
+	
+	public static String getHourFromDate(String dateFromAPI, boolean isDuration) {
+		Date date;
 
-	public static void loadTweets(final Activity a, final ListView l) {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					String url = "http://search.twitter.com/search.json?q=BETRAINS";
-					SharedPreferences mDefaultPrefs = PreferenceManager
-							.getDefaultSharedPreferences(a);
-					;
-					if (mDefaultPrefs.getBoolean("mNMBS", a.getResources()
-							.getBoolean(R.bool.nmbs)))
-						url += "%20OR%20NMBS";
+		DateFormat dateFormat = new SimpleDateFormat("HH");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
+		try {
+			if (isDuration) {
+				date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
+			} else {
 
-					if (mDefaultPrefs.getBoolean("mSNCB", a.getResources()
-							.getBoolean(R.bool.sncb)))
-						url += "%20OR%20SNCB";
-
-					if (mDefaultPrefs.getBoolean("miRail", true))
-						url += "%20OR%20irail";
-
-					if (mDefaultPrefs.getBoolean("mNavetteurs", a
-							.getResources().getBoolean(R.bool.navetteurs)))
-						url += "%20OR%20navetteurs";
-					
-					url+="&rpp=50";
-					
-					InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains/Twitter",null,a);
-					Gson gson = new Gson();
-					final Reader reader = new InputStreamReader(is);
-					final Tweets tweets= gson.fromJson(reader,Tweets.class);
-					
-					a.runOnUiThread(new Thread(new Runnable() {
-						public void run() {
-
-							l.setAdapter(new TweetItemAdapter(a,
-									R.layout.row_tweet, tweets.results));
-						}
-					}));
-				} catch (Exception e) {
-					e.printStackTrace();
-					a.runOnUiThread(new Thread(new Runnable() {
-						public void run() {
-							TextView tv = (TextView) a.findViewById(R.id.fail);
-							tv.setVisibility(View.VISIBLE);
-
-						}
-					}));
-
-				}
-
+				date = new Date((Long.valueOf(dateFromAPI)) * 1000);
+				Log.i("", "getHourFromDate: " + date.toString());
 			}
-		}).start();
+			return dateFormat.format(date);
+		} catch (Exception e) {
+			return dateFromAPI;
+		}
+
+	}
+
+	public static String getMinutsFromDate(String dateFromAPI,
+			boolean isDuration) {
+		Date date;
+		DateFormat dateFormat = new SimpleDateFormat("mm");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
+		try {
+			if (isDuration) {
+				date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
+			} else {
+
+				date = new Date((Long.valueOf(dateFromAPI)) * 1000);
+				Log.i("", "getMinutsFromDate: " + date.toString());
+			}
+			return dateFormat.format(date);
+		} catch (Exception e) {
+			return dateFromAPI;
+		}
+
+	}
+	
+	public static String getTrainId(String train) {
+
+		String[] array = train.split("\\.");
+
+		if (array.length == 0)
+			return train;
+		else
+			return array[array.length - 1];
 
 	}
 
 	
+	public static String formatDate(String dateFromAPI, boolean isDuration,
+			boolean isDelay) {
+		//TODO: Lot of tweaks, need to be cleaned
+		Date date;
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
+
+		if (dateFromAPI.contentEquals("0"))
+			return "";
+		try {
+			if (isDuration) {
+
+				if (isDelay)
+					return "+" + Integer.valueOf(dateFromAPI) / 60 + "'";
+				else
+					date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
+			} else {
+				date = new Date((Long.valueOf(dateFromAPI)) * 1000);
+			}
+			return dateFormat.format(date);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return dateFromAPI;
+		}
+
+	}
+	
+	public static Connections getCachedConnections() {
+		try {
+			File memory = Environment.getExternalStorageDirectory();
+			File dir = new File(memory.getAbsolutePath() + DIRPATH);
+			dir.mkdirs();
+			File file = new File(dir, Utils.FILENAMECONN);
+			InputStream is = new BufferedInputStream(new FileInputStream(file));
+			Gson gson = new Gson();
+			final Reader reader = new InputStreamReader(is);
+			return gson.fromJson(reader, Connections.class);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static InputStream DownloadJsonFromUrlAndCacheToSd(String url,
 			String dirName, String fileName, Context context) {
 

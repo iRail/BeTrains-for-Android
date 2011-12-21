@@ -2,10 +2,10 @@ package tof.cv.mpp;
 
 import java.util.Date;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
-import tof.cv.mpp.Utils.ConnectionMaker.Vehicle;
-import tof.cv.mpp.Utils.ConnectionMaker.VehicleStop;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.Utils.WebUtils;
+import tof.cv.mpp.Utils.WebUtils.Vehicle;
+import tof.cv.mpp.Utils.WebUtils.VehicleStop;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -75,7 +75,7 @@ public class InfoTrainFragment extends ListFragment {
 		// allConnections = new Connections();
 		Log.e("Test", "Check");
 		Date mDate = new Date();
-		return ConnectionMaker.getAPIvehicle(
+		return WebUtils.getAPIvehicle(
 				"" + (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
 						+ mDate.getDate(), "" + mDate.getHours(),
 				"" + mDate.getMinutes(), "langue",vehicle, getActivity());
