@@ -13,7 +13,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import tof.cv.mpp.Utils.LocationDbHelper;
+import tof.cv.mpp.Utils.DbAdapterLocation;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
@@ -50,7 +50,7 @@ public class ClosestFragment extends ListFragment {
 	private MyGPSLocationListener locationGpsListener;
 	private MyNetworkLocationListener locationNetworkListener;
 	private LocationManager locationManager;
-	private static LocationDbHelper mDbHelper;
+	private static DbAdapterLocation mDbHelper;
 	private Button btnUpdate;
 	private Location lastLocation;
 	private boolean isFirst = false;
@@ -92,7 +92,7 @@ public class ClosestFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		m_ProgressDialog = new MyProgressDialog(getActivity());
-		mDbHelper = new LocationDbHelper(getActivity());
+		mDbHelper = new DbAdapterLocation(getActivity());
 		tvEmpty = (TextView) getActivity().findViewById(R.id.empty_tv);
 		btEmpty = (Button) getActivity().findViewById(R.id.empty_bt);
 		
@@ -507,14 +507,14 @@ public class ClosestFragment extends ListFragment {
 			double lat, double lon) {
 		locationCursor.moveToPosition(i);
 		String strName = locationCursor.getString(locationCursor
-				.getColumnIndex(LocationDbHelper.KEY_STATION_NAME));
+				.getColumnIndex(DbAdapterLocation.KEY_STATION_NAME));
 		m_ProgressDialog.incrementProgressBy(1);
 		
 		double iLat = locationCursor.getInt(locationCursor
-				.getColumnIndex(LocationDbHelper.KEY_STATION_LAT));
+				.getColumnIndex(DbAdapterLocation.KEY_STATION_LAT));
 
 		double iLon = locationCursor.getInt(locationCursor
-				.getColumnIndex(LocationDbHelper.KEY_STATION_LON));
+				.getColumnIndex(DbAdapterLocation.KEY_STATION_LON));
 
 		double dDis = StationLocationAdapter.distance(lat, lon, iLat / 1E6,
 				iLon / 1E6);

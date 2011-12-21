@@ -219,7 +219,7 @@ public class ConnectionMaker {
 
 	public static void addAsStarred(String item, String item2, int type,
 			Context context) {
-		ConnectionDbAdapter mDbHelper = new ConnectionDbAdapter(context);
+		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
 		mDbHelper.open();
 		mDbHelper.createFav(item, item2, type);
 		mDbHelper.close();

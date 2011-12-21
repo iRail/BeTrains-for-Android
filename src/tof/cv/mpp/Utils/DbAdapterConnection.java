@@ -21,7 +21,7 @@ import android.util.Log;
  */
 
 //NOTE: FAV_TYPE: 1=Station 2=Train 3=Trip 
-public class ConnectionDbAdapter {
+public class DbAdapterConnection {
 
 	public static final String KEY_TITLE = "title";
 	public static final String KEY_BODY = "body";
@@ -143,7 +143,7 @@ public class ConnectionDbAdapter {
 	 * @param ctx
 	 *            the Context within which to work
 	 */
-	public ConnectionDbAdapter(Context ctx) {
+	public DbAdapterConnection(Context ctx) {
 		this.mCtx = ctx;
 	}
 
@@ -157,7 +157,7 @@ public class ConnectionDbAdapter {
 	 * @throws SQLException
 	 *             if the database could be neither opened or created
 	 */
-	public ConnectionDbAdapter open() throws SQLException {
+	public DbAdapterConnection open() throws SQLException {
 		mDbHelper = new DatabaseHelper(mCtx);		
 		mDb = mDbHelper.getWritableDatabase();
 		return this;

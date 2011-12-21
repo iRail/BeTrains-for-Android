@@ -15,7 +15,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import tof.cv.mpp.Utils.ConnectionDbAdapter;
+import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
@@ -318,7 +318,7 @@ public class ChatFragment extends ListFragment {
 							Intent i = new Intent(context,
 									InfoTrainActivity.class);
 
-							i.putExtra(ConnectionDbAdapter.KEY_TRAINS,
+							i.putExtra(DbAdapterConnection.KEY_TRAINS,
 									listOfMessage.get(position).gettrain_id());
 
 							startActivity(i);

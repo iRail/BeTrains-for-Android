@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-public class WebUtils {
+public class UtilsWeb {
 
 	public static InputStream getJSONData(String url, Context context) {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -66,7 +66,7 @@ public class WebUtils {
 			String trainsOnly, final Context context) {
 		String TAG = "BETRAINS";
 
-		ConnectionDbAdapter mDbHelper = new ConnectionDbAdapter(context);
+		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
 		mDbHelper.open();
 
 		if (day.length() == 1)

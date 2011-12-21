@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package tof.cv.mpp.Utils;
+package tof.cv.mpp.view;
 
 import tof.cv.mpp.InfoStationActivity;
 import tof.cv.mpp.InfoTrainActivity;
 import tof.cv.mpp.R;
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ViaAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Station;

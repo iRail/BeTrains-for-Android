@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import tof.cv.mpp.Utils.ConnectionDialog;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.WebUtils;
+import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
+import tof.cv.mpp.view.ConnectionDialog;
 import tof.cv.mpp.view.DateTimePicker;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -537,7 +537,7 @@ public class PlannerFragment extends ListFragment {
 
 		// allConnections = new Connections();
 
-		allConnections = WebUtils.getAPIConnections(
+		allConnections = UtilsWeb.getAPIConnections(
 				"" + (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
 						+ mDate.getDate(), "" + mDate.getHours(),
 				"" + mDate.getMinutes(), langue, myStart, myArrival, dA,

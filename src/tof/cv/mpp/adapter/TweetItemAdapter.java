@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.Utils.ImageLoader;
 import tof.cv.mpp.bo.Tweet;
+import tof.cv.mpp.view.ImageLoader;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;

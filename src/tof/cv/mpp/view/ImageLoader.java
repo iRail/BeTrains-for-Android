@@ -1,4 +1,4 @@
-package tof.cv.mpp.Utils;
+package tof.cv.mpp.view;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import tof.cv.mpp.R;
+import tof.cv.mpp.Utils.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;

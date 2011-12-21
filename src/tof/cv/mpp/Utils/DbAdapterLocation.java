@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class LocationDbHelper {
+public class DbAdapterLocation {
 
 	public static final String KEY_STATION_NAME = "stationname";
 	public static final String KEY_STATION_LAT = "lat";
@@ -67,7 +67,7 @@ public class LocationDbHelper {
 	 * @param ctx
 	 *            the Context within which to work
 	 */
-	public LocationDbHelper(Context ctx) {
+	public DbAdapterLocation(Context ctx) {
 		this.mCtx = ctx;
 	}
 
@@ -81,7 +81,7 @@ public class LocationDbHelper {
 	 * @throws SQLException
 	 *             if the database could be neither opened or created
 	 */
-	public LocationDbHelper open() throws SQLException {
+	public DbAdapterLocation open() throws SQLException {
 		mDbHelper = new DatabaseHelper(mCtx);		
 		mDb = mDbHelper.getWritableDatabase();
 		return this;

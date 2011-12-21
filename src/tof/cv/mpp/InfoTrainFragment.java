@@ -1,9 +1,9 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.WebUtils;
-import tof.cv.mpp.Utils.WebUtils.Vehicle;
-import tof.cv.mpp.Utils.WebUtils.VehicleStop;
+import tof.cv.mpp.Utils.UtilsWeb;
+import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
+import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,7 +49,7 @@ public class InfoTrainFragment extends ListFragment {
 	private void myTrainSearchThread(final String vehicle) {
 		Runnable trainSearch = new Runnable() {
 			public void run() {
-				currentVehicle = WebUtils.getAPIvehicle(vehicle, getActivity());
+				currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity());
 				getActivity().runOnUiThread(dismissPd);
 				getActivity().runOnUiThread(displayResult);
 			}
