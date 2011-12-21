@@ -422,7 +422,7 @@ public class PlannerFragment extends ListFragment {
 				new ConnectionDialog(getActivity(),
 						allConnections.connection.get(positionClicked)).show();
 			} else {
-				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
 						.getVehicle());
 				i.putExtra("Hour", mDate.getHours());

@@ -68,9 +68,9 @@ public class ConnectionMaker {
 			"FR/LILLE", "FR/PARIS", "FR/STRASBOURG", "DE/AACHEN HBF",
 			"DE/KOLN HBF", "LU/LUXEMBOURG", "NL/DEN HAAG", "NL/AMSTERDAM",
 			"NL/MAASTRICHT", "NL/ROTTERDAM" };
-	
-	public final static String[] LIST_OF_FAV_STATIONS = new String[] {
-		"FAV1","FAV2","FAV3","FAV4","FAV5"  };
+
+	public final static String[] LIST_OF_FAV_STATIONS = new String[] { "FAV1",
+			"FAV2", "FAV3", "FAV4", "FAV5" };
 
 	public final static String[] LIST_OF_STATIONS = new String[] {
 			"'S GRAVENBRAKEL", "AALST", "AALST KERREBROEK", "AALTER", "AARLEN",
@@ -216,8 +216,6 @@ public class ConnectionMaker {
 			"ZEEBRUGGE STRAND", "ZELE", "ZELLIK", "ZICHEM", "ZINGEM", "ZINNIK",
 			"ZOLDER", "ZOTTEGEM", "ZWANKENDAMME", "ZWIJNDRECHT" };
 
-	
-
 	/*
 	 * public static void fillDate(Activity context, String pYear, String
 	 * pMonth, String pDay) { final TextView textYear = (TextView)
@@ -234,8 +232,6 @@ public class ConnectionMaker {
 	 * }
 	 */
 
-
-
 	public static void setFullscreen(Activity context) {
 		context.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		context.getWindow().setFlags(
@@ -247,12 +243,14 @@ public class ConnectionMaker {
 			Context context) {
 
 		AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
-		alt_bld.setMessage(body).setCancelable(false).setPositiveButton(
-				android.R.string.ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						// Action for 'Yes' Button
-					}
-				});
+		alt_bld.setMessage(body)
+				.setCancelable(false)
+				.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// Action for 'Yes' Button
+							}
+						});
 		AlertDialog alert = alt_bld.create();
 		alert.setTitle(title);
 		alert.show();
@@ -262,13 +260,15 @@ public class ConnectionMaker {
 			final Context context) {
 
 		AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
-		alt_bld.setMessage(body).setCancelable(false).setPositiveButton(
-				android.R.string.ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						// Action for 'Yes' Button
-						((Activity) context).finish();
-					}
-				});
+		alt_bld.setMessage(body)
+				.setCancelable(false)
+				.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// Action for 'Yes' Button
+								((Activity) context).finish();
+							}
+						});
 		AlertDialog alert = alt_bld.create();
 		alert.setTitle(title);
 		alert.show();
@@ -283,82 +283,143 @@ public class ConnectionMaker {
 
 	}
 
-	public static Connections getAPIConnections(String year,
-			String month, String day, String hour, String minutes,
-			String language, String departure, String arrival,
-			String departureArrival, String trainsOnly, final Context context) {
+	public static Connections getAPIConnections(String year, String month,
+			String day, String hour, String minutes, String language,
+			String departure, String arrival, String departureArrival,
+			String trainsOnly, final Context context) {
 		String TAG = "BETRAINS";
 
 		mDbHelper = new ConnectionDbAdapter(context);
 		mDbHelper.open();
-		
-		if (day.length()==1)
-				day="0"+day;
-		
-		if (month.length()==1)
-			month="0"+month;
-		if (month.contentEquals("13"))
-			month="01";
 
-		// DefaultHttpClient httpclient = new DefaultHttpClient();
+		if (day.length() == 1)
+			day = "0" + day;
+
+		if (month.length() == 1)
+			month = "0" + month;
+		if (month.contentEquals("13"))
+			month = "01";
+
 		String url = "http://api.irail.be/connections.php?to="
 				// String url = "http://dev.api.irail.be/connections.php?to="
 				+ arrival + "&from=" + departure + "&date=" + day + month
 				+ year + "&time=" + hour + minutes + "&timeSel="
 				+ departureArrival + "&lang=" + language + "&typeOfTransport="
-				+ trainsOnly+"&format=json";
+				+ trainsOnly + "&format=json&fast=true";
 		url = url.replace(" ", "%20");
 		Log.v(TAG, url);
 
 		try {
-			InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,DIRPATH,FILENAMECONN,context);
-			
+			InputStream is = Utils.DownloadJsonFromUrlAndCacheToSd(url,
+					DIRPATH, FILENAMECONN, context);
+
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
-			return gson.fromJson(reader,Connections.class);
+			return gson.fromJson(reader, Connections.class);
 
-			
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			Log.i("","*******");
+			Log.i("", "*******");
 			mDbHelper.close();
 			return null;
-		} 
+		}
+	}
+
+	public static Vehicle getAPIvehicle(String year, String month, String day,
+			String hour, String minutes, String language, String vehicle,
+			final Context context) {
+		String TAG = "getAPITrain";
+
+		String langue = context.getString(R.string.url_lang_2);
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				"prefnl", false))
+			langue = "nl";
+
+		String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
+				+  "&format=JSON&fast=true";
+		//url+="&lang=" + langue ;
+		System.out.println("Affiche les infos train depuis la page: " + url);
+
+		try {
+			// Log.i(TAG, "Json Parser started..");
+			Gson gson = new Gson();
+			Reader r = new InputStreamReader(getJSONData(url, context));
+			return gson.fromJson(r, Vehicle.class);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public class Vehicle {
+
+		private VehicleStops stops;
+		private String version;
+
+		public VehicleStops getVehicleStops() {
+			return stops;
+		}
+
+		public String getVersion() {
+			return version;
+		}
+
 	}
 	
+	public class VehicleStops {
+
+		private List<VehicleStop> stop;
+
+		public List<VehicleStop> getVehicleStop() {
+			return stop;
+		}
+	}
+
+	public class VehicleStop {
+
+		private String station;
+		private String time;
+		private String delay;
+
+		public String getStation() {
+			return station;
+		}
+		public String getTime() {
+			return time;
+		}
+		public String getDelay() {
+			return delay;
+		}
+	}
 	public static Connections getCachedConnections() {
 
 		try {
 			File memory = Environment.getExternalStorageDirectory();
-			File dir = new File(memory.getAbsolutePath() +DIRPATH);
+			File dir = new File(memory.getAbsolutePath() + DIRPATH);
 			dir.mkdirs();
 			File file = new File(dir, FILENAMECONN);
-			InputStream is=new BufferedInputStream(new FileInputStream(file));
+			InputStream is = new BufferedInputStream(new FileInputStream(file));
 			Gson gson = new Gson();
 			final Reader reader = new InputStreamReader(is);
-			
-			//TEST
-			/*
-			String chaine="";
-			BufferedReader br=new BufferedReader(reader);
-			String ligne;
-			while ((ligne=br.readLine())!=null){
-				System.out.println(ligne);
-				chaine+=ligne+"\n";
-			}
-			br.close(); 
-			Log.i("TAG", "***"+chaine);
-			*/
-			
-			return gson.fromJson(reader,Connections.class);
 
-			
+			// TEST
+			/*
+			 * String chaine=""; BufferedReader br=new BufferedReader(reader);
+			 * String ligne; while ((ligne=br.readLine())!=null){
+			 * System.out.println(ligne); chaine+=ligne+"\n"; } br.close();
+			 * Log.i("TAG", "***"+chaine);
+			 */
+
+			return gson.fromJson(reader, Connections.class);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} 
+		}
 	}
-	
+
 	public static String capitalize(String inputWord) {
 		String firstLetter = inputWord.substring(0, 1); // Get first letter
 		String remainder = inputWord.substring(1); // Get remainder of word.
@@ -370,47 +431,6 @@ public class ConnectionMaker {
 
 	{
 		return Html.fromHtml(bla).toString();
-	}
-
-	// TODO -> rewrite !!! -__- with HTML parser !
-	public static ArrayList<Station> afficheGareL(String mon_url,
-			Context context) {
-		//String TAG = "BETRAINS";
-		mon_url += "&format=JSON&fast=true";
-		// Toast.makeText(context,mon_url, 1).show();
-		System.out
-				.println("Affiche les infos train depuis la page: " + mon_url);
-
-		//long actualtime = new Date().getTime();
-
-		ArrayList<Station> listOfStations = new ArrayList<Station>();
-		listOfStations.clear();
-/*
-		try {
-			// Log.i("MY INFO", "Json Parser started..");
-			Gson gson = new Gson();
-			Reader r = new InputStreamReader(getJSONData(mon_url, context));
-
-			Liveboard obj = gson.fromJson(r, Liveboard.class);
-			// TODO DISTANCE
-			Log.i("NAME", "NAME" + obj.getName());
-			listOfStations.add(new Station(obj.getStationInfo().getLat(), obj
-					.getStationInfo().getLon(), true, "C", obj.getName(),
-					"00000000 00000000", "D", "E"));
-			for (Departure dep : obj.departures.departure) {
-				listOfStations.add(new Station(dep.getVehicle().replace(
-						"BE.NMBS.", ""), dep.getPlatform(), true, formatDate(
-						dep.getTime(), false,false), ""+Html.fromHtml(dep.getName()),
-						"00000000 00000000", formatDate(dep.getDelay(), true,true),
-						""));
-				Log.i(TAG, "adding: " + dep.getVehicle());
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-*/
-		return listOfStations;
 	}
 
 	public class Liveboard {
@@ -537,240 +557,101 @@ public class ConnectionMaker {
 		return data;
 	}
 
-	public static ArrayList<Train> getTrainLiveboard(String vid,
-			Context context, boolean isDb) {
-		// Toast.makeText(context,mon_url, 1).show();
-		String TAG = "displayTrain";
-		ArrayList<Train> maliste = new ArrayList<Train>();
-
-		long actualtime = new Date().getTime();
-
-		String langue = context.getString(R.string.url_lang_2);
-		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				"prefnl", false))
-			langue = "nl";
-
-		int pos = -1;
-		String fromto = "";
-		String mon_url = "http://api.irail.be/vehicle/?id=" + vid + "&lang="
-				+ langue + "&format=json&fast=true";
-		mDbHelper = new ConnectionDbAdapter(context);
-		if (isDb) {
-			mDbHelper.open();
-			Cursor mArretCursor = mDbHelper.fetchAllWidgetStops();
-			mArretCursor.moveToFirst();
-			vid = mArretCursor.getString(mArretCursor
-					.getColumnIndex(ConnectionDbAdapter.KEY_STOP_NAME));
-			pos = Integer.valueOf(mArretCursor.getString(mArretCursor
-					.getColumnIndex(ConnectionDbAdapter.KEY_STOP_TIME)));
-			fromto = mArretCursor.getString(mArretCursor
-					.getColumnIndex(ConnectionDbAdapter.KEY_STOP_STATUS));
-
-			mon_url = "http://api.irail.be/vehicle/?id=" + vid + "&lang="
-					+ langue + "&format=json";
-
-			mDbHelper.close();
-		}
-		Log.v(TAG, "Affiche les infos train depuis la page: " + mon_url);
-		//String txt = "";
-		mDbHelper.open();
-		if (isDb) {
-			mDbHelper.deleteAllWidgetStops();
-			mDbHelper.createWidgetStop(vid, "" + pos, "", fromto);
-		}
-/*		
-		try {
-			// Log.i("MY INFO", "Json Parser started..");
-			Gson gson = new Gson();
-			Reader r = new InputStreamReader(getJSONData(mon_url, context));
-
-			TrainLiveboard obj = gson.fromJson(r, TrainLiveboard.class);
-			// TODO DISTANCE
-			Log.i("NAME", "NAME" + obj.getName());
-			
-			for (Stop stop : obj.getStops().getStop()) {
-
-				if (isDb)
-					mDbHelper.createWidgetStop(stop.station,  formatDate(stop.time,false,false),
-							formatDate(stop.delay, true, true), " ");
-				else
-					maliste.add(new TrainStop(""+Html.fromHtml(stop.station), formatDate(stop.time,false,false),
-							formatDate(stop.delay, true, true), " "));
-
-				Log.i(TAG, "adding: " + stop.station+" - "+isDb);
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-*/
-		long oldTime = actualtime;
-		actualtime = new Date().getTime();
-
-		Log.i(TAG, "Scrapping time for train list: " + (actualtime - oldTime)
-				+ "ms");
-
-
-
-		if (isDb) {
-			Toast.makeText(context, "Update OK", Toast.LENGTH_SHORT).show();
-
-		}
-
-		mDbHelper.close();
-
-		oldTime = actualtime;
-		actualtime = new Date().getTime();
-
-		// Log.i(TAG, "Parsing time for train list: " + (actualtime - oldTime)+
-		// "ms");
-
-		return maliste;
-	}
-
 	public static ArrayList<Message> requestPhpRead(String trainId, int start,
 			int span, Context context) {
-/*
-		String TAG = "requestPhpRead";
-		ArrayList<Message> listOfMessages = new ArrayList<Message>();
-		// On cree le client
-		HttpClient client = new HttpClient();
-
-		HttpClientParams clientParams = new HttpClientParams();
-		// clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
-		// "UTF-8");
-		client.setParams(clientParams);
-
-		PostMethod methode = new PostMethod(
-				"http://christophe.frandroid.com/betrains/php/messages.php");
-		methode.addParameter("code",
-				"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a");
-		methode.addParameter("message_count", "" + span);
-		methode.addParameter("message_index", "" + start);
-		methode.addParameter("mode", "read");
-		methode.addParameter("order", "DESC");
-		Log.d(TAG, "tid is " + trainId);
-		if (trainId != null)
-			methode.addParameter("train_id", trainId);
-
-		// methode.addRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-		// Le buffer qui nous servira a recuperer le code de la page
-		BufferedReader br = null;
-		String txt = "";
-		try {
-			client.executeMethod(methode);
-			br = new BufferedReader(new InputStreamReader(methode
-					.getResponseBodyAsStream(), methode.getResponseCharSet()));
-			String readLine;
-			while (((readLine = br.readLine()) != null)) {
-				System.out.println("readLine : " + readLine);
-				txt += readLine;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			methode.releaseConnection();
-			if (br != null) {
-				try {
-					br.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		if (!txt.equals("")) {
-			String[] messages = txt.split("<message>");
-
-			int i = 1;
-			if (messages.length > 1) {
-
-				while (i < messages.length) {
-					String[] params = messages[i].split("CDATA");
-					for (int j = 1; j < params.length; j++) {
-						params[j] = params[j].substring(1, params[j]
-								.indexOf("]"));
-
-					}
-					Log.w(TAG, "messages: " + params[1] + " " + params[2] + " "
-							+ params[3] + " " + params[4]);
-					listOfMessages.add(new Message(params[1], params[2],
-							params[3], params[4]));
-					i++;
-				}
-
-			}
-			return listOfMessages;
-
-		} else {
-			System.out.println("function in connection maker returns null !!");
-			listOfMessages.add(new Message(context
-					.getString(R.string.txt_server_down), context
-					.getString(R.string.txt_no_message), "", ""));
-			return listOfMessages;
-		}
-*/
+		/*
+		 * String TAG = "requestPhpRead"; ArrayList<Message> listOfMessages =
+		 * new ArrayList<Message>(); // On cree le client HttpClient client =
+		 * new HttpClient();
+		 * 
+		 * HttpClientParams clientParams = new HttpClientParams(); //
+		 * clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, //
+		 * "UTF-8"); client.setParams(clientParams);
+		 * 
+		 * PostMethod methode = new PostMethod(
+		 * "http://christophe.frandroid.com/betrains/php/messages.php");
+		 * methode.addParameter("code",
+		 * "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a");
+		 * methode.addParameter("message_count", "" + span);
+		 * methode.addParameter("message_index", "" + start);
+		 * methode.addParameter("mode", "read"); methode.addParameter("order",
+		 * "DESC"); Log.d(TAG, "tid is " + trainId); if (trainId != null)
+		 * methode.addParameter("train_id", trainId);
+		 * 
+		 * // methode.addRequestHeader("Content-Type",
+		 * "text/plain;charset=UTF-8"); // Le buffer qui nous servira a
+		 * recuperer le code de la page BufferedReader br = null; String txt =
+		 * ""; try { client.executeMethod(methode); br = new BufferedReader(new
+		 * InputStreamReader(methode .getResponseBodyAsStream(),
+		 * methode.getResponseCharSet())); String readLine; while (((readLine =
+		 * br.readLine()) != null)) { System.out.println("readLine : " +
+		 * readLine); txt += readLine; } } catch (Exception e) {
+		 * e.printStackTrace(); } finally { methode.releaseConnection(); if (br
+		 * != null) { try { br.close(); } catch (Exception e) {
+		 * e.printStackTrace(); } } } if (!txt.equals("")) { String[] messages =
+		 * txt.split("<message>");
+		 * 
+		 * int i = 1; if (messages.length > 1) {
+		 * 
+		 * while (i < messages.length) { String[] params =
+		 * messages[i].split("CDATA"); for (int j = 1; j < params.length; j++) {
+		 * params[j] = params[j].substring(1, params[j] .indexOf("]"));
+		 * 
+		 * } Log.w(TAG, "messages: " + params[1] + " " + params[2] + " " +
+		 * params[3] + " " + params[4]); listOfMessages.add(new
+		 * Message(params[1], params[2], params[3], params[4])); i++; }
+		 * 
+		 * } return listOfMessages;
+		 * 
+		 * } else {
+		 * System.out.println("function in connection maker returns null !!");
+		 * listOfMessages.add(new Message(context
+		 * .getString(R.string.txt_server_down), context
+		 * .getString(R.string.txt_no_message), "", "")); return listOfMessages;
+		 * }
+		 */
 		return null;
 	}
 
 	public static boolean requestPhpSend(String pseudo, String message,
 			String trainId) {
-/*
-		ArrayList<Message> maliste = new ArrayList<Message>();
-		// On cree le client
-		HttpClient client = new HttpClient();
-
-		HttpClientParams clientParams = new HttpClientParams();
-		clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
-				"UTF-8");
-		client.setParams(clientParams);
-
-		// Le HTTPMethod qui sera un Post en lui indiquant l'URL du traitement
-		// du formulaire
-		PostMethod methode = new PostMethod(
-				"http://christophe.frandroid.com/betrains/php/messages.php");
-		// On ajoute les parametres du formulaire
-		methode.addParameter("code",
-				"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs,
-		// valeur)
-		methode.addParameter("mode", "write");
-		methode.addParameter("train_id", trainId);
-		methode.addParameter("user_message", message);
-		methode.addParameter("user_name", pseudo);
-
-		// Le buffer qui nous servira a recuperer le code de la page
-		BufferedReader br = null;
-		String txt = null;
-		try {
-			// http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html
-			client.executeMethod(methode);
-			// Pour la gestion des erreurs ou un debuggage, on recupere le
-			// nombre renvoye.
-			// System.out.println("La reponse de executeMethod est : " +
-			// retour);
-			br = new BufferedReader(new InputStreamReader(methode
-					.getResponseBodyAsStream()));
-			String readLine;
-
-			// Tant que la ligne en cours n'est pas vide
-			while (((readLine = br.readLine()) != null)) {
-				txt += readLine;
-			}
-		} catch (Exception e) {
-			System.err.println(e); // erreur possible de executeMethod
-			e.printStackTrace();
-		} finally {
-			// On ferme la connexion
-			methode.releaseConnection();
-			if (br != null) {
-				try {
-					br.close(); // on ferme le buffer
-				} catch (Exception e) { 
-				}
-			}
-		}
-
-		return txt.contains("true");
-		*/
+		/*
+		 * ArrayList<Message> maliste = new ArrayList<Message>(); // On cree le
+		 * client HttpClient client = new HttpClient();
+		 * 
+		 * HttpClientParams clientParams = new HttpClientParams();
+		 * clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
+		 * "UTF-8"); client.setParams(clientParams);
+		 * 
+		 * // Le HTTPMethod qui sera un Post en lui indiquant l'URL du
+		 * traitement // du formulaire PostMethod methode = new PostMethod(
+		 * "http://christophe.frandroid.com/betrains/php/messages.php"); // On
+		 * ajoute les parametres du formulaire methode.addParameter("code",
+		 * "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs, //
+		 * valeur) methode.addParameter("mode", "write");
+		 * methode.addParameter("train_id", trainId);
+		 * methode.addParameter("user_message", message);
+		 * methode.addParameter("user_name", pseudo);
+		 * 
+		 * // Le buffer qui nous servira a recuperer le code de la page
+		 * BufferedReader br = null; String txt = null; try { //
+		 * http://hc.apache
+		 * .org/httpclient-3.x/apidocs/org/apache/commons/httpclient
+		 * /HttpStatus.html client.executeMethod(methode); // Pour la gestion
+		 * des erreurs ou un debuggage, on recupere le // nombre renvoye. //
+		 * System.out.println("La reponse de executeMethod est : " + // retour);
+		 * br = new BufferedReader(new InputStreamReader(methode
+		 * .getResponseBodyAsStream())); String readLine;
+		 * 
+		 * // Tant que la ligne en cours n'est pas vide while (((readLine =
+		 * br.readLine()) != null)) { txt += readLine; } } catch (Exception e) {
+		 * System.err.println(e); // erreur possible de executeMethod
+		 * e.printStackTrace(); } finally { // On ferme la connexion
+		 * methode.releaseConnection(); if (br != null) { try { br.close(); //
+		 * on ferme le buffer } catch (Exception e) { } } }
+		 * 
+		 * return txt.contains("true");
+		 */
 		return true;
 	}
 
@@ -785,7 +666,8 @@ public class ConnectionMaker {
 
 	}
 
-	public static String formatDate(String dateFromAPI, boolean isDuration, boolean isDelay) {
+	public static String formatDate(String dateFromAPI, boolean isDuration,
+			boolean isDelay) {
 		Date date;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
@@ -794,9 +676,9 @@ public class ConnectionMaker {
 			return "";
 		try {
 			if (isDuration) {
-				
+
 				if (isDelay)
-					return "+"+Integer.valueOf(dateFromAPI)/60+"'";
+					return "+" + Integer.valueOf(dateFromAPI) / 60 + "'";
 				else
 					date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
 			} else {
