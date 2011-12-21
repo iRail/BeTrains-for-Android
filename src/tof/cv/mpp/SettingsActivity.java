@@ -1,6 +1,6 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.Utils;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,7 +22,7 @@ public class SettingsActivity extends FragmentActivity {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(this);
+			Utils.setFullscreen(this);
 
 	    TextView label = new TextView(this);
 	    label.setText("A FAIRE");

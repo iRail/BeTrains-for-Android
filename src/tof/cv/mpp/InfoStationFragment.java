@@ -1,6 +1,6 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.Utils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ public class InfoStationFragment extends ListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(getActivity());
+			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_info_station, null);
 	}
 

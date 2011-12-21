@@ -49,18 +49,6 @@ import com.google.gson.Gson;
 public class ConnectionMaker {
 
 	private static ConnectionDbAdapter mDbHelper;
-	final static String CONNECTION = "connection";
-	final static String DEPARTURE = "departure";
-	final static String PLATFORM = "platform";
-	final static String TIME = "time";
-	final static String ARRIVAL = "arrival";
-	final static String DURATION = "duration";
-	final static String TIMEBETWEEN = "timeBetween";
-	final static String DELAY = "delay";
-	final static String TRAINS = "vehicle";
-	final static String STATION = "station";
-	final static String VIAS = "vias";
-	final static String VIA = "via";
 	final static String DIRPATH = "/Android/data/BeTrains";
 	final static String FILENAMECONN = "connections.txt";
 
@@ -231,13 +219,6 @@ public class ConnectionMaker {
 	 * textHour.setText(fillZero(pHour)); textMinute.setText(fillZero(pMinute));
 	 * }
 	 */
-
-	public static void setFullscreen(Activity context) {
-		context.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		context.getWindow().setFlags(
-				WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	}
 
 	public static void createAlertDialog(String title, String body,
 			Context context) {

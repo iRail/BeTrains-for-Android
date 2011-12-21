@@ -31,12 +31,21 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 public class Utils {
+	
+	public static void setFullscreen(Activity context) {
+		context.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		context.getWindow().setFlags(
+				WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
 
 	public static void loadTweets(final Activity a, final ListView l) {
 		new Thread(new Runnable() {

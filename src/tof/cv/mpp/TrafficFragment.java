@@ -1,6 +1,6 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.rss.DownloadTrafficTask;
 import tof.cv.mpp.rss.RSSFeed;
 import android.app.AlertDialog;
@@ -29,7 +29,7 @@ public class TrafficFragment extends ListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(getActivity());
+			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_traffic, null);
 	}
 

@@ -1,6 +1,6 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.MenuAdapter;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -29,7 +29,7 @@ public class WelcomeActivity extends FragmentActivity {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(this);
+			Utils.setFullscreen(this);
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment

@@ -91,7 +91,7 @@ public class PlannerFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(getActivity());
+			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_planner, null);
 	}
 

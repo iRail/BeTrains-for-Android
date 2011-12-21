@@ -5,6 +5,7 @@ import java.util.Date;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.ConnectionMaker.Vehicle;
 import tof.cv.mpp.Utils.ConnectionMaker.VehicleStop;
+import tof.cv.mpp.Utils.Utils;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 
@@ -33,7 +33,7 @@ public class InfoTrainFragment extends ListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(getActivity());
+			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_info_train, null);
 	}
 

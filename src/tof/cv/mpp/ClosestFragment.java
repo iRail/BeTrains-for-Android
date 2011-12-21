@@ -13,8 +13,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.LocationDbHelper;
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import android.app.AlertDialog;
@@ -73,7 +73,7 @@ public class ClosestFragment extends ListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(getActivity());
+			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_closest, null);
 	}
 

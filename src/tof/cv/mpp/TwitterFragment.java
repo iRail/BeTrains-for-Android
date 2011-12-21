@@ -2,7 +2,6 @@ package tof.cv.mpp;
 
 import java.io.File;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +22,7 @@ public class TwitterFragment extends ListFragment{
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		if (settings.getBoolean("preffullscreen", false))
-			ConnectionMaker.setFullscreen(getActivity());
+			Utils.setFullscreen(getActivity());
 		
 		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.fragment_twitter, null);
