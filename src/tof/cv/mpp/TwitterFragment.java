@@ -2,12 +2,9 @@ package tof.cv.mpp;
 
 import java.io.File;
 
-import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
@@ -20,12 +17,6 @@ public class TwitterFragment extends ListFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(getActivity());
-		
-		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.fragment_twitter, null);
 	}
 	@Override

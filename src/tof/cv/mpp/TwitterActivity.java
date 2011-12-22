@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -8,6 +9,9 @@ public class TwitterActivity extends FragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Utils.setFullscreenIfNecessary(this);
+		
 		setContentView(R.layout.activity_twitter);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}

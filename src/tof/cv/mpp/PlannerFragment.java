@@ -89,9 +89,6 @@ public class PlannerFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_planner, null);
 	}
 

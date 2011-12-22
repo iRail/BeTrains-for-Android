@@ -28,8 +28,8 @@ public class WelcomeActivity extends FragmentActivity {
 
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(this);
+
+		Utils.setFullscreenIfNecessary(this);
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment

@@ -26,9 +26,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import tof.cv.mpp.bo.Connections;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,11 +42,17 @@ public class Utils {
 	final static String FILENAMECONN = "connections.txt";
 	final static String DIRPATH = "/Android/data/BeTrains";
 	
-	public static void setFullscreen(Activity context) {
-		context.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		context.getWindow().setFlags(
-				WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	public static void setFullscreenIfNecessary(Activity context) {
+		
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+		if (settings.getBoolean("preffullscreen", false)){
+			context.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			context.getWindow().setFlags(
+					WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
+
 	}
 	
 	public static String getHourFromDate(String dateFromAPI, boolean isDuration) {

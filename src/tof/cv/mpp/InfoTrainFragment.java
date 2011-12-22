@@ -1,14 +1,11 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
 import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
@@ -25,10 +22,6 @@ public class InfoTrainFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_info_train, null);
 	}
 

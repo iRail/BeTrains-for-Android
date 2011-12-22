@@ -14,7 +14,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 import tof.cv.mpp.Utils.DbAdapterLocation;
-import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import android.app.AlertDialog;
@@ -22,7 +21,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
@@ -70,10 +68,6 @@ public class ClosestFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_closest, null);
 	}
 

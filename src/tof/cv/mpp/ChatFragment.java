@@ -16,7 +16,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
 import android.app.AlertDialog;
@@ -58,9 +57,6 @@ public class ChatFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(getActivity());
 		return inflater.inflate(R.layout.fragment_chat, null);
 	}
 
@@ -73,11 +69,6 @@ public class ChatFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		
 		context=getActivity();
-
-
-		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		if (settings.getBoolean("preffullscreen", false))
-			Utils.setFullscreen(getActivity());
 
 		getSupportActivity().getSupportActionBar().setTitle(
 				getString(R.string.txt_messages));
