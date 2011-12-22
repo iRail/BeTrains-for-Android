@@ -6,8 +6,10 @@ import tof.cv.mpp.Utils.UtilsWeb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,34 +24,11 @@ public class TwitterFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		setHasOptionsMenu(true);
 		UtilsWeb.loadTweets(getActivity(), getListView());
 	}
 
-		
-		//TODO ActionBar
-		//GDActionBar mActionBar = getGDActionBar();
-		//mActionBar.addItem(R.drawable.ic_title_settings);
-		// addActionBarItem(getGDActionBar().newActionBarItem(NormalActionBarItem.class).setDrawable(R.drawable.ic_title_settings),R.id.action_bar_settings);
-		//mActionBar.setTitle("Twitter");
-
 	
-	
-/*	
-	public boolean onHandleActionBarItemClick(GDActionBarItem item, int position) {
-
-		switch (position) {
-		case 0:
-			Intent i = new Intent(TwitterActivity.this,
-					TwitterSettingsActivity.class);
-			startActivity(i);
-			break;
-
-		default:
-			return super.onHandleActionBarItemClick(item,position);
-		}
-		return true;
-	}
-	*/
     
     public void onDestroy() { 
             super.onDestroy(); 
@@ -64,6 +43,13 @@ public class TwitterFragment extends ListFragment{
 
     } 
     
+    @Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.add(Menu.NONE, 0, Menu.NONE, "Filter")
+				.setIcon(R.drawable.ic_menu_preferences)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -73,8 +59,12 @@ public class TwitterFragment extends ListFragment{
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;
+		case (0):
+			startActivity(new Intent(getActivity(), SettingsActivity.class).putExtra("screen", SettingsActivity.PAGE_TWITTER));
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+    
 }

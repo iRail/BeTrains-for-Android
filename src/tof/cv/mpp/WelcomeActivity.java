@@ -136,7 +136,7 @@ public class WelcomeActivity extends FragmentActivity {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			startActivity(new Intent(this, SettingsActivity.class));
+			startActivity(new Intent(this, SettingsActivity.class).putExtra("screen", SettingsActivity.PAGE_GENERAL));
 		}
 	}
 

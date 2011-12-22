@@ -1,6 +1,5 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.view.PreferenceListFragment;
 import android.content.Context;
@@ -24,8 +23,11 @@ import com.viewpagerindicator.TitleProvider;
 
 public class SettingsActivity extends FragmentActivity{
 
-	MyPrefAdapter mAdapter;
-	ViewPager mPager;
+	private MyPrefAdapter mAdapter;
+	private ViewPager mPager;
+	public static int PAGE_GENERAL=0;
+	public static int PAGE_PLANNER=1;
+	public static int PAGE_TWITTER=2;
 
 
 	/** Called when the activity is first created. */
@@ -45,10 +47,10 @@ public class SettingsActivity extends FragmentActivity{
         TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
         titleIndicator.setViewPager(mPager);
         titleIndicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
-        
-        mPager.setCurrentItem(1);
-        
 
+        mPager.setCurrentItem(
+        		this.getIntent().getExtras().getInt("screen")
+        		);
 	}
 
 	@Override
@@ -118,16 +120,6 @@ public class SettingsActivity extends FragmentActivity{
 			return f;
 		}
 
-		/**
-		 * When creating, retrieve this instance's number from its arguments.
-		 */
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			// Notifier au créateur de ActionBarSherlock que le mNum doit être défini dans la onCreateView (cf Fragment lifeCycle)
-			//mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-		}
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -136,29 +128,6 @@ public class SettingsActivity extends FragmentActivity{
 			mNum = getArguments() != null ? getArguments().getInt("num") : 1;
 			return v;
 		}
-
-		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-			
-			String[] list = null;
-			switch (mNum) {
-			case 0:
-				list = ConnectionMaker.LIST_OF_FAV_STATIONS;
-				break;
-			case 1:
-				list = ConnectionMaker.LIST_OF_STATIONS;
-				break;
-			case 2:
-				list = ConnectionMaker.LIST_OF_EURO_STATIONS;
-				break;
-			}
-
-			//this.setListAdapter(new ArrayAdapter<String>(getActivity(),
-			//		android.R.layout.simple_list_item_1, list));
-		}
-		
-
 	}
    
 
