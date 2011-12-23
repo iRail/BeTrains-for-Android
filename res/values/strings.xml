@@ -37,8 +37,7 @@
     <string name="txt_load_message">Loading last Message</string>
     <string name="txt_no_message">No message.</string>
     <string name="api_key_debug">0K7Fau7cA-paYlUgd1I0OkvAE0xc8tN04C6qcMA</string>
-    <string name="wid_empty">Open your train information and click \'Add to widget\'".
-	</string>
+    <string name="wid_empty">Open your train information and click \'Add to widget\'".</string>
     <string name="wid_confirm">Add to Widget?</string>
     <string name="wid_added">%s added to widget</string>
     <string name="txt_messages">Messages</string>
@@ -61,20 +60,18 @@
     <string name="txt_train">Train</string>
     <string name="txt_trip">Trip</string>
     <string name="txt_infrabel">This info comes from the Infrabel/Railtime website. Delays smaller than 5 minutes are not shown, and might be slightly different from previous page.</string>
-    <string name="fav_no_fav_body">you can add your favorite stations, trains and
+    <string name="fav_no_fav_body">ou can add your favorite stations, trains and
 		trips here.\n\n* Add a favorite station by long-pressing it in the
 		station list\n\n* Add a Train by pressing menu in the train view\n\n*
-		Press "menu" key when you are on the route planner to add a trip.
-	</string>
+		Press "menu" key when you are on the route planner to add a trip.</string>
     <string name="fav_no_fav_title">No starred items</string>
     <string name="txt_remove">Delete</string>
     <string name="search_wrong_string">Please pick a station in the list or write a train
 		number: ex: "984" for IC 984</string>
     <string name="search_hint">Train nb. / Station</string>
-    <string name="changelog">v 2.0.2\n\n* New Feature: find closest station\n\n*
+    <string name="changelog"> 2.0.2\n\n* New Feature: find closest station\n\n*
 		User Interface Improved\n\n* Sorry, all you favorites stations are
-		lost. I needed to rewrite the Database. That won\'t happen again
-	</string>
+		lost. I needed to rewrite the Database. That won\'t happen again</string>
     <string name="changelog_title">ChangeLog</string>
     <string name="confirm_message_train">Open train %s messages?</string>
     <string name="confirm_info_train">Open train %s infos?</string>
@@ -86,9 +83,9 @@
     <string name="txt_time">Time</string>
     <string name="settings_planner_da">Arrival/Departure time.</string>
     <string name="settings_planner_da_summary">...</string>
+    <string name="key_train_only">OnlyTrainPref</string>
     <string name="settings_activity">First Screen.</string>
     <string name="settings_activity_summary">Where to start the application?</string>
-    <string name="key_train_only">OnlyTrainPref</string>
     <string name="settings_train_only_summary">Will not show buses and subway</string>
     <string name="key_planner_da">Plannerdapref</string>
     <string name="key_activity">Activitypref</string>
@@ -100,10 +97,9 @@
     <string name="txt_create_connections">Please update your search to see your trip
 		informations.</string>
     <string name="btn_closest_stations">Closest Stations</string>
-    <string name="txt_first_dl">The station list download will start. This is a
+    <string name="txt_first_dl">he station list download will start. This is a
 		slow process,
-		but next time you will use it, everything will be faster.
-	</string>
+		but next time you will use it, everything will be faster.</string>
     <string name="txt_accuracy">Accuracy: %sm.</string>
     <string name="txt_wait_gps">Waiting for GPS fix.</string>
     <string name="update_gps_btn">Update:\n%sm</string>
@@ -122,7 +118,6 @@
     <string name="pref_selectStartHour_sum">Help your battery by avoiding updates during the night</string>
     <string name="pref_selectEndHour_sum">Help your battery by avoiding updates during the night</string>
     <string name="pref_selectFreq_sum">1 hour</string>
-<string name="stationpicker">Pick a Station</string>
-        
-        
+    <string name="stationpicker">Pick a Station</string>
+
 </resources>
