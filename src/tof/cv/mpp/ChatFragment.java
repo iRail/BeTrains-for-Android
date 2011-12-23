@@ -170,7 +170,7 @@ public class ChatFragment extends ListFragment {
 	private void setBtnSettingsListener() {
 		btnSettings.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), SettingsActivity.class));
+				startActivity(new Intent(getActivity(), PreferenceActivity.class));
 			}
 		});
 

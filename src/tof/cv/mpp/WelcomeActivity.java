@@ -33,32 +33,23 @@ public class WelcomeActivity extends FragmentActivity {
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment
+		setContentView(R.layout.activity_welcome_with_fragment);
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			switch (Integer.valueOf(settings.getString("Activitypref", "1"))) {
 			case 1:
-				setContentView(R.layout.activity_welcome_with_fragment);
 				setFragment(new PlannerFragment());
 				break;
 			case 3:
-				// i = new Intent(WelcomeActivity.this, StarredActivity.class);
-				// finish();
-				// startActivity(i);
+				setFragment(new StarredFragment());
 				break;
 			case 4:
-				// i = new Intent(WelcomeActivity.this, TrafficActivity.class);
-				// finish();
-				// startActivity(i);
+				setFragment(new TrafficFragment());
 				break;
 			case 5:
-				// i = new Intent(WelcomeActivity.this,
-				// GetClosestStationsActivity.class);
-				// finish();
-				// startActivity(i);
+				setFragment(new ClosestFragment());
 				break;
 			case 6:
-				// i = new Intent(WelcomeActivity.this, MessagesActivity.class);
-				// finish();
-				// startActivity(i);
+				setFragment(new ChatFragment());
 				break;
 			default:
 				setWelcomeContent();
@@ -136,7 +127,7 @@ public class WelcomeActivity extends FragmentActivity {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			startActivity(new Intent(this, SettingsActivity.class).putExtra("screen", SettingsActivity.PAGE_GENERAL));
+			startActivity(new Intent(this, PreferenceActivity.class).putExtra("screen", PreferenceActivity.PAGE_GENERAL));
 		}
 	}
 

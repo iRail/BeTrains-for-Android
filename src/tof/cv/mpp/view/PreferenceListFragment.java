@@ -48,10 +48,6 @@ public class PreferenceListFragment extends ListFragment{
     public PreferenceListFragment(int xmlId){
         this.xmlId = xmlId;
     }
-    //must be provided
-    public PreferenceListFragment(){
-        
-    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b){
@@ -77,7 +73,7 @@ public class PreferenceListFragment extends ListFragment{
         lv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         addPreferencesFromResource(xmlId);
         postBindPreferences();
-       // ((OnPreferenceAttachedListener)getActivity()).onPreferenceAttached(getPreferenceScreen(), xmlId);
+        ((OnPreferenceAttachedListener)getActivity()).onPreferenceAttached(getPreferenceScreen(), xmlId);
     }
 
     @Override
