@@ -222,4 +222,60 @@ public class UtilsWeb {
 		}
 	}
 	
+	public static Station getAPIstation(String station,
+			final Context context) {
+		//TODO
+		String langue = context.getString(R.string.url_lang_2);
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				"prefnl", false))
+			langue = "nl";
+
+		String url = "http://api.irail.be/liveboard.php/?station=" + station
+				+  "&format=JSON&fast=true"+"&lang=" + langue;
+		System.out.println("Show station from: " + url);
+
+		try {
+			// Log.i(TAG, "Json Parser started..");
+			Gson gson = new Gson();
+			Reader r = new InputStreamReader(getJSONData(url, context));
+			return gson.fromJson(r, Station.class);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	public class Station {
+
+		private String version;
+		private StationStationinfo stationinfo;
+
+		public StationStationinfo getStationStationinfo() {
+			return stationinfo;
+		}
+
+		public String getVersion() {
+			return version;
+		}
+
+	}
+	
+	public class StationStationinfo {
+
+		private String id;
+		private String locationX;
+		private String locationY;
+
+		public String getId() {
+			return id;
+		}
+		public String getLocationX() {
+			return locationX;
+		}
+		public String getLocationY() {
+			return locationY;
+		}
+	}
 }

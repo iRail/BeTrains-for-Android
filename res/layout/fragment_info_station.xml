@@ -37,6 +37,11 @@
 		<ListView android:paddingTop="10dip" android:id="@android:id/list"
 			android:layout_width="fill_parent" android:layout_height="0dip"
 			android:layout_weight="1" />
+        <TextView android:id="@android:id/empty"
+            android:layout_width="fill_parent" android:layout_height="0dip"
+            android:text="@string/txt_loading" style="@style/TextElement"
+            android:layout_weight="1" />
+
 
 
 	</LinearLayout>
