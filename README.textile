@@ -10,28 +10,33 @@ For example:
 
 h4. ActionBarSherlock
 
+# In the Eclipse menu, select: *File* > *Import...* > *Projects from Git*
 # Git clone from: "https://github.com/JakeWharton/ActionBarSherlock":https://github.com/JakeWharton/ActionBarSherlock
-# Create a new project with the *library/* folder
-# Use Android *3.2* API
-# Include *android-support-v13.jar* from Android SDK
+# After the cloning, abort the import process
+# Create a new Android project with the *ActionBarSherlock/library/* folder
+# Use *com.actionbarsherlock* as package name
+# In the properties of the project, *Android* menu, use Android *3.2* (API *13*)
 
 h4. ViewPagerIndicator
 
+# In the Eclipse menu, select: *File* > *Import...* > *Projects from Git*
 # Git clone from: "https://github.com/JakeWharton/":https://github.com/JakeWharton/Android-ViewPagerIndicator
-# Create a new project with the *library/* folder
-# Use Android *1.6* API
-# Include *android-support-v4.jar* from Android SDK
+# After the cloning, abort the import process
+# Create a new project with the *ViewPagerIndicator/library/* folder
+# Use *com.viewpagerindicator* as package name
+# In the properties of the project, *Android* menu, use Android *1.6* (API *4*)
 
 h3. Clone BeTrains repository in Eclipse
 
-* "https://github.com/iRail/BeTrains-for-Android":https://github.com/iRail/BeTrains-for-Android
+# In the Eclipse menu, select: *File* > *Import...* > *Projects from Git*
+# Git clone from: "https://github.com/iRail/BeTrains-for-Android":https://github.com/iRail/BeTrains-for-Android
+# Select *Import existing projects*
 
 h3. Add libraries
 
-In the *libs/* folder, copy:
-# gson-2.0.jar: "http://code.google.com/p/google-gson/":http://code.google.com/p/google-gson/
-# actionbarsherlock-plugin-maps-3.4.1.jar: "https://github.com/JakeWharton/ActionBarSherlock/downloads":https://github.com/JakeWharton/ActionBarSherlock/downloads
-
-h3. In the properties of your BeTrains project in Eclipse
-
-# In "android" menu, select Google APIs *4.0*
+# Create a *libs/* folder in the BeTrains-for-Android/ folder
+# In the *libs/* folder, copy:
+## "gson-2.0.jar":http://google-gson.googlecode.com/files/google-gson-2.0-release.zip
+## "actionbarsherlock-plugin-maps-3.5.0.jar":https://github.com/downloads/JakeWharton/ActionBarSherlock/actionbarsherlock-plugin-maps-3.5.0.jar
+## "actionbarsherlock-plugin-preference-3.5.0.jar":https://github.com/downloads/JakeWharton/ActionBarSherlock/actionbarsherlock-plugin-preference-3.5.0.jar
+# In the properties of the project, *Android* menu, use Google APIs *4.0.3* (API *15*)
