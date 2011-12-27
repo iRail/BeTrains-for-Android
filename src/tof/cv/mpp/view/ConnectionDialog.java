@@ -54,8 +54,8 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	private View arrivalRow;
 	private Connection currentConnection;
 
-	public ConnectionDialog(Activity plannerActivity, Connection connection) {
-		super(plannerActivity);
+	public ConnectionDialog(Activity plannerActivity, Connection connection, int theme) {
+		super(plannerActivity,theme);
 
 		currentConnection = connection;
 

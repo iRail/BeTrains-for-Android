@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -198,9 +198,9 @@ public class UtilsWeb {
 	
 	public class VehicleStops {
 
-		private List<VehicleStop> stop;
+		private ArrayList<VehicleStop> stop;
 
-		public List<VehicleStop> getVehicleStop() {
+		public ArrayList<VehicleStop> getVehicleStop() {
 			return stop;
 		}
 	}

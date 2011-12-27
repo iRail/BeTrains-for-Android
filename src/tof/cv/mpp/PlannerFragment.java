@@ -17,6 +17,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
@@ -373,29 +374,7 @@ public class PlannerFragment extends ListFragment {
 		setListAdapter(adapter);
 	}
 
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
 
-		case CONNECTION_DIALOG_ID:
-			// Log.i("BETRAINS","clicked on: "+allConnections
-			// .get(positionClicked).getArrivalStation().getVehicle());
-			try {
-				return new ConnectionDialog(getActivity(),
-						allConnections.connection.get(positionClicked));
-			} catch (Exception e) {
-				Toast.makeText(getActivity(),
-						getString(R.string.txt_create_connections),
-						Toast.LENGTH_LONG).show();
-				// Log.i("BETRAINS", allConnections.size() + " - "
-				// + positionClicked);
-				e.printStackTrace();
-			}
-
-		}
-		Log.i("BETRAINS", "dialog null");
-		return null;
-
-	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
@@ -414,10 +393,17 @@ public class PlannerFragment extends ListFragment {
 
 			Connection currentConnection = allConnections.connection
 					.get(positionClicked);
-			
+
 			if (currentConnection.getVias()!=null && currentConnection.getVias().via.size() > 0) {
+				
+				int style = android.R.style.Theme_Dialog;
+				
+				if(Build.VERSION.SDK_INT>=14)
+					style = android.R.style.Theme_DeviceDefault_Dialog;
+				
+				
 				new ConnectionDialog(getActivity(),
-						allConnections.connection.get(positionClicked)).show();
+						allConnections.connection.get(positionClicked),style).show();
 			} else {
 				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
@@ -571,23 +557,6 @@ public class PlannerFragment extends ListFragment {
 
 	}
 
-	protected void onPrepareDialog(int dialogId, Dialog dialog) {
-		switch (dialogId) {
-		case CONNECTION_DIALOG_ID: {
-			try {
-				new ConnectionDialog(getActivity(),
-						allConnections.connection.get(positionClicked)).show();
-			} catch (Exception e) {
-				Toast.makeText(getActivity(),
-						getString(R.string.txt_create_connections),
-						Toast.LENGTH_LONG).show();
-				Log.i("BETRAINS", allConnections.connection.size() + " - "
-						+ positionClicked);
-				e.printStackTrace();
-			}
-		}
-		}
-	}
 
 	public void noDataClick(int position) {
 

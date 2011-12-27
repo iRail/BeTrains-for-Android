@@ -2,7 +2,7 @@ package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
-import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
+import tof.cv.mpp.adapter.TrainInfoAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class InfoTrainFragment extends ListFragment {
 	protected static final String TAG = "ChatFragment";
@@ -62,20 +61,9 @@ public class InfoTrainFragment extends ListFragment {
 	private Runnable displayResult = new Runnable() {
 		public void run() {
 
-			String txt = "";
-			try {
-				for (VehicleStop aStop : currentVehicle.getVehicleStops()
-						.getVehicleStop()) {
-					txt += aStop.getStation() + " - " + aStop.getTime() + "\n";
-				}
-
-			} catch (Exception e) {
-				txt = getString(R.string.txt_error)+"\n\n"+e.toString();
-				e.printStackTrace();
-			}
-			TextView tv = (TextView) getActivity().findViewById(
-					android.R.id.empty);
-			tv.setText(txt);
+			TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(getActivity(),
+					R.layout.row_info_train, currentVehicle.getVehicleStops().getVehicleStop());
+			setListAdapter(trainInfoAdapter);
 		}
 	};
 
