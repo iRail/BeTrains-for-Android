@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-<FrameLayout android:layout_height="fill_parent"
-	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/home_root"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-	<LinearLayout android:id="@+id/home_root"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+        <include layout="@layout/colorstrip" />
 
-		<include layout="@layout/colorstrip" />
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-		<FrameLayout android:layout_height="0dp"
-			android:layout_width="fill_parent" android:layout_weight="1">
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" />
 
-			<com.viewpagerindicator.CirclePageIndicator
-				android:id="@+id/indicator" android:layout_height="wrap_content"
-				android:layout_width="fill_parent" android:padding="10dip"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </FrameLayout>
 
-			<android.support.v4.view.ViewPager
-				android:id="@+id/pager" android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:layout_weight="1" />
+        <include layout="@layout/colorstrip" />
 
-		</FrameLayout>
-
-		<include layout="@layout/colorstrip" />
-		<TextView android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:text="Contact: christophe.versieux@gmail.com"
-			android:textColor="#FF000000" android:background="@color/action_bar_tint">
-		</TextView>
-
-	</LinearLayout>
-	<ListView android:cacheColorHint="#00000000" android:id="@android:id/list"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/action_bar_tint"
+            android:orientation="horizontal"
+            android:text="Contact: christophe.versieux@gmail.com"
+            android:textColor="#FF000000" >
+        </TextView>
+    </LinearLayout>
 </FrameLayout>
-

@@ -16,11 +16,13 @@
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.MyTheme" >
+        android:theme="@style/Theme.MyTheme" 
+         android:configChanges="keyboardHidden|orientation">
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/StyledIndicators" >
+            android:theme="@style/StyledIndicators" 
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

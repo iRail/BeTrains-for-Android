@@ -2,6 +2,7 @@ package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.adapter.AlphabeticalAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.viewpagerindicator.R;
@@ -39,14 +39,14 @@ public class StationPickerActivity extends FragmentActivity {
 
 		setContentView(R.layout.fragment_pref_picker);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		mAdapter = new MyAdapter(getSupportFragmentManager());
 
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 
 		TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-		indicator.setViewPager(mPager,1);
+		indicator.setViewPager(mPager, 1);
 
 	}
 
@@ -63,7 +63,7 @@ public class StationPickerActivity extends FragmentActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public static class ArrayListFragment extends ListFragment {
 		static int mNum;
 
@@ -87,8 +87,9 @@ public class StationPickerActivity extends FragmentActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			// Notifier au créateur de ActionBarSherlock que le mNum doit être défini dans la onCreateView (cf Fragment lifeCycle)
-			//mNum = getArguments() != null ? getArguments().getInt("num") : 1;
+			// Notifier au créateur de ActionBarSherlock que le mNum doit être
+			// défini dans la onCreateView (cf Fragment lifeCycle)
+			// mNum = getArguments() != null ? getArguments().getInt("num") : 1;
 		}
 
 		@Override
@@ -103,7 +104,7 @@ public class StationPickerActivity extends FragmentActivity {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			
+
 			String[] list = null;
 			switch (mNum) {
 			case 0:
@@ -116,21 +117,21 @@ public class StationPickerActivity extends FragmentActivity {
 				list = ConnectionMaker.LIST_OF_EURO_STATIONS;
 				break;
 			}
-
-			this.setListAdapter(new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, list));
+			getListView().setFastScrollEnabled(true);
+			AlphabeticalAdapter a = new AlphabeticalAdapter(getActivity(),
+					list);
+			this.setListAdapter(a);
 		}
 
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Bundle bundle=new Bundle();
+			Bundle bundle = new Bundle();
 			bundle.putString("GARE", l.getItemAtPosition(position).toString());
-			Intent i=new Intent();
+			Intent i = new Intent();
 			i.putExtras(bundle);
-			getActivity().setResult(RESULT_OK,i);
+			getActivity().setResult(RESULT_OK, i);
 			getActivity().finish();
 		}
-		
 
 	}
 

@@ -1,13 +1,19 @@
 package tof.cv.mpp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -49,7 +55,7 @@ public class ChatFragment extends ListFragment {
 	private int total = 5;
 	private boolean posted = false;
 	private ArrayList<Message> listOfMessage = new ArrayList<Message>();
-String trainId;
+	String trainId;
 	SharedPreferences settings;
 
 	private static final int MENU_FILTER = 0;
@@ -87,11 +93,10 @@ String trainId;
 		setBtnSettingsListener();
 		setBtnMoreListener();
 		setBtnSendListener();
-		Log.i("","Created "+trainId);
+		Log.i("", "Created " + trainId);
 		update();
 
 	}
-
 
 	private void setBtnSendListener() {
 		btnSend.setOnClickListener(new Button.OnClickListener() {
@@ -147,8 +152,9 @@ String trainId;
 	private void setBtnSettingsListener() {
 		btnSettings.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), PreferenceActivity.class).putExtra(
-						"screen", PreferenceActivity.PAGE_GENERAL));
+				startActivity(new Intent(getActivity(),
+						PreferenceActivity.class).putExtra("screen",
+						PreferenceActivity.PAGE_GENERAL));
 			}
 		});
 
@@ -163,7 +169,8 @@ String trainId;
 				if (listOfMessage != null) {
 					Log.i(TAG, "count= " + listOfMessage.size());
 					if (listOfMessage.size() == 0)
-						messagesEmpty.setText(getString(R.string.txt_no_message));
+						messagesEmpty
+								.setText(getString(R.string.txt_no_message));
 				} else
 					messagesEmpty.setText(getString(R.string.txt_connection));
 
@@ -171,8 +178,7 @@ String trainId;
 			}
 		};
 
-		Thread thread = new Thread(null, getMessageFromTrain,
-				"ChatThread");
+		Thread thread = new Thread(null, getMessageFromTrain, "ChatThread");
 		thread.start();
 	}
 
@@ -185,7 +191,7 @@ String trainId;
 		}
 
 	};
-	
+
 	public void onResume() {
 		super.onResume();
 		Log.i("BETRAINS", "train ID= " + trainId);
@@ -196,8 +202,9 @@ String trainId;
 		else
 			mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
 					getActivity()).getString("prefPseudo", "Anonymous"));
-		
-		LinearLayout mSendLayout = (LinearLayout) getActivity().findViewById(R.id.send_layout);
+
+		LinearLayout mSendLayout = (LinearLayout) getActivity().findViewById(
+				R.id.send_layout);
 
 		if (trainId == null) {
 			mSendLayout.setVisibility(View.GONE);
@@ -218,8 +225,8 @@ String trainId;
 						public void onClick(DialogInterface dialog, int arg1) {
 
 							Bundle bundle = new Bundle();
-							bundle.putString(DbAdapterConnection.KEY_NAME, listOfMessage.get(position)
-									.gettrain_id());
+							bundle.putString(DbAdapterConnection.KEY_NAME,
+									listOfMessage.get(position).gettrain_id());
 							Intent mIntent = new Intent(v.getContext(),
 									ChatActivity.class);
 							mIntent.putExtras(bundle);
@@ -287,8 +294,7 @@ String trainId;
 			nameValuePairs.add(new BasicNameValuePair("mode", "read"));
 			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
 			if (trainId != null)
-				nameValuePairs
-						.add(new BasicNameValuePair("train_id", trainId));
+				nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
 
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
@@ -300,7 +306,7 @@ String trainId;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//TODO: USE XML PARSER
+		// TODO: USE XML PARSER
 		if (txt != null && !txt.equals("")) {
 			String[] messages = txt.split("<message>");
 
@@ -336,43 +342,36 @@ String trainId;
 
 	public static boolean requestPhpSend(String pseudo, String message,
 			String trainId) {
-		String txt = "";
-		/*
-		 * ArrayList<Message> maliste = new ArrayList<Message>(); // On cree le
-		 * client HttpClient client = new HttpClient();
-		 * 
-		 * HttpClientParams clientParams = new HttpClientParams();
-		 * clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
-		 * "UTF-8"); client.setParams(clientParams);
-		 * 
-		 * // Le HTTPMethod qui sera un Post en lui indiquant l'URL du
-		 * traitement // du formulaire PostMethod methode = new PostMethod(
-		 * "http://christophe.frandroid.com/betrains/php/messages.php"); // On
-		 * ajoute les parametres du formulaire methode.addParameter("code",
-		 * "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs, //
-		 * valeur) methode.addParameter("mode", "write");
-		 * methode.addParameter("train_id", trainId);
-		 * methode.addParameter("user_message", message);
-		 * methode.addParameter("user_name", pseudo);
-		 * 
-		 * // Le buffer qui nous servira a recuperer le code de la page
-		 * BufferedReader br = null; String txt = null; try { //
-		 * http://hc.apache
-		 * .org/httpclient-3.x/apidocs/org/apache/commons/httpclient
-		 * /HttpStatus.html client.executeMethod(methode); // Pour la gestion
-		 * des erreurs ou un debuggage, on recupere le // nombre renvoye. //
-		 * System.out.println("La reponse de executeMethod est : " + // retour);
-		 * br = new BufferedReader(new InputStreamReader(
-		 * methode.getResponseBodyAsStream())); String readLine;
-		 * 
-		 * // Tant que la ligne en cours n'est pas vide while (((readLine =
-		 * br.readLine()) != null)) { txt += readLine; } } catch (Exception e) {
-		 * System.err.println(e); // erreur possible de executeMethod
-		 * e.printStackTrace(); } finally { // On ferme la connexion
-		 * methode.releaseConnection(); if (br != null) { try { br.close(); //
-		 * on ferme le buffer } catch (Exception e) { } } }
-		 */
-		return txt.contains("true");
+		try {
+			String txt = "";
+			ArrayList<Message> maliste = new ArrayList<Message>();
+			// On cree le client
+			HttpClient client = new DefaultHttpClient();
+
+			HttpPost httppost = new HttpPost(
+					"http://christophe.frandroid.com/betrains/php/messages.php");
+
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs.add(new BasicNameValuePair("code",
+					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
+			nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
+			nameValuePairs.add(new BasicNameValuePair("user_message", message));
+			nameValuePairs.add(new BasicNameValuePair("user_name", pseudo));
+			nameValuePairs.add(new BasicNameValuePair("mode", "write"));
+			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
+
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			HttpResponse response = client.execute(httppost);
+
+			BasicResponseHandler myHandler = new BasicResponseHandler();
+			txt = myHandler.handleResponse(response);
+
+			return txt.contains("true");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override

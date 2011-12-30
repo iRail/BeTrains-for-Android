@@ -1,42 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-<FrameLayout 
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:layout_weight="1" xmlns:android="http://schemas.android.com/apk/res/android">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/home_root" android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:background="#FFFFFFFF">
-		<include layout="@layout/colorstrip" />
+    <LinearLayout
+        android:id="@+id/home_root"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-		<FrameLayout 
-			android:layout_height="0dp" android:layout_width="fill_parent"
-			android:layout_weight="1">
+        <include layout="@layout/colorstrip" />
 
-			<uk.co.jasonfry.android.tools.ui.PageControl
-				android:id="@+id/page_control" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:orientation="horizontal"
-				android:gravity="center_horizontal" />
-			<uk.co.jasonfry.android.tools.ui.SwipeView
-				android:id="@+id/swipe_view" android:layout_width="fill_parent"
-				android:layout_height="fill_parent">
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-				<include layout="@layout/menu_1" />
-				<include layout="@layout/menu_2" />
-			</uk.co.jasonfry.android.tools.ui.SwipeView>
-		</FrameLayout>
-		<include layout="@layout/colorstrip" />
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" />
 
-		<LinearLayout android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_weight="0" android:background="#22000000">
-
-		</LinearLayout>
-
-
-	</LinearLayout>
-
-	<ListView android:cacheColorHint="#00000000"
-		android:visibility="gone" android:layout_marginTop="5dip" android:id="@android:id/list"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </FrameLayout>
+    </LinearLayout>
 </FrameLayout>
