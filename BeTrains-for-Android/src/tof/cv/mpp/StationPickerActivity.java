@@ -1,6 +1,7 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.AlphabeticalAdapter;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.viewpagerindicator.R;
@@ -95,9 +97,16 @@ public class StationPickerActivity extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View v = inflater.inflate(R.layout.fragment_station_list,
-					container, false);
 			mNum = getArguments() != null ? getArguments().getInt("num") : 1;
+			View v = null;
+			if (mNum != 1)
+				v = inflater.inflate(R.layout.fragment_station_list, container,
+						false);
+			else {
+				v = inflater.inflate(R.layout.fragment_station_picker,
+						container, false);
+			}
+
 			return v;
 		}
 
@@ -117,9 +126,21 @@ public class StationPickerActivity extends FragmentActivity {
 				list = ConnectionMaker.LIST_OF_EURO_STATIONS;
 				break;
 			}
+
 			getListView().setFastScrollEnabled(true);
-			AlphabeticalAdapter a = new AlphabeticalAdapter(getActivity(),
-					list);
+
+			AlphabeticalAdapter a = new AlphabeticalAdapter(getActivity(), list);
+
+			if (mNum == 1) {
+				EditText filterText = (EditText) getActivity().findViewById(
+						R.id.search_box);
+				FilterTextWatcher filterTextWatcher = new FilterTextWatcher(a);
+				if (filterText != null) {
+					filterText.addTextChangedListener(filterTextWatcher);
+					getListView().setTextFilterEnabled(true);
+				}
+			}
+
 			this.setListAdapter(a);
 		}
 
