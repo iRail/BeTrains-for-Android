@@ -22,18 +22,18 @@ import java.util.Calendar;
 import tof.cv.mpp.PlannerFragment;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
+import android.app.Dialog;
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
-public class DateTimePicker extends RelativeLayout implements
-		OnDateChangedListener, OnTimeChangedListener {
+public class DateTimePicker extends Dialog implements OnDateChangedListener,
+		OnTimeChangedListener {
 
 	// DatePicker reference
 	private DatePicker datePicker;
@@ -41,51 +41,54 @@ public class DateTimePicker extends RelativeLayout implements
 	private TimePicker timePicker;
 	// Calendar reference
 	private Calendar mCalendar;
-	// Dialog title
-	private TextView mTitle;
 
-	// Constructor start
-	public DateTimePicker(Context context) {
-		this(context, null);
-	}
-
-	public DateTimePicker(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
-
-	public DateTimePicker(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+	public DateTimePicker(Context context, int defStyle,final PlannerFragment fragment) {
+		super(context, defStyle);
 
 		// Get LayoutInflater instance
 		final LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		// Inflate myself
-		inflater.inflate(R.layout.dtp_datetimepicker, this, true);
-
+		View v = inflater.inflate(R.layout.datetimepicker, null, true);
+		final DateTimePicker mThis=this;
 		// Grab a Calendar instance
-		mCalendar = Calendar.getInstance();
+		mCalendar=Calendar.getInstance();
+		mCalendar.setTime(fragment.mDate);
 		// Grab the ViewSwitcher so we can attach our picker views to it
 
 		// Init date picker
-		datePicker = (DatePicker) this.findViewById(R.id.DatePicker);
+		datePicker = (DatePicker) v.findViewById(R.id.DatePicker);
 		datePicker.init(mCalendar.get(Calendar.YEAR),
 				mCalendar.get(Calendar.MONTH),
 				mCalendar.get(Calendar.DAY_OF_MONTH), this);
 
 		// Init time picker
-		timePicker = (TimePicker) this.findViewById(R.id.TimePicker);
+		timePicker = (TimePicker) v.findViewById(R.id.TimePicker);
 		timePicker.setOnTimeChangedListener(this);
 
-		mTitle = (TextView) this.findViewById(R.id.DateTimePickerTitle);
-		setTitle();
+		Button okButton = (Button) v.findViewById(R.id.positiveButton);
+		okButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				fragment.getSupportActivity().getSupportActionBar().setTitle(
+						getFormatedDate(PlannerFragment.abTimePattern));
+				fragment.getSupportActivity().getSupportActionBar().setSubtitle(
+						getFormatedDate(PlannerFragment.abDatePattern));
+				fragment.mDate = mCalendar.getTime();
+				mThis.dismiss();
+			}
+		});
+		
+		Button cancelButton = (Button) v.findViewById(R.id.negativeButton);
+		if(cancelButton!=null)
+		cancelButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				mThis.dismiss();
+			}
+		});
 
-	}
-
-	// Constructor end
-
-	public void setTitle() {
-		mTitle.setText(Utils.formatDate(mCalendar.getTime(), PlannerFragment.datePattern));
-		mTitle.setSelected(true);
+		setTitle(Utils.formatDate(mCalendar.getTime(),
+				PlannerFragment.datePattern));
+		setContentView(v);
 	}
 
 	// Called every time the user changes DatePicker values
@@ -95,7 +98,8 @@ public class DateTimePicker extends RelativeLayout implements
 		mCalendar.set(year, monthOfYear, dayOfMonth,
 				mCalendar.get(Calendar.HOUR_OF_DAY),
 				mCalendar.get(Calendar.MINUTE));
-		setTitle();
+		setTitle(Utils.formatDate(mCalendar.getTime(),
+				PlannerFragment.datePattern));
 
 	}
 
@@ -105,21 +109,13 @@ public class DateTimePicker extends RelativeLayout implements
 		mCalendar.set(mCalendar.get(Calendar.YEAR),
 				mCalendar.get(Calendar.MONTH),
 				mCalendar.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
-		setTitle();
+		setTitle(Utils.formatDate(mCalendar.getTime(),
+				PlannerFragment.datePattern));
 	}
 
 	// Convenience wrapper for internal Calendar instance
 	public int get(final int field) {
 		return mCalendar.get(field);
-	}
-
-	// Reset DatePicker, TimePicker and internal Calendar instance
-	public void reset() {
-		final Calendar c = Calendar.getInstance();
-		updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
-				c.get(Calendar.DAY_OF_MONTH));
-		updateTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
-		setTitle();
 	}
 
 	// Convenience wrapper for internal Calendar instance

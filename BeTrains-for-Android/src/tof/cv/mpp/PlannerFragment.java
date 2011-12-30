@@ -12,7 +12,6 @@ import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.ConnectionDialog;
 import tof.cv.mpp.view.DateTimePicker;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,18 +23,15 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.SupportActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
-import android.support.v4.view.Window;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +46,7 @@ public class PlannerFragment extends ListFragment {
 	private static final int MENU_FAV = 1;
 	private static final int MENU_PREF = 2;
 
-	Date mDate;
+	public Date mDate;
 
 	public static String datePattern = "EEE dd MMM HH:mm";
 	public static String abDatePattern = "EEE dd MMM";
@@ -67,11 +63,13 @@ public class PlannerFragment extends ListFragment {
 
 	private String TAG = "BETRAINS";
 	private SupportActivity context;
-	
+
 	private static SharedPreferences settings;
 	private SharedPreferences.Editor editor;
 
 	private ProgressDialog progressDialog;
+	
+	private int style;
 
 	// Second part need to be cleaned
 
@@ -80,10 +78,8 @@ public class PlannerFragment extends ListFragment {
 	private static final int ACTIVITY_STATION = 2;
 	private static final int ACTIVITY_GETSTARTSTATION = 3;
 	private static final int ACTIVITY_GETSTOPSTATION = 4;
-	
+
 	private static final int CONNECTION_DIALOG_ID = 0;
-
-
 
 	public void onStart() {
 		super.onStart();
@@ -115,6 +111,12 @@ public class PlannerFragment extends ListFragment {
 			tvArrival.setText(extras.getString("Arrival"));
 			mySearchThread();
 		}
+		
+
+		style = android.R.style.Theme_Dialog;
+
+		if (Build.VERSION.SDK_INT >= 14)
+			style = android.R.style.Theme_DeviceDefault_Dialog;
 
 	}
 
@@ -143,9 +145,6 @@ public class PlannerFragment extends ListFragment {
 		}
 	};
 
-
-
-
 	private void setAllBtnListener() {
 		Button btnInvert = (Button) getActivity().findViewById(
 				R.id.mybuttonInvert);
@@ -155,7 +154,7 @@ public class PlannerFragment extends ListFragment {
 						(String) tvDeparture.getText());
 			}
 		});
-		
+
 		Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
 		btnSearch.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -163,7 +162,7 @@ public class PlannerFragment extends ListFragment {
 
 			}
 		});
-		
+
 		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
 		tvDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -172,7 +171,7 @@ public class PlannerFragment extends ListFragment {
 				startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
 			}
 		});
-		
+
 		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 		tvArrival.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -181,7 +180,7 @@ public class PlannerFragment extends ListFragment {
 				startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
 			}
 		});
-		
+
 		Button btnInfoArrival = (Button) getActivity().findViewById(
 				R.id.btn_info_arrival);
 		btnInfoArrival.setOnClickListener(new Button.OnClickListener() {
@@ -209,7 +208,7 @@ public class PlannerFragment extends ListFragment {
 
 			}
 		});
-		
+
 		Button btnAfter = (Button) getActivity().findViewById(
 				R.id.mybuttonAfter);
 		btnAfter.setOnClickListener(new Button.OnClickListener() {
@@ -226,7 +225,7 @@ public class PlannerFragment extends ListFragment {
 				fillData();
 			}
 		});
-		
+
 		Button btnBefore = (Button) getActivity().findViewById(
 				R.id.mybuttonBefore);
 		btnBefore.setOnClickListener(new Button.OnClickListener() {
@@ -245,8 +244,6 @@ public class PlannerFragment extends ListFragment {
 		});
 
 	}
-
-
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -279,7 +276,8 @@ public class PlannerFragment extends ListFragment {
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):
-			startActivity(new Intent(getActivity(), PreferenceActivity.class).putExtra("screen", PreferenceActivity.PAGE_PLANNER));
+			startActivity(new Intent(getActivity(), PreferenceActivity.class)
+					.putExtra("screen", PreferenceActivity.PAGE_PLANNER));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -352,8 +350,6 @@ public class PlannerFragment extends ListFragment {
 		setListAdapter(adapter);
 	}
 
-
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -365,23 +361,19 @@ public class PlannerFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		positionClicked = position;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
-		Log.v(TAG, "click"+allConnections.connection
-				.get(positionClicked).getDuration());
+		Log.v(TAG, "click"
+				+ allConnections.connection.get(positionClicked).getDuration());
 		try {
 
 			Connection currentConnection = allConnections.connection
 					.get(positionClicked);
 
-			if (currentConnection.getVias()!=null && currentConnection.getVias().via.size() > 0) {
-				
-				int style = android.R.style.Theme_Dialog;
-				
-				if(Build.VERSION.SDK_INT>=14)
-					style = android.R.style.Theme_DeviceDefault_Dialog;
-				
-				
+			if (currentConnection.getVias() != null
+					&& currentConnection.getVias().via.size() > 0) {
+
 				new ConnectionDialog(getActivity(),
-						allConnections.connection.get(positionClicked),style).show();
+						allConnections.connection.get(positionClicked), style)
+						.show();
 			} else {
 				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
@@ -393,7 +385,7 @@ public class PlannerFragment extends ListFragment {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			//noDataClick(positionClicked);
+			// noDataClick(positionClicked);
 		}
 	}
 
@@ -498,9 +490,9 @@ public class PlannerFragment extends ListFragment {
 
 		// allConnections = new Connections();
 
-		allConnections = UtilsWeb.getAPIConnections(
-				"" + (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
-						+ mDate.getDate(), "" + mDate.getHours(),
+		allConnections = UtilsWeb.getAPIConnections(""
+				+ (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
+				+ mDate.getDate(), "" + mDate.getHours(),
 				"" + mDate.getMinutes(), langue, myStart, myArrival, dA,
 				trainOnly, getActivity());
 
@@ -535,7 +527,6 @@ public class PlannerFragment extends ListFragment {
 
 	}
 
-
 	public void noDataClick(int position) {
 
 		// TODO If there were no results, launch browser to check connection.
@@ -554,60 +545,20 @@ public class PlannerFragment extends ListFragment {
 	}
 
 	private void showDateTimeDialog() {
-		// Create the dialog
-		final Dialog mDateTimeDialog = new Dialog(
-				(Context) getSupportActivity());
-		// Inflate the root layout
-		final RelativeLayout mDateTimeDialogView = (RelativeLayout) getSupportActivity()
-				.getLayoutInflater().inflate(R.layout.dtp_date_time_dialog,
-						null);
-		// Grab widget instance
-		final DateTimePicker mDateTimePicker = (DateTimePicker) mDateTimeDialogView
-				.findViewById(R.id.DateTimePicker);
 
-		// Check is system is set to use 24h time (this doesn't seem to work as
-		// expected though)
+		if (Build.VERSION.SDK_INT >= 14)
+			style = android.R.style.Theme_DeviceDefault_Light_Dialog;
+		
+		final DateTimePicker mDateTimeDialog = new DateTimePicker(
+				(Context) getSupportActivity(), style,this);
+		
 		final String timeS = android.provider.Settings.System.getString(
 				getSupportActivity().getContentResolver(),
 				android.provider.Settings.System.TIME_12_24);
 		final boolean is24h = !(timeS == null || timeS.equals("12"));
 
-		// Update demo TextViews when the "OK" button is clicked
-		((Button) mDateTimeDialogView.findViewById(R.id.SetDateTime))
-				.setOnClickListener(new OnClickListener() {
+		mDateTimeDialog.setIs24HourView(is24h);
 
-					public void onClick(View v) {
-
-						getSupportActivity().getSupportActionBar().setTitle(
-								mDateTimePicker.getFormatedDate(abTimePattern));
-						getSupportActivity().getSupportActionBar().setSubtitle(
-								mDateTimePicker.getFormatedDate(abDatePattern));
-						mDateTimeDialog.cancel();
-
-					}
-				});
-
-		// Cancel the dialog when the "Cancel" button is clicked
-		((Button) mDateTimeDialogView.findViewById(R.id.CancelDialog))
-				.setOnClickListener(new OnClickListener() {
-
-					public void onClick(View v) {
-						mDateTimeDialog.cancel();
-					}
-				});
-
-		// Reset Date and Time pickers when the "Reset" button is clicked
-		((Button) mDateTimeDialogView.findViewById(R.id.ResetDateTime))
-				.setOnClickListener(new OnClickListener() {
-
-					public void onClick(View v) {
-						mDateTimePicker.reset();
-					}
-				});
-
-		mDateTimePicker.setIs24HourView(is24h);
-		mDateTimeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		mDateTimeDialog.setContentView(mDateTimeDialogView);
 		mDateTimeDialog.show();
 	}
 
