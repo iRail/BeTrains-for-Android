@@ -21,7 +21,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 public class WelcomeActivity extends FragmentActivity {
 	/** Called when the activity is first created. */
-	//TEST CVE
+	// TEST CVE
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,9 +48,6 @@ public class WelcomeActivity extends FragmentActivity {
 			case 5:
 				setFragment(new ClosestFragment());
 				break;
-			case 6:
-				setFragment(new ChatFragment());
-				break;
 			default:
 				setWelcomeContent();
 				break;
@@ -59,19 +56,19 @@ public class WelcomeActivity extends FragmentActivity {
 			setWelcomeContent();
 		}
 	}
-	
-	public void setWelcomeContent(){
+
+	public void setWelcomeContent() {
 		setContentView(R.layout.activity_welcome);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-		
-		ViewPager mPager=(ViewPager) this.findViewById(R.id.pager);
-		MenuAdapter adapter= new MenuAdapter(this);
+
+		ViewPager mPager = (ViewPager) this.findViewById(R.id.pager);
+		MenuAdapter adapter = new MenuAdapter(this);
 		mPager.setAdapter(adapter);
-		
-		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+
+		CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
 		indicator.setSnap(true);
-		
+
 	}
 
 	public void onTwitClick(View v) {
@@ -122,19 +119,20 @@ public class WelcomeActivity extends FragmentActivity {
 			startActivity(new Intent(this, ChatActivity.class));
 		}
 	}
-	
+
 	public void onSettingsClick(View v) {
 		if (findViewById(R.id.fragment) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			startActivity(new Intent(this, PreferenceActivity.class).putExtra("screen", PreferenceActivity.PAGE_GENERAL));
+			startActivity(new Intent(this, PreferenceActivity.class).putExtra(
+					"screen", PreferenceActivity.PAGE_GENERAL));
 		}
 	}
 
 	public void onHelpClick(View v) {
 		MyOtherAlertDialog.create(WelcomeActivity.this).show();
 	}
-	
+
 	public void onIrailClick(View v) {
 
 		Intent intent = new Intent("android.intent.action.MAIN");
@@ -148,14 +146,14 @@ public class WelcomeActivity extends FragmentActivity {
 			e.printStackTrace();
 
 			Intent updateIntent = null;
-			updateIntent = new Intent(Intent.ACTION_VIEW, Uri
-					.parse("market://details?id=be.irail.liveboards"));
+			updateIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("market://details?id=be.irail.liveboards"));
 			startActivity(updateIntent);
 
 		}
 
 	}
-	
+
 	// Display the Fragment when the user does not want the dashboard as his
 	// start screen.
 	public void setFragment(Fragment fragment) {
@@ -164,7 +162,7 @@ public class WelcomeActivity extends FragmentActivity {
 		ft.replace(R.id.fragment, fragment);
 		ft.commit();
 	}
-	
+
 	public static class MyOtherAlertDialog {
 
 		public static AlertDialog create(Context context) {
@@ -213,10 +211,10 @@ public class WelcomeActivity extends FragmentActivity {
 			WebView messageWv = new WebView(context);
 			messageWv.loadData(message, "text/html", "utf-8");
 
-			return new AlertDialog.Builder(context).setTitle(
-					R.string.btn_home_help).setCancelable(true).setIcon(
-					android.R.drawable.ic_dialog_info).setView(messageWv)
-					.create();
+			return new AlertDialog.Builder(context)
+					.setTitle(R.string.btn_home_help).setCancelable(true)
+					.setIcon(android.R.drawable.ic_dialog_info)
+					.setView(messageWv).create();
 		}
 	}
 

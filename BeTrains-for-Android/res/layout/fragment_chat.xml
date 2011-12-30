@@ -43,17 +43,12 @@
     -->
 
     <ListView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@android:id/list"
-        style="@style/TextElement"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:cacheColorHint="#00000000"
-        android:gravity="top|left"
         android:paddingLeft="6dip"
-        android:paddingRight="6dip"
-        android:text="@string/txt_loading" />
+        android:paddingRight="6dip" />
 
     <TextView
         android:id="@android:id/empty"

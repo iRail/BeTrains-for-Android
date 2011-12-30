@@ -67,6 +67,11 @@ public class PlannerFragment extends ListFragment {
 
 	private String TAG = "BETRAINS";
 	private SupportActivity context;
+	
+	private static SharedPreferences settings;
+	private SharedPreferences.Editor editor;
+
+	private ProgressDialog progressDialog;
 
 	// Second part need to be cleaned
 
@@ -78,10 +83,7 @@ public class PlannerFragment extends ListFragment {
 	
 	private static final int CONNECTION_DIALOG_ID = 0;
 
-	private static SharedPreferences settings;
-	private SharedPreferences.Editor editor;
 
-	private ProgressDialog progressDialog;
 
 	public void onStart() {
 		super.onStart();
@@ -114,22 +116,13 @@ public class PlannerFragment extends ListFragment {
 			mySearchThread();
 		}
 
-		setHasOptionsMenu(true);
-
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		setBtnSearchListener();
-		setBtnInvertListener();
-		setTvArrivalListener();
-		setTvDepartureListener();
-		setBtnInfoArrivalListener();
-		setBtnInfoDepartureListener();
-		setBtnAfterListener();
-		setBtnBeforeListener();
+		setAllBtnListener();
 
 		String defaultStart = settings.getString("pStart", "MONS");
 		String defaultStop = settings.getString("pStop", "TOURNAI");
@@ -150,24 +143,45 @@ public class PlannerFragment extends ListFragment {
 		}
 	};
 
-	private void setBtnInfoDepartureListener() {
-		Button btnInfoDeparture = (Button) getActivity().findViewById(
-				R.id.btn_infos_departure);
-		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
+
+
+
+	private void setAllBtnListener() {
+		Button btnInvert = (Button) getActivity().findViewById(
+				R.id.mybuttonInvert);
+		btnInvert.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				String station = tvDeparture.getText().toString();
-				Intent i = new Intent(getActivity(), InfoStationActivity.class);
-				i.putExtra("Name", station);
-				i.putExtra("Hour", mDate.getHours());
-				i.putExtra("Minute", mDate.getMinutes());
-				startActivityForResult(i, ACTIVITY_STATION);
+				fillStations((String) tvArrival.getText(),
+						(String) tvDeparture.getText());
+			}
+		});
+		
+		Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
+		btnSearch.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				mySearchThread();
 
 			}
 		});
-	}
-
-	private void setBtnInfoArrivalListener() {
-
+		
+		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
+		tvDeparture.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(),
+						StationPickerActivity.class);
+				startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
+			}
+		});
+		
+		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
+		tvArrival.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(),
+						StationPickerActivity.class);
+				startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
+			}
+		});
+		
 		Button btnInfoArrival = (Button) getActivity().findViewById(
 				R.id.btn_info_arrival);
 		btnInfoArrival.setOnClickListener(new Button.OnClickListener() {
@@ -182,55 +196,57 @@ public class PlannerFragment extends ListFragment {
 
 			}
 		});
-
-	}
-
-	private void setTvArrivalListener() {
-
-		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
-		tvArrival.setOnClickListener(new Button.OnClickListener() {
+		Button btnInfoDeparture = (Button) getActivity().findViewById(
+				R.id.btn_infos_departure);
+		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(getActivity(),
-						StationPickerActivity.class);
-				startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
+				String station = tvDeparture.getText().toString();
+				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				i.putExtra("Name", station);
+				i.putExtra("Hour", mDate.getHours());
+				i.putExtra("Minute", mDate.getMinutes());
+				startActivityForResult(i, ACTIVITY_STATION);
+
+			}
+		});
+		
+		Button btnAfter = (Button) getActivity().findViewById(
+				R.id.mybuttonAfter);
+		btnAfter.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				// tracker.trackEvent("Click", "ButtonAfter", "clicked", 0);
+				// int hour = Integer.parseInt(mHour);
+				// if (hour < 23)
+				// mHour = ConnectionMaker.fillZero("" + (hour + 1));
+				// else
+				// mHour = "00";
+				// mActionBar.setTitle(mDay + "/" + mMonth + "/" + mYear + "   "
+				// + mHour + ":" + mMinute);
+				makeApiRequest();
+				fillData();
+			}
+		});
+		
+		Button btnBefore = (Button) getActivity().findViewById(
+				R.id.mybuttonBefore);
+		btnBefore.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				// tracker.trackEvent("Click", "ButtonBefore", "clicked", 0);
+				// int hour = Integer.parseInt(mHour);
+				// if (hour > 0)
+				// mHour = ConnectionMaker.fillZero("" + (hour - 1));
+				// else
+				// mHour = "23";
+				// mActionBar.setTitle(mDay + "/" + mMonth + "/" + mYear + "   "
+				// + mHour + ":" + mMinute);
+				makeApiRequest();
+				fillData();
 			}
 		});
 
 	}
 
-	private void setTvDepartureListener() {
-		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
-		tvDeparture.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(),
-						StationPickerActivity.class);
-				startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
-			}
-		});
 
-	}
-
-	private void setBtnInvertListener() {
-		Button btnInvert = (Button) getActivity().findViewById(
-				R.id.mybuttonInvert);
-		btnInvert.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				fillStations((String) tvArrival.getText(),
-						(String) tvDeparture.getText());
-			}
-		});
-
-	}
-
-	private void setBtnSearchListener() {
-		Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
-		btnSearch.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				mySearchThread();
-
-			}
-		});
-	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -268,44 +284,6 @@ public class PlannerFragment extends ListFragment {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	private void setBtnBeforeListener() {
-		Button btnBefore = (Button) getActivity().findViewById(
-				R.id.mybuttonBefore);
-		btnBefore.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				// tracker.trackEvent("Click", "ButtonBefore", "clicked", 0);
-				// int hour = Integer.parseInt(mHour);
-				// if (hour > 0)
-				// mHour = ConnectionMaker.fillZero("" + (hour - 1));
-				// else
-				// mHour = "23";
-				// mActionBar.setTitle(mDay + "/" + mMonth + "/" + mYear + "   "
-				// + mHour + ":" + mMinute);
-				makeApiRequest();
-				fillData();
-			}
-		});
-	}
-
-	private void setBtnAfterListener() {
-		Button btnAfter = (Button) getActivity().findViewById(
-				R.id.mybuttonAfter);
-		btnAfter.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				// tracker.trackEvent("Click", "ButtonAfter", "clicked", 0);
-				// int hour = Integer.parseInt(mHour);
-				// if (hour < 23)
-				// mHour = ConnectionMaker.fillZero("" + (hour + 1));
-				// else
-				// mHour = "00";
-				// mActionBar.setTitle(mDay + "/" + mMonth + "/" + mYear + "   "
-				// + mHour + ":" + mMinute);
-				makeApiRequest();
-				fillData();
-			}
-		});
 	}
 
 	private void fillData() {

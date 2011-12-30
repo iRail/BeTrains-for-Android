@@ -22,9 +22,9 @@ import android.util.Log;
 
 //NOTE: FAV_TYPE: 1=Station 2=Train 3=Trip 
 public class DbAdapterConnection {
+	
+	public final static String KEY_NAME = "Name";
 
-	public static final String KEY_TITLE = "title";
-	public static final String KEY_BODY = "body";
 	public static final String KEY_FAV_NAME = "favname";
 	public static final String KEY_FAV_NAMETWO = "favnametwo";
 	public static final String KEY_FAV_TYPE = "favtype";
@@ -32,10 +32,7 @@ public class DbAdapterConnection {
 	public static final String KEY_STOP_TIME = "stoptime";
 	public static final String KEY_STOP_LATE = "stoplate";
 	public static final String KEY_STOP_STATUS = "stopstatus";
-	public static final String KEY_INFO_START = "infostart";
-	public static final String KEY_INFO_STOP = "infostop";
-	public static final String KEY_INFO_TID = "infotid";
-	public static final String KEY_INFO_MESSAGE = "infomessage";
+
 	public static final String KEY_ROWID = "_id";
 
 	private static final String TAG = "BETRAINS";
@@ -63,7 +60,7 @@ public class DbAdapterConnection {
 	public final static String KEY_TRIPTIME = "triptime";
 	public final static String KEY_DELAY_DEPARTURE = "delayd";
 	public final static String KEY_DELAY_ARRIVAL = "delaya";
-	public final static String KEY_TRAINS = "trains";
+
 	public final static String KEY_DEPARTURE_PLATFORM = "departureplatform";
 	public final static String KEY_ARRIVAL_PLATFORM = "arrivalplatform";
 	public final static String KEY_DEPARTURE_COORD = "departurecoordinates";
@@ -100,12 +97,6 @@ public class DbAdapterConnection {
 		+ KEY_STOP_LATE + " text not null, " + KEY_STOP_STATUS
 		+ " text not null);";
 
-	private static final String CREATE_INFO_DATABASE = "create table "
-			+ DATABASE_INFO_TABLE + " (_id integer primary key autoincrement, "
-			+ KEY_INFO_START + " text not null, " + KEY_INFO_STOP
-			+ " text not null, " + KEY_INFO_TID + " text not null, "
-			+ KEY_INFO_MESSAGE + " text not null);";
-
 	private final Context mCtx;
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -120,7 +111,6 @@ public class DbAdapterConnection {
 			System.out.println("CREATING DATABASE TABLES");
 			db.execSQL(CREATE_FAV_DATABASE);
 			db.execSQL(CREATE_WIDGET_STOP_DATABASE);
-			db.execSQL(CREATE_INFO_DATABASE);
 			
 		}
 
@@ -261,13 +251,6 @@ public class DbAdapterConnection {
 				KEY_STOP_STATUS }, null, null, null, null, null);
 	}
 
-	public Cursor fetchAllInfo() {
-
-		return mDb.query(DATABASE_INFO_TABLE,
-				new String[] { KEY_ROWID, KEY_INFO_START, KEY_INFO_STOP,
-						KEY_INFO_TID, KEY_INFO_MESSAGE }, null, null, null,
-				null, null);
-	}
 
 	/**
 	 * Return a Cursor positioned at the connection that matches the given rowId
@@ -301,16 +284,6 @@ public class DbAdapterConnection {
 		return mCursor;
 	}
 
-	public Cursor fetchInfo(long rowId) throws SQLException {
-		Cursor mCursor = mDb.query(true, DATABASE_INFO_TABLE, new String[] {
-				KEY_ROWID, KEY_INFO_START, KEY_INFO_STOP, KEY_INFO_TID,
-				KEY_INFO_MESSAGE }, KEY_ROWID + "=" + rowId, null, null, null,
-				null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
-		}
-		return mCursor;
-	}
 
 	/**
 	 * Update the connection using the details provided. The connection to be updated is
@@ -347,15 +320,5 @@ public class DbAdapterConnection {
 				null) > 0;
 	}
 
-	public boolean updateInfo(long rowId, String start, String stop,
-			String tid, String message) {
-		ContentValues args = new ContentValues();
-		args.put(KEY_INFO_START, start);
-		args.put(KEY_INFO_STOP, stop);
-		args.put(KEY_INFO_TID, tid);
-		args.put(KEY_INFO_MESSAGE, message);
-		return mDb.update(DATABASE_INFO_TABLE, args, KEY_ROWID + "=" + rowId,
-				null) > 0;
-	}
 
 }

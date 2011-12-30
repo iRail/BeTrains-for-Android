@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="/home/cvr/workspace/Jar/gson-2.0.jar"/>
+	<classpathentry kind="lib" path="/home/cvr/workspace/Jar/actionbarsherlock-plugin-preference-3.4.1.jar"/>
+	<classpathentry kind="lib" path="/home/cvr/workspace/Jar/actionbarsherlock-plugin-maps-3.4.1.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="libs/actionbarsherlock-plugin-maps-3.5.0.jar"/>
-	<classpathentry kind="lib" path="libs/actionbarsherlock-plugin-preference-3.5.0.jar"/>
-	<classpathentry kind="lib" path="libs/gson-2.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

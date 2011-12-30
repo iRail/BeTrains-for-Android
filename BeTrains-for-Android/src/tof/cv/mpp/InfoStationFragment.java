@@ -3,8 +3,6 @@ package tof.cv.mpp;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Station;
 import tof.cv.mpp.Utils.UtilsWeb.StationStationinfo;
-import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
-import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
