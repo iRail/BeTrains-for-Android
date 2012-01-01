@@ -20,4 +20,3 @@ local.properties
 *.jar
 .*.kate-swp
 .*.swp
-/project.properties
