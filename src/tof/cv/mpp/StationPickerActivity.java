@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class StationPickerActivity extends FragmentActivity {
 	public static class ArrayListFragment extends ListFragment implements
 			OnScrollListener {
 		static int mNum;
-		private char mPrevLetter = Character.MIN_VALUE;
+		private char mPrevLetter = '\'';
 		private TextView mDialogText;
 		private boolean mShowing;
 		private boolean mReady;
@@ -244,11 +245,12 @@ public class StationPickerActivity extends FragmentActivity {
 						.toString().charAt(0);
 
 				if (!mShowing && firstLetter != mPrevLetter) {
+					mShowing=true;
 					mDialogText.setVisibility(View.VISIBLE);
 				}
 				mDialogText.setText(((Character) firstLetter).toString());
 				mHandler.removeCallbacks(mRemoveWindow);
-				mHandler.postDelayed(mRemoveWindow, 3000);
+				mHandler.postDelayed(mRemoveWindow, 1000);
 				mPrevLetter = firstLetter;
 			}
 
