@@ -3,9 +3,12 @@ package tof.cv.mpp;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.adapter.AlphabeticalAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActionBar.LayoutParams;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,10 +19,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.viewpagerindicator.R;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
@@ -38,7 +45,6 @@ public class StationPickerActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		Utils.setFullscreenIfNecessary(this);
-
 		setContentView(R.layout.fragment_pref_picker);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -66,8 +72,30 @@ public class StationPickerActivity extends FragmentActivity {
 		}
 	}
 
-	public static class ArrayListFragment extends ListFragment {
+	public static class ArrayListFragment extends ListFragment implements
+			OnScrollListener {
 		static int mNum;
+		private char mPrevLetter = Character.MIN_VALUE;
+		private TextView mDialogText;
+		private boolean mShowing;
+		private boolean mReady;
+
+		private final class RemoveWindow implements Runnable {
+			public void run() {
+				removeWindow();
+			}
+		}
+
+		private void removeWindow() {
+			if (mShowing) {
+				mShowing = false;
+				mDialogText.setVisibility(View.INVISIBLE);
+			}
+		}
+
+		private RemoveWindow mRemoveWindow = new RemoveWindow();
+		Handler mHandler = new Handler();
+		private WindowManager mWindowManager;
 
 		/**
 		 * Create a new instance of CountingFragment, providing "num" as an
@@ -81,6 +109,27 @@ public class StationPickerActivity extends FragmentActivity {
 			f.setArguments(args);
 
 			return f;
+		}
+
+		@Override
+		public void onResume() {
+			super.onResume();
+			mReady = true;
+		}
+
+		@Override
+		public void onPause() {
+			super.onPause();
+			removeWindow();
+			mReady = false;
+		}
+
+		@Override
+		public void onDestroy() {
+			super.onDestroy();
+			if (mWindowManager != null)
+				mWindowManager.removeView(mDialogText);
+			mReady = false;
 		}
 
 		/**
@@ -129,9 +178,34 @@ public class StationPickerActivity extends FragmentActivity {
 
 			getListView().setFastScrollEnabled(true);
 
-			AlphabeticalAdapter a = new AlphabeticalAdapter(getActivity(), list);
+			ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_1, list);
 
 			if (mNum == 1) {
+
+				mWindowManager = (WindowManager) getActivity()
+						.getSystemService(Context.WINDOW_SERVICE);
+
+				LayoutInflater inflate = (LayoutInflater) getActivity()
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				mDialogText = (TextView) inflate.inflate(
+						R.layout.list_position, null);
+				mDialogText.setVisibility(View.INVISIBLE);
+
+				mHandler.post(new Runnable() {
+
+					public void run() {
+						WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+								LayoutParams.WRAP_CONTENT,
+								LayoutParams.WRAP_CONTENT,
+								WindowManager.LayoutParams.TYPE_APPLICATION,
+								WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+										| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+								PixelFormat.TRANSLUCENT);
+						mWindowManager.addView(mDialogText, lp);
+					}
+				});
+
 				EditText filterText = (EditText) getActivity().findViewById(
 						R.id.search_box);
 				FilterTextWatcher filterTextWatcher = new FilterTextWatcher(a);
@@ -140,6 +214,8 @@ public class StationPickerActivity extends FragmentActivity {
 					getListView().setTextFilterEnabled(true);
 				}
 			}
+
+			getListView().setOnScrollListener(this);
 
 			this.setListAdapter(a);
 		}
@@ -152,6 +228,30 @@ public class StationPickerActivity extends FragmentActivity {
 			i.putExtras(bundle);
 			getActivity().setResult(RESULT_OK, i);
 			getActivity().finish();
+		}
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+			if (mReady && mDialogText != null) {
+				char firstLetter = view.getItemAtPosition(firstVisibleItem)
+						.toString().charAt(0);
+
+				if (!mShowing && firstLetter != mPrevLetter) {
+					mDialogText.setVisibility(View.VISIBLE);
+				}
+				mDialogText.setText(((Character) firstLetter).toString());
+				mHandler.removeCallbacks(mRemoveWindow);
+				mHandler.postDelayed(mRemoveWindow, 3000);
+				mPrevLetter = firstLetter;
+			}
+
 		}
 
 	}
