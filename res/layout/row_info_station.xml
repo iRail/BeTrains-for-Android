@@ -1,38 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="horizontal" android:paddingRight="6dip"
-	android:clickable="false">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:orientation="horizontal"
+    android:paddingRight="6dip" >
 
-	<TextView android:layout_width="33dip" android:text="X"
-		android:textSize="16dip" android:layout_height="wrap_content"
-		android:id="@+id/tv_platform" android:textStyle="bold" android:gravity="center"
-		android:textColor="@color/lightblue" />
+    <TextView
+        android:id="@+id/tv_platform"
+        android:layout_width="33dip"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/lightblue"
+        android:textSize="16dip"
+        android:textStyle="bold" />
 
-	<TextView android:layout_width="wrap_content" android:text="XX:XX"
-		android:textSize="16dip" android:layout_height="wrap_content"
-		android:id="@+id/tv_time" android:textColor="@color/darkyellow" 
-		 android:background="@color/timebg"/>
-		
-	<TextView android:layout_width="wrap_content"
-		android:textSize="16dip" android:textColor="#FF0000" android:text="delay"
-		android:layout_height="wrap_content" android:id="@+id/tv_delay"
-		android:paddingLeft="6dip" />
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/blackbg"
+        android:text="XX:XX"
+        android:textColor="@color/darkyellow"
+        android:textSize="16dip" />
 
+    <TextView
+        android:id="@+id/tv_delay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="6dip"
+        android:text="delay"
+        android:textColor="#FF0000"
+        android:textSize="16dip" />
 
-	<TextView android:layout_width="0dip" android:gravity="center"
-		android:layout_weight="1"  android:text="Station"
-		android:layout_height="wrap_content" android:id="@+id/tv_station"
-		android:textStyle="bold" android:textSize="16dip"  android:textColor="@color/darkblue"/>
+    <TextView
+        android:id="@+id/tv_station"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Station"
+        android:textColor="@color/darkblue"
+        android:textSize="16dip"
+        android:textStyle="bold" />
 
-	<TextView android:layout_width="wrap_content" android:gravity="center"
-		android:textColor="#FFFFFF" android:text="" android:layout_height="wrap_content"
-		android:id="@+id/vide" />
+    <TextView
+        android:id="@+id/vide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#FFFFFF" />
 
-	<TextView android:layout_width="wrap_content" android:text="IC XXXX"
-		android:textSize="16dip" android:layout_height="wrap_content"
-		android:gravity="right" android:id="@+id/tv_train" android:textColor="@color/darkblue" />
-
-
+    <TextView
+        android:id="@+id/tv_train"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="IC XXXX"
+        android:textColor="@color/darkblue"
+        android:textSize="16dip" />
 
 </LinearLayout>

@@ -59,7 +59,7 @@ public class UtilsWeb {
 
 		return data;
 	}
-	
+
 	public static Connections getAPIConnections(String year, String month,
 			String day, String hour, String minutes, String language,
 			String departure, String arrival, String departureArrival,
@@ -101,7 +101,7 @@ public class UtilsWeb {
 			return null;
 		}
 	}
-	
+
 	public static void loadTweets(final Activity a, final ListView l) {
 		new Thread(new Runnable() {
 			public void run() {
@@ -124,14 +124,15 @@ public class UtilsWeb {
 					if (mDefaultPrefs.getBoolean("mNavetteurs", a
 							.getResources().getBoolean(R.bool.navetteurs)))
 						url += "%20OR%20navetteurs";
-					
-					url+="&rpp=50";
-					
-					InputStream is=Utils.DownloadJsonFromUrlAndCacheToSd(url,"/Android/data/BeTrains/Twitter",null,a);
+
+					url += "&rpp=50";
+
+					InputStream is = Utils.DownloadJsonFromUrlAndCacheToSd(url,
+							"/Android/data/BeTrains/Twitter", null, a);
 					Gson gson = new Gson();
 					final Reader reader = new InputStreamReader(is);
-					final Tweets tweets= gson.fromJson(reader,Tweets.class);
-					
+					final Tweets tweets = gson.fromJson(reader, Tweets.class);
+
 					a.runOnUiThread(new Thread(new Runnable() {
 						public void run() {
 
@@ -156,16 +157,15 @@ public class UtilsWeb {
 
 	}
 
-	public static Vehicle getAPIvehicle(String vehicle,
-			final Context context) {
-		//TODO
+	public static Vehicle getAPIvehicle(String vehicle, final Context context) {
+		// TODO
 		String langue = context.getString(R.string.url_lang_2);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
 
 		String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
-				+  "&format=JSON&fast=true"+"&lang=" + langue;
+				+ "&format=JSON&fast=true" + "&lang=" + langue;
 		System.out.println("Affiche les infos train depuis la page: " + url);
 
 		try {
@@ -180,11 +180,13 @@ public class UtilsWeb {
 		}
 
 	}
-	
+
 	public class Vehicle {
 
 		private VehicleStops stops;
 		private String version;
+		private String vehicle;
+		private String timestamp;
 
 		public VehicleStops getVehicleStops() {
 			return stops;
@@ -193,9 +195,17 @@ public class UtilsWeb {
 		public String getVersion() {
 			return version;
 		}
+		
+		public String getId() {
+			return vehicle;
+		}
+		
+		public String getTimestamp() {
+			return timestamp;
+		}
 
 	}
-	
+
 	public class VehicleStops {
 
 		private ArrayList<VehicleStop> stop;
@@ -214,24 +224,32 @@ public class UtilsWeb {
 		public String getStation() {
 			return station;
 		}
+
 		public String getTime() {
 			return time;
 		}
+
 		public String getDelay() {
 			return delay;
 		}
+
+		public String getStatus() {
+			if (delay.contentEquals("0"))
+				return "";
+
+			return "+" + Integer.valueOf(delay) / 60 + "'";
+		}
 	}
-	
-	public static Station getAPIstation(String station,
-			final Context context) {
-		//TODO
+
+	public static Station getAPIstation(String station, final Context context) {
+		// TODO
 		String langue = context.getString(R.string.url_lang_2);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
 
 		String url = "http://api.irail.be/liveboard.php/?station=" + station
-				+  "&format=JSON&fast=true"+"&lang=" + langue;
+				+ "&format=JSON&fast=true" + "&lang=" + langue;
 		System.out.println("Show station from: " + url);
 
 		try {
@@ -246,7 +264,7 @@ public class UtilsWeb {
 		}
 
 	}
-	
+
 	public class Station {
 
 		private String version;
@@ -261,7 +279,7 @@ public class UtilsWeb {
 		}
 
 	}
-	
+
 	public class StationStationinfo {
 
 		private String id;
@@ -271,9 +289,11 @@ public class UtilsWeb {
 		public String getId() {
 			return id;
 		}
+
 		public String getLocationX() {
 			return locationX;
 		}
+
 		public String getLocationY() {
 			return locationY;
 		}

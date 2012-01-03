@@ -59,6 +59,7 @@
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:orientation="horizontal" android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
+			
 			<TextView android:id="@+id/text3" android:layout_width="0dip"
 				android:layout_weight="1" android:layout_height="wrap_content"
 				android:textColor="@color/appwidget_text" android:textSize="18dip"
@@ -69,8 +70,7 @@
 			<TextView android:id="@+id/text4" android:textStyle="bold"
 				android:textColor="#FF0000" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:textSize="18dip"
-				android:singleLine="true" android:fadingEdge="horizontal"
-				android:fadingEdgeLength="10dip" android:gravity="right"
+				android:singleLine="true" android:gravity="right"
 				android:ellipsize="none" android:text="retard" />
 
 

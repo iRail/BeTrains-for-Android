@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 import tof.cv.mpp.PlannerActivity;
 import tof.cv.mpp.R;
-import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb.VehicleStops;
@@ -255,11 +254,12 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 				String time = Utils.getTimeFromDate(mSTOPCursor.getString(mSTOPCursor
 						.getColumnIndex(DbAdapterConnection.KEY_STOP_TIME)));
 				String late = mSTOPCursor.getString(mSTOPCursor
-						.getColumnIndex(DbAdapterConnection.KEY_STOP_LATE));
+						.getColumnIndex(DbAdapterConnection.KEY_STOP_STATUS));
 				String station = mSTOPCursor.getString(mSTOPCursor
 						.getColumnIndex(DbAdapterConnection.KEY_STOP_NAME));
 				updateViews.setTextViewText(R.id.text2, Html.fromHtml(station));
 				updateViews.setTextViewText(R.id.text3, time);
+	
 				updateViews.setTextViewText(R.id.text4, late);
 
 			} else {

@@ -18,14 +18,14 @@
 
 	<color name="buttons">#cc000000</color>
 	
+		<color name="blackbg">#cc000000</color>
+	
 	<color name="red">#ffff0000</color>
 
 	<color name="background1">#ffffffff</color>
 
 	<color name="appwidget_text">#ffffffff</color>
 	
-	<color name="timebg">#AA000000</color>
-
 	<color name="darkblue">#ff355689</color>
 	<color name="lightblue">#ff3399ff</color>
 	<color name="stationsymbol">#558B7D6B</color>

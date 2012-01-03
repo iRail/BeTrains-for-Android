@@ -21,7 +21,7 @@
         android:id="@+id/arret2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/timebg"
+        android:background="@color/blackbg"
         android:paddingLeft="2dip"
         android:text="XX:XX"
         android:textColor="@color/darkyellow"

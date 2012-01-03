@@ -378,6 +378,8 @@ public class PlannerFragment extends ListFragment {
 				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
 						.getVehicle());
+				i.putExtra("fromto", tvDeparture.getText().toString() + " - " +
+						  tvArrival.getText().toString());
 				i.putExtra("Hour", mDate.getHours());
 				i.putExtra("Minute", mDate.getMinutes());
 				startActivity(i);

@@ -17,10 +17,11 @@ public class InfoTrainActivity extends FragmentActivity {
 		
 		Bundle bundle = this.getIntent().getExtras();
 		String name = bundle.getString("Name").replace("BE.NMBS.", "");
+		String fromTo = bundle.getString("fromto");
 		getSupportActionBar().setTitle(name+" infos:");
 		
 		InfoTrainFragment fragment = (InfoTrainFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
-		fragment.displayInfo(name);
+		fragment.displayInfo(name,fromTo);
 	}
 
 	

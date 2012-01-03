@@ -40,7 +40,7 @@ public class TrainInfoAdapter extends AbstractAdapter<VehicleStop> {
 			if (o.getDelay().contentEquals("0"))
 				t3.setVisibility(View.GONE);
 			else
-				t3.setText(o.getDelay());
+				t3.setText("+"+(Integer.valueOf(o.getDelay())/60)+"'");
 
 		}
 		return v;

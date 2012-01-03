@@ -30,6 +30,7 @@ public class InfoTrainFragment extends ListFragment {
 	private ProgressDialog progressDialog;
 	private Vehicle currentVehicle;
 	private TextView mTitleText;
+	private String fromTo;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,9 +53,10 @@ public class InfoTrainFragment extends ListFragment {
 
 	}
 
-	public void displayInfo(String vehicle) {
+	public void displayInfo(String vehicle, String fromTo) {
 		progressDialog = ProgressDialog.show(getActivity(), "",
 				getString(R.string.txt_patient), true);
+		this.fromTo=fromTo;
 		myTrainSearchThread(vehicle);
 	}
 
@@ -85,6 +87,7 @@ public class InfoTrainFragment extends ListFragment {
 						getActivity(), R.layout.row_info_train, currentVehicle
 								.getVehicleStops().getVehicleStop());
 				setListAdapter(trainInfoAdapter);
+				setTitle(Utils.formatDate(new Date(Long.valueOf(currentVehicle.getTimestamp())*1000), "dd MMM HH:mm"));
 
 			} else {
 				TextView messagesEmpty = (TextView) getActivity().findViewById(
@@ -148,13 +151,13 @@ public class InfoTrainFragment extends ListFragment {
 								getActivity());
 						mDbHelper.open();
 						mDbHelper.deleteAllWidgetStops();
-						mDbHelper.createWidgetStop("currentTrain", "1", "",
-								"fromto");
+						mDbHelper.createWidgetStop(currentVehicle.getId().replace("BE.NMBS.", ""), "1", "",
+								fromTo);
 						for (VehicleStop oneStop : currentVehicle
 								.getVehicleStops().getVehicleStop())
 							mDbHelper.createWidgetStop(oneStop.getStation(),
 									oneStop.getTime(),
-									oneStop.getDelay() + " ", "Status");
+									oneStop.getDelay(), oneStop.getStatus());
 						Intent intent = new Intent(
 								TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
 						getActivity().sendBroadcast(intent);
