@@ -84,6 +84,15 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        
+        <receiver android:name="tof.cv.widget.TrainAppWidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="BETRAIN_WIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/appwidget_info" />
+		</receiver>
     </application>
 
     <supports-screens

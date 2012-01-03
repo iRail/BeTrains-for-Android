@@ -38,23 +38,23 @@ import android.view.WindowManager;
 import com.google.gson.Gson;
 
 public class Utils {
-	
+
 	final static String FILENAMECONN = "connections.txt";
 	final static String DIRPATH = "/Android/data/BeTrains";
-	
+
 	public static void setFullscreenIfNecessary(Activity context) {
-		
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		if (settings.getBoolean("preffullscreen", false)){
+
+		SharedPreferences settings = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		if (settings.getBoolean("preffullscreen", false)) {
 			context.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			context.getWindow().setFlags(
 					WindowManager.LayoutParams.FLAG_FULLSCREEN,
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
-		
 
 	}
-	
+
 	public static String getHourFromDate(String dateFromAPI, boolean isDuration) {
 		Date date;
 
@@ -94,7 +94,23 @@ public class Utils {
 		}
 
 	}
-	
+
+	public static String getTimeFromDate(String dateFromAPI) {
+		Date date;
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
+		try {
+
+			date = new Date((Long.valueOf(dateFromAPI)) * 1000);
+			Log.i("", "getMinutsFromDate: " + date.toString());
+
+			return dateFormat.format(date);
+		} catch (Exception e) {
+			return dateFromAPI;
+		}
+
+	}
+
 	public static String getTrainId(String train) {
 
 		String[] array = train.split("\\.");
@@ -106,10 +122,9 @@ public class Utils {
 
 	}
 
-	
 	public static String formatDate(String dateFromAPI, boolean isDuration,
 			boolean isDelay) {
-		//TODO: Lot of tweaks, need to be cleaned
+		// TODO: Lot of tweaks, need to be cleaned
 		Date date;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
@@ -133,7 +148,7 @@ public class Utils {
 		}
 
 	}
-	
+
 	public static Connections getCachedConnections() {
 		try {
 			File memory = Environment.getExternalStorageDirectory();
@@ -156,9 +171,9 @@ public class Utils {
 
 		InputStream source = retrieveStream(url, context);
 
-		if (fileName==null)
+		if (fileName == null)
 			return source;
-		
+
 		// Petite entourloupe pour éviter des soucis de InputSTream qui se ferme
 		// apres la premiere utilisation.
 		Utils test = new Utils();
@@ -211,7 +226,7 @@ public class Utils {
 				+ " for Android");
 
 		Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
-		
+
 		try {
 			HttpResponse response = client.execute(request);
 			final int statusCode = response.getStatusLine().getStatusCode();
