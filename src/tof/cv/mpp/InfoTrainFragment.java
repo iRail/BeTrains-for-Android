@@ -1,5 +1,8 @@
 package tof.cv.mpp;
 
+import java.util.Date;
+
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
@@ -12,12 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class InfoTrainFragment extends ListFragment {
 	protected static final String TAG = "ChatFragment";
 	private ProgressDialog progressDialog;
 	private Vehicle currentVehicle;
-
+	private TextView mTitleText;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -28,9 +33,18 @@ public class InfoTrainFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setHasOptionsMenu(true);
+		
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		mTitleText = (TextView) getActivity().findViewById(R.id.title);
+		
+	}
+	
+	
 
 	public void displayInfo(String vehicle) {
 		progressDialog = ProgressDialog.show(getActivity(), "",
@@ -60,10 +74,19 @@ public class InfoTrainFragment extends ListFragment {
 
 	private Runnable displayResult = new Runnable() {
 		public void run() {
-
-			TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(getActivity(),
-					R.layout.row_info_train, currentVehicle.getVehicleStops().getVehicleStop());
-			setListAdapter(trainInfoAdapter);
+			
+			if(currentVehicle!=null){
+				TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(getActivity(),
+						R.layout.row_info_train, currentVehicle.getVehicleStops().getVehicleStop());	
+				setListAdapter(trainInfoAdapter);
+				
+			}
+			else{
+				TextView messagesEmpty = (TextView) getActivity().findViewById(
+						android.R.id.empty);
+				messagesEmpty.setText(getString(R.string.txt_connection));
+				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm"));
+			}	
 		}
 	};
 
@@ -96,6 +119,10 @@ public class InfoTrainFragment extends ListFragment {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void setTitle(String txt) {
+		mTitleText.setText(txt);
 	}
 
 }

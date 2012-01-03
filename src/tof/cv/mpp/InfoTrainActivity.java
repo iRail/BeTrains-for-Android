@@ -16,7 +16,7 @@ public class InfoTrainActivity extends FragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle bundle = this.getIntent().getExtras();
-		String name = bundle.getString("Name");
+		String name = bundle.getString("Name").replace("BE.NMBS.", "");
 		getSupportActionBar().setTitle(name+" infos:");
 		
 		InfoTrainFragment fragment = (InfoTrainFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);

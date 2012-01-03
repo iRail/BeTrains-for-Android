@@ -327,8 +327,8 @@ public class ChatFragment extends ListFragment {
 		} else {
 			System.out.println("function in connection maker returns null !!");
 			listOfMessages.add(new Message(context
-					.getString(R.string.txt_server_down), context
-					.getString(R.string.txt_no_message), "", ""));
+					.getString(R.string.txt_no_message), context
+					.getString(R.string.txt_connection), "", ""));
 			return listOfMessages;
 		}
 
