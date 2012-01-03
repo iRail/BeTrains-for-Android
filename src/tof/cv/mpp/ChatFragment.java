@@ -16,10 +16,10 @@ import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
@@ -49,8 +49,9 @@ public class ChatFragment extends ListFragment {
 	private int total = 5;
 	private boolean posted = false;
 	private ArrayList<Message> listOfMessage = new ArrayList<Message>();
+	private ProgressDialog progressDialog;
 	String trainId;
-	SharedPreferences settings;
+	private String toTast;
 
 	private static final int MENU_FILTER = 0;
 
@@ -112,19 +113,9 @@ public class ChatFragment extends ListFragment {
 							.contentEquals(""))
 						Toast.makeText(getActivity(), "Please write something",
 								Toast.LENGTH_LONG).show();
-					else if (requestPhpSend(pseudo, messageTxtField.getText()
-							.toString(), trainId)) {
-						Toast.makeText(getActivity(),
-								getString(android.R.string.ok),
-								Toast.LENGTH_LONG).show();
-						posted = true;
+					else {
+						postMessage(pseudo);
 					}
-
-					else
-						Toast.makeText(getActivity(), "Problem",
-								Toast.LENGTH_LONG).show();
-
-					update();
 				}
 
 			}
@@ -132,6 +123,51 @@ public class ChatFragment extends ListFragment {
 		});
 
 	}
+	private void postMessage(final String pseudo) {
+		
+		Runnable trainSearch = new Runnable() {
+
+			public void run() {
+				
+				getActivity().runOnUiThread(new Runnable() {
+					public void run() {
+						progressDialog = ProgressDialog.show(getActivity(), "",
+								getString(R.string.txt_patient), true);
+					}
+				});
+				
+				if (requestPhpSend(pseudo, messageTxtField.getText()
+						.toString(), trainId)) {
+					
+					toTast=getString(android.R.string.ok);
+					getActivity().runOnUiThread(displayToast);
+
+					posted = true;
+				}
+
+				else
+					toTast="Problem";
+					getActivity().runOnUiThread(displayToast);
+				getActivity().runOnUiThread(dismissPd);
+			}
+		};
+
+		Thread thread = new Thread(null, trainSearch, "MyThread");
+		thread.start();
+
+	}
+	private Runnable dismissPd = new Runnable() {
+		public void run() {
+			progressDialog.dismiss();
+		}
+	};
+	private Runnable displayToast = new Runnable() {
+		public void run() {
+			Toast.makeText(getActivity(), toTast, Toast.LENGTH_LONG).show();
+		}
+	};
+
+	
 
 	private void setBtnMoreListener() {
 		btnMore.setOnClickListener(new Button.OnClickListener() {
@@ -175,7 +211,7 @@ public class ChatFragment extends ListFragment {
 		Thread thread = new Thread(null, getMessageFromTrain, "ChatThread");
 		thread.start();
 	}
-
+	
 	private Runnable returnRes = new Runnable() {
 
 		public void run() {
