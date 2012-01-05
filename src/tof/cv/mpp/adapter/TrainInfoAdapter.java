@@ -10,9 +10,10 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class TrainInfoAdapter extends AbstractAdapter<VehicleStop> {
+public class TrainInfoAdapter extends ArrayAdapter<VehicleStop> {
 
 	public TrainInfoAdapter(Context context, int textViewResourceId,
 			ArrayList<VehicleStop> items) {
@@ -28,7 +29,7 @@ public class TrainInfoAdapter extends AbstractAdapter<VehicleStop> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.row_info_train, null);
 		}
-		VehicleStop o = items.get(position);
+		VehicleStop o = getItem(position);
 		if (o != null) {
 			TextView t2 = (TextView) v.findViewById(R.id.arret2);
 			TextView t3 = (TextView) v.findViewById(R.id.arret3);
