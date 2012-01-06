@@ -27,6 +27,7 @@ import tof.cv.mpp.PlannerActivity;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.VehicleStops;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -118,10 +119,9 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 				mDbHelper.open();
 				Cursor mSTOPCursor = mDbHelper.fetchAllWidgetStops();
 
-				int dummy;
 				if (mSTOPCursor.getCount() > 1)
-					dummy = 69;
-				// ConnectionMaker.getTrainLiveboard("", context, true);
+					//TODO: fix it!
+					UtilsWeb.getAPIvehicle(" vehicle" , context);
 				else
 					Toast.makeText(context, R.string.wid_empty,
 							Toast.LENGTH_LONG).show();
@@ -147,9 +147,6 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 				mDbHelper.open();
 
 				Cursor mSTOPCursor = mDbHelper.fetchAllWidgetStops();
-
-				int total = mSTOPCursor.getCount();
-
 				mSTOPCursor.moveToPosition(0);
 				int id = mSTOPCursor.getInt(mSTOPCursor.getColumnIndex("_id"));
 
@@ -223,14 +220,14 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 	public void update(Context context, RemoteViews updateViews) {
 
 		mDbHelper = new DbAdapterConnection(context);
-		
+
 		try {
 			mDbHelper.open();
 
 			Cursor mSTOPCursor = mDbHelper.fetchAllWidgetStops();
 			int size = mSTOPCursor.getCount();
-			
-			Log.d("BETRAINS", "** "+size);
+
+			Log.d("BETRAINS", "** " + size);
 
 			if (size > 1) {
 				mSTOPCursor.moveToPosition(0);
@@ -251,15 +248,16 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 
 				mSTOPCursor.moveToPosition(pos);
 
-				String time = Utils.getTimeFromDate(mSTOPCursor.getString(mSTOPCursor
-						.getColumnIndex(DbAdapterConnection.KEY_STOP_TIME)));
+				String time = Utils
+						.getTimeFromDate(mSTOPCursor.getString(mSTOPCursor
+								.getColumnIndex(DbAdapterConnection.KEY_STOP_TIME)));
 				String late = mSTOPCursor.getString(mSTOPCursor
 						.getColumnIndex(DbAdapterConnection.KEY_STOP_STATUS));
 				String station = mSTOPCursor.getString(mSTOPCursor
 						.getColumnIndex(DbAdapterConnection.KEY_STOP_NAME));
 				updateViews.setTextViewText(R.id.text2, Html.fromHtml(station));
 				updateViews.setTextViewText(R.id.text3, time);
-	
+
 				updateViews.setTextViewText(R.id.text4, late);
 
 			} else {

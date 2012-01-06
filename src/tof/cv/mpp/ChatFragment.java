@@ -375,7 +375,7 @@ public class ChatFragment extends ListFragment {
 		try {
 			String txt = "";
 			HttpClient client = new DefaultHttpClient();
-
+			
 			HttpPost httppost = new HttpPost(
 					"http://christophe.frandroid.com/betrains/php/messages.php");
 
