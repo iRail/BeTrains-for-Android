@@ -1,7 +1,7 @@
 package tof.cv.mpp;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class PlannerFragment extends ListFragment {
 	private static final int MENU_FAV = 1;
 	private static final int MENU_PREF = 2;
 
-	public Date mDate;
+	public Calendar mDate;
 
 	public static String datePattern = "EEE dd MMM HH:mm";
 	public static String abDatePattern = "EEE dd MMM";
@@ -97,12 +97,9 @@ public class PlannerFragment extends ListFragment {
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
 		context = this.getSupportActivity();
-		mDate = new Date();
+		mDate = Calendar.getInstance();
 
-		getSupportActivity().getSupportActionBar().setTitle(
-				Utils.formatDate(mDate, abTimePattern));
-		getSupportActivity().getSupportActionBar().setSubtitle(
-				Utils.formatDate(mDate, abDatePattern));
+		updateActionBar();
 		setHasOptionsMenu(true);
 
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -189,8 +186,8 @@ public class PlannerFragment extends ListFragment {
 				String station = tvArrival.getText().toString();
 				Intent i = new Intent(getActivity(), InfoStationActivity.class);
 				i.putExtra("Name", station);
-				i.putExtra("Hour", mDate.getHours());
-				i.putExtra("Minute", mDate.getMinutes());
+				i.putExtra("Hour", mDate.get(Calendar.HOUR));
+				i.putExtra("Minute", mDate.get(Calendar.MINUTE));
 				startActivityForResult(i, ACTIVITY_STATION);
 
 			}
@@ -202,8 +199,8 @@ public class PlannerFragment extends ListFragment {
 				String station = tvDeparture.getText().toString();
 				Intent i = new Intent(getActivity(), InfoStationActivity.class);
 				i.putExtra("Name", station);
-				i.putExtra("Hour", mDate.getHours());
-				i.putExtra("Minute", mDate.getMinutes());
+				i.putExtra("Hour", mDate.get(Calendar.HOUR));
+				i.putExtra("Minute", mDate.get(Calendar.MINUTE));
 				startActivityForResult(i, ACTIVITY_STATION);
 
 			}
@@ -213,16 +210,9 @@ public class PlannerFragment extends ListFragment {
 				R.id.mybuttonAfter);
 		btnAfter.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				// tracker.trackEvent("Click", "ButtonAfter", "clicked", 0);
-				// int hour = Integer.parseInt(mHour);
-				// if (hour < 23)
-				// mHour = ConnectionMaker.fillZero("" + (hour + 1));
-				// else
-				// mHour = "00";
-				// mActionBar.setTitle(mDay + "/" + mMonth + "/" + mYear + "   "
-				// + mHour + ":" + mMinute);
-				makeApiRequest();
-				fillData();
+				mDate.add(Calendar.HOUR,1);
+				updateActionBar();
+				mySearchThread();
 			}
 		});
 
@@ -230,16 +220,9 @@ public class PlannerFragment extends ListFragment {
 				R.id.mybuttonBefore);
 		btnBefore.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				// tracker.trackEvent("Click", "ButtonBefore", "clicked", 0);
-				// int hour = Integer.parseInt(mHour);
-				// if (hour > 0)
-				// mHour = ConnectionMaker.fillZero("" + (hour - 1));
-				// else
-				// mHour = "23";
-				// mActionBar.setTitle(mDay + "/" + mMonth + "/" + mYear + "   "
-				// + mHour + ":" + mMinute);
-				makeApiRequest();
-				fillData();
+				mDate.add(Calendar.HOUR,-1);
+				updateActionBar();
+				mySearchThread();
 			}
 		});
 
@@ -380,8 +363,8 @@ public class PlannerFragment extends ListFragment {
 						.getVehicle());
 				i.putExtra("fromto", tvDeparture.getText().toString() + " - " +
 						  tvArrival.getText().toString());
-				i.putExtra("Hour", mDate.getHours());
-				i.putExtra("Minute", mDate.getMinutes());
+				i.putExtra("Hour", mDate.get(Calendar.HOUR));
+				i.putExtra("Minute", mDate.get(Calendar.MINUTE));
 				startActivity(i);
 			}
 
@@ -490,12 +473,10 @@ public class PlannerFragment extends ListFragment {
 		else
 			trainOnly = "train;bus";
 
-		// allConnections = new Connections();
-
 		allConnections = UtilsWeb.getAPIConnections(""
-				+ (mDate.getYear() - 100), "" + (mDate.getMonth() + 1), ""
-				+ mDate.getDate(), "" + mDate.getHours(),
-				"" + mDate.getMinutes(), langue, myStart, myArrival, dA,
+				+ (mDate.get(Calendar.YEAR)-2000), "" + (mDate.get(Calendar.MONTH)+ 1), ""
+				+ mDate.get(Calendar.DAY_OF_MONTH),Utils.formatDate(mDate.getTime(), "HH"),
+				Utils.formatDate(mDate.getTime(), "mm"), langue, myStart, myArrival, dA,
 				trainOnly, getActivity());
 
 		if (allConnections == null) {
@@ -562,6 +543,13 @@ public class PlannerFragment extends ListFragment {
 		mDateTimeDialog.setIs24HourView(is24h);
 
 		mDateTimeDialog.show();
+	}
+	
+	private void updateActionBar(){
+		getSupportActivity().getSupportActionBar().setTitle(
+				Utils.formatDate(mDate.getTime(), abTimePattern));
+		getSupportActivity().getSupportActionBar().setSubtitle(
+				Utils.formatDate(mDate.getTime(), abDatePattern));
 	}
 
 }

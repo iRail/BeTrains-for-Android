@@ -53,7 +53,7 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 		final DateTimePicker mThis=this;
 		// Grab a Calendar instance
 		mCalendar=Calendar.getInstance();
-		mCalendar.setTime(fragment.mDate);
+		mCalendar.setTime(fragment.mDate.getTime());
 		// Grab the ViewSwitcher so we can attach our picker views to it
 
 		// Init date picker
@@ -73,7 +73,7 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 						getFormatedDate(PlannerFragment.abTimePattern));
 				fragment.getSupportActivity().getSupportActionBar().setSubtitle(
 						getFormatedDate(PlannerFragment.abDatePattern));
-				fragment.mDate = mCalendar.getTime();
+				fragment.mDate = mCalendar;
 				mThis.dismiss();
 			}
 		});
