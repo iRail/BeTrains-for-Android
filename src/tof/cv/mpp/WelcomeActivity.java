@@ -1,7 +1,6 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.adapter.MenuAdapter;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -13,15 +12,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.viewpagerindicator.CirclePageIndicator;
-
 public class WelcomeActivity extends FragmentActivity {
 	/** Called when the activity is first created. */
-	// TEST CVE
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,7 +29,7 @@ public class WelcomeActivity extends FragmentActivity {
 
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment
-		setContentView(R.layout.activity_welcome_with_fragment);
+		setContentView(R.layout.activity_welcome);
 		if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			switch (Integer.valueOf(settings.getString("Activitypref", "1"))) {
 			case 1:
@@ -49,30 +45,16 @@ public class WelcomeActivity extends FragmentActivity {
 				setFragment(new ClosestFragment());
 				break;
 			default:
-				setWelcomeContent();
+				setFragment(new WelcomeFragment());
 				break;
 			}
 		} else {
-			setWelcomeContent();
+			setFragment(new WelcomeFragment());
 		}
 	}
 
-	public void setWelcomeContent() {
-		setContentView(R.layout.activity_welcome);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-		ViewPager mPager = (ViewPager) this.findViewById(R.id.pager);
-		MenuAdapter adapter = new MenuAdapter(this);
-		mPager.setAdapter(adapter);
-
-		CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
-		indicator.setViewPager(mPager);
-		indicator.setSnap(true);
-
-	}
-
 	public void onTwitClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new TwitterFragment());
 		} else {
 			startActivity(new Intent(this, TwitterActivity.class));
@@ -81,7 +63,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onTrafficClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new TrafficFragment());
 		} else {
 			startActivity(new Intent(this, TrafficActivity.class));
@@ -89,7 +71,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onStarredClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new StarredFragment());
 		} else {
 			startActivity(new Intent(this, StarredActivity.class));
@@ -97,7 +79,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onClosestClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new ClosestFragment());
 		} else {
 			startActivity(new Intent(this, ClosestActivity.class));
@@ -105,7 +87,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onPlannerClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new PlannerFragment());
 		} else {
 			startActivity(new Intent(this, PlannerActivity.class));
@@ -113,7 +95,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onChatClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new ChatFragment());
 		} else {
 			startActivity(new Intent(this, ChatActivity.class));
@@ -121,7 +103,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onSettingsClick(View v) {
-		if (findViewById(R.id.fragment) != null) {
+		if (findViewById(R.id.istablet) != null) {
 			setFragment(new ChatFragment());
 		} else {
 			startActivity(new Intent(this, PreferenceActivity.class).putExtra(
@@ -217,5 +199,4 @@ public class WelcomeActivity extends FragmentActivity {
 					.setView(messageWv).create();
 		}
 	}
-
 }
