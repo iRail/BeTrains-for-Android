@@ -1,69 +1,55 @@
 package tof.cv.mpp.adapter;
 
-import java.util.ArrayList;
-
 import tof.cv.mpp.R;
-import android.app.Activity;
+import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 
-public class MenuAdapter extends PagerAdapter{
+public class MenuAdapter extends PagerAdapter {
+	 
+    public int getCount() {
+        return 2;
+    }
 
-	ArrayList<View> views;
-	
-	public MenuAdapter(Activity context){
-		views = new ArrayList<View>();
-		views.add(context.getLayoutInflater().inflate(R.layout.menu_1, null));
-		views.add(context.getLayoutInflater().inflate(R.layout.menu_2, null));
-	}
-	
-	@Override
-	public int getCount() {
-		return views.size();
-	}
+    public Object instantiateItem(View collection, int position) {
 
-	@Override
-	public Object instantiateItem(View container, int position) {
-		View view=views.get(position);
-		((ViewPager) container).addView(view);
-		return view;
-	}
+        LayoutInflater inflater = (LayoutInflater) collection.getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-	@Override
-	public void destroyItem(View container, int position, Object object) {
-		((ViewPager) container).removeView((View)object);
-		
-	}
+        int resId = 0;
+        switch (position) {
+        case 0:
+            resId = R.layout.menu_1;
+            break;
+        case 1:
+            resId = R.layout.menu_2;
+            break;
+        }
 
-	@Override
-	public void finishUpdate(View container) {
-		// TODO Auto-generated method stub
-		
-	}
+        View view = inflater.inflate(resId, null);
 
-	@Override
-	public boolean isViewFromObject(View view, Object object) {
-		return view == object;
-	}
+        ((ViewPager) collection).addView(view, 0);
 
-	@Override
-	public void restoreState(Parcelable state, ClassLoader loader) {
-		// TODO Auto-generated method stub
-		
-	}
+        return view;
+    }
 
-	@Override
-	public Parcelable saveState() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void destroyItem(View arg0, int arg1, Object arg2) {
+        ((ViewPager) arg0).removeView((View) arg2);
 
-	@Override
-	public void startUpdate(View container) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
+    @Override
+    public boolean isViewFromObject(View arg0, Object arg1) {
+        return arg0 == ((View) arg1);
+
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
+    }
 }

@@ -30,10 +30,12 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -41,7 +43,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 
 public class ClosestFragment extends ListFragment {
 	protected static final String TAG = "ClosestFragment";
@@ -60,11 +61,10 @@ public class ClosestFragment extends ListFragment {
 
 	private TextView tvEmpty;
 	private Button btEmpty;
-	
+
 	private static final long INT_MINTIME = 0;
 	private static final long INT_MINDISTANCE = 0;
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -78,9 +78,8 @@ public class ClosestFragment extends ListFragment {
 
 		setHasOptionsMenu(true);
 
-
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -89,22 +88,22 @@ public class ClosestFragment extends ListFragment {
 		mDbHelper = new DbAdapterLocation(getActivity());
 		tvEmpty = (TextView) getActivity().findViewById(R.id.empty_tv);
 		btEmpty = (Button) getActivity().findViewById(R.id.empty_bt);
-		
+
 		btEmpty.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				Intent myIntent = new Intent(
+						Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 				startActivity(myIntent);
 			}
 		});
 		btnUpdate = (Button) getActivity().findViewById(R.id.btn_update);
 		btnUpdate.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
 				updateListToLocation(lastLocation);
 			}
 		});
 
-		
 		locationManager = (LocationManager) getActivity().getSystemService(
 				Context.LOCATION_SERVICE);
 		locationGpsListener = new MyGPSLocationListener();
@@ -112,15 +111,24 @@ public class ClosestFragment extends ListFragment {
 
 	}
 
-
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.add(Menu.NONE, 0, Menu.NONE, "Reload")
+				.setIcon(R.drawable.ic_menu_refresh)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case 0:
+			downloadStationListFromApi();
+			return true;			
 		case (android.R.id.home):
 			// app icon in ActionBar is clicked; Go home
 			Intent intent = new Intent(getActivity(), WelcomeActivity.class);
@@ -131,68 +139,48 @@ public class ClosestFragment extends ListFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	//TODO
+
+	// TODO
 	/*
-	public void setQuickAction(View v) {
-		int[] xy = new int[2];
-		v.getLocationInWindow(xy);
-		Rect rect = new Rect(xy[0], xy[1], xy[0] + v.getWidth(), xy[1]
-				+ v.getHeight());
-		final QuickActionWindow qa = new QuickActionWindow(this, v, rect);
-
-		qa.addItem(getResources().getDrawable(
-				android.R.drawable.ic_menu_directions), this
-				.getString(R.string.txt_nav), new OnClickListener() {
-			public void onClick(View v) {
-				try {
-					Uri uri = Uri.parse("google.navigation:q="
-							+ ((double) clickedItem.getLat() / 1E6) + ","
-							+ ((double) clickedItem.getLon() / 1E6));
-					Intent it = new Intent(Intent.ACTION_VIEW, uri);
-					startActivity(it);
-				} catch (ActivityNotFoundException e) {
-					(Toast.makeText(context, "Navigation not found",
-							Toast.LENGTH_LONG)).show();
-				}
-				qa.dismiss();
-			}
-		});
-
-		qa.addItem(getResources().getDrawable(
-				android.R.drawable.ic_menu_mapmode), this
-				.getString(R.string.txt_map), new OnClickListener() {
-			public void onClick(View v) {
-				try {
-					Intent i = new Intent(GetClosestStationsActivity.this,
-							StationMapActivity.class);
-
-					i.putExtra("nom", clickedItem.getStation());
-					i.putExtra("lat", "" + (clickedItem.getLat() / 1E6));
-
-					i.putExtra("lon", "" + (clickedItem.getLon() / 1E6));
-
-					startActivity(i);
-				} catch (ActivityNotFoundException e) {
-					(Toast.makeText(context, "GoogleMap not found",
-							Toast.LENGTH_LONG)).show();
-				}
-
-				qa.dismiss();
-			}
-		});
-
-		qa.addItem(getResources().getDrawable(
-				android.R.drawable.ic_menu_myplaces), this
-				.getString(R.string.txt_info_station), new OnClickListener() {
-			public void onClick(View v) {
-				Toast.makeText(context, clickedItem.getStation(),
-						Toast.LENGTH_SHORT).show();
-				qa.dismiss();
-			}
-		});
-		qa.show();
-
-	}*/
+	 * public void setQuickAction(View v) { int[] xy = new int[2];
+	 * v.getLocationInWindow(xy); Rect rect = new Rect(xy[0], xy[1], xy[0] +
+	 * v.getWidth(), xy[1] + v.getHeight()); final QuickActionWindow qa = new
+	 * QuickActionWindow(this, v, rect);
+	 * 
+	 * qa.addItem(getResources().getDrawable(
+	 * android.R.drawable.ic_menu_directions), this
+	 * .getString(R.string.txt_nav), new OnClickListener() { public void
+	 * onClick(View v) { try { Uri uri = Uri.parse("google.navigation:q=" +
+	 * ((double) clickedItem.getLat() / 1E6) + "," + ((double)
+	 * clickedItem.getLon() / 1E6)); Intent it = new Intent(Intent.ACTION_VIEW,
+	 * uri); startActivity(it); } catch (ActivityNotFoundException e) {
+	 * (Toast.makeText(context, "Navigation not found",
+	 * Toast.LENGTH_LONG)).show(); } qa.dismiss(); } });
+	 * 
+	 * qa.addItem(getResources().getDrawable(
+	 * android.R.drawable.ic_menu_mapmode), this .getString(R.string.txt_map),
+	 * new OnClickListener() { public void onClick(View v) { try { Intent i =
+	 * new Intent(GetClosestStationsActivity.this, StationMapActivity.class);
+	 * 
+	 * i.putExtra("nom", clickedItem.getStation()); i.putExtra("lat", "" +
+	 * (clickedItem.getLat() / 1E6));
+	 * 
+	 * i.putExtra("lon", "" + (clickedItem.getLon() / 1E6));
+	 * 
+	 * startActivity(i); } catch (ActivityNotFoundException e) {
+	 * (Toast.makeText(context, "GoogleMap not found",
+	 * Toast.LENGTH_LONG)).show(); }
+	 * 
+	 * qa.dismiss(); } });
+	 * 
+	 * qa.addItem(getResources().getDrawable(
+	 * android.R.drawable.ic_menu_myplaces), this
+	 * .getString(R.string.txt_info_station), new OnClickListener() { public
+	 * void onClick(View v) { Toast.makeText(context, clickedItem.getStation(),
+	 * Toast.LENGTH_SHORT).show(); qa.dismiss(); } }); qa.show();
+	 * 
+	 * }
+	 */
 
 	private class MyGPSLocationListener implements LocationListener
 
@@ -299,9 +287,6 @@ public class ClosestFragment extends ListFragment {
 
 	}
 
-
-	
-	
 	/**
 	 * The thread that is launched to read the database and compare each Station
 	 * location to my current location.
@@ -316,7 +301,7 @@ public class ClosestFragment extends ListFragment {
 						+ locationCursor.getCount());
 		if (locationCursor.getCount() == 0) {
 			getActivity().runOnUiThread(hideProgressdialog);
-			//TODO downloadStationListFromApi();
+			// TODO downloadStationListFromApi();
 
 		} else {
 			getActivity().runOnUiThread(hideProgressdialog);
@@ -377,40 +362,44 @@ public class ClosestFragment extends ListFragment {
 			setListAdapter(myLocationAdapter);
 		}
 	};
+
 	protected void downloadStationListFromApi() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(getString(R.string.txt_patient))
-		.setMessage(getString(R.string.txt_first_dl))	
-		.setPositiveButton(android.R.string.ok,
+				.setMessage(getString(R.string.txt_first_dl))
+				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int id) {
+							public void onClick(DialogInterface dialog, int id) {
 								Runnable fillDataRunnable = new Runnable() {
-									
+
 									public void run() {
 										downloadStationListThread();
 									}
 								};
 
-								thread = new Thread(null, fillDataRunnable, "MagentoBackground");
+								thread = new Thread(null, fillDataRunnable,
+										"MagentoBackground");
 								thread.start();
 								try {
 									m_ProgressDialog.hide();
-									m_ProgressDialog = new MyProgressDialog(getActivity());
+									m_ProgressDialog = new MyProgressDialog(
+											getActivity());
 								} catch (Exception e) {
 									Looper.prepare();
-									m_ProgressDialog = new MyProgressDialog(getActivity());
+									m_ProgressDialog = new MyProgressDialog(
+											getActivity());
 								}
 								m_ProgressDialog.setCancelable(false);
-								m_ProgressDialog.setTitle(getString(R.string.txt_patient));
-								m_ProgressDialog.setMessage(getString(R.string.txt_dl_stations));
+								m_ProgressDialog
+										.setTitle(getString(R.string.txt_patient));
+								m_ProgressDialog
+										.setMessage(getString(R.string.txt_dl_stations));
 								m_ProgressDialog.setMax(660);
 								m_ProgressDialog.show();
 							}
 						});
 		AlertDialog alert = builder.create();
 		alert.show();
-
 
 	}
 
@@ -424,12 +413,14 @@ public class ClosestFragment extends ListFragment {
 		mDbHelper.open();
 		final Cursor locationCursor = mDbHelper.fetchAllLocations();
 		if (locationCursor.getCount() > 0) {
-			//TODO refresh list
+			// TODO refresh list
 			mDbHelper.close();
-			/*startActivity(new Intent(GetClosestStationsActivity.this,
-					GetClosestStationsActivity.class));
-
-			finish();*/
+			/*
+			 * startActivity(new Intent(GetClosestStationsActivity.this,
+			 * GetClosestStationsActivity.class));
+			 * 
+			 * finish();
+			 */
 		} else {
 			getActivity().runOnUiThread(hideProgressdialog);
 			getActivity().runOnUiThread(noConnexion);
@@ -438,7 +429,7 @@ public class ClosestFragment extends ListFragment {
 		mDbHelper.close();
 
 	}
-	
+
 	/**
 	 * Fill the list at the activity creation
 	 */
@@ -451,19 +442,19 @@ public class ClosestFragment extends ListFragment {
 		}
 	}
 
-	
 	/**
 	 * Each time I come back in the activity, I listen to GPS
 	 */
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d(TAG,"RESUME");
+		Log.d(TAG, "RESUME");
 		isFirst = false;
 		checkIfDbIsEmpty();
 
 		String txt = "";
-		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+		locationManager = (LocationManager) getActivity().getSystemService(
+				Context.LOCATION_SERVICE);
 		for (String aProvider : locationManager.getAllProviders())
 			txt += ("<br>"
 					+ aProvider
@@ -496,14 +487,13 @@ public class ClosestFragment extends ListFragment {
 		locationManager = null;
 	}
 
-	
 	public void compareStationsListToMyLocation(Cursor locationCursor, int i,
 			double lat, double lon) {
 		locationCursor.moveToPosition(i);
 		String strName = locationCursor.getString(locationCursor
 				.getColumnIndex(DbAdapterLocation.KEY_STATION_NAME));
 		m_ProgressDialog.incrementProgressBy(1);
-		
+
 		double iLat = locationCursor.getInt(locationCursor
 				.getColumnIndex(DbAdapterLocation.KEY_STATION_LAT));
 
@@ -516,17 +506,16 @@ public class ClosestFragment extends ListFragment {
 		stationList.add(new StationLocation(strName, iLat, iLon, dDis + ""));
 	}
 
-
 	public void DownloadAndParseStationList() {
 
 		try {
 			URL url = new URL("http://api.irail."
-			//URL url = new URL("http://dev.api.irail."
+					// URL url = new URL("http://dev.api.irail."
 					+ PreferenceManager.getDefaultSharedPreferences(
 							getActivity()).getString("countryPref", "be")
 					+ "/stations.php");
 			isFirst = true;
-			
+
 			Log.v(TAG, "Begin to parse " + url);
 			SAXParserFactory mySAXParserFactory = SAXParserFactory
 					.newInstance();
@@ -537,7 +526,7 @@ public class ClosestFragment extends ListFragment {
 			mDbHelper.deleteAllLocations();
 			InputSource myInputSource = new InputSource(url.openStream());
 			myXMLReader.parse(myInputSource);
-			
+
 			Looper.prepare();
 			StationLocationAdapter locationAdapter = new StationLocationAdapter(
 					getActivity(), R.layout.row_closest, stationList);
@@ -545,12 +534,17 @@ public class ClosestFragment extends ListFragment {
 			getActivity().runOnUiThread(hideProgressdialog);
 			Log.v(TAG, "Finish to parse");
 			isFirst = false;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.v(TAG, "Connexion error");
-			getActivity().runOnUiThread(noConnexion);
-			getActivity().runOnUiThread(hideProgressdialog);
+			try{
+				getActivity().runOnUiThread(noConnexion);
+				getActivity().runOnUiThread(hideProgressdialog);
+			}catch(Exception f){
+				//Si il a quitté l'activité.
+			}
+
 
 		}
 	}
@@ -572,22 +566,23 @@ public class ClosestFragment extends ListFragment {
 		public void startElement(String uri, String localName, String qName,
 				Attributes attributes) throws SAXException {
 			if (localName.equalsIgnoreCase("station")) {
-				
-				lat = (int) (Float.valueOf( attributes.getValue(attributes.getIndex("locationY"))) * 1E6);
-				lon = (int) (Float.valueOf( attributes.getValue(attributes.getIndex("locationX"))) * 1E6);
 
+				lat = (int) (Float.valueOf(attributes.getValue(attributes
+						.getIndex("locationY"))) * 1E6);
+				lon = (int) (Float.valueOf(attributes.getValue(attributes
+						.getIndex("locationX"))) * 1E6);
 
-			}			
-			
+			}
+
 			else {
-				//state = stateUnknown;
+				// state = stateUnknown;
 			}
 		}
 
 		@Override
 		public void endElement(String uri, String localName, String qName)
 				throws SAXException {
-			//state = stateUnknown;
+			// state = stateUnknown;
 		}
 
 		@Override
@@ -595,7 +590,7 @@ public class ClosestFragment extends ListFragment {
 				throws SAXException {
 			strCharacters = new String(ch, start, length);
 			try {
-				//if (state == stateStation && !thread.isInterrupted()) {
+				// if (state == stateStation && !thread.isInterrupted()) {
 				if (!thread.isInterrupted()) {
 					m_ProgressDialog.incrementProgressBy(1);
 					getActivity().runOnUiThread(changeProgressDialogMessage);
@@ -612,27 +607,25 @@ public class ClosestFragment extends ListFragment {
 
 	}
 
-		private Runnable changeProgressDialogMessage = new Runnable() {
-			
-			public void run() {
-				m_ProgressDialog.setMessage(strCharacters);
+	private Runnable changeProgressDialogMessage = new Runnable() {
+
+		public void run() {
+			m_ProgressDialog.setMessage(strCharacters);
+		}
+	};
+
+	private Runnable noConnexion = new Runnable() {
+
+		public void run() {
+			getActivity().runOnUiThread(hideProgressdialog);
+			tvEmpty.setText(R.string.txt_connection);
+			if (locationManager != null) {
+				locationManager.removeUpdates(locationGpsListener);
+				locationManager.removeUpdates(locationNetworkListener);
 			}
-		};
 
+			locationManager = null;
+		}
+	};
 
-		private Runnable noConnexion = new Runnable() {
-			
-			public void run() {
-				getActivity().runOnUiThread(hideProgressdialog);
-				tvEmpty.setText(R.string.txt_connection);
-				if (locationManager != null) {
-					locationManager.removeUpdates(locationGpsListener);
-					locationManager.removeUpdates(locationNetworkListener);
-				}
-
-				locationManager = null;
-			}
-		};
-
-	
 }

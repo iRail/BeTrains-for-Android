@@ -1,7 +1,6 @@
 package tof.cv.mpp;
 
 import tof.cv.mpp.adapter.MenuAdapter;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.Menu;
@@ -28,14 +27,16 @@ public class WelcomeFragment extends Fragment{
 		setHasOptionsMenu(true);
 		
 		ViewPager mPager = (ViewPager) getActivity().findViewById(R.id.pager);
-		MenuAdapter adapter = new MenuAdapter(getActivity());
+		
+		MenuAdapter adapter = new MenuAdapter();
 		mPager.setAdapter(adapter);
 
 		CirclePageIndicator indicator = (CirclePageIndicator) getActivity().findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
 		indicator.setSnap(true);
 	}
-    
+	
+	  
     @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Search")
