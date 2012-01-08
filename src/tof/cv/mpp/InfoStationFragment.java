@@ -1,8 +1,13 @@
 package tof.cv.mpp;
 
+import java.util.Date;
+
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Station;
 import tof.cv.mpp.Utils.UtilsWeb.StationStationinfo;
+import tof.cv.mpp.adapter.StationInfoAdapter;
+import tof.cv.mpp.adapter.TrainInfoAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class InfoStationFragment extends ListFragment {
 	protected static final String TAG = "InfoStationFragment";
@@ -45,8 +49,8 @@ public class InfoStationFragment extends ListFragment {
 		Runnable search = new Runnable() {
 			public void run() {
 				currentStation = UtilsWeb.getAPIstation(station, getActivity());
-				getActivity().runOnUiThread(dismissProgressDialog);
 				getActivity().runOnUiThread(displayResult);
+				getActivity().runOnUiThread(dismissProgressDialog);
 			}
 		};
 		Thread thread = new Thread(null, search, "stationSearch");
@@ -55,31 +59,25 @@ public class InfoStationFragment extends ListFragment {
 	
 	private Runnable dismissProgressDialog = new Runnable() {
 		public void run() {
-//			fillData();
 			progressDialog.dismiss();
-			Toast.makeText(getActivity(),"On affiche les infos", Toast.LENGTH_LONG).show();
+//			Toast.makeText(getActivity(),"On affiche les infos", Toast.LENGTH_LONG).show();
 		}
 	};
 
 	private Runnable displayResult = new Runnable() {
 		public void run() {
-
-			String txt = "";
-			try {
-//				for (VehicleStop aStop : currentVehicle.getVehicleStops()
-//						.getVehicleStop()) {
-//					txt += aStop.getStation() + " - " + aStop.getTime() + "\n";
-//				}
-				StationStationinfo stationinfo = currentStation.getStationStationinfo();
-				txt += stationinfo.getId() + " - " + stationinfo.getLocationX() + " - " + stationinfo.getLocationY() + "\n";
-
-			} catch (Exception e) {
-				txt = getString(R.string.txt_error)+"\n\n"+e.toString();
-				e.printStackTrace();
+			if (currentStation != null && currentStation.getStationDepartures() != null) {
+				StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
+						getActivity(), R.layout.row_info_station, currentStation
+								.getStationDepartures().getStationDeparture());
+				setListAdapter(StationInfoAdapter);
+//				setTitle(Utils.formatDate(new Date(Long.valueOf(currentStation.getTimestamp())*1000), "dd MMM HH:mm"));
+			} else {
+				TextView messagesEmpty = (TextView) getActivity().findViewById(
+						android.R.id.empty);
+				messagesEmpty.setText(getString(R.string.txt_connection));
+//				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm"));
 			}
-			TextView tv = (TextView) getActivity().findViewById(
-					android.R.id.empty);
-			tv.setText(txt);
 		}
 	};
 

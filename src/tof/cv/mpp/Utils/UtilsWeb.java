@@ -268,7 +268,9 @@ public class UtilsWeb {
 	public class Station {
 
 		private String version;
+		private String station;
 		private StationStationinfo stationinfo;
+		private StationDepartures departures;
 
 		public StationStationinfo getStationStationinfo() {
 			return stationinfo;
@@ -276,6 +278,14 @@ public class UtilsWeb {
 
 		public String getVersion() {
 			return version;
+		}
+
+		public String getStation() {
+			return station;
+		}
+
+		public StationDepartures getStationDepartures() {
+			return departures;
 		}
 
 	}
@@ -298,4 +308,50 @@ public class UtilsWeb {
 			return locationY;
 		}
 	}
+
+	public class StationDepartures {
+
+		private ArrayList<StationDeparture> departure;
+
+		public ArrayList<StationDeparture> getStationDeparture() {
+			return departure;
+		}
+	}
+
+	public class StationDeparture {
+
+		private String station;
+		private String time;
+		private String delay;
+		private String platform;
+		private String vehicle;
+
+		public String getStation() {
+			return station;
+		}
+
+		public String getTime() {
+			return time;
+		}
+
+		public String getDelay() {
+			return delay;
+		}
+
+		public String getPlatform() {
+			return platform;
+		}
+
+		public String getVehicle() {
+			return vehicle;
+		}
+
+		public String getStatus() {
+			if (delay.contentEquals("0"))
+				return "";
+
+			return "+" + Integer.valueOf(delay) / 60 + "'";
+		}
+	}
+
 }

@@ -3,17 +3,20 @@ package tof.cv.mpp.adapter;
 import java.util.ArrayList;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.bo.Station;
+import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.Utils.UtilsWeb.StationDeparture;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class StationInfoAdapter extends AbstractAdapter<Station> {
+public class StationInfoAdapter extends ArrayAdapter<StationDeparture> {
 
 	public StationInfoAdapter(Context context, int textViewResourceId,
-			ArrayList<Station> items) {
+			ArrayList<StationDeparture> items) {
 		super(context, textViewResourceId, items);		
 	}
 
@@ -25,19 +28,19 @@ public class StationInfoAdapter extends AbstractAdapter<Station> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.row_info_station, null);
 		}
-		Station trainstop = items.get(position);
+		StationDeparture trainstop = getItem(position);
 		if (trainstop != null) {
-			TextView t1 = (TextView) v.findViewById(R.id.tv_platform);
-			TextView t2 = (TextView) v.findViewById(R.id.tv_time);
-			TextView t3 = (TextView) v.findViewById(R.id.tv_delay);
-			TextView t4 = (TextView) v.findViewById(R.id.tv_station);
-			TextView t5 = (TextView) v.findViewById(R.id.tv_train);
+			TextView platform = (TextView) v.findViewById(R.id.tv_platform);
+			TextView time = (TextView) v.findViewById(R.id.tv_time);
+			TextView delay = (TextView) v.findViewById(R.id.tv_delay);
+			TextView station = (TextView) v.findViewById(R.id.tv_station);
+			TextView train = (TextView) v.findViewById(R.id.tv_train);
 
-			t4.setText(trainstop.getStation());
-			t2.setText(trainstop.getTime());
-			t3.setText(trainstop.getDelay());
-			t1.setText(trainstop.getPlatform());
-			t5.setText(trainstop.getVehicle());
+			station.setText(Html.fromHtml(trainstop.getStation()));
+			time.setText(Utils.formatDate(trainstop.getTime(), false, false));
+			delay.setText(trainstop.getDelay());
+			platform.setText(trainstop.getPlatform());
+			train.setText(Utils.getTrainId(trainstop.getVehicle()));
 
 		}
 		return v;
