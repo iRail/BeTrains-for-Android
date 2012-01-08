@@ -49,7 +49,7 @@ public class PreferenceActivity extends FragmentActivity implements
 
 		Utils.setFullscreenIfNecessary(this);
 
-		setContentView(R.layout.fragment_pref_picker);
+		setContentView(R.layout.fragment_tab_picker);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mPager = (ViewPager) findViewById(R.id.pager);

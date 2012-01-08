@@ -1,10 +1,14 @@
 package tof.cv.mpp;
 
+import java.util.ArrayList;
+
 import tof.cv.mpp.Utils.ConnectionMaker;
+import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,8 +37,9 @@ import com.viewpagerindicator.TitleProvider;
 public class StationPickerActivity extends FragmentActivity {
 
 	MyAdapter mAdapter;
-
 	ViewPager mPager;
+	
+	private static DbAdapterConnection mDbHelper;
 
 	protected static final String[] TITLES = new String[] { "FAVOURITE",
 			"BELGIUM", "EUROPE" };
@@ -45,7 +50,7 @@ public class StationPickerActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		Utils.setFullscreenIfNecessary(this);
-		setContentView(R.layout.fragment_pref_picker);
+		setContentView(R.layout.fragment_tab_picker);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mAdapter = new MyAdapter(getSupportFragmentManager());
@@ -55,6 +60,8 @@ public class StationPickerActivity extends FragmentActivity {
 
 		TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(mPager, 1);
+		
+		mDbHelper= new DbAdapterConnection(this);
 
 	}
 
@@ -163,10 +170,17 @@ public class StationPickerActivity extends FragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			String[] list = null;
+			String[] list = {};
 			switch (mNum) {
 			case 0:
-				list = ConnectionMaker.LIST_OF_FAV_STATIONS;
+				mDbHelper.open();
+				Cursor mCursor = mDbHelper.fetchAllFavStations();
+				ArrayList<String> mArrayList=new ArrayList<String>();
+				for(mCursor.moveToFirst(); mCursor.moveToNext(); mCursor.isAfterLast()) {
+				    // The Cursor is now set to the right position
+					mArrayList.add(mCursor.getString(mCursor.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+				}
+				list = mArrayList.toArray(list);
 				break;
 			case 1:
 				list = ConnectionMaker.LIST_OF_STATIONS;
