@@ -202,6 +202,9 @@ public class DbAdapterConnection {
 	public boolean deleteFav(long rowId) {
 		return mDb.delete(DATABASE_FAV_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
 	}
+	public boolean deleteFav(String name) {
+		return mDb.delete(DATABASE_FAV_TABLE, KEY_FAV_NAME + "=\'" + name+ "\'", null) > 0;
+	}
 	
 	public boolean deleteWidgetStop(long rowId) {
 		return mDb.delete(DATABASE_WIDGET_STOP_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
@@ -265,6 +268,16 @@ public class DbAdapterConnection {
 	public Cursor fetchFav(long rowId) throws SQLException {
 		Cursor mCursor = mDb.query(true, DATABASE_FAV_TABLE, new String[] {
 				KEY_ROWID, KEY_FAV_NAME, KEY_FAV_NAMETWO,KEY_FAV_TYPE }, KEY_ROWID + "=" + rowId, null, null,
+				null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+	
+	public Cursor fetchFav(String name) throws SQLException {
+		Cursor mCursor = mDb.query(true, DATABASE_FAV_TABLE, new String[] {
+				KEY_ROWID, KEY_FAV_NAME, KEY_FAV_NAMETWO,KEY_FAV_TYPE }, KEY_FAV_NAME + "=" + name, null, null,
 				null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
