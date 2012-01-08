@@ -1,11 +1,15 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.search.SearchDatabase;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +18,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 public class WelcomeActivity extends FragmentActivity {
 	/** Called when the activity is first created. */
@@ -27,6 +32,27 @@ public class WelcomeActivity extends FragmentActivity {
 
 		Utils.setFullscreenIfNecessary(this);
 
+		if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+			// handles a click on a search suggestion; launches activity to show
+			// word
+			Cursor cursor = managedQuery(getIntent().getData(), null, null, null,
+					null);
+			cursor.moveToFirst();
+			int iIndex = cursor.getColumnIndexOrThrow(SearchDatabase.KEY_ITEM);
+			int tIndex = cursor.getColumnIndexOrThrow(SearchDatabase.KEY_TYPE);
+			String type = cursor.getString(tIndex);
+			if (type.contentEquals("Station"))
+				launchStationActivity(cursor.getString(iIndex));
+			else
+				launchTrainActivity(cursor.getString(iIndex));
+
+			finish();
+		} else if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+			showResults(getIntent().getStringExtra(SearchManager.QUERY));
+			finish();
+		}
+		
+		
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment
 		setContentView(R.layout.activity_welcome);
@@ -198,5 +224,36 @@ public class WelcomeActivity extends FragmentActivity {
 					.setIcon(android.R.drawable.ic_dialog_info)
 					.setView(messageWv).create();
 		}
+	}
+	
+	private void showResults(String query) {
+		try {
+			Integer.valueOf(query);
+			Intent i = new Intent(this, InfoTrainActivity.class);
+			i.putExtra(DbAdapterConnection.KEY_NAME,query);
+			startActivity(i);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(this, R.string.search_wrong_string,
+					Toast.LENGTH_LONG).show();
+		}
+
+	}
+
+	private void launchTrainActivity(String trainNumber) {
+		Intent i = new Intent(this, InfoTrainActivity.class);
+
+		i.putExtra("fromto", getString(R.string.app_name));
+
+		i.putExtra(DbAdapterConnection.KEY_NAME, trainNumber);
+
+		startActivity(i);
+	}
+
+	private void launchStationActivity(String station) {
+
+		Intent i = new Intent(WelcomeActivity.this, InfoStationActivity.class);
+		i.putExtra(DbAdapterConnection.KEY_NAME, station);
+		startActivity(i);
 	}
 }
