@@ -18,7 +18,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/arret2"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/blackbg"
@@ -28,7 +28,7 @@
         android:textSize="16dip" />
 
     <TextView
-        android:id="@+id/arret4"
+        android:id="@+id/station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -38,7 +38,7 @@
         android:textSize="16dip" />
 
     <TextView
-        android:id="@+id/arret3"
+        android:id="@+id/delay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"

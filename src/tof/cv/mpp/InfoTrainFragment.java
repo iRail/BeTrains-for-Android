@@ -81,7 +81,7 @@ public class InfoTrainFragment extends ListFragment {
 	private Runnable displayResult = new Runnable() {
 		public void run() {
 
-			if (currentVehicle != null) {
+			if (currentVehicle != null && currentVehicle.getVehicleStops() != null) {
 				TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
 						getActivity(), R.layout.row_info_train, currentVehicle
 								.getVehicleStops().getVehicleStop());

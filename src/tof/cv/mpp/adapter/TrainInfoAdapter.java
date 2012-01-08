@@ -31,17 +31,17 @@ public class TrainInfoAdapter extends ArrayAdapter<VehicleStop> {
 		}
 		VehicleStop o = getItem(position);
 		if (o != null) {
-			TextView t2 = (TextView) v.findViewById(R.id.arret2);
-			TextView t3 = (TextView) v.findViewById(R.id.arret3);
-			TextView t4 = (TextView) v.findViewById(R.id.arret4);
+			TextView time = (TextView) v.findViewById(R.id.time);
+			TextView delay = (TextView) v.findViewById(R.id.delay);
+			TextView station = (TextView) v.findViewById(R.id.station);
 
-			t4.setText(Html.fromHtml(o.getStation()));
-			t2.setText(Utils.formatDate(o.getTime(), false, false));
+			station.setText(Html.fromHtml(o.getStation()));
+			time.setText(Utils.formatDate(o.getTime(), false, false));
 			
 			if (o.getDelay().contentEquals("0"))
-				t3.setVisibility(View.GONE);
+				delay.setVisibility(View.GONE);
 			else
-				t3.setText("+"+(Integer.valueOf(o.getDelay())/60)+"'");
+				delay.setText("+"+(Integer.valueOf(o.getDelay())/60)+"'");
 
 		}
 		return v;
