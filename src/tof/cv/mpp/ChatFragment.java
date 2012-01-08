@@ -52,6 +52,7 @@ public class ChatFragment extends ListFragment {
 	private ProgressDialog progressDialog;
 	String trainId;
 	private String toTast;
+	private String toEmpty;
 
 	private static final int MENU_FILTER = 0;
 
@@ -194,17 +195,15 @@ public class ChatFragment extends ListFragment {
 		final Runnable getMessageFromTrain = new Runnable() {
 			public void run() {
 				listOfMessage = requestPhpRead(trainId, 0, total, getActivity());
-				TextView messagesEmpty = (TextView) getActivity().findViewById(
-						android.R.id.empty);
 				if (listOfMessage != null) {
 					Log.i(TAG, "count= " + listOfMessage.size());
 					if (listOfMessage.size() == 0)
-						messagesEmpty
-								.setText(getString(R.string.txt_no_message));
-				} else
-					messagesEmpty.setText(getString(R.string.txt_connection));
-
-				getActivity().runOnUiThread(returnRes);
+						getActivity().runOnUiThread(updateEmpty);
+					toEmpty=getString(R.string.txt_no_message);
+				} else{
+					toEmpty=getString(R.string.txt_connection);
+					getActivity().runOnUiThread(returnRes);
+				}
 			}
 		};
 
@@ -221,7 +220,15 @@ public class ChatFragment extends ListFragment {
 		}
 
 	};
+	private Runnable updateEmpty = new Runnable() {
 
+		public void run() {
+			TextView messagesEmpty = (TextView) getActivity().findViewById(
+					android.R.id.empty);
+			messagesEmpty.setText(toEmpty);
+		}
+
+	};
 	public void onResume() {
 		super.onResume();
 		Log.i("BETRAINS", "train ID= " + trainId);
@@ -405,7 +412,7 @@ public class ChatFragment extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, MENU_FILTER, Menu.NONE, "Filter")
-				.setIcon(R.drawable.icon)
+				.setIcon(android.R.drawable.ic_menu_search)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
