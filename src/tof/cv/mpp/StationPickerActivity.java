@@ -177,22 +177,6 @@ public class StationPickerActivity extends FragmentActivity {
 
 			String[] list = {};
 			switch (mNum) {
-			case 0:
-				mDbHelper.open();
-				Cursor mCursor = mDbHelper.fetchAllFavStations();
-				ArrayList<String> mArrayList = new ArrayList<String>();
-				getActivity().startManagingCursor(mCursor);
-
-				for (mCursor.moveToFirst(); mCursor.moveToNext(); mCursor
-						.isAfterLast()) {
-					// The Cursor is now set to the right position
-
-					mArrayList.add(mCursor.getString(mCursor
-							.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
-				}
-				list = mArrayList.toArray(new String[mArrayList.size()]);
-				mDbHelper.close();
-				break;
 			case 1:
 				list = ConnectionMaker.LIST_OF_STATIONS;
 				break;
