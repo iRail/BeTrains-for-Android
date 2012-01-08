@@ -74,7 +74,6 @@ public class InfoTrainFragment extends ListFragment {
 
 	private Runnable dismissPd = new Runnable() {
 		public void run() {
-			fillData();
 			progressDialog.dismiss();
 		}
 	};
@@ -97,18 +96,6 @@ public class InfoTrainFragment extends ListFragment {
 			}
 		}
 	};
-
-	private void fillData() {
-		/*
-		 * if (allConnections != null && allConnections.connection != null) {
-		 * Log.i(TAG, "*** Remplis avec les infos"); connAdapter = new
-		 * ConnectionAdapter(this.getActivity() .getBaseContext(),
-		 * R.layout.row_planner, allConnections.connection);
-		 * setListAdapter(connAdapter); registerForContextMenu(getListView());
-		 * 
-		 * }
-		 */
-	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
