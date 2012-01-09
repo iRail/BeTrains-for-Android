@@ -144,7 +144,7 @@ public class PreferenceActivity extends FragmentActivity implements
 	@Override
 	public void onPreferenceAttached(PreferenceScreen root, int xmlId) {
 		rootPref.add(root);
-		Toast.makeText(getBaseContext(), root.getSharedPreferences().toString(), Toast.LENGTH_LONG).show();
+		//Toast.makeText(getBaseContext(), root.getSharedPreferences().toString(), Toast.LENGTH_LONG).show();
 		root.getSharedPreferences().registerOnSharedPreferenceChangeListener(
 				this);
 		// General Prefs
