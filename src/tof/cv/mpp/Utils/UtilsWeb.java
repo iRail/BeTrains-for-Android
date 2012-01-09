@@ -1,5 +1,7 @@
 package tof.cv.mpp.Utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -11,7 +13,9 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.w3c.dom.Document;
@@ -107,6 +111,48 @@ public class UtilsWeb {
 			mDbHelper.close();
 			return null;
 		}
+	}
+
+	public static InputStream retrieveStream(String url, Context context) {
+
+		DefaultHttpClient client = new DefaultHttpClient();
+
+		HttpGet request = new HttpGet(url);
+
+		// TODO: stocker la version pour ne pas faire un appel à chaque fois.
+		String myVersion = "0.0";
+		PackageManager manager = context.getPackageManager();
+		try {
+			myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		request.setHeader("User-Agent", "Waza_Be: BeTrains " + myVersion
+				+ " for Android");
+
+		Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
+
+		try {
+			HttpResponse response = client.execute(request);
+			final int statusCode = response.getStatusLine().getStatusCode();
+
+			if (statusCode != HttpStatus.SC_OK) {
+				Log.w("getClass().getSimpleName()", "Error " + statusCode
+						+ " for URL " + url);
+				return null;
+			}
+
+			HttpEntity getResponseEntity = response.getEntity();
+			Log.w("getClass().getSimpleName()", "Read the url:  " + url);
+			return getResponseEntity.getContent();
+
+		} catch (IOException e) {
+			Log.w("getClass().getSimpleName()", " Error for URL " + url, e);
+		}
+
+		return null;
+
 	}
 
 	public static void loadTweets(final Activity a, final ListView l) {
@@ -400,5 +446,43 @@ public class UtilsWeb {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static GeoPoint findVehiclePosition(String name, Context context) {
+		String url = "http://railtime.be/website/apercu-du-trafic-trains?tn="
+				+ name.replaceAll("\\D", "");
+
+		InputStream source = retrieveStream(url, context);
+		BufferedReader br = new BufferedReader(new InputStreamReader(source));
+		String read = "";
+		boolean foundLat = false;
+		boolean foundLon = false;
+		String lat = null;
+		String lon = null;
+		try {
+			read = br.readLine();
+			while (!foundLat || !foundLon) {
+				if (read.contains("PARAMS.CenterLat")) {
+					String[]array=read.split("=");
+					lat=array[1].trim().replaceAll(";","");
+					foundLat = true;	
+				}
+
+				if (read.contains("PARAMS.CenterLon")) {
+					String[]array=read.split("=");
+					lon=array[1].trim().replaceAll(";","");
+					foundLon = true;
+				}
+				read = br.readLine();
+				if (read==null)
+						break;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new GeoPoint((int) (Float.valueOf(lat) * 1E6), (int) (Float.valueOf(lon)  * 1E6));
+
 	}
 }

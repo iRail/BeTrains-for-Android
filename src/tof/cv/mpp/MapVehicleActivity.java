@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.map.ItemizedOverlayVehicle;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -14,9 +15,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 public class MapVehicleActivity extends MapActivity {
-
-	// PSOTIT: Pour le train:
-	// http://railtime.be/website/apercu-du-trafic-trains?tn=3835
 
 	private MapView mMap;
 	private MapController mController;
@@ -42,19 +40,28 @@ public class MapVehicleActivity extends MapActivity {
 		} else
 			Toast.makeText(this, "Error while getting train position",
 					Toast.LENGTH_LONG).show();
+		final String vehicleName=name;
+		final MapVehicleActivity activity =this;
+		Runnable trainSearch = new Runnable() {
 
-		double glat = 0;
-		double glon = 0;
+			public void run() {
 
-		gpStation = new GeoPoint((int) (glat * 1E6), (int) (glon * 1E6));
+				gpStation = UtilsWeb.findVehiclePosition(vehicleName,getBaseContext());
 
-		marker = getResources().getDrawable(R.drawable.train);
-		stationsOverlay = new ItemizedOverlayVehicle(marker,name,this);
-		stationsOverlay.addPoint(gpStation);
-		mMap.getOverlays().add(stationsOverlay);
+				marker = getResources().getDrawable(R.drawable.train);
+				stationsOverlay = new ItemizedOverlayVehicle(marker,vehicleName,activity);
+				stationsOverlay.addPoint(gpStation);
+				mMap.getOverlays().add(stationsOverlay);
 
-		mController.setCenter(gpStation);
-		mController.setZoom(15);
+				mController.setCenter(gpStation);
+				mController.setZoom(15);
+			}
+		};
+
+		Thread thread = new Thread(null, trainSearch, "MyThread");
+		thread.start();
+		
+
 	}
 	
 	@Override

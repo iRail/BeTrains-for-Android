@@ -18,18 +18,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import tof.cv.mpp.bo.Connections;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -171,7 +163,7 @@ public class Utils {
 	public static InputStream DownloadJsonFromUrlAndCacheToSd(String url,
 			String dirName, String fileName, Context context) {
 
-		InputStream source = retrieveStream(url, context);
+		InputStream source = UtilsWeb.retrieveStream(url, context);
 
 		if (fileName == null)
 			return source;
@@ -209,48 +201,7 @@ public class Utils {
 		return sourcetoReturn;
 	}
 
-	public static InputStream retrieveStream(String url, Context context) {
-
-		DefaultHttpClient client = new DefaultHttpClient();
-
-		HttpGet request = new HttpGet(url);
-
-		// TODO: stocker la version pour ne pas faire un appel à chaque fois.
-		String myVersion = "0.0";
-		PackageManager manager = context.getPackageManager();
-		try {
-			myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		request.setHeader("User-Agent", "Waza_Be: BeTrains " + myVersion
-				+ " for Android");
-
-		Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
-
-		try {
-			HttpResponse response = client.execute(request);
-			final int statusCode = response.getStatusLine().getStatusCode();
-
-			if (statusCode != HttpStatus.SC_OK) {
-				Log.w("getClass().getSimpleName()", "Error " + statusCode
-						+ " for URL " + url);
-				return null;
-			}
-
-			HttpEntity getResponseEntity = response.getEntity();
-			Log.w("getClass().getSimpleName()", "Read the url:  " + url);
-			return getResponseEntity.getContent();
-
-		} catch (IOException e) {
-			Log.w("getClass().getSimpleName()", " Error for URL " + url, e);
-		}
-
-		return null;
-
-	}
-
+	
 	public class CopyInputStream {
 		private InputStream _is;
 		private ByteArrayOutputStream _copy = new ByteArrayOutputStream();

@@ -86,7 +86,6 @@ public class InfoTrainFragment extends ListFragment {
 								new Date(Long.valueOf(currentVehicle
 										.getTimestamp()) * 1000),
 								"dd MMM HH:mm"));
-
 			} else {
 				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm")+"\n\n"+getString(R.string.txt_connection));
 			}
