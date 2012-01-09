@@ -131,8 +131,10 @@ public class InfoTrainFragment extends ListFragment {
 			widget();
 			return true;
 		case 1:
-			Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
-			startActivity(new Intent(getActivity(), StarredActivity.class));
+			if(currentVehicle!=null){
+				Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
+				startActivity(new Intent(getActivity(), StarredActivity.class));
+			}			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
