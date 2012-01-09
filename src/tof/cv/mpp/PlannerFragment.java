@@ -184,7 +184,7 @@ public class PlannerFragment extends ListFragment {
 			public void onClick(View v) {
 
 				String station = tvArrival.getText().toString();
-				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				Intent i = new Intent(getActivity(), MapBeActivity.class);
 				i.putExtra("Name", station);
 				i.putExtra("Hour", mDate.get(Calendar.HOUR));
 				i.putExtra("Minute", mDate.get(Calendar.MINUTE));
@@ -197,7 +197,7 @@ public class PlannerFragment extends ListFragment {
 		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				String station = tvDeparture.getText().toString();
-				Intent i = new Intent(getActivity(), InfoStationActivity.class);
+				Intent i = new Intent(getActivity(), MapBeActivity.class);
 				i.putExtra("Name", station);
 				i.putExtra("Hour", mDate.get(Calendar.HOUR));
 				i.putExtra("Minute", mDate.get(Calendar.MINUTE));

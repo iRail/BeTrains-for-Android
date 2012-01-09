@@ -37,7 +37,8 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
-public class StationMapActivity extends MapActivity implements LocationListener {
+
+public class MapBeActivity extends MapActivity implements LocationListener {
 
 	private static final String TAG = "BETRAINS";
 	/** Called when the activity is first created. */
@@ -51,8 +52,6 @@ public class StationMapActivity extends MapActivity implements LocationListener 
 	private ItemizedOverlayPerso stationsOverlay;
 	private String name;
 	private GeoPoint gpStation;
-	private double geoLatitude;
-	private double geoLongitude;
 	private GeoPoint gpMyLocation;
 
 	@Override
@@ -73,14 +72,17 @@ public class StationMapActivity extends MapActivity implements LocationListener 
 		if (extras != null) {
 			lat = extras.getString("lat");
 			lon = extras.getString("lon");
-			name = extras.getString("nom");
+			name = extras.getString("Name");
 			Log.i(TAG,"Station position: " + lat + ", " + lon);
 
 		} else
 			Toast.makeText(this, "Error while getting train position",
 					Toast.LENGTH_LONG).show();
-
-		// centrer la carte sur la gare de Charleroi-Sud
+//TODO: Remove, just for test
+		lat="1";
+		lon="1";
+		
+		
 		double glat = Double.parseDouble(lat);
 		double glon = Double.parseDouble(lon);
 		gpStation = new GeoPoint((int) (glat * 1E6), (int) (glon * 1E6));
@@ -194,7 +196,7 @@ public class StationMapActivity extends MapActivity implements LocationListener 
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// Auto-generated method stub
+	// Auto-generated method stub
 		return false;
 	}
 
@@ -286,7 +288,7 @@ public class StationMapActivity extends MapActivity implements LocationListener 
 							mMap.invalidate();
 						} else
 							Toast.makeText(
-									StationMapActivity.this,
+									MapBeActivity.this,
 									"Waiting GPS fix\nActivate network localisation in settings or enable you GPS.",
 									Toast.LENGTH_LONG).show();
 						
