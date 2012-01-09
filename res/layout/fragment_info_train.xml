@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-<FrameLayout 
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="0dp" android:layout_width="fill_parent"
-	android:layout_weight="1" android:background="#FFFFFFFF">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+    <include layout="@layout/colorstrip" />
 
-		<include layout="@layout/colorstrip" />
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip"
+        android:text="@string/txt_loading"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/darkblue"
+        android:textStyle="bold" />
 
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
 
-			<ImageButton android:background="@drawable/myleftarrow"
-				android:id="@+id/Button_prev" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:visibility="gone" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center" >
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-			<TextView android:id="@+id/title" android:textStyle="bold"
-				xmlns:android="http://schemas.android.com/apk/res/android"
-				android:layout_width="0dip" android:layout_height="wrap_content"
-				android:layout_weight="1" android:layout_gravity="center"
-				android:gravity="center" android:text="@string/txt_loading"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:paddingBottom="10dip" android:paddingTop="10dip"
-				android:textColor="@color/darkblue" />
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/More_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
-			<ImageButton android:background="@drawable/myrightarrow"
-				android:id="@+id/Button_next" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:visibility="gone" />
+    <include layout="@layout/colorstrip" />
 
-		</LinearLayout>
+    <TextView
+        android:id="@+id/last_message"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:textColor="#FF000000" >
+    </TextView>
 
-		<ListView android:id="@android:id/list" android:layout_width="fill_parent"
-			android:layout_height="0dip" android:layout_weight="1" />
-		<TextView android:id="@android:id/empty"
-			android:layout_width="fill_parent" android:layout_height="0dip"
-			android:text="@string/txt_loading" style="@style/TextElement"
-			android:layout_weight="1" />
-
-		<TextView android:id="@+id/More_info"
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:visibility="gone" />
-
-
-		<include layout="@layout/colorstrip" />
-
-		<TextView android:id="@+id/last_message" android:gravity="center"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textColor="#FF000000">
-		</TextView>
-
-
-	</LinearLayout>
-</FrameLayout>
-
-    
+</LinearLayout>

@@ -10,7 +10,6 @@ import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.widget.TrainAppWidgetProvider;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 
 public class InfoTrainFragment extends ListFragment {
 	protected static final String TAG = "ChatFragment";
-	private ProgressDialog progressDialog;
 	private Vehicle currentVehicle;
 	private TextView mTitleText;
 	private String fromTo;
@@ -57,8 +55,6 @@ public class InfoTrainFragment extends ListFragment {
 	}
 
 	public void displayInfo(String vehicle, String fromTo) {
-		progressDialog = ProgressDialog.show(getActivity(), "",
-				getString(R.string.txt_patient), true);
 		this.fromTo = fromTo;
 		myTrainSearchThread(vehicle);
 	}
@@ -67,19 +63,14 @@ public class InfoTrainFragment extends ListFragment {
 		Runnable trainSearch = new Runnable() {
 			public void run() {
 				currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity());
-				getActivity().runOnUiThread(dismissPd);
-				getActivity().runOnUiThread(displayResult);
+				if(getActivity()!=null)
+					getActivity().runOnUiThread(displayResult);
 			}
 		};
 		Thread thread = new Thread(null, trainSearch, "MyThread");
 		thread.start();
 	}
 
-	private Runnable dismissPd = new Runnable() {
-		public void run() {
-			progressDialog.dismiss();
-		}
-	};
 
 	private Runnable displayResult = new Runnable() {
 		public void run() {
@@ -97,10 +88,7 @@ public class InfoTrainFragment extends ListFragment {
 								"dd MMM HH:mm"));
 
 			} else {
-				TextView messagesEmpty = (TextView) getActivity().findViewById(
-						android.R.id.empty);
-				messagesEmpty.setText(getString(R.string.txt_connection));
-				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm"));
+				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm")+"\n\n"+getString(R.string.txt_connection));
 			}
 		}
 	};
