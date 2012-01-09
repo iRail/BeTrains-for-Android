@@ -7,15 +7,20 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class StarredFragment extends ListFragment {
 	protected static final String TAG = "StarredFragment";
 	private static DbAdapterConnection mDbHelper;
 	private Cursor mCursor ;
+	private static final int REMOVE_ID = 1;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -96,5 +101,26 @@ public class StarredFragment extends ListFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, REMOVE_ID, 0, R.string.txt_remove);
+	}
 
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case REMOVE_ID:
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+					.getMenuInfo();
+			mDbHelper.open();
+			mDbHelper.deleteFav(menuInfo.id);
+			mDbHelper.close();
+			populateList();
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+
+	}
 }
