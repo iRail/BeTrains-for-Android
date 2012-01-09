@@ -17,10 +17,13 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,13 +53,13 @@ public class InfoTrainFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mTitleText = (TextView) getActivity().findViewById(R.id.title);
-
+		registerForContextMenu(getListView());
 	}
 
 	public void displayInfo(String vehicle, String fromTo) {
 		progressDialog = ProgressDialog.show(getActivity(), "",
 				getString(R.string.txt_patient), true);
-		this.fromTo=fromTo;
+		this.fromTo = fromTo;
 		myTrainSearchThread(vehicle);
 	}
 
@@ -81,12 +84,17 @@ public class InfoTrainFragment extends ListFragment {
 	private Runnable displayResult = new Runnable() {
 		public void run() {
 
-			if (currentVehicle != null && currentVehicle.getVehicleStops() != null) {
+			if (currentVehicle != null
+					&& currentVehicle.getVehicleStops() != null) {
 				TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
 						getActivity(), R.layout.row_info_train, currentVehicle
 								.getVehicleStops().getVehicleStop());
 				setListAdapter(trainInfoAdapter);
-				setTitle(Utils.formatDate(new Date(Long.valueOf(currentVehicle.getTimestamp())*1000), "dd MMM HH:mm"));
+				setTitle(Utils
+						.formatDate(
+								new Date(Long.valueOf(currentVehicle
+										.getTimestamp()) * 1000),
+								"dd MMM HH:mm"));
 
 			} else {
 				TextView messagesEmpty = (TextView) getActivity().findViewById(
@@ -107,20 +115,17 @@ public class InfoTrainFragment extends ListFragment {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Widget")
 				.setIcon(R.drawable.ic_menu_save)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
+
 		menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
-		.setIcon(R.drawable.ic_menu_star)
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setIcon(R.drawable.ic_menu_star)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case (android.R.id.home):
-			// app icon in ActionBar is clicked; Go home
-			Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			getActivity().finish();
 			return true;
 		case 0:
 			widget();
@@ -146,13 +151,13 @@ public class InfoTrainFragment extends ListFragment {
 								getActivity());
 						mDbHelper.open();
 						mDbHelper.deleteAllWidgetStops();
-						mDbHelper.createWidgetStop(currentVehicle.getId().replace("BE.NMBS.", ""), "1", "",
-								fromTo);
+						mDbHelper.createWidgetStop(currentVehicle.getId()
+								.replace("BE.NMBS.", ""), "1", "", fromTo);
 						for (VehicleStop oneStop : currentVehicle
 								.getVehicleStops().getVehicleStop())
 							mDbHelper.createWidgetStop(oneStop.getStation(),
-									oneStop.getTime(),
-									oneStop.getDelay(), oneStop.getStatus());
+									oneStop.getTime(), oneStop.getDelay(),
+									oneStop.getStatus());
 						Intent intent = new Intent(
 								TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
 						getActivity().sendBroadcast(intent);
@@ -177,6 +182,29 @@ public class InfoTrainFragment extends ListFragment {
 
 	public void setTitle(String txt) {
 		mTitleText.setText(txt);
+	}
+
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, 0, 0,"Info");
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+					.getMenuInfo();
+			VehicleStop stop = (VehicleStop) getListAdapter().getItem((int) menuInfo.id);
+			Intent i = new Intent(getActivity(), InfoStationActivity.class);
+			i.putExtra("Name", stop.getStation());
+			startActivity(i);
+
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+
 	}
 
 }

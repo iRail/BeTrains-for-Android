@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class StarredFragment extends ListFragment {
 	protected static final String TAG = "StarredFragment";
@@ -36,10 +37,15 @@ public class StarredFragment extends ListFragment {
 		mDbHelper = new DbAdapterConnection(getActivity());
 
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		registerForContextMenu(getListView());
+	}
 
 	public void onResume() {
 		super.onResume();
-		registerForContextMenu(getListView());
 		populateList();
 	}
 	
