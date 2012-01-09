@@ -3,7 +3,6 @@ package tof.cv.search;
 import java.io.IOException;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
-
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;

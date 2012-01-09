@@ -255,6 +255,8 @@ public class PlannerFragment extends ListFragment {
 			showDateTimeDialog();
 			return true;
 		case (MENU_FAV):
+			Utils.addAsStarred(tvDeparture.getText().toString(),
+					tvArrival.getText().toString(), 3, context.asActivity());
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):

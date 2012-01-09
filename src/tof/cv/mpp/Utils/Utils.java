@@ -324,4 +324,12 @@ public class Utils {
 		}
 		return mArrayList;
 	}
+	public static void addAsStarred(String item, String item2, int type,
+			Context context) {
+		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
+		mDbHelper.open();
+		mDbHelper.createFav(item, item2, type);
+		mDbHelper.close();
+
+	}
 }

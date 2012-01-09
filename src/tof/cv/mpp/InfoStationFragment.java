@@ -1,13 +1,8 @@
 package tof.cv.mpp;
 
-import java.util.Date;
-
-import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Station;
-import tof.cv.mpp.Utils.UtilsWeb.StationStationinfo;
 import tof.cv.mpp.adapter.StationInfoAdapter;
-import tof.cv.mpp.adapter.TrainInfoAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
