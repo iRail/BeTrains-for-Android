@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -302,5 +303,25 @@ public class Utils {
 	public static String formatDate(Date d, String pattern) {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		return sdf.format(d);
+	}
+	
+	public static ArrayList<String> getFavFromDb(Activity context,DbAdapterConnection mDbHelper){
+		ArrayList<String> mArrayList= new ArrayList<String>();
+		mDbHelper.open();
+		Cursor mCursor = mDbHelper.fetchAllFavStations();
+		mCursor.moveToFirst();
+		
+		// TODO: Bug: I have to add first item manually.. Why?
+		if (!mCursor.isAfterLast())
+			mArrayList.add(mCursor.getString(mCursor
+					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+
+		for (mCursor.moveToFirst(); mCursor.moveToNext(); mCursor
+				.isAfterLast()) {
+			// The Cursor is now set to the right position
+			mArrayList.add(mCursor.getString(mCursor
+					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+		}
+		return mArrayList;
 	}
 }

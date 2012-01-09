@@ -8,7 +8,6 @@ import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -359,25 +358,9 @@ public class StationPickerActivity extends FragmentActivity {
 			String[] list = {};
 			switch (mNum) {
 			case 0:
-				mDbHelper.open();
-				Cursor mCursor = mDbHelper.fetchAllFavStations();
-				ArrayList<String> mArrayList = new ArrayList<String>();
-				getActivity().startManagingCursor(mCursor);
-
-				// TODO: Bug: I have to add first item manually.. Why?
-				mCursor.moveToFirst();
-				if (!mCursor.isAfterLast())
-					mArrayList.add(mCursor.getString(mCursor
-							.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
-
-				for (mCursor.moveToFirst(); mCursor.moveToNext(); mCursor
-						.isAfterLast()) {
-					// The Cursor is now set to the right position
-					mArrayList.add(mCursor.getString(mCursor
-							.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
-				}
-
-				list = mArrayList.toArray(new String[mArrayList.size()]);
+				ArrayList<String> mArrayList = Utils.getFavFromDb(getActivity(),mDbHelper);
+				if (mArrayList!=null)
+					list = mArrayList.toArray(new String[mArrayList.size()]);
 				mDbHelper.close();
 				break;
 			case 1:
