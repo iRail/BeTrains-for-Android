@@ -15,7 +15,7 @@ import android.widget.ListView;
 public class StarredFragment extends ListFragment {
 	protected static final String TAG = "StarredFragment";
 	private static DbAdapterConnection mDbHelper;
-
+	private Cursor mCursor ;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -36,8 +36,12 @@ public class StarredFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 		registerForContextMenu(getListView());
+		populateList();
+	}
+	
+	public void populateList(){
 		mDbHelper.open();
-		Cursor mCursor = mDbHelper.fetchAllFav();
+		mCursor = mDbHelper.fetchAllFav();
 		FavAdapter fAdapter = new FavAdapter(getActivity(), mCursor);
 		setListAdapter(fAdapter);
 		mDbHelper.close();
@@ -45,7 +49,38 @@ public class StarredFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-
+		super.onListItemClick(l, v, position, id);
+		
+		mCursor.moveToPosition(position);
+		String item=mCursor.getString(mCursor
+				.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME));
+		String itemTwo=mCursor.getString(mCursor
+				.getColumnIndex(DbAdapterConnection.KEY_FAV_NAMETWO));
+		int type=mCursor.getInt(mCursor
+				.getColumnIndex(DbAdapterConnection.KEY_FAV_TYPE));
+		Intent i;
+		switch (type) {
+		case 1:
+			i = new Intent(getActivity(),
+					InfoStationActivity.class);
+			i.putExtra("Name", item);
+			startActivity(i);
+			break;
+		case 2:
+			i = new Intent(getActivity(),
+					InfoTrainActivity.class);
+			i.putExtra("Name",item);
+			startActivity(i);
+			break;
+		case 3:
+			i = new Intent(getActivity(),
+					PlannerActivity.class);
+			i.putExtra("Departure",item);
+			i.putExtra("Arrival",itemTwo);
+			startActivity(i);
+		
+			break;
+		}
 	}
 
 	@Override

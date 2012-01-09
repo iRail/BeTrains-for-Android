@@ -326,6 +326,9 @@ public class Utils {
 	}
 	public static void addAsStarred(String item, String item2, int type,
 			Context context) {
+		// TYPE 1 = Station
+		// TYPE 2 = Vehicle
+		// TYPE 3 = Trip
 		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
 		mDbHelper.open();
 		mDbHelper.createFav(item, item2, type);

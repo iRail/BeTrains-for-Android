@@ -250,12 +250,8 @@ public class StationPickerActivity extends FragmentActivity {
 			case ADD_ID:
 				AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 						.getMenuInfo();
-				String sName = "";
-				sName = (String) getListAdapter().getItem((int) menuInfo.id);
-				mDbHelper.open();
-				mDbHelper.createFav(sName, "", 1);
-				mDbHelper.close();
-
+				String sName = (String) getListAdapter().getItem((int) menuInfo.id);
+				Utils.addAsStarred(sName,"",1,getActivity());
 				return true;
 			default:
 				return super.onContextItemSelected(item);

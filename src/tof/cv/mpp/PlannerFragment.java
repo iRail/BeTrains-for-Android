@@ -101,16 +101,8 @@ public class PlannerFragment extends ListFragment {
 
 		updateActionBar();
 		setHasOptionsMenu(true);
-
-		Bundle extras = getActivity().getIntent().getExtras();
-		if (extras != null) {
-			tvDeparture.setText(extras.getString("Departure"));
-			tvArrival.setText(extras.getString("Arrival"));
-			mySearchThread();
-		}
-
+		
 		style = android.R.style.Theme_Dialog;
-
 		if (Build.VERSION.SDK_INT >= 14)
 			style = android.R.style.Theme_DeviceDefault_Dialog;
 
@@ -120,6 +112,17 @@ public class PlannerFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
+		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
+
+		Bundle extras = getActivity().getIntent().getExtras();
+		// SI j'ai des extras, je lance direct la recherche
+		if (extras != null) {
+			tvDeparture.setText(extras.getString("Departure"));
+			tvArrival.setText(extras.getString("Arrival"));
+			mySearchThread();
+		}
+		
 		setAllBtnListener();
 
 		String defaultStart = settings.getString("pStart", "MONS");
@@ -159,7 +162,6 @@ public class PlannerFragment extends ListFragment {
 			}
 		});
 
-		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
 		tvDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(),
@@ -168,7 +170,6 @@ public class PlannerFragment extends ListFragment {
 			}
 		});
 
-		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 		tvArrival.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(),
@@ -255,8 +256,8 @@ public class PlannerFragment extends ListFragment {
 			showDateTimeDialog();
 			return true;
 		case (MENU_FAV):
-			Utils.addAsStarred(tvDeparture.getText().toString(),
-					tvArrival.getText().toString(), 3, context.asActivity());
+			Utils.addAsStarred(tvDeparture.getText().toString(), tvArrival
+					.getText().toString(), 3, context.asActivity());
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):

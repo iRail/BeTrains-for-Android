@@ -107,6 +107,10 @@ public class InfoTrainFragment extends ListFragment {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Widget")
 				.setIcon(R.drawable.ic_menu_save)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
+		menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
+		.setIcon(R.drawable.ic_menu_star)
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	@Override
@@ -120,6 +124,10 @@ public class InfoTrainFragment extends ListFragment {
 			return true;
 		case 0:
 			widget();
+			return true;
+		case 1:
+			Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
+			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
