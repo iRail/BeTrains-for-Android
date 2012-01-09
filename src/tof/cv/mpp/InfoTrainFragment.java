@@ -119,6 +119,10 @@ public class InfoTrainFragment extends ListFragment {
 		menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
 				.setIcon(R.drawable.ic_menu_star)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+		menu.add(Menu.NONE, 2, Menu.NONE, "Map")
+				.setIcon(android.R.drawable.ic_menu_mapmode)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	@Override
@@ -131,10 +135,17 @@ public class InfoTrainFragment extends ListFragment {
 			widget();
 			return true;
 		case 1:
-			if(currentVehicle!=null){
+			if (currentVehicle != null) {
 				Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
 				startActivity(new Intent(getActivity(), StarredActivity.class));
-			}			
+			}
+			return true;
+		case 2:
+			if (currentVehicle != null) {
+				Intent i = new Intent(getActivity(), MapVehicleActivity.class);
+				i.putExtra("Name", currentVehicle.getId());
+				startActivity(i);
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -189,7 +200,7 @@ public class InfoTrainFragment extends ListFragment {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, 0, 0,"Info");
+		menu.add(0, 0, 0, "Info");
 	}
 
 	public boolean onContextItemSelected(MenuItem item) {
@@ -197,7 +208,8 @@ public class InfoTrainFragment extends ListFragment {
 		case 0:
 			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 					.getMenuInfo();
-			VehicleStop stop = (VehicleStop) getListAdapter().getItem((int) menuInfo.id);
+			VehicleStop stop = (VehicleStop) getListAdapter().getItem(
+					(int) menuInfo.id);
 			Intent i = new Intent(getActivity(), InfoStationActivity.class);
 			i.putExtra("Name", stop.getStation());
 			startActivity(i);

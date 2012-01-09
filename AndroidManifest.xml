@@ -71,7 +71,12 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="MapBeActivity"
+            android:name=".MapStationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".MapVehicleActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden" />

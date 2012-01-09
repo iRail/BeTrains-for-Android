@@ -3,12 +3,18 @@ package tof.cv.mpp.Utils;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.w3c.dom.Document;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.adapter.TweetItemAdapter;
@@ -25,6 +31,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.maps.GeoPoint;
 import com.google.gson.Gson;
 
 public class UtilsWeb {
@@ -195,11 +202,11 @@ public class UtilsWeb {
 		public String getVersion() {
 			return version;
 		}
-		
+
 		public String getId() {
 			return vehicle;
 		}
-		
+
 		public String getTimestamp() {
 			return timestamp;
 		}
@@ -354,4 +361,44 @@ public class UtilsWeb {
 		}
 	}
 
+	public static Document getKml(GeoPoint src, GeoPoint dest) {
+		// connect to map web service
+		StringBuilder urlString = new StringBuilder();
+		urlString.append("http://maps.google.com/maps?f=d&hl=en");
+		urlString.append("&saddr=");// from
+		urlString.append(Double.toString((double) src.getLatitudeE6() / 1.0E6));
+		urlString.append(",");
+		urlString
+				.append(Double.toString((double) src.getLongitudeE6() / 1.0E6));
+		urlString.append("&daddr=");// to
+		urlString
+				.append(Double.toString((double) dest.getLatitudeE6() / 1.0E6));
+		urlString.append(",");
+		urlString
+				.append(Double.toString((double) dest.getLongitudeE6() / 1.0E6));
+		urlString.append("&ie=UTF8&0&om=0&output=kml");
+		// Log.d("xxx","URL="+urlString.toString());
+		// get the kml (XML) doc. And parse it to get the coordinates(direction
+		// route).
+
+		HttpURLConnection urlConnection = null;
+		URL url = null;
+
+		try {
+			url = new URL(urlString.toString());
+			urlConnection = (HttpURLConnection) url.openConnection();
+			urlConnection.setRequestMethod("GET");
+			urlConnection.setDoOutput(true);
+			urlConnection.setDoInput(true);
+			urlConnection.connect();
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			return db.parse(urlConnection.getInputStream());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
