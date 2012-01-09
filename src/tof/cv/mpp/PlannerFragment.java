@@ -68,7 +68,7 @@ public class PlannerFragment extends ListFragment {
 	private SharedPreferences.Editor editor;
 
 	private ProgressDialog progressDialog;
-	
+
 	private int style;
 
 	// Second part need to be cleaned
@@ -108,7 +108,6 @@ public class PlannerFragment extends ListFragment {
 			tvArrival.setText(extras.getString("Arrival"));
 			mySearchThread();
 		}
-		
 
 		style = android.R.style.Theme_Dialog;
 
@@ -210,7 +209,7 @@ public class PlannerFragment extends ListFragment {
 				R.id.mybuttonAfter);
 		btnAfter.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				mDate.add(Calendar.HOUR,1);
+				mDate.add(Calendar.HOUR, 1);
 				updateActionBar();
 				mySearchThread();
 			}
@@ -220,7 +219,7 @@ public class PlannerFragment extends ListFragment {
 				R.id.mybuttonBefore);
 		btnBefore.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				mDate.add(Calendar.HOUR,-1);
+				mDate.add(Calendar.HOUR, -1);
 				updateActionBar();
 				mySearchThread();
 			}
@@ -361,8 +360,8 @@ public class PlannerFragment extends ListFragment {
 				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
 						.getVehicle());
-				i.putExtra("fromto", tvDeparture.getText().toString() + " - " +
-						  tvArrival.getText().toString());
+				i.putExtra("fromto", tvDeparture.getText().toString() + " - "
+						+ tvArrival.getText().toString());
 				i.putExtra("Hour", mDate.get(Calendar.HOUR));
 				i.putExtra("Minute", mDate.get(Calendar.MINUTE));
 				startActivity(i);
@@ -418,13 +417,13 @@ public class PlannerFragment extends ListFragment {
 
 	public void onPause() {
 		super.onPause();
-		// String start = (String) tvDeparture.getText();
-		// String stop = (String) tvArrival.getText();
-		// if (!start.contentEquals("") && !start.contentEquals("")) {
-		// editor.putString("pStart", start);
-		// editor.putString("pStop", stop);
-		// editor.commit();
-		// }
+		String start = (String) tvDeparture.getText();
+		String stop = (String) tvArrival.getText();
+		if (!start.contentEquals("") && !start.contentEquals("")) {
+			editor.putString("pStart", start);
+			editor.putString("pStop", stop);
+			editor.commit();
+		}
 
 	}
 
@@ -473,11 +472,13 @@ public class PlannerFragment extends ListFragment {
 		else
 			trainOnly = "train;bus";
 
-		allConnections = UtilsWeb.getAPIConnections(""
-				+ (mDate.get(Calendar.YEAR)-2000), "" + (mDate.get(Calendar.MONTH)+ 1), ""
-				+ mDate.get(Calendar.DAY_OF_MONTH),Utils.formatDate(mDate.getTime(), "HH"),
-				Utils.formatDate(mDate.getTime(), "mm"), langue, myStart, myArrival, dA,
-				trainOnly, getActivity());
+		allConnections = UtilsWeb.getAPIConnections(
+				"" + (mDate.get(Calendar.YEAR) - 2000),
+				"" + (mDate.get(Calendar.MONTH) + 1),
+				"" + mDate.get(Calendar.DAY_OF_MONTH),
+				Utils.formatDate(mDate.getTime(), "HH"),
+				Utils.formatDate(mDate.getTime(), "mm"), langue, myStart,
+				myArrival, dA, trainOnly, getActivity());
 
 		if (allConnections == null) {
 			Log.e(TAG, "API failure!!!");
@@ -489,13 +490,6 @@ public class PlannerFragment extends ListFragment {
 			});
 
 		}
-	}
-
-	public void onDestroy() {
-		super.onDestroy();
-
-		// tracker.stop();
-
 	}
 
 	public void onResume() {
@@ -531,10 +525,10 @@ public class PlannerFragment extends ListFragment {
 
 		if (Build.VERSION.SDK_INT >= 14)
 			style = android.R.style.Theme_DeviceDefault_Light_Dialog;
-		
+
 		final DateTimePicker mDateTimeDialog = new DateTimePicker(
-				(Context) getSupportActivity(), style,this);
-		
+				(Context) getSupportActivity(), style, this);
+
 		final String timeS = android.provider.Settings.System.getString(
 				getSupportActivity().getContentResolver(),
 				android.provider.Settings.System.TIME_12_24);
@@ -544,8 +538,8 @@ public class PlannerFragment extends ListFragment {
 
 		mDateTimeDialog.show();
 	}
-	
-	private void updateActionBar(){
+
+	private void updateActionBar() {
 		getSupportActivity().getSupportActionBar().setTitle(
 				Utils.formatDate(mDate.getTime(), abTimePattern));
 		getSupportActivity().getSupportActionBar().setSubtitle(
