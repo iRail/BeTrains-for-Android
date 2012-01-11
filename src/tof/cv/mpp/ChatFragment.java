@@ -199,6 +199,8 @@ public class ChatFragment extends ListFragment {
 					Log.i(TAG, "count= " + listOfMessage.size());
 					if (listOfMessage.size() == 0)
 						getActivity().runOnUiThread(updateEmpty);
+					else
+						getActivity().runOnUiThread(returnRes);
 					toEmpty=getString(R.string.txt_no_message);
 				} else{
 					toEmpty=getString(R.string.txt_connection);
