@@ -43,6 +43,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ClosestFragment extends ListFragment {
 	protected static final String TAG = "ClosestFragment";
@@ -146,7 +147,7 @@ public class ClosestFragment extends ListFragment {
 	{
 
 		public void onLocationChanged(final Location loc) {
-
+			locationManager.removeUpdates(locationNetworkListener);
 			if (loc != null) {
 				// GPS Location is considered as the best
 				// We can of course improve that.
@@ -214,13 +215,7 @@ public class ClosestFragment extends ListFragment {
 		thread = new Thread(null, updateListRunnable, "thread");
 		thread.start();
 
-		m_ProgressDialog.hide();
-		m_ProgressDialog = new MyProgressDialog(this.getActivity());
-		m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		m_ProgressDialog.setCancelable(false);
-		m_ProgressDialog.setTitle(getString(R.string.txt_patient));
-		m_ProgressDialog.setMessage(getString(R.string.txt_fill_closest));
-		m_ProgressDialog.show();
+
 
 	}
 
@@ -234,8 +229,7 @@ public class ClosestFragment extends ListFragment {
 		locationCursor = mDbHelper.fetchAllLocations();
 		if (locationCursor.getCount() == 0) {
 			getActivity().runOnUiThread(hideProgressdialog);
-			// TODO downloadStationListFromApi();
-
+			downloadStationListFromApi();
 		} else {
 			m_ProgressDialog.setMax(locationCursor.getCount());
 			stationList.clear();
@@ -549,11 +543,12 @@ public class ClosestFragment extends ListFragment {
 
 	public void notifyList(boolean manual) {
 		threadLock = true;
+		Log.v(TAG, "notifyList");
+
 		// I only update automatically first time
 		if (!isFirst || manual) {
-			Log.v(TAG, "MyNetworkLocationListener");
 			isFirst = true;
-			// Notify the Adapter in the UIThread
+			// Upate the list and notify Adapter
 			Runnable notifyListRunnable = new Runnable() {
 				public void run() {
 					updateListToBestLocation();
@@ -567,6 +562,8 @@ public class ClosestFragment extends ListFragment {
 			};
 			getActivity().runOnUiThread(notifyListRunnable);
 		}
-
+		threadLock = false;
 	}
+	
+
 }
