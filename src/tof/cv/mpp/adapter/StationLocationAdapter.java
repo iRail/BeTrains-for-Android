@@ -8,9 +8,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class StationLocationAdapter extends AbstractAdapter<StationLocation> {
+public class StationLocationAdapter extends ArrayAdapter<StationLocation> {
 	public StationLocationAdapter(Context context, int rowResourceId,
 			ArrayList<StationLocation> items) {
 		super(context, rowResourceId, items);	
@@ -24,7 +25,7 @@ public class StationLocationAdapter extends AbstractAdapter<StationLocation> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.row_closest, null);
 		}
-		StationLocation station = items.get(position);
+		StationLocation station = getItem(position);
 		if (station != null) {
 			TextView tvName = (TextView) v.findViewById(R.id.tv_name);
 			TextView tvGps = (TextView) v.findViewById(R.id.tv_gps);
