@@ -220,7 +220,7 @@ public class WelcomeActivity extends FragmentActivity {
 			messageWv.loadData(message, "text/html", "utf-8");
 
 			return new AlertDialog.Builder(context)
-					.setTitle(R.string.btn_home_help).setCancelable(true)
+					.setTitle(R.string.btn_home_contact).setCancelable(true)
 					.setIcon(android.R.drawable.ic_dialog_info)
 					.setView(messageWv).create();
 		}

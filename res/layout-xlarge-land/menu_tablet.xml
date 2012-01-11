@@ -1,52 +1,84 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:padding="6dip">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:padding="6dip" >
 
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_weight="1">
-		<Button android:id="@+id/btn_home_planner" style="@style/HomeButton"
-			android:text="@string/btn_home_planner" android:drawableTop="@drawable/home_btn_planner"
-			android:onClick="onPlannerClick" />
-		<Button android:id="@+id/btn_twit" style="@style/HomeButton"
-			android:text="Twitter" android:drawableTop="@drawable/home_btn_twit"
-			android:onClick="onTwitClick" />
-		<Button android:id="@+id/btn_home_traffic" style="@style/HomeButton"
-			android:text="@string/btn_home_traffic" android:drawableTop="@drawable/home_btn_traffic"
-			android:onClick="onTrafficClick" />
-		<!-- <Button android:id="@+id/btn_home_notif" style="@style/HomeButton" 
+    <Button
+        android:id="@+id/btn_home_planner"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_planner"
+        android:onClick="onPlannerClick"
+        android:text="@string/btn_home_planner" />
+
+    <Button
+        android:id="@+id/btn_twit"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_twit"
+        android:onClick="onTwitClick"
+        android:text="Twitter" />
+
+    <Button
+        android:id="@+id/btn_home_traffic"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_traffic"
+        android:onClick="onTrafficClick"
+        android:text="@string/btn_home_traffic" />
+    <!--
+             <Button android:id="@+id/btn_home_notif" style="@style/HomeButton" 
 			android:text="@string/btn_home_notif" android:drawableTop="@drawable/home_btn_notif" 
-			android:onClick="onNotifClick" /> -->
+			android:onClick="onNotifClick" />
+    -->
 
-		<Button android:id="@+id/btn_home_chat" style="@style/HomeButton"
-			android:text="@string/btn_home_chat" android:drawableTop="@drawable/home_btn_chat"
-			android:onClick="onChatClick" />
-		<Button android:id="@+id/btn_home_starred" style="@style/HomeButton"
-			android:text="@string/btn_home_starred" android:drawableTop="@drawable/home_btn_starred"
-			android:onClick="onStarredClick" />
-		<Button android:id="@+id/btn_closest_stations" style="@style/HomeButton"
-			android:text="@string/btn_closest_stations" android:drawableTop="@drawable/home_btn_closest"
-			android:onClick="onClosestClick" />
-		<Button android:id="@+id/btn_iRail" style="@style/HomeButton"
-			android:text="Liveboards" android:drawableTop="@drawable/home_btn_irail"
-			android:onClick="onIrailClick" />
-		<Button android:id="@+id/btn_home_settings" style="@style/HomeButton"
-			android:text="@string/btn_home_settings" android:drawableTop="@drawable/home_btn_settings"
-			android:onClick="onSettingsClick" />
-		<Button android:id="@+id/btn_home_help" style="@style/HomeButton"
-			android:text="@string/btn_home_help" android:drawableTop="@drawable/home_btn_map"
-			android:onClick="onHelpClick" />
+    <Button
+        android:id="@+id/btn_home_chat"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_chat"
+        android:onClick="onChatClick"
+        android:text="@string/btn_home_chat" />
 
-		<Button android:id="@+id/btn_donate" style="@style/HomeButton"
-			android:text="Donation" android:drawableTop="@drawable/home_btn_donate"
-			android:onClick="onDonateClick" android:visibility="gone" />
+    <Button
+        android:id="@+id/btn_home_starred"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_starred"
+        android:onClick="onStarredClick"
+        android:text="@string/btn_home_starred" />
 
-	</LinearLayout>
+    <Button
+        android:id="@+id/btn_closest_stations"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_closest"
+        android:onClick="onClosestClick"
+        android:text="@string/btn_closest_stations" />
 
+    <Button
+        android:id="@+id/btn_iRail"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_irail"
+        android:onClick="onIrailClick"
+        android:text="Liveboards" />
+
+    <Button
+        android:id="@+id/btn_home_settings"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_settings"
+        android:onClick="onSettingsClick"
+        android:text="@string/btn_home_settings" />
+
+    <Button
+        android:id="@+id/btn_home_help"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_map"
+        android:onClick="onHelpClick"
+        android:text="@string/btn_home_contact" />
+
+    <Button
+        android:id="@+id/btn_donate"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_donate"
+        android:onClick="onDonateClick"
+        android:text="Donation"
+        android:visibility="gone" />
 
 </LinearLayout>
-
-
-
-
-

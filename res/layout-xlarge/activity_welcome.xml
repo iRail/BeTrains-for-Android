@@ -1,56 +1,80 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/istablet" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:id="@+id/istablet"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/icon" />
 
-	<ImageView android:src="@drawable/icon" android:scaleType="center"
-		android:layout_height="wrap_content" android:layout_width="fill_parent" />
-	<ImageView android:src="@drawable/colorstrip"
-		android:scaleType="center" android:layout_height="wrap_content"
-		android:layout_width="fill_parent" />
-	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<include layout="@layout/menu_tablet" />
-	</ScrollView>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/colorstrip" />
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
+        <include layout="@layout/menu_tablet" />
+    </ScrollView>
 
-	<LinearLayout android:orientation="vertical"
-		android:layout_weight="1" android:layout_width="fill_parent"
-		android:layout_height="0dp" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" android:layout_marginBottom="10dp">
+    <LinearLayout
+        android:baselineAligned="false"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
 
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="0dp" android:layout_weight="1"
-			android:orientation="vertical" android:background="@drawable/home_streambox">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/home_streambox"
+            android:orientation="vertical" >
 
-			<LinearLayout android:name="com.google.android.apps.iosched.ui.TagStreamFragment"
-				android:id="@+id/fragment_tag_stream" android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/fragment_tag_stream"
+                android:name="com.google.android.apps.iosched.ui.TagStreamFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
-				<TextView style="@style/TextHeader2" android:layout_width="0dip"
-					android:layout_height="wrap_content" android:layout_weight="1"
-					android:layout_marginBottom="10dp" android:text="Stream" />
-				<Button android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:onClick="onTwitPrefClick"
-					android:background="@drawable/ic_title_settingsbl"
-					android:layout_gravity="right" />
-			</LinearLayout>
+                <TextView
+                    style="@style/TextHeader2"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:text="Stream" />
 
-				<LinearLayout android:name="com.google.android.apps.iosched.ui.TagStreamFragment"
-					android:id="@+id/fragment_tag_stream" android:layout_width="fill_parent"
-					android:layout_height="fill_parent">
-			<fragment android:name="tof.cv.mpp.fragments.PlannerFragment"
-				android:id="@+id/fragment" android:layout_width="fill_parent"
-				android:layout_height="fill_parent"/>
-				</LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/ic_title_settingsbl"
+                    android:onClick="onTwitPrefClick" />
+            </LinearLayout>
 
-		</LinearLayout>
+            <LinearLayout
+                android:id="@+id/fragment_tag_stream"
+                android:name="com.google.android.apps.iosched.ui.TagStreamFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
 
-	</LinearLayout>
-
-
+                <fragment
+                    android:id="@+id/fragment"
+                    android:name="tof.cv.mpp.fragments.PlannerFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
-

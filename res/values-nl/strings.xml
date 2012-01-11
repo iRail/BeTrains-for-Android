@@ -21,7 +21,7 @@
     <string name="btn_home_notif">Notifications</string>
     <string name="btn_home_traffic">Verkeershinder</string>
     <string name="btn_home_settings">Instellingen</string>
-    <string name="btn_home_help">Help</string>
+    <string name="btn_home_contact">Contact</string>
     <string name="btn_home_starred">Favorieten</string>
     <string name="txt_loading">Laden...</string>
     <string name="txt_patient">Even geduld, de data wordt geladen...</string>

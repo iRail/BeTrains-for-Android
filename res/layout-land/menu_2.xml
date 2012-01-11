@@ -21,7 +21,7 @@
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_weight="1">
 		<Button android:id="@+id/btn_home_help" style="@style/HomeButton"
-			android:text="@string/btn_home_help" android:drawableTop="@drawable/home_btn_map"
+			android:text="@string/btn_home_contact" android:drawableTop="@drawable/home_btn_map"
 			android:onClick="onHelpClick" />
 
 		<Button android:id="@+id/btn_donate" style="@style/HomeButton"
