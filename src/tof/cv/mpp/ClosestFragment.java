@@ -43,7 +43,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ClosestFragment extends ListFragment {
 	protected static final String TAG = "ClosestFragment";
@@ -64,8 +63,8 @@ public class ClosestFragment extends ListFragment {
 	private TextView tvEmpty;
 	private Button btEmpty;
 
-	private static final long INT_MINTIME = 0;
-	private static final long INT_MINDISTANCE = 0;
+	private static final long INT_MINTIME = 3000;
+	private static final long INT_MINDISTANCE = 50;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,6 +146,7 @@ public class ClosestFragment extends ListFragment {
 	{
 
 		public void onLocationChanged(final Location loc) {
+			Log.v(TAG, "GPS");
 			locationManager.removeUpdates(locationNetworkListener);
 			if (loc != null) {
 				// GPS Location is considered as the best
@@ -155,6 +155,7 @@ public class ClosestFragment extends ListFragment {
 				btnUpdate.setVisibility(View.VISIBLE);
 				btnUpdate.setText(getActivity().getString(
 						R.string.update_gps_btn, loc.getAccuracy()));
+				
 				if (!threadLock)
 					notifyList(false);
 
@@ -187,7 +188,7 @@ public class ClosestFragment extends ListFragment {
 				btnUpdate.setText(getActivity().getString(
 						R.string.update_gps_btn, loc.getAccuracy()));
 				if (!threadLock)
-					notifyList(true);
+					notifyList(false);
 			}
 		}
 
@@ -202,27 +203,6 @@ public class ClosestFragment extends ListFragment {
 
 	}
 
-	/**
-	 * I have a new location and I update the list
-	 */
-	private void updateListToLocation(final Location loc) {
-		Runnable updateListRunnable = new Runnable() {
-			public void run() {
-				updateListToBestLocation();
-			}
-		};
-		Log.v(TAG, "updateListToLocation");
-		thread = new Thread(null, updateListRunnable, "thread");
-		thread.start();
-
-
-
-	}
-
-	/**
-	 * The thread that is launched to read the database and compare each Station
-	 * location to my current location.
-	 */
 
 	private void updateListToBestLocation() {
 		mDbHelper.open();
@@ -333,7 +313,7 @@ public class ClosestFragment extends ListFragment {
 		mDbHelper.open();
 		final Cursor locationCursor = mDbHelper.fetchAllLocations();
 		if (locationCursor.getCount() > 0) {
-			// TODO refresh list
+//TODO Refresh
 			mDbHelper.close();
 		} else {
 			getActivity().runOnUiThread(hideProgressdialog);
@@ -344,18 +324,7 @@ public class ClosestFragment extends ListFragment {
 
 	}
 
-	/**
-	 * Fill the list at the activity creation
-	 */
-	private void checkIfDbIsEmpty() {
-		mDbHelper.open();
-		final Cursor locationCursor = mDbHelper.fetchAllLocations();
-		if (locationCursor.getCount() == 0) {
-			isFirst = true;
-			downloadStationListFromApi();
-		}
-		mDbHelper.close();
-	}
+
 
 	/**
 	 * Each time I come back in the activity, I listen to GPS
@@ -364,9 +333,6 @@ public class ClosestFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 		Log.d(TAG, "RESUME");
-		isFirst = false;
-		checkIfDbIsEmpty();
-
 		String txt = "";
 		locationManager = (LocationManager) getActivity().getSystemService(
 				Context.LOCATION_SERVICE);
@@ -430,7 +396,6 @@ public class ClosestFragment extends ListFragment {
 					+ PreferenceManager.getDefaultSharedPreferences(
 							getActivity()).getString("countryPref", "be")
 					+ "/stations.php");
-			isFirst = true;
 
 			Log.v(TAG, "Begin to parse " + url);
 			SAXParserFactory mySAXParserFactory = SAXParserFactory
@@ -447,7 +412,6 @@ public class ClosestFragment extends ListFragment {
 
 			getActivity().runOnUiThread(hideProgressdialog);
 			Log.v(TAG, "Finish to parse");
-			isFirst = false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -486,10 +450,7 @@ public class ClosestFragment extends ListFragment {
 						.getIndex("locationY"))) * 1E6);
 				lon = (int) (Float.valueOf(attributes.getValue(attributes
 						.getIndex("locationX"))) * 1E6);
-			}
-
-			else {
-				// state = stateUnknown;
+			} else {// state = stateUnknown;
 			}
 		}
 
@@ -544,9 +505,16 @@ public class ClosestFragment extends ListFragment {
 	public void notifyList(boolean manual) {
 		threadLock = true;
 		Log.v(TAG, "notifyList");
-
+		//m_ProgressDialog.hide();
+		m_ProgressDialog = new MyProgressDialog(this.getActivity());
+		m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		m_ProgressDialog.setCancelable(false);
+		m_ProgressDialog.setTitle(getString(R.string.txt_patient));
+		m_ProgressDialog.setMessage(getString(R.string.txt_fill_closest));
+		m_ProgressDialog.show();
 		// I only update automatically first time
 		if (!isFirst || manual) {
+			Log.v(TAG, "GO!");
 			isFirst = true;
 			// Upate the list and notify Adapter
 			Runnable notifyListRunnable = new Runnable() {
@@ -558,12 +526,13 @@ public class ClosestFragment extends ListFragment {
 					}
 					myLocationAdapter.notifyDataSetChanged();
 					threadLock = false;
+					m_ProgressDialog.hide();
 				}
 			};
 			getActivity().runOnUiThread(notifyListRunnable);
 		}
 		threadLock = false;
+		m_ProgressDialog.hide();
 	}
-	
 
 }
