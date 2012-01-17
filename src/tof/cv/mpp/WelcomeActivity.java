@@ -132,8 +132,8 @@ public class WelcomeActivity extends FragmentActivity {
 		if (findViewById(R.id.istablet) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			startActivity(new Intent(this, PreferenceActivity.class).putExtra(
-					"screen", PreferenceActivity.PAGE_GENERAL));
+			startActivity(new Intent(this, MyPreferenceActivity.class).putExtra(
+					"screen", MyPreferenceActivity.PAGE_GENERAL));
 		}
 	}
 

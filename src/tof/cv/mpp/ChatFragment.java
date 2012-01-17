@@ -184,8 +184,8 @@ public class ChatFragment extends ListFragment {
 		btnSettings.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				startActivity(new Intent(getActivity(),
-						PreferenceActivity.class).putExtra("screen",
-						PreferenceActivity.PAGE_GENERAL));
+						MyPreferenceActivity.class).putExtra("screen",
+						MyPreferenceActivity.PAGE_GENERAL));
 			}
 		});
 

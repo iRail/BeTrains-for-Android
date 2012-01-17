@@ -1,0 +1,14 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
+		android:title="@string/btn_home_settings" android:summary="">
+		<extra android:name="resource" android:value="activity_preferences" />
+	</header>
+	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
+		android:title="@string/btn_home_planner" android:summary="">
+		<extra android:name="resource" android:value="activity_planner_preferences" />
+	</header>
+	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
+		android:title="Twitter" android:summary="">
+		<extra android:name="resource" android:value="activity_twitter_preferences" />
+	</header>
+</preference-headers>

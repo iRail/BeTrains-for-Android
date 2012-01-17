@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<CheckBoxPreference android:title="iRail"
-		android:defaultValue="true" android:key="miRail" />
-
-	<CheckBoxPreference android:title="SNCB"
-		android:defaultValue="@bool/sncb" android:key="mSNCB" />
-
-	<CheckBoxPreference android:title="NMBS"
-		android:defaultValue="@bool/nmbs" android:key="mNMBS" />
-
-	<CheckBoxPreference android:title="Navetteurs"
-		android:defaultValue="@bool/navetteurs" android:key="mNavetteurs" />
-
+    <PreferenceCategory android:title="Twitter" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="miRail"
+            android:title="iRail" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/sncb"
+            android:key="mSNCB"
+            android:title="SNCB" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/nmbs"
+            android:key="mNMBS"
+            android:title="NMBS" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/navetteurs"
+            android:key="mNavetteurs"
+            android:title="Navetteurs" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

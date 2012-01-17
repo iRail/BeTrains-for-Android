@@ -261,8 +261,8 @@ public class PlannerFragment extends ListFragment {
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):
-			startActivity(new Intent(getActivity(), PreferenceActivity.class)
-					.putExtra("screen", PreferenceActivity.PAGE_PLANNER));
+			startActivity(new Intent(getActivity(), MyPreferenceActivity.class)
+					.putExtra("screen", MyPreferenceActivity.PAGE_PLANNER));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -1,42 +1,25 @@
 package tof.cv.mpp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.view.PreferenceListFragment;
-import tof.cv.mpp.view.PreferenceListFragment.OnPreferenceAttachedListener;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItem;
+import android.preference.PreferenceActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.viewpagerindicator.R;
-import com.viewpagerindicator.TitlePageIndicator;
-import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
-import com.viewpagerindicator.TitleProvider;
 
-public class PreferenceActivity extends FragmentActivity implements
-		OnSharedPreferenceChangeListener, OnPreferenceAttachedListener {
+public class MyPreferenceActivity extends PreferenceActivity implements
+		OnSharedPreferenceChangeListener {
 
-	private MyPrefAdapter mAdapter;
+	//private MyPrefAdapter mAdapter;
 	private ViewPager mPager;
 	public static int PAGE_GENERAL = 0;
 	public static int PAGE_PLANNER = 1;
@@ -48,11 +31,28 @@ public class PreferenceActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 
 		Utils.setFullscreenIfNecessary(this);
+		
+		 if (Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB) {
+				addPreferencesFromResource(R.xml.activity_preferences);
+				addPreferencesFromResource(R.xml.activity_planner_preferences);
+				addPreferencesFromResource(R.xml.activity_twitter_preferences);			 
+		 }
 
-		setContentView(R.layout.fragment_tab_picker);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			try {
+				Preference pref = findPreference("prefPseudo");
+				pref.setSummary(((EditTextPreference) pref).getText());
 
-		mPager = (ViewPager) findViewById(R.id.pager);
+				pref = findPreference(getString(R.string.key_activity));
+				pref.setSummary(((ListPreference) pref).getEntry());
+			} catch (Exception e) {
+			}		
+
+		//setContentView(R.layout.fragment_tab_picker);
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		
+		//This way is buggy
+		/*mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new MyPrefAdapter(getSupportFragmentManager(), this);
 		mPager.setAdapter(mAdapter);
 
@@ -60,9 +60,14 @@ public class PreferenceActivity extends FragmentActivity implements
 		titleIndicator.setViewPager(mPager);
 		titleIndicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
 
-		mPager.setCurrentItem(this.getIntent().getExtras().getInt("screen"));
+		mPager.setCurrentItem(this.getIntent().getExtras().getInt("screen"));*/
 	}
-
+	
+	@Override
+	  public void onBuildHeaders(List<Header> target) {
+	    loadHeadersFromResource(R.xml.preference_headers, target);
+	  }
+/*
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -116,10 +121,6 @@ public class PreferenceActivity extends FragmentActivity implements
 	public static class PrefFragment extends PreferenceFragment {
 		static int mNum;
 
-		/**
-		 * Create a new instance of CountingFragment, providing "num" as an
-		 * argument.
-		 */
 		static PrefFragment newInstance(int num) {
 			PrefFragment f = new PrefFragment();
 			// Supply num input as an argument.
@@ -144,7 +145,7 @@ public class PreferenceActivity extends FragmentActivity implements
 	@Override
 	public void onPreferenceAttached(PreferenceScreen root, int xmlId) {
 		rootPref.add(root);
-		//Toast.makeText(getBaseContext(), root.getSharedPreferences().toString(), Toast.LENGTH_LONG).show();
+		Toast.makeText(getBaseContext(), root.getSharedPreferences().toString(), Toast.LENGTH_LONG).show();
 		root.getSharedPreferences().registerOnSharedPreferenceChangeListener(
 				this);
 		// General Prefs
@@ -171,26 +172,27 @@ public class PreferenceActivity extends FragmentActivity implements
 		}
 
 	}
-
+*/
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		Log.i("","X");
 		if(key.contentEquals("prefPseudo")){
-			Preference pref = rootPref.get(PAGE_GENERAL).findPreference("prefPseudo");
+			Preference pref = findPreference("prefPseudo");
 			pref.setSummary(((EditTextPreference) pref).getText());
 		}
 		if(key.contentEquals(getString(R.string.key_activity))){
 			Log.i("","B");
-			Preference pref = rootPref.get(PAGE_GENERAL).findPreference(getString(R.string.key_activity));
+			Preference pref = findPreference(getString(R.string.key_activity));
 			pref.setSummary(((ListPreference) pref).getEntry());
 		}
 		if(key.contentEquals(getString(R.string.key_planner_da))){
 			Log.i("","C");
-			Preference pref = rootPref.get(PAGE_PLANNER).findPreference(getString(R.string.key_planner_da));
+			Preference pref = findPreference(getString(R.string.key_planner_da));
 			pref.setSummary(((ListPreference) pref).getEntry());
 		}
 
 	}
+
 
 }
