@@ -108,7 +108,7 @@ public class InfoTrainFragment extends ListFragment {
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		menu.add(Menu.NONE, 2, Menu.NONE, "Map")
-				.setIcon(android.R.drawable.ic_menu_mapmode)
+				.setIcon(R.drawable.ic_menu_mapmode)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
