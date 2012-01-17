@@ -1,24 +1,32 @@
 package tof.cv.mpp;
 
+import java.util.Date;
+
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Station;
+import tof.cv.mpp.Utils.UtilsWeb.StationDeparture;
 import tof.cv.mpp.adapter.StationInfoAdapter;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class InfoStationFragment extends ListFragment {
 	protected static final String TAG = "InfoStationFragment";
-	private ProgressDialog progressDialog;
 	private Station currentStation;
-
+	private TextView mTitleText;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -29,14 +37,20 @@ public class InfoStationFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setHasOptionsMenu(true);
 	}
-	
-	public void displayInfo(String station){
-//		Toast.makeText(getActivity(),"On affiche les infos de: "+station, Toast.LENGTH_LONG).show();
-		progressDialog = ProgressDialog.show(getActivity(), "",
-				getString(R.string.txt_patient), true);
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		mTitleText = (TextView) getActivity().findViewById(R.id.title);
+		registerForContextMenu(getListView());
+	}
+
+	public void displayInfo(String station) {
+		// Toast.makeText(getActivity(),"On affiche les infos de: "+station,
+		// Toast.LENGTH_LONG).show();
 		searchThread(station);
 	}
 
@@ -44,43 +58,52 @@ public class InfoStationFragment extends ListFragment {
 		Runnable search = new Runnable() {
 			public void run() {
 				currentStation = UtilsWeb.getAPIstation(station, getActivity());
-				getActivity().runOnUiThread(displayResult);
-				getActivity().runOnUiThread(dismissProgressDialog);
+				if(getActivity()!=null)
+					getActivity().runOnUiThread(displayResult);
 			}
 		};
 		Thread thread = new Thread(null, search, "stationSearch");
 		thread.start();
 	}
-	
-	private Runnable dismissProgressDialog = new Runnable() {
-		public void run() {
-			progressDialog.dismiss();
-//			Toast.makeText(getActivity(),"On affiche les infos", Toast.LENGTH_LONG).show();
-		}
-	};
 
 	private Runnable displayResult = new Runnable() {
 		public void run() {
-			if (currentStation != null && currentStation.getStationDepartures() != null) {
+			if (currentStation != null
+					&& currentStation.getStationDepartures() != null) {
 				StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
-						getActivity(), R.layout.row_info_station, currentStation
-								.getStationDepartures().getStationDeparture());
+						getActivity(), R.layout.row_info_station,
+						currentStation.getStationDepartures()
+								.getStationDeparture());
 				setListAdapter(StationInfoAdapter);
-//				setTitle(Utils.formatDate(new Date(Long.valueOf(currentStation.getTimestamp())*1000), "dd MMM HH:mm"));
+				 setTitle(Utils.formatDate(new
+				 Date(currentStation.getTimeStamp()*1000),
+				 "dd MMM HH:mm"));
 			} else {
-				TextView messagesEmpty = (TextView) getActivity().findViewById(
-						android.R.id.empty);
-				messagesEmpty.setText(getString(R.string.txt_connection));
-//				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm"));
+				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm")+"\n\n"+getString(R.string.txt_connection));
 			}
 		}
 	};
+	
+	public void setTitle(String txt) {
+		mTitleText.setText(txt);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-       
-    }
-    
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.add(Menu.NONE, 0, Menu.NONE, "Fav")
+				.setIcon(R.drawable.ic_menu_star)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+		menu.add(Menu.NONE, 1, Menu.NONE, "Map")
+				.setIcon(R.drawable.ic_menu_mapmode)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -90,10 +113,46 @@ public class InfoStationFragment extends ListFragment {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;
+		case 0:
+			if (currentStation != null) {
+				Utils.addAsStarred(currentStation.getStation(), "", 1, getActivity());
+				startActivity(new Intent(getActivity(), StarredActivity.class));
+			}
+			return true;
+		case 1:
+			if (currentStation != null) {
+				Intent i = new Intent(getActivity(), MapStationActivity.class);
+				i.putExtra("Name", currentStation.getStation());
+				startActivity(i);
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-    
 	
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, 0, 0, "Info");
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+					.getMenuInfo();
+			StationDeparture stop = (StationDeparture) getListAdapter().getItem(
+					(int) menuInfo.id);
+			Intent i = new Intent(getActivity(), InfoTrainActivity.class);
+			i.putExtra("Name", stop.getVehicle());
+			startActivity(i);
+
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+
+	}
+
 }

@@ -38,7 +38,10 @@ public class StationInfoAdapter extends ArrayAdapter<StationDeparture> {
 
 			station.setText(Html.fromHtml(trainstop.getStation()));
 			time.setText(Utils.formatDate(trainstop.getTime(), false, false));
-			delay.setText(trainstop.getDelay());
+			if (trainstop.getDelay().contentEquals("0"))
+				delay.setText("");
+			else
+				delay.setText("+" + (Integer.valueOf(trainstop.getDelay()) / 60) + "'");
 			platform.setText(trainstop.getPlatform());
 			train.setText(Utils.getTrainId(trainstop.getVehicle()));
 

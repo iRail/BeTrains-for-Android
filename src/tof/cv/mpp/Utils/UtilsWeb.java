@@ -324,6 +324,7 @@ public class UtilsWeb {
 		private String station;
 		private StationStationinfo stationinfo;
 		private StationDepartures departures;
+		private long timestamp;
 
 		public StationStationinfo getStationStationinfo() {
 			return stationinfo;
@@ -339,6 +340,10 @@ public class UtilsWeb {
 
 		public StationDepartures getStationDepartures() {
 			return departures;
+		}
+		
+		public long getTimeStamp() {
+			return this.timestamp;
 		}
 
 	}

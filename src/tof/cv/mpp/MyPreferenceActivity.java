@@ -49,6 +49,9 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 
 			pref = findPreference(getString(R.string.key_activity));
 			pref.setSummary(((ListPreference) pref).getEntry());
+			
+			pref = findPreference(getString(R.string.key_planner_da));
+			pref.setSummary(((ListPreference) pref).getEntry());
 		} catch (Exception e) {
 		}
 
