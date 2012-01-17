@@ -7,6 +7,7 @@ import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +38,11 @@ public class TrainInfoAdapter extends ArrayAdapter<VehicleStop> {
 
 			station.setText(Html.fromHtml(o.getStation()));
 			time.setText(Utils.formatDate(o.getTime(), false, false));
-			
-			if (o.getDelay().contentEquals("0"))
-				delay.setVisibility(View.GONE);
-			else
-				delay.setText("+"+(Integer.valueOf(o.getDelay())/60)+"'");
 
+			if (o.getDelay().contentEquals("0"))
+				delay.setText("");
+			else
+				delay.setText("+" + (Integer.valueOf(o.getDelay()) / 60) + "'");
 		}
 		return v;
 	}
