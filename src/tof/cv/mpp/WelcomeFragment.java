@@ -40,7 +40,7 @@ public class WelcomeFragment extends Fragment{
     @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Search")
-				.setIcon(android.R.drawable.ic_menu_search)
+				.setIcon(R.drawable.ic_menu_search)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 

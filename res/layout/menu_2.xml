@@ -1,35 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:padding="6dip">
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_weight="1">
-		<Button android:id="@+id/btn_home_settings" style="@style/HomeButton"
-			android:text="@string/btn_home_settings" android:drawableTop="@drawable/home_btn_settings"
-			android:onClick="onSettingsClick" />
-		<Button android:id="@+id/btn_home_help" style="@style/HomeButton"
-			android:text="@string/btn_home_contact" android:drawableTop="@drawable/home_btn_map"
-			android:onClick="onHelpClick" />
-	</LinearLayout>
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_weight="1">
-		<Button android:id="@+id/btn_iRail" style="@style/HomeButton"
-			android:text="Liveboards" android:drawableTop="@drawable/home_btn_irail"
-			android:onClick="onIrailClick" />
-		<Button android:visibility="invisible" style="@style/HomeButton"
-			android:text="Donation" android:drawableTop="@drawable/home_btn_donate"
-			android:onClick="onDonateClick" />
-	</LinearLayout>
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_weight="1">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="6dip" >
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
 
-	</LinearLayout>
+        <Button
+            android:id="@+id/btn_home_settings"
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/home_btn_settings"
+            android:onClick="onSettingsClick"
+            android:text="@string/btn_home_settings" />
 
+        <Button
+            android:id="@+id/btn_home_help"
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/home_btn_map"
+            android:onClick="onHelpClick"
+            android:text="@string/btn_home_contact" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_iRail"
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/home_btn_irail"
+            android:onClick="onIrailClick"
+            android:text="Liveboards" />
+
+        <Button
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/home_btn_donate"
+            android:onClick="onDonateClick"
+            android:text="Donation"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_iRail"
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/home_btn_irail"
+            android:onClick="onIrailClick"
+            android:text="Liveboards"
+            android:visibility="invisible" />
+
+        <Button
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/home_btn_donate"
+            android:onClick="onDonateClick"
+            android:text="Donation"
+            android:visibility="invisible" >
+        </Button>
+    </LinearLayout>
 
 </LinearLayout>

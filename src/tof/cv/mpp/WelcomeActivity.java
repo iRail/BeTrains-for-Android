@@ -22,7 +22,8 @@ import android.widget.Toast;
 
 public class WelcomeActivity extends FragmentActivity {
 	/** Called when the activity is first created. */
-	
+	Bundle savedInstanceState;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,12 +32,12 @@ public class WelcomeActivity extends FragmentActivity {
 				.getDefaultSharedPreferences(this);
 
 		Utils.setFullscreenIfNecessary(this);
-
+		this.savedInstanceState=savedInstanceState;
 		if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
 			// handles a click on a search suggestion; launches activity to show
 			// word
-			Cursor cursor = managedQuery(getIntent().getData(), null, null, null,
-					null);
+			Cursor cursor = managedQuery(getIntent().getData(), null, null,
+					null, null);
 			cursor.moveToFirst();
 			int iIndex = cursor.getColumnIndexOrThrow(SearchDatabase.KEY_ITEM);
 			int tIndex = cursor.getColumnIndexOrThrow(SearchDatabase.KEY_TYPE);
@@ -51,8 +52,7 @@ public class WelcomeActivity extends FragmentActivity {
 			showResults(getIntent().getStringExtra(SearchManager.QUERY));
 			finish();
 		}
-		
-		
+
 		// Je vérifie si c'est lancé depuis le Launcher pour activer le bon
 		// fragment
 		setContentView(R.layout.activity_welcome);
@@ -90,6 +90,7 @@ public class WelcomeActivity extends FragmentActivity {
 
 	public void onTrafficClick(View v) {
 		if (findViewById(R.id.istablet) != null) {
+			
 			setFragment(new TrafficFragment());
 		} else {
 			startActivity(new Intent(this, TrafficActivity.class));
@@ -132,8 +133,8 @@ public class WelcomeActivity extends FragmentActivity {
 		if (findViewById(R.id.istablet) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			startActivity(new Intent(this, MyPreferenceActivity.class).putExtra(
-					"screen", MyPreferenceActivity.PAGE_GENERAL));
+			startActivity(new Intent(this, MyPreferenceActivity.class)
+					.putExtra("screen", MyPreferenceActivity.PAGE_GENERAL));
 		}
 	}
 
@@ -166,9 +167,16 @@ public class WelcomeActivity extends FragmentActivity {
 	// start screen.
 	public void setFragment(Fragment fragment) {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.replace(R.id.fragment, fragment);
-		ft.commit();
+		
+		if(savedInstanceState == null) 
+		{
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+			ft.add(R.id.fragment, fragment);
+			ft.commit();
+		}
+		
+		
 	}
 
 	public static class MyOtherAlertDialog {
@@ -225,12 +233,12 @@ public class WelcomeActivity extends FragmentActivity {
 					.setView(messageWv).create();
 		}
 	}
-	
+
 	private void showResults(String query) {
 		try {
 			Integer.valueOf(query);
 			Intent i = new Intent(this, InfoTrainActivity.class);
-			i.putExtra(DbAdapterConnection.KEY_NAME,query);
+			i.putExtra(DbAdapterConnection.KEY_NAME, query);
 			startActivity(i);
 		} catch (Exception e) {
 			e.printStackTrace();
