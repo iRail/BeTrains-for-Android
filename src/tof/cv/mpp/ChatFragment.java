@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreProtocolPNames;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.adapter.MessageAdapter;
@@ -384,6 +385,9 @@ public class ChatFragment extends ListFragment {
 		try {
 			String txt = "";
 			HttpClient client = new DefaultHttpClient();
+			
+			client.getParams().setParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET, 
+				    "UTF-8");
 			
 			HttpPost httppost = new HttpPost(
 					"http://christophe.frandroid.com/betrains/php/messages.php");
