@@ -267,17 +267,22 @@ public class StationPickerActivity extends FragmentActivity {
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
 			if (mReady && mDialogText != null) {
-				char firstLetter = view.getItemAtPosition(firstVisibleItem)
-						.toString().charAt(0);
+				try{
+					char firstLetter = view.getItemAtPosition(firstVisibleItem)
+							.toString().charAt(0);
 
-				if (!mShowing && firstLetter != mPrevLetter) {
-					mShowing = true;
-					mDialogText.setVisibility(View.VISIBLE);
+					if (!mShowing && firstLetter != mPrevLetter) {
+						mShowing = true;
+						mDialogText.setVisibility(View.VISIBLE);
+					}
+					mDialogText.setText(((Character) firstLetter).toString());
+					mHandler.removeCallbacks(mRemoveWindow);
+					mHandler.postDelayed(mRemoveWindow, 1000);
+					mPrevLetter = firstLetter;					
+				}catch(Exception e){
+					
 				}
-				mDialogText.setText(((Character) firstLetter).toString());
-				mHandler.removeCallbacks(mRemoveWindow);
-				mHandler.postDelayed(mRemoveWindow, 1000);
-				mPrevLetter = firstLetter;
+
 			}
 
 		}
