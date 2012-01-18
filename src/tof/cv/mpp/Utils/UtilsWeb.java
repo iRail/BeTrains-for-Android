@@ -365,18 +365,18 @@ public class UtilsWeb {
 	public class StationStationinfo {
 
 		private String id;
-		private String locationX;
-		private String locationY;
+		private double locationX;
+		private double locationY;
 
 		public String getId() {
 			return id;
 		}
 
-		public String getLocationX() {
+		public double getLocationX() {
 			return locationX;
 		}
 
-		public String getLocationY() {
+		public double getLocationY() {
 			return locationY;
 		}
 	}

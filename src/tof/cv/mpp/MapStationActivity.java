@@ -52,19 +52,24 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 		mController = mMap.getController();
 
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			name = extras.getString("Name");
-		} else
-			Toast.makeText(this, "Error while getting train position",
-					Toast.LENGTH_LONG).show();
 
 		double glat = 0;
 		double glon = 0;
 
+		if (extras != null) {
+			name = extras.getString("Name");
+			glat = extras.getDouble("lat");
+			glon = extras.getDouble("lon");
+		} else
+			Toast.makeText(this, "Error while getting train position",
+					Toast.LENGTH_LONG).show();
+
+		Toast.makeText(this, glat + " // " + glon, Toast.LENGTH_LONG).show();
+
 		gpStation = new GeoPoint((int) (glat * 1E6), (int) (glon * 1E6));
 
 		marker = getResources().getDrawable(R.drawable.ic_station_pixelart);
-		stationsOverlay = new ItemizedOverlayStation(marker,name,this);
+		stationsOverlay = new ItemizedOverlayStation(marker, name, this);
 		stationsOverlay.addPoint(gpStation);
 		mMap.getOverlays().add(stationsOverlay);
 
@@ -95,8 +100,6 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 		myLocationOverlay.disableCompass();
 		myLocationOverlay.disableMyLocation();
 	}
-
-	
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -159,52 +162,69 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 		ad.setPositiveButton("Go there",
 				new android.content.DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int arg1) {
-
-						gpMyLocation = myLocationOverlay.getMyLocation();
-
-						if (gpMyLocation != null) {
-							double lat1 = gpStation.getLatitudeE6();
-							double lat2 = gpMyLocation.getLatitudeE6();
-							double lon1 = gpStation.getLongitudeE6();
-							double lon2 = gpMyLocation.getLongitudeE6();
-							GeoPoint gpMiddle = new GeoPoint(
-									(int) ((lat1 + lat2) / 2.0),
-									(int) ((lon1 + lon2) / 2.0));
-
-							DrawPath(gpMyLocation, gpStation, Color.BLUE, mMap);
-							mController.setCenter(gpMiddle);
-
-							double spanLat;
-							double spanLon;
-
-							if (lat1 > lat2)
-								spanLat = (lat1 - lat2);
-							else
-								spanLat = (lat2 - lat1);
-
-							if (lon1 > lon2)
-								spanLon = (lon1 - lon2);
-							else
-								spanLon = (lon2 - lon1);
-
-							mController
-									.zoomToSpan((int) spanLat, (int) spanLon);
-							mMap.invalidate();
-						} else
-							Toast.makeText(
-									MapStationActivity.this,
-									"Waiting GPS fix\nActivate network localisation in settings or enable you GPS.",
-									Toast.LENGTH_LONG).show();
+						new Thread(new Runnable() {
+							public void run() {
+								goThere();
+							}
+						}).start();
 
 					}
 				});
 		ad.show();
 	}
 
-	private void DrawPath(GeoPoint src, GeoPoint dest, int color,
-			MapView mMapView01) {
+	public void goThere() {
+		gpMyLocation = myLocationOverlay.getMyLocation();
 
-		Document doc = UtilsWeb.getKml(src, dest);
+		if (gpMyLocation != null) {
+			final double lat1 = gpStation.getLatitudeE6();
+			final double lat2 = gpMyLocation.getLatitudeE6();
+			final double lon1 = gpStation.getLongitudeE6();
+			final double lon2 = gpMyLocation.getLongitudeE6();
+			final GeoPoint gpMiddle = new GeoPoint((int) ((lat1 + lat2) / 2.0),
+					(int) ((lon1 + lon2) / 2.0));
+			final Document doc = UtilsWeb.getKml(gpMyLocation, gpStation);
+			
+
+			this.runOnUiThread(new Thread(new Runnable() {
+				public void run() {
+					DrawPath(gpMyLocation, gpStation, Color.BLUE, mMap,doc);
+					mController.setCenter(gpMiddle);
+
+					final double spanLat;
+					final double spanLon;
+
+					if (lat1 > lat2)
+						spanLat = (lat1 - lat2);
+					else
+						spanLat = (lat2 - lat1);
+
+					if (lon1 > lon2)
+						spanLon = (lon1 - lon2);
+					else
+						spanLon = (lon2 - lon1);
+					mController.zoomToSpan((int) spanLat, (int) spanLon);
+					mMap.invalidate();
+
+				}
+			}));
+
+		} else
+
+			this.runOnUiThread(new Thread(new Runnable() {
+				public void run() {
+					Toast.makeText(
+							MapStationActivity.this,
+							"Waiting GPS fix\nActivate network localisation in settings or enable you GPS.",
+							Toast.LENGTH_LONG).show();
+
+				}
+			}));
+
+	}
+
+	private void DrawPath(GeoPoint src, GeoPoint dest, int color,
+			MapView mMapView01,Document doc) {
 
 		if (doc != null
 				&& doc.getElementsByTagName("GeometryCollection").getLength() > 0) {

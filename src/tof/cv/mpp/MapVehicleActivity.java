@@ -1,10 +1,6 @@
 package tof.cv.mpp;
 
-import java.util.Date;
-
-import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
-import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.map.ItemizedOverlayVehicle;
 import android.graphics.drawable.Drawable;
 import android.location.Location;

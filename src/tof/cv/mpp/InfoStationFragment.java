@@ -129,6 +129,8 @@ public class InfoStationFragment extends ListFragment {
 			if (currentStation != null) {
 				Intent i = new Intent(getActivity(), MapStationActivity.class);
 				i.putExtra("Name", currentStation.getStation());
+				i.putExtra("lat", currentStation.getStationStationinfo().getLocationY());
+				i.putExtra("lon", currentStation.getStationStationinfo().getLocationX());
 				startActivity(i);
 			}
 			return true;
