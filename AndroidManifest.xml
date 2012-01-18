@@ -83,6 +83,7 @@
         <activity
             android:name=".StationPickerActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/StyledIndicators"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".MyPreferenceActivity"

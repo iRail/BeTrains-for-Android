@@ -49,9 +49,8 @@ public class Utils {
 
 	}
 
-	public static String getHourFromDate(String dateFromAPI, boolean isDuration) {
+	public static String getHourFromDate(long dateFromAPI, boolean isDuration) {
 		Date date;
-
 		DateFormat dateFormat = new SimpleDateFormat("HH");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
 		try {
@@ -64,8 +63,14 @@ public class Utils {
 			}
 			return dateFormat.format(date);
 		} catch (Exception e) {
-			return dateFromAPI;
+			return "" + dateFromAPI;
 		}
+
+	}
+
+	public static String getHourFromDate(String dateFromAPI, boolean isDuration) {
+
+		return getHourFromDate(Long.valueOf(dateFromAPI), isDuration);
 
 	}
 
@@ -118,27 +123,34 @@ public class Utils {
 
 	public static String formatDate(String dateFromAPI, boolean isDuration,
 			boolean isDelay) {
+
+		return formatDate(Long.valueOf(dateFromAPI), isDuration, isDelay);
+
+	}
+
+	public static String formatDate(long dateFromAPI, boolean isDuration,
+			boolean isDelay) {
 		// TODO: Lot of tweaks, need to be cleaned
 		Date date;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
 
-		if (dateFromAPI.contentEquals("0"))
+		if (dateFromAPI == 0)
 			return "";
 		try {
 			if (isDuration) {
 
 				if (isDelay)
-					return "+" + Integer.valueOf(dateFromAPI) / 60 + "'";
+					return "+" + dateFromAPI / 60 + "'";
 				else
-					date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
+					date = new Date((dateFromAPI - 3600) * 1000);
 			} else {
-				date = new Date((Long.valueOf(dateFromAPI)) * 1000);
+				date = new Date(dateFromAPI * 1000);
 			}
 			return dateFormat.format(date);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return dateFromAPI;
+			return ""+dateFromAPI;
 		}
 
 	}
@@ -201,7 +213,6 @@ public class Utils {
 		return sourcetoReturn;
 	}
 
-	
 	public class CopyInputStream {
 		private InputStream _is;
 		private ByteArrayOutputStream _copy = new ByteArrayOutputStream();
@@ -255,26 +266,27 @@ public class Utils {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		return sdf.format(d);
 	}
-	
-	public static ArrayList<String> getFavFromDb(Activity context,DbAdapterConnection mDbHelper){
-		ArrayList<String> mArrayList= new ArrayList<String>();
+
+	public static ArrayList<String> getFavFromDb(Activity context,
+			DbAdapterConnection mDbHelper) {
+		ArrayList<String> mArrayList = new ArrayList<String>();
 		mDbHelper.open();
 		Cursor mCursor = mDbHelper.fetchAllFavStations();
 		mCursor.moveToFirst();
-		
+
 		// TODO: Bug: I have to add first item manually.. Why?
 		if (!mCursor.isAfterLast())
 			mArrayList.add(mCursor.getString(mCursor
 					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
 
-		for (mCursor.moveToFirst(); mCursor.moveToNext(); mCursor
-				.isAfterLast()) {
+		for (mCursor.moveToFirst(); mCursor.moveToNext(); mCursor.isAfterLast()) {
 			// The Cursor is now set to the right position
 			mArrayList.add(mCursor.getString(mCursor
 					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
 		}
 		return mArrayList;
 	}
+
 	public static void addAsStarred(String item, String item2, int type,
 			Context context) {
 		// TYPE 1 = Station

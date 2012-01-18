@@ -121,7 +121,7 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 
 				if (mSTOPCursor.getCount() > 1)
 					//TODO: fix it!
-					UtilsWeb.getAPIvehicle(" vehicle" , context);
+					UtilsWeb.getAPIvehicle(" vehicle" , context,0);
 				else
 					Toast.makeText(context, R.string.wid_empty,
 							Toast.LENGTH_LONG).show();

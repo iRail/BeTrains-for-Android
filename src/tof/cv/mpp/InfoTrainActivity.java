@@ -16,12 +16,13 @@ public class InfoTrainActivity extends FragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle bundle = this.getIntent().getExtras();
+		long timestamp = bundle.getLong("timestamp")*1000;
 		String name = bundle.getString("Name").replace("BE.NMBS.", "");
 		String fromTo = bundle.getString("fromto");
 		getSupportActionBar().setTitle(name+" infos:");
 		
 		InfoTrainFragment fragment = (InfoTrainFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
-		fragment.displayInfo(name,fromTo);
+		fragment.displayInfo(name,fromTo,timestamp);
 	}
 
 	

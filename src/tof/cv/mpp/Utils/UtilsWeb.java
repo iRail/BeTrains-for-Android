@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -210,36 +212,12 @@ public class UtilsWeb {
 
 	}
 
-	public static Vehicle getAPIvehicle(String vehicle, final Context context) {
-		// TODO
-		String langue = context.getString(R.string.url_lang_2);
-		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				"prefnl", false))
-			langue = "nl";
-
-		String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
-				+ "&format=JSON&fast=true" + "&lang=" + langue;
-		System.out.println("Affiche les infos train depuis la page: " + url);
-
-		try {
-			// Log.i(TAG, "Json Parser started..");
-			Gson gson = new Gson();
-			Reader r = new InputStreamReader(getJSONData(url, context));
-			return gson.fromJson(r, Vehicle.class);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
-
-	}
-
 	public class Vehicle {
 
 		private VehicleStops stops;
 		private String version;
 		private String vehicle;
-		private String timestamp;
+		private long timestamp;
 
 		public VehicleStops getVehicleStops() {
 			return stops;
@@ -253,7 +231,7 @@ public class UtilsWeb {
 			return vehicle;
 		}
 
-		public String getTimestamp() {
+		public long getTimestamp() {
 			return timestamp;
 		}
 
@@ -271,14 +249,14 @@ public class UtilsWeb {
 	public class VehicleStop {
 
 		private String station;
-		private String time;
+		private long time;
 		private String delay;
 
 		public String getStation() {
-			return station;
+			return Html.fromHtml(station).toString();
 		}
 
-		public String getTime() {
+		public long getTime() {
 			return time;
 		}
 
@@ -293,16 +271,52 @@ public class UtilsWeb {
 			return "+" + Integer.valueOf(delay) / 60 + "'";
 		}
 	}
-
-	public static Station getAPIstation(String station, final Context context) {
+	
+	public static Vehicle getAPIvehicle(String vehicle, final Context context,long timestamp) {
 		// TODO
 		String langue = context.getString(R.string.url_lang_2);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
+		String dateTime="";
+		if(timestamp!=0){
+			String formattedDate=Utils.formatDate(new Date(timestamp),"ddMMyy");
+			String formattedTime=Utils.formatDate(new Date(timestamp),"HHmm");
+			dateTime="&date=" + formattedDate+ "&time=" + formattedTime;
+		}
+		
+		String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
+				+ "&lang=" + langue + dateTime+ "&format=JSON&fast=true" ;
+		System.out.println("Affiche les infos train depuis la page: " + url);
 
-		String url = "http://api.irail.be/liveboard.php/?station=" + station
-				+ "&format=JSON&fast=true" + "&lang=" + langue;
+		try {
+			// Log.i(TAG, "Json Parser started..");
+			Gson gson = new Gson();
+			Reader r = new InputStreamReader(getJSONData(url, context));
+			return gson.fromJson(r, Vehicle.class);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public static Station getAPIstation(String station,long timestamp, final Context context) {
+		// TODO
+		String langue = context.getString(R.string.url_lang_2);
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				"prefnl", false))
+			langue = "nl";
+		String dateTime="";
+		if(timestamp!=0){
+			String formattedDate=Utils.formatDate(new Date(timestamp),"ddMMyy");
+			String formattedTime=Utils.formatDate(new Date(timestamp),"HHmm");
+			dateTime="&date=" + formattedDate+ "&time=" + formattedTime;
+		}
+		
+		String url = "http://api.irail.be/liveboard.php/?station=" + station.replace(" ", "%20")+dateTime
+				 +"&format=JSON&fast=true" + "&lang=" + langue;
 		System.out.println("Show station from: " + url);
 
 		try {
@@ -379,7 +393,7 @@ public class UtilsWeb {
 	public class StationDeparture {
 
 		private String station;
-		private String time;
+		private long time;
 		private String delay;
 		private String platform;
 		private String vehicle;
@@ -388,7 +402,7 @@ public class UtilsWeb {
 			return station;
 		}
 
-		public String getTime() {
+		public long getTime() {
 			return time;
 		}
 
@@ -401,7 +415,7 @@ public class UtilsWeb {
 		}
 
 		public String getVehicle() {
-			return vehicle;
+			return vehicle.replace("BE.NMBS.", "");
 		}
 
 		public String getStatus() {

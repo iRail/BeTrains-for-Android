@@ -30,7 +30,7 @@
     <string name="txt_duration">Duur :</string>
     <string name="txt_search">Zoek</string>
     <string name="api_key_prod">0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg</string>
-     <string name="api_key_debug">0K7Fau7cA-paYlUgd1I0OkvAE0xc8tN04C6qcMA</string>
+    <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Voeg toe aan widget</string>
     <string name="url_lang">nl</string>
     <string name="url_lang_2">nl</string>
@@ -74,7 +74,7 @@
 		door op menu te klikken in de treinslijst.\n\n* Druk op menu om een
 		trip toe te voegen vanuit de triplijst.</string>
     <string name="fav_no_fav_title">Geen "starred" items</string>
-        <string name="settings_planner_da_summary">...</string>
+    <string name="settings_planner_da_summary">...</string>
     <string name="key_train_only">OnlyTrainPref</string>
     <string name="txt_remove">Delete</string>
     <string name="search_wrong_string">Kies een station uit de lijst, of typ een trein in
@@ -126,7 +126,7 @@
 		night</string>
     <string name="pref_selectFreq_sum">1 hour</string>
     <string name="stationpicker">Kies een station</string>
-       <string name="key_planner_da">Plannerdapref</string>
+    <string name="key_planner_da">Plannerdapref</string>
     <string name="key_activity">Activitypref</string>
 
 </resources>

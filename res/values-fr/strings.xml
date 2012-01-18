@@ -35,7 +35,7 @@
     <string name="txt_duration">Dur:</string>
     <string name="txt_search">Chercher</string>
     <string name="api_key_prod">0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg</string>
-    <string name="api_key_debug">0K7Fau7cA-paYlUgd1I0OkvAE0xc8tN04C6qcMA</string>
+       <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Widget</string>
     <string name="url_lang">fr</string>
     <string name="url_lang_2">fr</string>

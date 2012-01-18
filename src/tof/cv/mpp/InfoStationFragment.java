@@ -26,7 +26,8 @@ public class InfoStationFragment extends ListFragment {
 	protected static final String TAG = "InfoStationFragment";
 	private Station currentStation;
 	private TextView mTitleText;
-	
+	private long timestamp;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -48,17 +49,20 @@ public class InfoStationFragment extends ListFragment {
 		registerForContextMenu(getListView());
 	}
 
-	public void displayInfo(String station) {
-		// Toast.makeText(getActivity(),"On affiche les infos de: "+station,
-		// Toast.LENGTH_LONG).show();
-		searchThread(station);
+	public void displayInfo(String station, long timestamp) {
+		if(timestamp!=0)
+			this.timestamp=timestamp;
+		else
+			this.timestamp=System.currentTimeMillis();
+		searchThread(station, timestamp);
 	}
 
-	private void searchThread(final String station) {
+	private void searchThread(final String station, final long timestamp) {
 		Runnable search = new Runnable() {
 			public void run() {
-				currentStation = UtilsWeb.getAPIstation(station, getActivity());
-				if(getActivity()!=null)
+				currentStation = UtilsWeb.getAPIstation(station, timestamp,
+						getActivity());
+				if (getActivity() != null)
 					getActivity().runOnUiThread(displayResult);
 			}
 		};
@@ -75,24 +79,25 @@ public class InfoStationFragment extends ListFragment {
 						currentStation.getStationDepartures()
 								.getStationDeparture());
 				setListAdapter(StationInfoAdapter);
-				 setTitle(Utils.formatDate(new
-				 Date(currentStation.getTimeStamp()*1000),
-				 "dd MMM HH:mm"));
+				setTitle(Utils.formatDate(
+						new Date(timestamp),
+						"dd MMM HH:mm"));
 			} else {
-				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm")+"\n\n"+getString(R.string.txt_connection));
+				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm") + "\n\n"
+						+ getString(R.string.txt_connection));
 			}
 		}
 	};
-	
+
 	public void setTitle(String txt) {
 		mTitleText.setText(txt);
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Fav")
@@ -115,7 +120,8 @@ public class InfoStationFragment extends ListFragment {
 			return true;
 		case 0:
 			if (currentStation != null) {
-				Utils.addAsStarred(currentStation.getStation(), "", 1, getActivity());
+				Utils.addAsStarred(currentStation.getStation(), "", 1,
+						getActivity());
 				startActivity(new Intent(getActivity(), StarredActivity.class));
 			}
 			return true;
@@ -130,11 +136,17 @@ public class InfoStationFragment extends ListFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, 0, 0, "Info");
+
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+		StationDeparture clicked = (StationDeparture) getListAdapter().getItem(
+				(int) info.id);
+
+		menu.add(0, 0, 0, clicked.getVehicle());
 	}
 
 	public boolean onContextItemSelected(MenuItem item) {
@@ -142,12 +154,12 @@ public class InfoStationFragment extends ListFragment {
 		case 0:
 			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 					.getMenuInfo();
-			StationDeparture stop = (StationDeparture) getListAdapter().getItem(
-					(int) menuInfo.id);
+			StationDeparture stop = (StationDeparture) getListAdapter()
+					.getItem((int) menuInfo.id);
 			Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 			i.putExtra("Name", stop.getVehicle());
+			i.putExtra("timestamp", stop.getTime());
 			startActivity(i);
-
 			return true;
 		default:
 			return super.onContextItemSelected(item);

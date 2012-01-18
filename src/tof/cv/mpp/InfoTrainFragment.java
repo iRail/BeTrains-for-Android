@@ -32,6 +32,7 @@ public class InfoTrainFragment extends ListFragment {
 	private Vehicle currentVehicle;
 	private TextView mTitleText;
 	private String fromTo;
+	private long timestamp;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,15 +55,19 @@ public class InfoTrainFragment extends ListFragment {
 		registerForContextMenu(getListView());
 	}
 
-	public void displayInfo(String vehicle, String fromTo) {
+	public void displayInfo(String vehicle, String fromTo,long timestamp) {
 		this.fromTo = fromTo;
-		myTrainSearchThread(vehicle);
+		if(timestamp!=0)
+			this.timestamp=timestamp;
+		else
+			this.timestamp=System.currentTimeMillis();
+		myTrainSearchThread(vehicle,timestamp);
 	}
 
-	private void myTrainSearchThread(final String vehicle) {
+	private void myTrainSearchThread(final String vehicle,final long timestamp) {
 		Runnable trainSearch = new Runnable() {
 			public void run() {
-				currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity());
+				currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity(),timestamp);
 				if(getActivity()!=null)
 					getActivity().runOnUiThread(displayResult);
 			}
@@ -83,8 +88,7 @@ public class InfoTrainFragment extends ListFragment {
 				setListAdapter(trainInfoAdapter);
 				setTitle(Utils
 						.formatDate(
-								new Date(Long.valueOf(currentVehicle
-										.getTimestamp()) * 1000),
+								new Date(timestamp),
 								"dd MMM HH:mm"));
 			} else {
 				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm")+"\n\n"+getString(R.string.txt_connection));
@@ -156,7 +160,7 @@ public class InfoTrainFragment extends ListFragment {
 						for (VehicleStop oneStop : currentVehicle
 								.getVehicleStops().getVehicleStop())
 							mDbHelper.createWidgetStop(oneStop.getStation(),
-									oneStop.getTime(), oneStop.getDelay(),
+									""+oneStop.getTime(), oneStop.getDelay(),
 									oneStop.getStatus());
 						Intent intent = new Intent(
 								TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
@@ -187,7 +191,14 @@ public class InfoTrainFragment extends ListFragment {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, 0, 0, "Info");
+		
+		AdapterView.AdapterContextMenuInfo info =
+	            (AdapterView.AdapterContextMenuInfo) menuInfo;
+		
+		VehicleStop clicked = (VehicleStop) getListAdapter().getItem(
+				(int) info.id);
+		
+		menu.add(0, 0, 0, clicked.getStation());
 	}
 
 	public boolean onContextItemSelected(MenuItem item) {
@@ -199,6 +210,7 @@ public class InfoTrainFragment extends ListFragment {
 					(int) menuInfo.id);
 			Intent i = new Intent(getActivity(), InfoStationActivity.class);
 			i.putExtra("Name", stop.getStation());
+			i.putExtra("timestamp", stop.getTime());
 			startActivity(i);
 
 			return true;

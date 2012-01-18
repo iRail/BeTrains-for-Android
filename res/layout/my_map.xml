@@ -8,9 +8,11 @@
         android:id="@+id/myGmap"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="@string/api_key_prod"
+        android:apiKey="0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g"
         class="com.google.android.maps.MapView"
         android:clickable="true"
         android:enabled="true" />
+
+    <!--  -->
 
 </LinearLayout>
