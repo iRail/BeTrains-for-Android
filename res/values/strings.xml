@@ -14,6 +14,7 @@
     <string name="app_name">BeTrains</string>
     <string name="btn_home_planner">Route Planner</string>
     <string name="btn_home_chat">Chat</string>
+     <string name="btn_home_twitter">Twitter</string>
     <string name="btn_home_notif">Notifications</string>
     <string name="btn_home_traffic">Traffic Issues</string>
     <string name="btn_home_settings">Settings</string>

@@ -8,7 +8,7 @@
 		<extra android:name="resource" android:value="activity_planner_preferences" />
 	</header>
 	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
-		android:title="Twitter" android:summary="">
+		android:title="@string/btn_home_twitter" android:summary="">
 		<extra android:name="resource" android:value="activity_twitter_preferences" />
 	</header>
 </preference-headers>
