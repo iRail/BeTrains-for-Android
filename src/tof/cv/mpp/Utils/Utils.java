@@ -150,7 +150,7 @@ public class Utils {
 			return dateFormat.format(date);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ""+dateFromAPI;
+			return "" + dateFromAPI;
 		}
 
 	}
@@ -277,12 +277,13 @@ public class Utils {
 		// TODO: Bug: I have to add first item manually.. Why?
 		if (!mCursor.isAfterLast())
 			mArrayList.add(mCursor.getString(mCursor
-					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
-
+			// .getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+					.getColumnIndex(DbAdapterConnection.KEY_ROWID)));
 		for (mCursor.moveToFirst(); mCursor.moveToNext(); mCursor.isAfterLast()) {
 			// The Cursor is now set to the right position
 			mArrayList.add(mCursor.getString(mCursor
-					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+			// .getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+					.getColumnIndex(DbAdapterConnection.KEY_ROWID)));
 		}
 		return mArrayList;
 	}

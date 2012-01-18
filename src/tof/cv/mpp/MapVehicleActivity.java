@@ -1,6 +1,10 @@
 package tof.cv.mpp;
 
+import java.util.Date;
+
+import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
+import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.map.ItemizedOverlayVehicle;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -34,36 +38,49 @@ public class MapVehicleActivity extends MapActivity {
 		mController = mMap.getController();
 
 		Bundle extras = getIntent().getExtras();
-		String name="";
+		String name = "";
 		if (extras != null) {
 			name = extras.getString("Name");
 		} else
 			Toast.makeText(this, "Error while getting train position",
 					Toast.LENGTH_LONG).show();
-		final String vehicleName=name;
-		final MapVehicleActivity activity =this;
+		final String vehicleName = name;
+		final MapVehicleActivity activity = this;
 		Runnable trainSearch = new Runnable() {
 
 			public void run() {
+				try {
+					gpStation = UtilsWeb.findVehiclePosition(vehicleName,
+							getBaseContext());
 
-				gpStation = UtilsWeb.findVehiclePosition(vehicleName,getBaseContext());
+					marker = getResources().getDrawable(R.drawable.train);
+					stationsOverlay = new ItemizedOverlayVehicle(marker,
+							vehicleName, activity);
+					stationsOverlay.addPoint(gpStation);
+					mMap.getOverlays().add(stationsOverlay);
 
-				marker = getResources().getDrawable(R.drawable.train);
-				stationsOverlay = new ItemizedOverlayVehicle(marker,vehicleName,activity);
-				stationsOverlay.addPoint(gpStation);
-				mMap.getOverlays().add(stationsOverlay);
+					mController.setCenter(gpStation);
+					mController.setZoom(15);
+				} catch (Exception e) {
+					runOnUiThread(toastError);
+				}
 
-				mController.setCenter(gpStation);
-				mController.setZoom(15);
 			}
 		};
 
 		Thread thread = new Thread(null, trainSearch, "MyThread");
 		thread.start();
-		
 
 	}
-	
+
+	private Runnable toastError = new Runnable() {
+		public void run() {
+			Toast.makeText(getApplicationContext(), "No Info",
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
+	};
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		// Auto-generated method stub

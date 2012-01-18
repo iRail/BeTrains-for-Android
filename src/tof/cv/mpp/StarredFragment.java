@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class StarredFragment extends ListFragment {
 	protected static final String TAG = "StarredFragment";
@@ -116,6 +115,7 @@ public class StarredFragment extends ListFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case REMOVE_ID:
+			
 			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 					.getMenuInfo();
 			mDbHelper.open();

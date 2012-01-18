@@ -1,13 +1,12 @@
 package tof.cv.mpp;
 
-import java.util.ArrayList;
-
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +18,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -29,24 +29,36 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
-public class StationPickerActivity extends FragmentActivity {
+public class StationPickerActivity extends FragmentActivity implements
+		ViewPager.OnPageChangeListener {
 
 	MyAdapter mAdapter;
 	ViewPager mPager;
 	private static final int ADD_ID = 1;
 	private static final int REMOVE_ID = 2;
+	static StationFavListFragment f;
 
 	private static DbAdapterConnection mDbHelper;
 
 	protected static final String[] TITLES = new String[] { "FAVOURITE",
 			"BELGIUM", "EUROPE" };
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+		super.onSaveInstanceState(outState);
+		getSupportFragmentManager().putFragment(outState,
+				StationFavListFragment.class.getName(), f);
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -64,9 +76,8 @@ public class StationPickerActivity extends FragmentActivity {
 
 		TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(mPager, 1);
-
+		indicator.setOnPageChangeListener(this);
 		mDbHelper = new DbAdapterConnection(this);
-
 	}
 
 	@Override
@@ -146,13 +157,6 @@ public class StationPickerActivity extends FragmentActivity {
 		/**
 		 * When creating, retrieve this instance's number from its arguments.
 		 */
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			// Notifier au créateur de ActionBarSherlock que le mNum doit être
-			// défini dans la onCreateView (cf Fragment lifeCycle)
-			// mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -250,8 +254,9 @@ public class StationPickerActivity extends FragmentActivity {
 			case ADD_ID:
 				AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 						.getMenuInfo();
-				String sName = (String) getListAdapter().getItem((int) menuInfo.id);
-				Utils.addAsStarred(sName,"",1,getActivity());
+				String sName = (String) getListAdapter().getItem(
+						(int) menuInfo.id);
+				Utils.addAsStarred(sName, "", 1, getActivity());
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -267,7 +272,7 @@ public class StationPickerActivity extends FragmentActivity {
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
 			if (mReady && mDialogText != null) {
-				try{
+				try {
 					char firstLetter = view.getItemAtPosition(firstVisibleItem)
 							.toString().charAt(0);
 
@@ -278,9 +283,9 @@ public class StationPickerActivity extends FragmentActivity {
 					mDialogText.setText(((Character) firstLetter).toString());
 					mHandler.removeCallbacks(mRemoveWindow);
 					mHandler.postDelayed(mRemoveWindow, 1000);
-					mPrevLetter = firstLetter;					
-				}catch(Exception e){
-					
+					mPrevLetter = firstLetter;
+				} catch (Exception e) {
+
 				}
 
 			}
@@ -308,13 +313,8 @@ public class StationPickerActivity extends FragmentActivity {
 		 * Create a new instance of CountingFragment, providing "num" as an
 		 * argument.
 		 */
-		static StationFavListFragment newInstance(int num) {
+		static StationFavListFragment newInstance() {
 			StationFavListFragment f = new StationFavListFragment();
-			// Supply num input as an argument.
-			Bundle args = new Bundle();
-			args.putInt("num", num);
-			f.setArguments(args);
-
 			return f;
 		}
 
@@ -334,13 +334,6 @@ public class StationPickerActivity extends FragmentActivity {
 		/**
 		 * When creating, retrieve this instance's number from its arguments.
 		 */
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			// Notifier au créateur de ActionBarSherlock que le mNum doit être
-			// défini dans la onCreateView (cf Fragment lifeCycle)
-			// mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -355,63 +348,20 @@ public class StationPickerActivity extends FragmentActivity {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-
-			String[] list = {};
-			switch (mNum) {
-			case 0:
-				ArrayList<String> mArrayList = Utils.getFavFromDb(getActivity(),mDbHelper);
-				if (mArrayList!=null)
-					list = mArrayList.toArray(new String[mArrayList.size()]);
-				mDbHelper.close();
-				break;
-			case 1:
-				list = ConnectionMaker.LIST_OF_STATIONS;
-				break;
-			case 2:
-				list = ConnectionMaker.LIST_OF_EURO_STATIONS;
-				break;
-			}
-
-			getListView().setFastScrollEnabled(true);
+			updateList();
 			registerForContextMenu(getListView());
+		}
 
-			ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, list);
-
-			if (mNum == 1) {
-
-				mWindowManager = (WindowManager) getActivity()
-						.getSystemService(Context.WINDOW_SERVICE);
-
-				LayoutInflater inflate = (LayoutInflater) getActivity()
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				mDialogText = (TextView) inflate.inflate(
-						R.layout.list_position, null);
-				mDialogText.setVisibility(View.INVISIBLE);
-
-				mHandler.post(new Runnable() {
-
-					public void run() {
-						WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-								LayoutParams.WRAP_CONTENT,
-								LayoutParams.WRAP_CONTENT,
-								WindowManager.LayoutParams.TYPE_APPLICATION,
-								WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-										| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-								PixelFormat.TRANSLUCENT);
-						mWindowManager.addView(mDialogText, lp);
-					}
-				});
-
-				EditText filterText = (EditText) getActivity().findViewById(
-						R.id.search_box);
-				FilterTextWatcher filterTextWatcher = new FilterTextWatcher(a);
-				if (filterText != null) {
-					filterText.addTextChangedListener(filterTextWatcher);
-					getListView().setTextFilterEnabled(true);
-				}
-			}
-			this.setListAdapter(a);
+		public void updateList() {
+			mDbHelper.open();
+			Cursor mCursor = mDbHelper.fetchAllFavStations();
+			
+			String[] from={DbAdapterConnection.KEY_FAV_NAME};
+			int[] to={android.R.id.text1};
+			
+			SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, mCursor, from, to);
+			setListAdapter(adapter);
+			mDbHelper.close();
 		}
 
 		@Override
@@ -433,15 +383,14 @@ public class StationPickerActivity extends FragmentActivity {
 		public boolean onContextItemSelected(MenuItem item) {
 			switch (item.getItemId()) {
 			case REMOVE_ID:
-				// TODO
 				AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 						.getMenuInfo();
-				String sName = "";
-				sName = (String) getListAdapter().getItem((int) menuInfo.id);
-
 				mDbHelper.open();
-				mDbHelper.deleteFav(sName);
+				Log.i("","ID "+menuInfo.id);
+				mDbHelper.deleteFav(menuInfo.id);
 				mDbHelper.close();
+				
+				updateList();
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -465,8 +414,11 @@ public class StationPickerActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			if (position == 0)
-				return StationFavListFragment.newInstance(position);
+			if (position == 0){
+				f=StationFavListFragment.newInstance();
+				return f;
+			}
+				
 			return StationListFragment.newInstance(position);
 		}
 
@@ -474,5 +426,26 @@ public class StationPickerActivity extends FragmentActivity {
 		public String getTitle(int position) {
 			return TITLES[position % TITLES.length];
 		}
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset,
+			int positionOffsetPixels) {
+		// Log.i("","SCROLLED "+position);
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		if (position == 0) {
+			f.updateList();
+		}
+
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+		// Log.i("","CHANGED "+state);
+
 	}
 }
