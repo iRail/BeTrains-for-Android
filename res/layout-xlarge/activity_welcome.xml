@@ -24,13 +24,13 @@
     </ScrollView>
 
     <LinearLayout
-        android:baselineAligned="false"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
+        android:baselineAligned="false"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -40,27 +40,13 @@
             android:background="@drawable/home_streambox"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/fragment_tag_stream"
-                android:name="com.google.android.apps.iosched.ui.TagStreamFragment"
+            <TextView
+                android:id="@+string/myboxtitle"
+                style="@style/TextHeader2"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    style="@style/TextHeader2"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:text="Stream" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@drawable/ic_title_settingsbl"
-                    android:onClick="onTwitPrefClick" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Title" />
 
             <LinearLayout
                 android:id="@+id/fragment_tag_stream"
