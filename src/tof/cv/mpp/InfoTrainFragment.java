@@ -113,7 +113,8 @@ public class InfoTrainFragment extends ListFragment {
 								new Date(timestamp),
 								"dd MMM HH:mm"));
 			} else {
-				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm")+"\n\n"+getString(R.string.txt_connection));
+				Toast.makeText(getActivity(), R.string.txt_connection, Toast.LENGTH_LONG).show();
+				getActivity().finish();
 			}
 		}
 	};

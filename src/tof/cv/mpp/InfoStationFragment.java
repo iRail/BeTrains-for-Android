@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class InfoStationFragment extends ListFragment {
 	protected static final String TAG = "InfoStationFragment";
@@ -117,8 +118,8 @@ public class InfoStationFragment extends ListFragment {
 				setListAdapter(StationInfoAdapter);
 				setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
 			} else {
-				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm") + "\n\n"
-						+ getString(R.string.txt_connection));
+				Toast.makeText(getActivity(), R.string.txt_connection, Toast.LENGTH_LONG).show();
+				getActivity().finish();
 			}
 		}
 	};
