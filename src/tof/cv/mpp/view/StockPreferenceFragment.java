@@ -73,7 +73,6 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 	@Override
 	public void onPause() {
 		super.onPause();
-		Log.i("","PAUSE");
 		preferences.unregisterOnSharedPreferenceChangeListener(this);
 	}
 

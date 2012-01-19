@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
+        android:background="@color/action_bar_tint"
         android:textColor="#FF000000" >
     </TextView>
 

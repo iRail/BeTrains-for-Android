@@ -14,11 +14,11 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
+import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -195,7 +195,7 @@ public class ChatFragment extends ListFragment {
 	public void update() {
 		final Runnable getMessageFromTrain = new Runnable() {
 			public void run() {
-				listOfMessage = requestPhpRead(trainId, 0, total, getActivity());
+				listOfMessage = UtilsWeb.requestPhpRead(trainId, 0, total, getActivity());
 				if (listOfMessage != null) {
 					Log.i(TAG, "count= " + listOfMessage.size());
 					if (listOfMessage.size() == 0)
@@ -312,73 +312,7 @@ public class ChatFragment extends ListFragment {
 		}
 	}
 
-	public static ArrayList<Message> requestPhpRead(String trainId, int start,
-			int span, Context context) {
-
-		String TAG = "requestPhpRead";
-		ArrayList<Message> listOfMessages = new ArrayList<Message>();
-
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(
-				"http://christophe.frandroid.com/betrains/php/messages.php");
-		String txt = null;
-		try {
-			// Add your data
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("id",
-					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
-			nameValuePairs.add(new BasicNameValuePair("message_count", ""
-					+ span));
-			nameValuePairs.add(new BasicNameValuePair("message_index", ""
-					+ start));
-			nameValuePairs.add(new BasicNameValuePair("mode", "read"));
-			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
-			if (trainId != null)
-				nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
-
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			HttpResponse response = httpclient.execute(httppost);
-
-			BasicResponseHandler myHandler = new BasicResponseHandler();
-
-			txt = myHandler.handleResponse(response);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// TODO: USE XML PARSER
-		if (txt != null && !txt.equals("")) {
-			String[] messages = txt.split("<message>");
-
-			int i = 1;
-			if (messages.length > 1) {
-
-				while (i < messages.length) {
-					String[] params = messages[i].split("CDATA");
-					for (int j = 1; j < params.length; j++) {
-						params[j] = params[j].substring(1,
-								params[j].indexOf("]"));
-
-					}
-					Log.w(TAG, "messages: " + params[1] + " " + params[2] + " "
-							+ params[3] + " " + params[4]);
-					listOfMessages.add(new Message(params[1], params[2],
-							params[3], params[4]));
-					i++;
-				}
-
-			}
-			return listOfMessages;
-
-		} else {
-			System.out.println("function in connection maker returns null !!");
-			listOfMessages.add(new Message(context
-					.getString(R.string.txt_no_message), context
-					.getString(R.string.txt_connection), "", ""));
-			return listOfMessages;
-		}
-
-	}
+	
 
 	public static boolean requestPhpSend(String pseudo, String message,
 			String trainId) {

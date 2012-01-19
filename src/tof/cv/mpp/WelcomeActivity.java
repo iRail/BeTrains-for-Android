@@ -4,6 +4,7 @@ import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.search.SearchDatabase;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -17,7 +18,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class WelcomeActivity extends FragmentActivity {
@@ -32,7 +35,7 @@ public class WelcomeActivity extends FragmentActivity {
 				.getDefaultSharedPreferences(this);
 
 		Utils.setFullscreenIfNecessary(this);
-		this.savedInstanceState=savedInstanceState;
+		this.savedInstanceState = savedInstanceState;
 		if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
 			// handles a click on a search suggestion; launches activity to show
 			// word
@@ -90,7 +93,7 @@ public class WelcomeActivity extends FragmentActivity {
 
 	public void onTrafficClick(View v) {
 		if (findViewById(R.id.istablet) != null) {
-			
+
 			setFragment(new TrafficFragment());
 		} else {
 			startActivity(new Intent(this, TrafficActivity.class));
@@ -139,7 +142,36 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onHelpClick(View v) {
-		MyOtherAlertDialog.create(WelcomeActivity.this).show();
+		Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.about_dialog);
+		dialog.setTitle("About us");
+
+		LinearLayout profile1 = (LinearLayout) dialog
+				.findViewById(R.id.profil1);
+		profile1.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent profileIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse("https://plus.google.com/117418174673875366560"));
+				startActivity(profileIntent);
+
+			}
+		});
+
+		LinearLayout profile2 = (LinearLayout) dialog
+				.findViewById(R.id.profil2);
+		profile2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent profileIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse("https://twitter.com/#!/GMLudo"));
+				startActivity(profileIntent);
+			}
+		});
+
+		dialog.getWindow().getAttributes().width = LayoutParams.FILL_PARENT;
+		dialog.show();
 	}
 
 	public void onIrailClick(View v) {
@@ -167,16 +199,15 @@ public class WelcomeActivity extends FragmentActivity {
 	// start screen.
 	public void setFragment(Fragment fragment) {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		if(savedInstanceState == null) 
-		{
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+		if (savedInstanceState == null) {
+			FragmentTransaction ft = getSupportFragmentManager()
+					.beginTransaction();
 
 			ft.add(R.id.fragment, fragment);
 			ft.commit();
 		}
-		
-		
+
 	}
 
 	public static class MyOtherAlertDialog {

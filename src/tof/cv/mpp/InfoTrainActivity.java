@@ -17,7 +17,7 @@ public class InfoTrainActivity extends FragmentActivity {
 		
 		Bundle bundle = this.getIntent().getExtras();
 		long timestamp = bundle.getLong("timestamp")*1000;
-		String name = bundle.getString("Name").replace("BE.NMBS.", "");
+		String name = bundle.getString("Name").replaceAll("[^0-9]+", "");
 		String fromTo = bundle.getString("fromto");
 		getSupportActionBar().setTitle(name+" infos:");
 		

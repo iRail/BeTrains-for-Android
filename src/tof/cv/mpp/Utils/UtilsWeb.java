@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,13 +18,20 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.w3c.dom.Document;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.adapter.TweetItemAdapter;
 import tof.cv.mpp.bo.Connections;
+import tof.cv.mpp.bo.Message;
 import tof.cv.mpp.bo.Tweets;
 import android.app.Activity;
 import android.content.Context;
@@ -502,6 +510,74 @@ public class UtilsWeb {
 		}
 
 		return new GeoPoint((int) (Float.valueOf(lat) * 1E6), (int) (Float.valueOf(lon)  * 1E6));
+
+	}
+	
+	public static ArrayList<Message> requestPhpRead(String trainId, int start,
+			int span, Context context) {
+
+		String TAG = "requestPhpRead";
+		ArrayList<Message> listOfMessages = new ArrayList<Message>();
+
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(
+				"http://christophe.frandroid.com/betrains/php/messages.php");
+		String txt = null;
+		try {
+			// Add your data
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs.add(new BasicNameValuePair("id",
+					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
+			nameValuePairs.add(new BasicNameValuePair("message_count", ""
+					+ span));
+			nameValuePairs.add(new BasicNameValuePair("message_index", ""
+					+ start));
+			nameValuePairs.add(new BasicNameValuePair("mode", "read"));
+			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
+			if (trainId != null)
+				nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
+
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
+
+			BasicResponseHandler myHandler = new BasicResponseHandler();
+
+			txt = myHandler.handleResponse(response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// TODO: USE XML PARSER
+		if (txt != null && !txt.equals("")) {
+			String[] messages = txt.split("<message>");
+
+			int i = 1;
+			if (messages.length > 1) {
+
+				while (i < messages.length) {
+					String[] params = messages[i].split("CDATA");
+					for (int j = 1; j < params.length; j++) {
+						params[j] = params[j].substring(1,
+								params[j].indexOf("]"));
+
+					}
+					Log.w(TAG, "messages: " + params[1] + " " + params[2] + " "
+							+ params[3] + " " + params[4]);
+					listOfMessages.add(new Message(params[1], params[2],
+							params[3], params[4]));
+					i++;
+				}
+
+			}
+			return listOfMessages;
+
+		} else {
+			System.out.println("function in connection maker returns null !!");
+			listOfMessages.add(new Message(context
+					.getString(R.string.txt_no_message), context
+					.getString(R.string.txt_connection), "", ""));
+			return listOfMessages;
+		}
 
 	}
 }

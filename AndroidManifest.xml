@@ -38,17 +38,17 @@
         <activity
             android:name=".TwitterActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="@string/btn_home_twitter"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".StarredActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+           android:label="@string/btn_home_starred"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ClosestActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="@string/btn_closest_stations"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".InfoStationActivity"
@@ -63,22 +63,22 @@
         <activity
             android:name=".ChatActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="@string/btn_home_chat"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".TrafficActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="@string/btn_home_traffic"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".MapStationActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="Google Maps"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".MapVehicleActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="Google Maps"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".StationPickerActivity"

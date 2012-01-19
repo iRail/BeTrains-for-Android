@@ -1,21 +1,28 @@
 package tof.cv.mpp;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
+import tof.cv.mpp.Utils.DownloadLastMessageTask;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
 import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
+import tof.cv.mpp.bo.Message;
 import tof.cv.widget.TrainAppWidgetProvider;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
+import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -31,8 +38,10 @@ public class InfoTrainFragment extends ListFragment {
 	protected static final String TAG = "ChatFragment";
 	private Vehicle currentVehicle;
 	private TextView mTitleText;
+	private TextView mMessageText;
 	private String fromTo;
 	private long timestamp;
+	private ArrayList<Message> mSaveMessageList = new ArrayList<Message>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,13 +54,15 @@ public class InfoTrainFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-
+		
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mTitleText = (TextView) getActivity().findViewById(R.id.title);
+		mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
+		Log.i("'",""+mMessageText);
 		registerForContextMenu(getListView());
 	}
 
@@ -61,6 +72,17 @@ public class InfoTrainFragment extends ListFragment {
 			this.timestamp=timestamp;
 		else
 			this.timestamp=System.currentTimeMillis();
+		mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
+		if (PreferenceManager
+				.getDefaultSharedPreferences(this.getActivity()).getBoolean("preffirstM", false)) {
+			new DownloadLastMessageTask(this).execute(vehicle);
+			setLastMessageText(getString(R.string.txt_load_message));
+		} else
+			mMessageText.setText(Html.fromHtml(
+					"<small>"
+					+ getText(R.string.txt_infrabel)
+					+ "</small>"));
+
 		myTrainSearchThread(vehicle,timestamp);
 	}
 
@@ -218,6 +240,18 @@ public class InfoTrainFragment extends ListFragment {
 			return super.onContextItemSelected(item);
 		}
 
+	}
+	
+	public void setLastMessageText(Spanned spanned) {
+		mMessageText.setText(spanned);
+	}
+	
+	public void setLastMessageText(String text) {
+		mMessageText.setText(text);
+	}
+	
+	public void addMessage(Message message) {
+		this.mSaveMessageList.add(message);
 	}
 
 }
