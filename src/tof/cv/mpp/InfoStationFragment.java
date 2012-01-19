@@ -7,6 +7,7 @@ import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.Utils.UtilsWeb.Station;
 import tof.cv.mpp.Utils.UtilsWeb.StationDeparture;
 import tof.cv.mpp.adapter.StationInfoAdapter;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -19,6 +20,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +30,8 @@ public class InfoStationFragment extends ListFragment {
 	private Station currentStation;
 	private TextView mTitleText;
 	private long timestamp;
+	private String stationString;
+	private ProgressDialog pd;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,21 +52,50 @@ public class InfoStationFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		mTitleText = (TextView) getActivity().findViewById(R.id.title);
 		registerForContextMenu(getListView());
+
+		final ImageButton prevButton = (ImageButton) getActivity()
+				.findViewById(R.id.Button_prev);
+		final ImageButton nextButton = (ImageButton) getActivity()
+				.findViewById(R.id.Button_next);
+		nextButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+
+				pd = ProgressDialog.show(getActivity(), "",
+						getString(R.string.txt_patient), true);
+
+				timestamp += (60 * 60 * 1000);
+				searchThread();
+			}
+		});
+
+		prevButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+
+				pd = ProgressDialog.show(getActivity(), "",
+						getString(R.string.txt_patient), true);
+
+				timestamp -= (60 * 60 * 1000);
+				searchThread();
+			}
+		});
 	}
 
 	public void displayInfo(String station, long timestamp) {
-		if(timestamp!=0)
-			this.timestamp=timestamp;
+		if (timestamp != 0)
+			this.timestamp = timestamp;
 		else
-			this.timestamp=System.currentTimeMillis();
-		searchThread(station, timestamp);
+			this.timestamp = System.currentTimeMillis();
+
+		this.stationString = station;
+
+		searchThread();
 	}
 
-	private void searchThread(final String station, final long timestamp) {
+	private void searchThread() {
 		Runnable search = new Runnable() {
 			public void run() {
-				currentStation = UtilsWeb.getAPIstation(station, timestamp,
-						getActivity());
+				currentStation = UtilsWeb.getAPIstation(stationString,
+						timestamp, getActivity());
 				if (getActivity() != null)
 					getActivity().runOnUiThread(displayResult);
 			}
@@ -72,6 +106,8 @@ public class InfoStationFragment extends ListFragment {
 
 	private Runnable displayResult = new Runnable() {
 		public void run() {
+			if (pd != null)
+				pd.dismiss();
 			if (currentStation != null
 					&& currentStation.getStationDepartures() != null) {
 				StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
@@ -79,9 +115,7 @@ public class InfoStationFragment extends ListFragment {
 						currentStation.getStationDepartures()
 								.getStationDeparture());
 				setListAdapter(StationInfoAdapter);
-				setTitle(Utils.formatDate(
-						new Date(timestamp),
-						"dd MMM HH:mm"));
+				setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
 			} else {
 				setTitle(Utils.formatDate(new Date(), "dd MMM HH:mm") + "\n\n"
 						+ getString(R.string.txt_connection));
@@ -129,8 +163,10 @@ public class InfoStationFragment extends ListFragment {
 			if (currentStation != null) {
 				Intent i = new Intent(getActivity(), MapStationActivity.class);
 				i.putExtra("Name", currentStation.getStation());
-				i.putExtra("lat", currentStation.getStationStationinfo().getLocationY());
-				i.putExtra("lon", currentStation.getStationStationinfo().getLocationX());
+				i.putExtra("lat", currentStation.getStationStationinfo()
+						.getLocationY());
+				i.putExtra("lon", currentStation.getStationStationinfo()
+						.getLocationX());
 				startActivity(i);
 			}
 			return true;

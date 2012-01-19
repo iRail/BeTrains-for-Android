@@ -18,6 +18,7 @@ import tof.cv.mpp.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -66,10 +67,13 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		return inflater.inflate(R.layout.activity_preference, null);
+
+		// Crash on tablets but works everywhere else.
+		// return inflater.inflate(R.layout.activity_preference, null);
+
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -79,7 +83,7 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		Log.i("", "PREFChanged1 "+this.getActivity());
+		Log.i("", "PREFChanged1 " + this.getActivity());
 		if (key.contentEquals("prefPseudo")) {
 			Log.i("", "PseudoChanged1");
 			Preference pref = findPreference("prefPseudo");
@@ -91,8 +95,9 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 			pref.setSummary(((ListPreference) pref).getEntry());
 		}
 		if (key.contentEquals(a.getString(R.string.key_planner_da))) {
-			Preference pref = findPreference(a.getString(R.string.key_planner_da));
-			Log.i("", "PlannerChanged1"+pref);
+			Preference pref = findPreference(a
+					.getString(R.string.key_planner_da));
+			Log.i("", "PlannerChanged1" + pref);
 			pref.setSummary(((ListPreference) pref).getEntry());
 		}
 
