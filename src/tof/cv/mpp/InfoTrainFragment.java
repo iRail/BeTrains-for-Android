@@ -13,6 +13,7 @@ import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.bo.Message;
 import tof.cv.widget.TrainAppWidgetProvider;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +64,20 @@ public class InfoTrainFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		mTitleText = (TextView) getActivity().findViewById(R.id.title);
 		mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
+		
+		mMessageText.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putString(DbAdapterConnection.KEY_NAME,
+						currentVehicle.getId());
+				Intent mIntent = new Intent(v.getContext(),
+						ChatActivity.class);
+				mIntent.putExtras(bundle);
+				startActivityForResult(mIntent, 0);
+
+			}
+		});
+		
 		Log.i("'",""+mMessageText);
 		registerForContextMenu(getListView());
 	}
