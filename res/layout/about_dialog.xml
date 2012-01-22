@@ -26,6 +26,14 @@
             android:padding="10dip"
             android:text="Christophe Versieux" />
     </LinearLayout>
+    
+    
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dip"
+            android:text="@string/kindhelp" />
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,8 +54,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="10dip"
-            android:text="With the kind help of Ludo" />
+            android:text="Ludovic" />
     </LinearLayout>
 
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/profil3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dip"
+            android:src="@drawable/profil3" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dip"
+            android:text="@string/lecorse" />
+    </LinearLayout>
 
 </LinearLayout>

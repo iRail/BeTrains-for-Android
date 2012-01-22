@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
+ <string name="lecorse">Le Corse: utilisateur sympathique et Beta Testeur</string>
+  <string name="kindhelp">Avec l\'aide de:</string>
     <string name="tipa">Débuter avec BeTrains</string>
     <string name="tipatitle">Il suffit de cliquer sur le bouton "Chercher" pour
 		commencer.</string>
@@ -11,7 +12,7 @@
     <string name="tipctitle">La bannière du dessus permet de changer la date et
 		l\'heure de votre recherche.</string>
     <string name="tipd">Menu principal</string>
-    <string name="tipdtitle">Cliquer sur l\'icone "Home" dans le coin supérieur
+    <string name="tipdtitle">Cliquer sur l\'icone \'Home\' dans le coin supérieur
 		gauche pour arriver au menu principal.</string>
     <string name="tipe">Ecran de démarrage</string>
     <string name="tipetitle">Dans les paramètres, il sera facile de choisir

@@ -13,7 +13,6 @@ import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.bo.Message;
 import tof.cv.widget.TrainAppWidgetProvider;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;

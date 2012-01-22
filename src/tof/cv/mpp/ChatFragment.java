@@ -1,17 +1,13 @@
 package tof.cv.mpp;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.CoreProtocolPNames;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.UtilsWeb;
@@ -318,14 +314,21 @@ public class ChatFragment extends ListFragment {
 			String trainId) {
 		try {
 			String txt = "";
-			HttpClient client = new DefaultHttpClient();
 			
-			client.getParams().setParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET, 
-				    "UTF-8");
-			
-			HttpPost httppost = new HttpPost(
-					"http://christophe.frandroid.com/betrains/php/messages.php");
+			// On cree le client
+			HttpClient client = new HttpClient();
 
+			HttpClientParams clientParams = new HttpClientParams();
+			clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
+					"UTF-8");
+			client.setParams(clientParams);
+			/*HttpClient client = new DefaultHttpClient();
+			
+			client.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, 
+				    "UTF-8");
+				    
+				    			HttpPost httppost = new HttpPost(
+					"http://christophe.frandroid.com/betrains/php/messages.php");
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 			nameValuePairs.add(new BasicNameValuePair("code",
 					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
@@ -334,13 +337,56 @@ public class ChatFragment extends ListFragment {
 			nameValuePairs.add(new BasicNameValuePair("user_name", pseudo));
 			nameValuePairs.add(new BasicNameValuePair("mode", "write"));
 			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
-
+			
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 			HttpResponse response = client.execute(httppost);
 
 			BasicResponseHandler myHandler = new BasicResponseHandler();
 			txt = myHandler.handleResponse(response);
+
+			*/
+			PostMethod methode = new PostMethod(
+					"http://christophe.frandroid.com/betrains/php/messages.php");
+			// On ajoute les parametres du formulaire
+			methode.addParameter("code",
+					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs,
+			// valeur)
+			methode.addParameter("mode", "write");
+			methode.addParameter("train_id", trainId);
+			methode.addParameter("user_message", message);
+			methode.addParameter("user_name", pseudo);
+
+			// Le buffer qui nous servira a recuperer le code de la page
+			BufferedReader br = null;
+			try {
+				// http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html
+				client.executeMethod(methode);
+				// Pour la gestion des erreurs ou un debuggage, on recupere le
+				// nombre renvoye.
+				// System.out.println("La reponse de executeMethod est : " +
+				// retour);
+				br = new BufferedReader(new InputStreamReader(methode
+						.getResponseBodyAsStream()));
+				String readLine;
+
+				// Tant que la ligne en cours n'est pas vide
+				while (((readLine = br.readLine()) != null)) {
+					txt += readLine;
+				}
+			} catch (Exception e) {
+				System.err.println(e); // erreur possible de executeMethod
+				e.printStackTrace();
+			} finally {
+				// On ferme la connexion
+				methode.releaseConnection();
+				if (br != null) {
+					try {
+						br.close(); // on ferme le buffer
+					} catch (Exception e) { /* on fait rien */
+					}
+				}
+			}
 
 			return txt.contains("true");
 		} catch (Exception e) {

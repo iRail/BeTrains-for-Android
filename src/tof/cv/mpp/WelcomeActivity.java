@@ -169,6 +169,17 @@ public class WelcomeActivity extends FragmentActivity {
 				startActivity(profileIntent);
 			}
 		});
+		
+		LinearLayout profile3 = (LinearLayout) dialog
+				.findViewById(R.id.profil3);
+		profile3.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent profileIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse("https://twitter.com/#!/uncorse"));
+				startActivity(profileIntent);
+			}
+		});
 
 		dialog.getWindow().getAttributes().width = LayoutParams.FILL_PARENT;
 		dialog.show();
@@ -208,61 +219,6 @@ public class WelcomeActivity extends FragmentActivity {
 			ft.commit();
 		}
 
-	}
-
-	public static class MyOtherAlertDialog {
-
-		public static AlertDialog create(Context context) {
-
-			String message = "";
-			if (context.getString(R.string.url_lang).equalsIgnoreCase("en"))
-				message = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />"
-						+ "<strong>Cool application, how can I help?</strong>"
-						+ "<br />"
-						+ "Please share the news on:<br />"
-						+ "<a href=\"http://touch.facebook.com/#/profile.php?id=238334902800\">Our Facebook Page</a><br />"
-						+ "<a href=\"http://twitter.com/betrains\">Our Twitter</a><br />"
-						+ "<br /><br />"
-						+ "<strong>Who made this application?</strong>"
-						+ "<br />"
-						+ "<br /><a href=\"http://twitter.com/waza_be\">Christophe Versieux</a><br /><br />"
-						+ "<br /><a href=\"https://twitter.com/#!/gmludo\">Ludovic Gasc</a><br /><br />";
-
-			if (context.getString(R.string.url_lang).equalsIgnoreCase("fr"))
-				message = "  <head>  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"  /> "
-						+ "<title>UTF-8</title>  </head> <body>  "
-						+ "<strong>Trop fort cette appli, comment vous aider?</strong>"
-						+ "<br />"
-						+ "Parlez de l'appli autour de vous!:<br />"
-						+ "<a href=\"http://touch.facebook.com/#/profile.php?id=238334902800\">Notre page Facebook</a><br />"
-						+ "<a href=\"http://twitter.com/betrains\">Notre Twitter</a><br />"
-						+ "<br /><br />"
-						+ "<strong>Qui en sont les auteurs?</strong>"
-						+ "<br />"
-						+ "<br /><a href=\"http://twitter.com/waza_be\">Christophe Versieux</a><br /><br />"
-						+ "<br /><a href=\"https://twitter.com/#!/gmludo\">Ludovic Gasc</a><br /><br />";
-
-			if (context.getString(R.string.url_lang).equalsIgnoreCase("nl"))
-				message = "  <head>  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"  /> "
-						+ "<strong>Schitterende App !! Hoe kan ik helpen ?</strong>"
-						+ "<br />"
-						+ "Verspreid het nieuws over deze app : <br />"
-						+ "<a href=\"http://touch.facebook.com/#/profile.php?id=238334902800\">Onze facebook pagina</a><br />"
-						+ "<a href=\"http://twitter.com/betrains\">Onze twitterpagina</a><br />"
-						+ "<br /><br />"
-						+ "<strong>Wie heeft deze app gemaakt ? </strong>"
-						+ "<br />"
-						+ "<br /><a href=\"http://twitter.com/waza_be\">Christophe Versieux</a><br /><br />"
-						+ "<br /><a href=\"https://twitter.com/#!/gmludo\">Ludovic Gasc</a><br /><br />";
-
-			WebView messageWv = new WebView(context);
-			messageWv.loadData(message, "text/html", "utf-8");
-
-			return new AlertDialog.Builder(context)
-					.setTitle(R.string.btn_home_contact).setCancelable(true)
-					.setIcon(android.R.drawable.ic_dialog_info)
-					.setView(messageWv).create();
-		}
 	}
 
 	private void showResults(String query) {

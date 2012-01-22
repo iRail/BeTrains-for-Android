@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
+ <string name="lecorse">Le Corse: Sympatiek gebruiker en Beta Tester </string>
+  <string name="kindhelp">Met behulp van:</string>
     <string name="tipa">Om te beginnen</string>
     <string name="tipatitle">m onmiddellijk te starten, klik op \'zoeken\'</string>
     <string name="tipb">Stationkeuze</string>

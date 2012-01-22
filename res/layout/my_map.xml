@@ -4,6 +4,10 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <include
+        android:id="@+id/top"
+        layout="@layout/colorstrip" />
+
     <view
         android:id="@+id/myGmap"
         android:layout_width="fill_parent"
@@ -13,7 +17,9 @@
         android:clickable="true"
         android:enabled="true" />
 
-    <!-- DEBUG:  0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g
-         PROD :  0K7Fau7cA-pYJQs_ettKSeY36klggcJ9isiC4pA   -->
+    <!--
+         DEBUG:  0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g
+         PROD :  0K7Fau7cA-pYJQs_ettKSeY36klggcJ9isiC4pA
+    -->
 
 </LinearLayout>
