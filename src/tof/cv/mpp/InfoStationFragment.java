@@ -109,16 +109,28 @@ public class InfoStationFragment extends ListFragment {
 		public void run() {
 			if (pd != null)
 				pd.dismiss();
-			if (currentStation != null
-					&& currentStation.getStationDepartures() != null) {
-				StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
-						getActivity(), R.layout.row_info_station,
-						currentStation.getStationDepartures()
-								.getStationDeparture());
-				setListAdapter(StationInfoAdapter);
-				setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
-			} else {
-				Toast.makeText(getActivity(), R.string.txt_connection, Toast.LENGTH_LONG).show();
+			if (currentStation != null)
+				if (currentStation.getStationDepartures() != null) {
+					StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
+							getActivity(), R.layout.row_info_station,
+							currentStation.getStationDepartures()
+									.getStationDeparture());
+					setListAdapter(StationInfoAdapter);
+					setTitle(Utils.formatDate(new Date(timestamp),
+							"dd MMM HH:mm"));
+				} else {
+					
+
+					Toast.makeText(getActivity(), R.string.txt_no_result,
+							Toast.LENGTH_LONG).show();
+					setTitle(Utils.formatDate(new Date(timestamp),
+							"dd MMM HH:mm"));
+					
+				}
+			else {
+
+				Toast.makeText(getActivity(), R.string.txt_connection,
+						Toast.LENGTH_LONG).show();
 				getActivity().finish();
 			}
 		}

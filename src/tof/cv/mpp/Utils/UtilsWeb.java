@@ -516,6 +516,9 @@ public class UtilsWeb {
 	public static ArrayList<Message> requestPhpRead(String trainId, int start,
 			int span, Context context) {
 
+		if(trainId!=null)
+			trainId=trainId.replaceAll("[^0-9]+", "");
+		
 		String TAG = "requestPhpRead";
 		ArrayList<Message> listOfMessages = new ArrayList<Message>();
 
