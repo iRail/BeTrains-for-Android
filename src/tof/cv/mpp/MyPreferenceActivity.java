@@ -40,7 +40,14 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 
 		// if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 
-		if (page != 99 && !this.hasHeaders()) {
+		Boolean hasHeader = false;
+		try {
+			hasHeader = this.hasHeaders();
+		} catch (NoSuchMethodError e) {
+
+		}
+
+		if (!hasHeader) {
 			this.setContentView(R.layout.activity_preference);
 			switch (page) {
 			case 0:
@@ -68,7 +75,8 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 				@Override
 				public boolean onPreferenceChange(Preference preference,
 						Object newValue) {
-					preference.setSummary(((ListPreference) preference).getEntries()[Integer.valueOf(newValue.toString())-1]);
+					preference.setSummary(((ListPreference) preference)
+							.getEntries()[Integer.valueOf(newValue.toString()) - 1]);
 					return true;
 				}
 			});
@@ -82,7 +90,8 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 				@Override
 				public boolean onPreferenceChange(Preference preference,
 						Object newValue) {
-					preference.setSummary(((ListPreference) preference).getEntries()[Integer.valueOf(newValue.toString())-1]);
+					preference.setSummary(((ListPreference) preference)
+							.getEntries()[Integer.valueOf(newValue.toString()) - 1]);
 					return true;
 				}
 			});

@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tof.cv.mpp"
     android:versionCode="6000"
-    android:versionName="3.0Beta" >
+    android:versionName="3.0" >
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="7"
         android:targetSdkVersion="11" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

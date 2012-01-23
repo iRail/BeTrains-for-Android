@@ -41,7 +41,13 @@ public class TrainInfoAdapter extends ArrayAdapter<VehicleStop> {
 			if (o.getDelay().contentEquals("0"))
 				delay.setText("");
 			else
-				delay.setText("+" + (Integer.valueOf(o.getDelay()) / 60) + "'");
+				try {
+					delay.setText("+"
+							+ (Integer.valueOf(o.getDelay()) / 60)
+							+ "'");
+				} catch (Exception e) {
+					delay.setText(o.getDelay());
+				}
 		}
 		return v;
 	}

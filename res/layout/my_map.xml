@@ -12,7 +12,7 @@
         android:id="@+id/myGmap"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0K7Fau7cA-pYJQs_ettKSeY36klggcJ9isiC4pA"
+        android:apiKey="0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg"
         class="com.google.android.maps.MapView"
         android:clickable="true"
         android:enabled="true" />
@@ -20,6 +20,7 @@
     <!--
          DEBUG:  0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g
          PROD :  0K7Fau7cA-pYJQs_ettKSeY36klggcJ9isiC4pA
+         MAC:	 0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg
     -->
 
 </LinearLayout>
