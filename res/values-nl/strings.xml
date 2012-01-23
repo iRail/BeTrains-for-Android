@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
- <string name="lecorse">Le Corse: Sympatiek gebruiker en Beta Tester </string>
-  <string name="kindhelp">Met behulp van:</string>
+ <string name="lecorse">Le Corse: Sympatieke gebruiker en Beta Tester </string>
+  <string name="kindhelp">Met hulp van:</string>
     <string name="tipa">Om te beginnen</string>
-    <string name="tipatitle">m onmiddellijk te starten, klik op \'zoeken\'</string>
-    <string name="tipb">Stationkeuze</string>
-    <string name="tipbtitle">m van station of rit te veranderen, klik op de naam</string>
+    <string name="tipatitle">Om onmiddellijk te starten, klik op \'zoeken\'</string>
+    <string name="tipb">Stationskeuze</string>
+    <string name="tipbtitle">Klik op de naam om het station te wijzigen</string>
     <string name="tipc">Datum- en uurwijziging</string>
     <string name="tipctitle">Klik op de datum en de tijd in het bovenste deel van het scherm om deze te wijzigen
 .</string>
     <string name="tipd">Hoofdmenu</string>
     <string name="tipdtitle">Gebruik het item \'Home\' bovenaan links op het scherm om het hoofdmenu te doen verschijnen.</string>
-    <string name="tipe">Startbeeld verandering</string>
-    <string name="tipetitle">Om een ander startbeeld te bepalen, wijzig dit in de parameters
-		configure that in the settings.</string>
-    <string name="settings_activity">Eerste scherme.</string>
-    <string name="settings_activity_summary">waar moet de applicatie starten?</string>
+    <string name="tipe">Hernieuw startscherm</string>
+    <string name="tipetitle">Om een ander startscherm in te stellen, wijzig dit in de configuratie</string>
+    <string name="settings_activity">Eerste scherm</string>
+    <string name="settings_activity_summary">Waar moet de applicatie opstarten?</string>
     <string name="app_name">BeTrains</string>
-    <string name="btn_home_planner">Route Planner</string>
+    <string name="btn_home_planner">Routeplanner</string>
     <string name="btn_home_chat">Chat</string>
-    <string name="btn_home_notif">Notifications</string>
+    <string name="btn_home_notif">Meldingen</string>
     <string name="btn_home_traffic">Verkeershinder</string>
     <string name="btn_home_settings">Instellingen</string>
     <string name="btn_home_contact">Contact</string>
     <string name="btn_home_starred">Favorieten</string>
     <string name="txt_loading">Laden...</string>
-    <string name="txt_patient">Even geduld, de data wordt geladen...</string>
+    <string name="txt_patient">Even geduld, de data worden geladen...</string>
     <string name="txt_traffic_issues">Overzicht van de huidige storingen</string>
     <string name="txt_no_issue">Geen verkeershinder</string>
     <string name="txt_duration">Duur :</string>
@@ -35,7 +34,7 @@
     <string name="add_widget">Voeg toe aan widget</string>
     <string name="url_lang">nl</string>
     <string name="url_lang_2">nl</string>
-    <string name="txt_connection">elieve uw internetverbinding te controleren...</string>
+    <string name="txt_connection">Gelieve uw internetverbinding te controleren...</string>
     <string name="txt_def_title">Default titel</string>
     <string name="txt_type_subway">Metro</string>
     <string name="txt_type_walk">Wandel</string>
@@ -48,7 +47,7 @@
 		Infrabel/Railtime website. Vertragingen van minder dan vijf minuten
 		worden niet weergegeven en kunnen enigszins afwijken van de vorige
 		pagina.</string>
-    <string name="wid_confirm">Toevoegen aan widget ?</string>
+    <string name="wid_confirm">Toevoegen aan widget?</string>
     <string name="wid_added">%s toegevoegd aan widget</string>
     <string name="txt_messages">Berichten</string>
     <string name="txt_more_messages">Oudere Berichten</string>
@@ -87,45 +86,40 @@
     <string name="changelog_title">Updatelog</string>
     <string name="confirm_message_train">Wilt u de treinberichten openen?</string>
     <string name="confirm_info_train">Wilt u de treininfos openen?</string>
-    <string name="txt_server_down">Server down</string>
+    <string name="txt_server_down">De iRail-servers liggen plat. Even geduld! Excuses voor het ongemak.</string>
     <string name="txt_map">Map</string>
-    <string name="txt_nav">Navigation</string>
+    <string name="txt_nav">Navigatie</string>
     <string name="txt_invert_da">Vertrek/Aankomst</string>
-    <string name="txt_date">Date</string>
-    <string name="txt_time">Time</string>
-    <string name="settings_planner_da">Arrival/Departure time.</string>
-    <string name="settings_train_only">Trains only</string>
-    <string name="settings_train_only_summary">Will not show buses/metro</string>
-    <string name="txt_no_driving">No Info on this train</string>
-    <string name="txt_no_result">Sorry, no result.</string>
-    <string name="txt_error">Something went wrong. Please check your connection
-		again. Maybe our server is down...</string>
-    <string name="txt_create_connections">Please update your search to see your trip
-		informations.</string>
+    <string name="txt_date">Datum</string>
+    <string name="txt_time">Tijd</string>
+    <string name="settings_planner_da">Aankomst/Vertrek tijd.</string>
+    <string name="settings_train_only">Enkel treinen</string>
+    <string name="settings_train_only_summary">Toon geen bussen/metro's</string>
+    <string name="txt_no_driving">Geen informatie over deze trein beschikbaar</string>
+    <string name="txt_no_result">Excuses, er werden geen resultaten gevonden.</string>
+    <string name="txt_error">Er ging iets mis. Probeert u later even opnieuw?</string>
+    <string name="txt_create_connections">Gelieve uw zoekopdracht in te vullen.</string>
     <string name="btn_closest_stations">dichtste station</string>
-    <string name="txt_first_dl">it is de eerste keer dat je de "naburige stations"
+    <string name="txt_first_dl">Dit is de eerste keer dat je de "naburige stations"
 		functie wilt gebruiken. Voor een keer zullen we de lijst moeten
 		initialiseren. De volgende keer zal dit proces sneller verlopen.</string>
-    <string name="txt_accuracy">Accuracy: %sm.</string>
-    <string name="txt_wait_gps">Waiting for GPS fix.</string>
+    <string name="txt_accuracy">Nauwkeurigheid: %sm.</string>
+    <string name="txt_wait_gps">Wachten op GPS fix.</string>
     <string name="update_gps_btn">Update:\n%sm</string>
     <string name="txt_info_station">Info station</string>
-    <string name="txt_dl_stations">Downloading stations list</string>
-    <string name="txt_fill_closest">Looking for closest station</string>
-    <string name="txt_sort">Sorting list...</string>
-    <string name="txt_location">If you cannot get GPS position, please enable it by
-		clicking here.</string>
-    <string name="pref_selectTrain">Your train.</string>
-    <string name="pref_stations">Stations to check.</string>
-    <string name="pref_weekdays">Days to check</string>
-    <string name="pref_selectStartHour">Start updates at:</string>
-    <string name="pref_selectEndHour">Stop updates at:</string>
-    <string name="pref_selectFreq">Updates frequency</string>
-    <string name="pref_selectStartHour_sum">Help your battery by avoiding updates during the
-		night</string>
-    <string name="pref_selectEndHour_sum">Help your battery by avoiding updates during the
-		night</string>
-    <string name="pref_selectFreq_sum">1 hour</string>
+    <string name="txt_dl_stations">Stationslijst aan het downloaden</string>
+    <string name="txt_fill_closest">Dichtste station aan het zoeken</string>
+    <string name="txt_sort">Lijst aan het sorteren...</string>
+    <string name="txt_location">Is je GPS ingeschakeld? Klik hier indien niet.</string>
+    <string name="pref_selectTrain">Uw trein.</string>
+    <string name="pref_stations">Haltes om te controleren.</string>
+    <string name="pref_weekdays">Dagen om te controleren</string>
+    <string name="pref_selectStartHour">Start updates om:</string>
+    <string name="pref_selectEndHour">Stop updates om:</string>
+    <string name="pref_selectFreq">Updates frequentie</string>
+    <string name="pref_selectStartHour_sum">Help je batterij door 's nachts niet up te daten.</string>
+    <string name="pref_selectEndHour_sum">Selecteer eind-uur</string>
+    <string name="pref_selectFreq_sum">1 uur</string>
     <string name="stationpicker">Kies een station</string>
     <string name="key_planner_da">Plannerdapref</string>
     <string name="key_activity">Activitypref</string>
