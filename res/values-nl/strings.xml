@@ -72,8 +72,7 @@
     <string name="fav_no_fav_body">Je kan je favoriete treinen, stations en
 		verbindingen hier toevoegen.\n\n* Voeg een favoriet station toe , door
 		er lang op te klikken in de stationslijst. \n\n* Voeg een trein toe
-		door op menu te klikken in de treinslijst.\n\n* Druk op menu om een
-		trip toe te voegen vanuit de triplijst.</string>
+		door op steer te klikken in de treinslijst of triplijst.</string>
     <string name="fav_no_fav_title">Geen "starred" items</string>
     <string name="settings_planner_da_summary">...</string>
     <string name="key_train_only">OnlyTrainPref</string>

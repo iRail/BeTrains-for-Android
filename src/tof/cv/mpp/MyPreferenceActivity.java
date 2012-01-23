@@ -6,7 +6,6 @@ import tof.cv.mpp.Utils.Utils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -39,10 +38,9 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		if (extras != null)
 			page = extras.getInt("screen");
 
-		//if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-			
+		// if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 
-		if (page != 99 && !this.hasHeaders()){
+		if (page != 99 && !this.hasHeaders()) {
 			this.setContentView(R.layout.activity_preference);
 			switch (page) {
 			case 0:
@@ -63,17 +61,45 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 			}
 		}
 		Preference pref = findPreference(getString(R.string.key_planner_da));
-		if (pref != null)
+		if (pref != null) {
 			pref.setSummary(((ListPreference) pref).getEntry());
+			pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
-		pref = findPreference(getString(R.string.key_activity));
-		if (pref != null)
-			pref.setSummary(((ListPreference) pref).getEntry());
+				@Override
+				public boolean onPreferenceChange(Preference preference,
+						Object newValue) {
+					preference.setSummary(((ListPreference) preference).getEntries()[Integer.valueOf(newValue.toString())-1]);
+					return true;
+				}
+			});
+		}
 
-		pref = findPreference("prefPseudo");
-		if (pref != null)
-			pref.setSummary(((EditTextPreference) pref).getText());
+		Preference pref2 = findPreference(getString(R.string.key_activity));
+		if (pref2 != null) {
+			pref2.setSummary(((ListPreference) pref2).getEntry());
+			pref2.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
+				@Override
+				public boolean onPreferenceChange(Preference preference,
+						Object newValue) {
+					preference.setSummary(((ListPreference) preference).getEntries()[Integer.valueOf(newValue.toString())-1]);
+					return true;
+				}
+			});
+		}
+		Preference pref3 = findPreference("prefPseudo");
+		if (pref3 != null) {
+			pref3.setSummary(((EditTextPreference) pref3).getText());
+			pref3.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+				@Override
+				public boolean onPreferenceChange(Preference preference,
+						Object newValue) {
+					preference.setSummary((CharSequence) newValue);
+					return true;
+				}
+			});
+		}
 	}
 
 	@Override

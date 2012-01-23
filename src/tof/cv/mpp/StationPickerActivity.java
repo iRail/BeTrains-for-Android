@@ -366,7 +366,12 @@ public class StationPickerActivity extends FragmentActivity implements
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
 			Bundle bundle = new Bundle();
-			bundle.putString("GARE", l.getItemAtPosition(position).toString());
+			mDbHelper.open();
+			Cursor c=mDbHelper.fetchAllFav();
+			c.moveToPosition(position);
+			
+			bundle.putString("GARE", mDbHelper.fetchFav(c.getInt(c.getColumnIndex(DbAdapterConnection.KEY_ROWID))).getString(c.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+			mDbHelper.close();
 			Intent i = new Intent();
 			i.putExtras(bundle);
 			getActivity().setResult(RESULT_OK, i);

@@ -88,7 +88,7 @@
         <activity
             android:name=".MyPreferenceActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="@string/btn_home_settings"
             android:theme="@style/StyledIndicators"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity

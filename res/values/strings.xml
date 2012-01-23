@@ -65,8 +65,7 @@
     <string name="txt_infrabel">This info comes from the Infrabel/Railtime website. Delays smaller than 5 minutes are not shown, and might be slightly different from previous page.</string>
     <string name="fav_no_fav_body">You can add your favorite stations, trains and
 		trips here.\n\n* Add a favorite station by long-pressing it in the
-		station list\n\n* Add a Train by pressing menu in the train view\n\n*
-		Press "menu" key when you are on the route planner to add a trip.</string>
+		station list\n\n* Or, you can click on the top Bar icon in the Train, Station or Planner view.</string>
     <string name="fav_no_fav_title">No starred items</string>
     <string name="txt_remove">Delete</string>
     <string name="search_wrong_string">Please pick a station in the list or write a train

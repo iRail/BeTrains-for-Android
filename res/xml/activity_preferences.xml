@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<EditTextPreference android:title="@string/settings_pseudo"
-		android:defaultValue="Anonymous" 
-		android:summary="" 
-		android:key="prefPseudo" />
-		
-	<PreferenceCategory android:title="@string/txt_messages">
 
-		<CheckBoxPreference android:title="@string/settings_display_lm"
-			android:defaultValue="false" 
-			android:summary="@string/settings_display_lm_desc"
-			android:key="preffirstM" />
+    <PreferenceCategory android:title="BETrains" >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/activity_entries"
+            android:entryValues="@array/activity_values"
+            android:key="@string/key_activity"
+            android:summary="@string/settings_activity_summary"
+            android:title="@string/settings_activity" />
 
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="BETrains">
-	
-	 <ListPreference android:key="@string/key_activity"
-		android:title="@string/settings_activity" android:summary="@string/settings_activity_summary"
-		android:entries="@array/activity_entries" android:entryValues="@array/activity_values"
-		android:defaultValue="1" />
-	
-		<CheckBoxPreference android:title="@string/settings_fullscreen"
-			android:defaultValue="false" 
-			android:summary="@string/settings_restart"
-			android:key="preffullscreen" />
-			
-		<CheckBoxPreference android:title="@string/settings_force_dutch"
-			android:defaultValue="false" 
-			android:summary="@string/settings_english"
-			android:key="prefnl" />
-			
-	</PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="preffullscreen"
+            android:summary="@string/settings_restart"
+            android:title="@string/settings_fullscreen" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefnl"
+            android:summary="@string/settings_english"
+            android:title="@string/settings_force_dutch" />
+    </PreferenceCategory>
+    
+        <PreferenceCategory android:title="@string/txt_messages" >
+        <EditTextPreference
+            android:defaultValue="Anonymous"
+            android:key="prefPseudo"
+            android:summary=""
+            android:title="@string/settings_pseudo" />
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="preffirstM"
+            android:summary="@string/settings_display_lm_desc"
+            android:title="@string/settings_display_lm" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

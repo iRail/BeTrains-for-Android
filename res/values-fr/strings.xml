@@ -81,7 +81,7 @@
     <string name="fav_no_fav_body">Vous pouvez rajouter ici vos trajets, trains et
 		gares favorites pour un accès rapide.\n\n* Pour ajouter une gare,
 		gardez votre doigt appuyé sur son nom dans la liste des
-		gares.\n\n*Utilisez la touche "Menu" pour ajouter un train ou un
+		gares.\n\n*Utilisez l\'icone avec l\'étoile pour ajouter un train ou un
 		voyage dans leurs vues respectives.</string>
     <string name="fav_no_fav_title">Pas de favoris</string>
     <string name="txt_remove">Supprimer</string>
