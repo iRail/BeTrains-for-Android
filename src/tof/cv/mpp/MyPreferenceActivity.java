@@ -21,12 +21,13 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 
 	// private MyPrefAdapter mAdapter;
-	//private ViewPager mPager;
+	// private ViewPager mPager;
 	public static int PAGE_GENERAL = 0;
 	public static int PAGE_PLANNER = 1;
 	public static int PAGE_TWITTER = 2;
 
-	
+	int page = 99;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,13 +35,33 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			addPreferencesFromResource(R.xml.activity_preferences);
-			addPreferencesFromResource(R.xml.activity_planner_preferences);
-			addPreferencesFromResource(R.xml.activity_twitter_preferences);
+		Bundle extras = this.getIntent().getExtras();
+		if (extras != null)
+			page = extras.getInt("screen");
+
+		//if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+			
+
+		if (page != 99 && !this.hasHeaders()){
 			this.setContentView(R.layout.activity_preference);
+			switch (page) {
+			case 0:
+				addPreferencesFromResource(R.xml.activity_preferences);
+				break;
+			case 1:
+				addPreferencesFromResource(R.xml.activity_planner_preferences);
+				break;
+			case 2:
+				addPreferencesFromResource(R.xml.activity_twitter_preferences);
+				break;
+			default:
+				addPreferencesFromResource(R.xml.activity_preferences);
+				addPreferencesFromResource(R.xml.activity_planner_preferences);
+				addPreferencesFromResource(R.xml.activity_twitter_preferences);
+				break;
+
+			}
 		}
-		
 		Preference pref = findPreference(getString(R.string.key_planner_da));
 		if (pref != null)
 			pref.setSummary(((ListPreference) pref).getEntry());
@@ -57,16 +78,22 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 
 	@Override
 	public void onBuildHeaders(List<Header> target) {
-		Log.i("","onBuildHeaders");
-		loadHeadersFromResource(R.xml.preference_headers, target);
+		Bundle extras = this.getIntent().getExtras();
+		if (extras != null)
+			page = extras.getInt("screen");
+
+		Log.i("", "onBuildHeaders" + page);
+
+		if (page == 99)
+			loadHeadersFromResource(R.xml.preference_headers, target);
+
 		this.setContentView(R.layout.activity_preference);
 	}
-
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		Log.i("", "PRE-HC");
+
 		if (key.contentEquals("prefPseudo")) {
 			Preference pref = findPreference("prefPseudo");
 			pref.setSummary(((EditTextPreference) pref).getText());
@@ -81,7 +108,7 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		}
 
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

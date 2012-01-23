@@ -60,7 +60,7 @@ public class TwitterFragment extends ListFragment{
 			startActivity(intent);
 			return true;
 		case (0):
-			//startActivity(new Intent(getActivity(), PreferenceActivity.class).putExtra("screen", PreferenceActivity.PAGE_TWITTER));
+			startActivity(new Intent(getActivity(), MyPreferenceActivity.class).putExtra("screen", MyPreferenceActivity.PAGE_TWITTER));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

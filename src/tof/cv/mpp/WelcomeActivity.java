@@ -3,11 +3,9 @@ package tof.cv.mpp;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.search.SearchDatabase;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -19,7 +17,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -136,8 +133,7 @@ public class WelcomeActivity extends FragmentActivity {
 		if (findViewById(R.id.istablet) != null) {
 			setFragment(new ChatFragment());
 		} else {
-			startActivity(new Intent(this, MyPreferenceActivity.class)
-					.putExtra("screen", MyPreferenceActivity.PAGE_GENERAL));
+			startActivity(new Intent(this, MyPreferenceActivity.class));
 		}
 	}
 
@@ -169,7 +165,7 @@ public class WelcomeActivity extends FragmentActivity {
 				startActivity(profileIntent);
 			}
 		});
-		
+
 		LinearLayout profile3 = (LinearLayout) dialog
 				.findViewById(R.id.profil3);
 		profile3.setOnClickListener(new View.OnClickListener() {
