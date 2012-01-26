@@ -93,7 +93,7 @@
     <string name="txt_time">Tijd</string>
     <string name="settings_planner_da">Aankomst/Vertrek tijd.</string>
     <string name="settings_train_only">Enkel treinen</string>
-    <string name="settings_train_only_summary">Toon geen bussen/metro's</string>
+    <string name="settings_train_only_summary">Toon geen bussen/metro\'s</string>
     <string name="txt_no_driving">Geen informatie over deze trein beschikbaar</string>
     <string name="txt_no_result">Excuses, er werden geen resultaten gevonden.</string>
     <string name="txt_error">Er ging iets mis. Probeert u later even opnieuw?</string>
@@ -116,7 +116,7 @@
     <string name="pref_selectStartHour">Start updates om:</string>
     <string name="pref_selectEndHour">Stop updates om:</string>
     <string name="pref_selectFreq">Updates frequentie</string>
-    <string name="pref_selectStartHour_sum">Help je batterij door 's nachts niet up te daten.</string>
+    <string name="pref_selectStartHour_sum">Help je batterij door \'s nachts niet up te daten.</string>
     <string name="pref_selectEndHour_sum">Selecteer eind-uur</string>
     <string name="pref_selectFreq_sum">1 uur</string>
     <string name="stationpicker">Kies een station</string>

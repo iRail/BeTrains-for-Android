@@ -346,8 +346,7 @@ public class PlannerFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		positionClicked = position;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
-		Log.v(TAG, "click"
-				+ allConnections.connection.get(positionClicked).getDuration());
+
 		try {
 
 			Connection currentConnection = allConnections.connection
