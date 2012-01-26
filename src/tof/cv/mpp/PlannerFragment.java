@@ -38,8 +38,6 @@ import android.widget.Toast;
 
 public class PlannerFragment extends ListFragment {
 
-	// First part is cleaned
-
 	boolean isDebug = false;
 
 	private static final int MENU_DT = 0;
@@ -71,6 +69,10 @@ public class PlannerFragment extends ListFragment {
 
 	private int style;
 
+	public String fromIntentArrivalStation = null;
+	public String fromIntentDepartureStation = null;
+	public boolean fromIntent = false;
+
 	// Second part need to be cleaned
 
 	private static final int ACTIVITY_DISPLAY = 0;
@@ -101,11 +103,10 @@ public class PlannerFragment extends ListFragment {
 
 		updateActionBar();
 		setHasOptionsMenu(true);
-		
+
 		style = android.R.style.Theme_Dialog;
 		if (Build.VERSION.SDK_INT >= 14)
 			style = android.R.style.Theme_DeviceDefault_Dialog;
-
 	}
 
 	@Override
@@ -115,25 +116,29 @@ public class PlannerFragment extends ListFragment {
 		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
 		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 
-		Bundle extras = getActivity().getIntent().getExtras();
-		// SI j'ai des extras, je lance direct la recherche
-		if (extras != null) {
-			tvDeparture.setText(extras.getString("Departure"));
-			tvArrival.setText(extras.getString("Arrival"));
-			mySearchThread();
-		}
-		
 		setAllBtnListener();
-
-		String defaultStart = settings.getString("pStart", "MONS");
-		String defaultStop = settings.getString("pStop", "TOURNAI");
-		fillStations(defaultStart, defaultStop);
+		
+		fillStations(settings.getString("pStart", "MONS"),
+				settings.getString("pStop", "TOURNAI"));
 
 	}
 
 	public void fillStations(String departure, String arrival) {
-		tvDeparture.setText(departure);
-		tvArrival.setText(arrival);
+		Log.i("", "fill " + departure + " - " + arrival + " - " + fromIntent);
+		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
+		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
+
+		if (fromIntent) {
+			fromIntent = false;
+			tvDeparture.setText(fromIntentDepartureStation);
+			tvArrival.setText(fromIntentArrivalStation);
+			// mySearchThread();
+		} else {
+			if (departure != null && arrival != null) {
+				tvDeparture.setText(departure);
+				tvArrival.setText(arrival);
+			}
+		}
 
 	}
 
