@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-
 public class TrafficFragment extends ListFragment {
 	protected static final String TAG = "ActivityTraffic";
 	private RSSFeed myRssFeed = null;
@@ -32,7 +31,7 @@ public class TrafficFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setHasOptionsMenu(true);
 
 		SharedPreferences settings = PreferenceManager
@@ -43,8 +42,9 @@ public class TrafficFragment extends ListFragment {
 		// mABar.setTitle(getString(R.string.app_name));
 
 		lang = this.getString(R.string.url_lang_2);
-		if (settings.getBoolean("prefnl", false))
+		if (settings.getBoolean("prefnl", false)) {
 			lang = "nl";
+		}
 
 		new DownloadTrafficTask(this).execute();
 
@@ -61,11 +61,12 @@ public class TrafficFragment extends ListFragment {
 	public void setRssFeed(RSSFeed rssFeed) {
 		this.myRssFeed = rssFeed;
 	}
-	
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.i("FragmentList", "Item clicked: " + id);
-		AlertDialog.Builder alertbox = new AlertDialog.Builder(this.getActivity());
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		Log.i("FragmentList", "Item clicked: " + id);
+		AlertDialog.Builder alertbox = new AlertDialog.Builder(
+				this.getActivity());
 		alertbox.setTitle(myRssFeed.getItem(position).getTitle());
 		alertbox.setMessage(myRssFeed.getItem(position).getDescription());
 		// "\n\n"+myRssFeed.getItem(position).getPubdate());
@@ -75,8 +76,8 @@ public class TrafficFragment extends ListFragment {
 					}
 				});
 		alertbox.show();
-    }
-    
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

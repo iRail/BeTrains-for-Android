@@ -36,6 +36,7 @@ public class RSSDocument {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			document = builder.parse(urlconn.getInputStream());
+			document.normalize();
 			makeRSSFeed();
 
 		} catch (IOException e) {
@@ -78,7 +79,7 @@ public class RSSDocument {
 					String description = null;
 					String link = null;
 					if(child2.getNodeName().equals("item")){
-						System.out.println("item found !!");
+						
 						NodeList propertiesOfItem = child2.getChildNodes();
 						
 						/*
@@ -91,6 +92,7 @@ public class RSSDocument {
 							}else if(property.getNodeName().contains("link")){
 								pubDate = property.getFirstChild().getNodeValue();
 							}else if(property.getNodeName().contains("description")){
+								System.out.println("item found !!"+ property.getFirstChild().getNodeValue());
 								description = property.getFirstChild().getNodeValue();
 							}else if(property.getNodeName().contains("pubDate")){
 								pubDate = property.getFirstChild().getNodeValue();

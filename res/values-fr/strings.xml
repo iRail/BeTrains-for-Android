@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
- <string name="lecorse">Le Corse: utilisateur sympathique et Beta Testeur</string>
-  <string name="kindhelp">Avec l\'aide de:</string>
+
+    <string name="lecorse">Le Corse: utilisateur sympathique et Beta Testeur</string>
+    <string name="kindhelp">Avec l\'aide de:</string>
     <string name="tipa">Débuter avec BeTrains</string>
     <string name="tipatitle">Il suffit de cliquer sur le bouton "Chercher" pour
 		commencer.</string>
@@ -36,10 +37,11 @@
     <string name="txt_duration">Dur:</string>
     <string name="txt_search">Chercher</string>
     <string name="api_key_prod">0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg</string>
-       <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
+    <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Widget</string>
     <string name="url_lang">fr</string>
     <string name="url_lang_2">fr</string>
+    <string name="url_lang_for_him">f</string>
     <string name="txt_connection">Vérifiez votre connection.</string>
     <string name="txt_def_title">Titre</string>
     <string name="txt_type_subway">Métro</string>
