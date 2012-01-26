@@ -15,7 +15,7 @@ public class SearchDatabaseHelper extends SQLiteOpenHelper {
 	private final String TAG = "SearchDatabase";
 	private final static String DATABASE_NAME = "trains";
 	private final static int DATABASE_VERSION = 1;
-	private Context helperContext;
+	//private Context helperContext;
 	private SQLiteDatabase mDatabase;
 	public static final String KEY_WORD = SearchManager.SUGGEST_COLUMN_TEXT_1;
 	public static final String KEY_DEFINITION = SearchManager.SUGGEST_COLUMN_TEXT_2;
@@ -33,7 +33,7 @@ public class SearchDatabaseHelper extends SQLiteOpenHelper {
 
 	SearchDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		helperContext = context;
+		//helperContext = context;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class SearchDatabaseHelper extends SQLiteOpenHelper {
 	private void loadWords() throws IOException {
 		Log.d(TAG, "Loading words...");
 		for (String station : ConnectionMaker.LIST_OF_STATIONS) {
-			long id = addWord(station, "Station");
+			addWord(station, "Station");
 		}
 
 		Log.d(TAG, "DONE loading words.");

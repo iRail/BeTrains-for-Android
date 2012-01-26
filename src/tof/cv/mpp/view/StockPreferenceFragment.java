@@ -66,10 +66,10 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if (true)
+		//if (true)
 			return inflater.inflate(R.layout.activity_preference, null);
-		else
-			return super.onCreateView(inflater, container, savedInstanceState);
+		//else
+		//	return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
