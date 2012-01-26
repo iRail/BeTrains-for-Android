@@ -398,7 +398,7 @@ public class ChatFragment extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, MENU_FILTER, Menu.NONE, "Filter")
-				.setIcon(android.R.drawable.ic_menu_search)
+				.setIcon(R.drawable.ic_menu_search)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
