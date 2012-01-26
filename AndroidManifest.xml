@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tof.cv.mpp"
-    android:versionCode="6001"
-    android:versionName="3.01" 
+    android:versionCode="6002"
+    android:versionName="3.02" 
     android:installLocation="auto">
 
     <uses-sdk

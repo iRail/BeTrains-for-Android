@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:paddingLeft="8dp"
+     android:background="#FFFFFFFF"
     android:paddingRight="8dp" >
 
     <EditText

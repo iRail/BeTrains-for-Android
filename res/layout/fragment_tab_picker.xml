@@ -22,7 +22,8 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="0dip" >
+    android:padding="0dip" 
+     android:background="#FFFFFFFF">
 <include layout="@layout/colorstrip" />
     
    <com.viewpagerindicator.TitlePageIndicator
