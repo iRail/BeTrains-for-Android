@@ -130,11 +130,7 @@ public class WelcomeActivity extends FragmentActivity {
 	}
 
 	public void onSettingsClick(View v) {
-		if (findViewById(R.id.istablet) != null) {
-			setFragment(new ChatFragment());
-		} else {
 			startActivity(new Intent(this, MyPreferenceActivity.class));
-		}
 	}
 
 	public void onHelpClick(View v) {
