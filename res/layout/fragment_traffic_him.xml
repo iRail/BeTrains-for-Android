@@ -5,7 +5,7 @@
     android:background="#FFFFFFFF"
     android:orientation="vertical" >
 
-    <include layout="@layout/colorstrip" />
+   <!-- <include layout="@layout/colorstrip" />
 
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +18,7 @@
         android:text="B-Rail"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <include layout="@layout/colorstrip" />
+    <include layout="@layout/colorstrip" />  -->
 
     <ListView
         android:id="@android:id/list"

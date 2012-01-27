@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical">
-<TextView
-android:id="@+id/listtitle"
-android:textSize="16sp"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:textStyle="bold"
-android:textColor="@color/darkblue"/>
-<TextView
-android:id="@+id/listpubdate"
-android:textSize="12sp"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:textColor="#FF0F0F0F"/>
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="5dip"
+    android:paddingRight="5dip" >
+
+    <TextView
+        android:id="@+id/listtitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkblue"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/listpubdate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0F0F0F"
+        android:textSize="12sp" />
+
 </LinearLayout>

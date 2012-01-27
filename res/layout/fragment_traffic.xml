@@ -5,6 +5,7 @@
     android:background="#FFFFFFFF"
     android:orientation="vertical" >
 
+    <!--
     <include layout="@layout/colorstrip" />
 
     <TextView
@@ -19,6 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <include layout="@layout/colorstrip" />
+    -->
 
     <ListView
         android:id="@android:id/list"
