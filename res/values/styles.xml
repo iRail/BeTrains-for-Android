@@ -64,20 +64,21 @@
     </style>
 
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light">
-        <item name="abBackground">@color/action_bar_tint</item>
-        <item name="abTitleTextStyle">@style/CustomTitle</item>
         <item name="textColor">@color/darkblue</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
-
     </style>
 
-    <style name="CustomTitle" parent="TextAppearance.Widget.Title">
+    <!--
+      <item name="abBackground">@color/action_bar_tint</item>
+        <item name="abTitleTextStyle">@style/CustomTitle</item>
+            <style name="CustomTitle" parent="TextAppearance.Widget.Title">
         <item name="android:textColor">#ff000000</item>
     </style>
+    -->
 
     <style name="StyledIndicators" parent="@style/Theme.MyTheme">
-       <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
-        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item> 
+        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
     </style>
 
     <style name="CustomCirclePageIndicator">

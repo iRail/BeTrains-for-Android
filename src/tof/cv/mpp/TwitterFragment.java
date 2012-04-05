@@ -5,15 +5,17 @@ import java.io.File;
 import tof.cv.mpp.Utils.UtilsWeb;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TwitterFragment extends ListFragment{
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+
+public class TwitterFragment extends SherlockListFragment{
 //http://search.twitter.com/search.json?q=BETRAINS%20OR%20SNCB%20OR%20NMBS
 	
 	@Override
@@ -44,7 +46,7 @@ public class TwitterFragment extends ListFragment{
     } 
     
     @Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Filter")
 				.setIcon(R.drawable.ic_menu_preferences)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

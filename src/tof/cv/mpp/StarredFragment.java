@@ -5,8 +5,6 @@ import tof.cv.mpp.adapter.FavAdapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.MenuItem;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -15,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class StarredFragment extends ListFragment {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.MenuItem;
+
+public class StarredFragment extends SherlockListFragment {
 	protected static final String TAG = "StarredFragment";
 	private static DbAdapterConnection mDbHelper;
 	private Cursor mCursor ;
@@ -124,7 +125,7 @@ public class StarredFragment extends ListFragment {
 			populateList();
 			return true;
 		default:
-			return super.onContextItemSelected(item);
+			return super.onContextItemSelected((android.view.MenuItem) item);
 		}
 
 	}

@@ -17,16 +17,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,7 +31,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class InfoTrainFragment extends ListFragment {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class InfoTrainFragment extends SherlockListFragment {
 	protected static final String TAG = "ChatFragment";
 	private Vehicle currentVehicle;
 	private TextView mTitleText;
@@ -253,7 +254,7 @@ public class InfoTrainFragment extends ListFragment {
 
 			return true;
 		default:
-			return super.onContextItemSelected(item);
+			return super.onContextItemSelected((android.view.MenuItem) item);
 		}
 
 	}

@@ -10,13 +10,10 @@ import android.database.Cursor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActionBar.LayoutParams;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
-import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -30,14 +27,17 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
-public class StationPickerActivity extends FragmentActivity implements
+public class StationPickerActivity extends SherlockFragmentActivity implements
 		ViewPager.OnPageChangeListener {
 
 	MyAdapter mAdapter;
@@ -258,7 +258,7 @@ public class StationPickerActivity extends FragmentActivity implements
 				Utils.addAsStarred(sName, "", 1, getActivity());
 				return true;
 			default:
-				return super.onContextItemSelected(item);
+				return super.onContextItemSelected((android.view.MenuItem) item);
 			}
 
 		}
@@ -397,7 +397,7 @@ public class StationPickerActivity extends FragmentActivity implements
 				updateList();
 				return true;
 			default:
-				return super.onContextItemSelected(item);
+				return super.onContextItemSelected((android.view.MenuItem) item);
 			}
 
 		}

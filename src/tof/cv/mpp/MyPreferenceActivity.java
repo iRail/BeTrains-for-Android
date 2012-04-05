@@ -10,11 +10,10 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.support.v4.app.SherlockPreferenceActivity;
-import android.support.v4.view.MenuItem;
 import android.util.Log;
 
-import com.viewpagerindicator.R;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {

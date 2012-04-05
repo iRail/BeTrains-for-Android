@@ -69,9 +69,9 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 		Button okButton = (Button) v.findViewById(R.id.positiveButton);
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				fragment.getSupportActivity().getSupportActionBar().setTitle(
+				fragment.getSherlockActivity().getSupportActionBar().setTitle(
 						getFormatedDate(PlannerFragment.abTimePattern));
-				fragment.getSupportActivity().getSupportActionBar().setSubtitle(
+				fragment.getSherlockActivity().getSupportActionBar().setSubtitle(
 						getFormatedDate(PlannerFragment.abDatePattern));
 				fragment.mDate = mCalendar;
 				mThis.dismiss();

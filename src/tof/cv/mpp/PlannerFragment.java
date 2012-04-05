@@ -12,6 +12,7 @@ import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.ConnectionDialog;
 import tof.cv.mpp.view.DateTimePicker;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,15 +20,10 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.SupportActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,7 +32,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PlannerFragment extends ListFragment {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class PlannerFragment extends SherlockListFragment {
 
 	boolean isDebug = false;
 
@@ -60,7 +61,7 @@ public class PlannerFragment extends ListFragment {
 	private ConnectionAdapter connAdapter;
 
 	private String TAG = "BETRAINS";
-	private SupportActivity context;
+	private Activity context;
 
 	private static SharedPreferences settings;
 	private SharedPreferences.Editor editor;
@@ -98,7 +99,7 @@ public class PlannerFragment extends ListFragment {
 
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
-		context = this.getSupportActivity();
+		context = this.getActivity();
 		mDate = Calendar.getInstance();
 
 		updateActionBar();
@@ -262,7 +263,7 @@ public class PlannerFragment extends ListFragment {
 			return true;
 		case (MENU_FAV):
 			Utils.addAsStarred(tvDeparture.getText().toString(), tvArrival
-					.getText().toString(), 3, context.asActivity());
+					.getText().toString(), 3, context);
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):
@@ -534,10 +535,10 @@ public class PlannerFragment extends ListFragment {
 			style = android.R.style.Theme_DeviceDefault_Light_Dialog;
 
 		final DateTimePicker mDateTimeDialog = new DateTimePicker(
-				(Context) getSupportActivity(), style, this);
+				(Context) getActivity(), style, this);
 
 		final String timeS = android.provider.Settings.System.getString(
-				getSupportActivity().getContentResolver(),
+				getActivity().getContentResolver(),
 				android.provider.Settings.System.TIME_12_24);
 		final boolean is24h = !(timeS == null || timeS.equals("12"));
 
@@ -547,9 +548,9 @@ public class PlannerFragment extends ListFragment {
 	}
 
 	private void updateActionBar() {
-		getSupportActivity().getSupportActionBar().setTitle(
+		getSherlockActivity().getSupportActionBar().setTitle(
 				Utils.formatDate(mDate.getTime(), abTimePattern));
-		getSupportActivity().getSupportActionBar().setSubtitle(
+		getSherlockActivity().getSupportActionBar().setSubtitle(
 				Utils.formatDate(mDate.getTime(), abDatePattern));
 	}
 

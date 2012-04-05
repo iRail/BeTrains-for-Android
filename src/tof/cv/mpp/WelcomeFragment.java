@@ -2,18 +2,18 @@ package tof.cv.mpp;
 
 import tof.cv.mpp.adapter.MenuAdapter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.viewpagerindicator.CirclePageIndicator;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.viewpagerindicator.TitlePageIndicator;
 
-public class WelcomeFragment extends Fragment{
+public class WelcomeFragment extends SherlockFragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -23,7 +23,7 @@ public class WelcomeFragment extends Fragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		getSupportActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
 		setHasOptionsMenu(true);
 		
 		ViewPager mPager = (ViewPager) getActivity().findViewById(R.id.pager);
@@ -31,9 +31,8 @@ public class WelcomeFragment extends Fragment{
 		MenuAdapter adapter = new MenuAdapter();
 		mPager.setAdapter(adapter);
 
-		CirclePageIndicator indicator = (CirclePageIndicator) getActivity().findViewById(R.id.indicator);
+		TitlePageIndicator indicator = (TitlePageIndicator) getActivity().findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
-		indicator.setSnap(true);
 	}
 	
 	  

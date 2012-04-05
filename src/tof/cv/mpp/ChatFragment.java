@@ -19,13 +19,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,7 +31,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ChatFragment extends ListFragment {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class ChatFragment extends SherlockListFragment {
 	/** Called when the activity is first created. */
 	private TextView mTitleText;
 	private Button btnSettings;
@@ -62,11 +63,11 @@ public class ChatFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(
+		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(
 				true);
 
 		setHasOptionsMenu(true);
-		getSupportActivity().getSupportActionBar().setTitle(
+		getSherlockActivity().getSupportActionBar().setTitle(
 				getString(R.string.txt_messages));
 
 	}
@@ -121,31 +122,32 @@ public class ChatFragment extends ListFragment {
 		});
 
 	}
+
 	private void postMessage(final String pseudo) {
-		
+
 		Runnable trainSearch = new Runnable() {
 
 			public void run() {
-				
+
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
 						progressDialog = ProgressDialog.show(getActivity(), "",
 								getString(R.string.txt_patient), true);
 					}
 				});
-				
-				if (requestPhpSend(pseudo, messageTxtField.getText()
-						.toString(), trainId)) {
-					
-					toTast=getString(android.R.string.ok);
+
+				if (requestPhpSend(pseudo,
+						messageTxtField.getText().toString(), trainId)) {
+
+					toTast = getString(android.R.string.ok);
 					getActivity().runOnUiThread(displayToast);
 
 					posted = true;
 				}
 
 				else
-					toTast="Problem";
-					getActivity().runOnUiThread(displayToast);
+					toTast = "Problem";
+				getActivity().runOnUiThread(displayToast);
 				getActivity().runOnUiThread(dismissPd);
 			}
 		};
@@ -154,6 +156,7 @@ public class ChatFragment extends ListFragment {
 		thread.start();
 
 	}
+
 	private Runnable dismissPd = new Runnable() {
 		public void run() {
 			progressDialog.dismiss();
@@ -164,8 +167,6 @@ public class ChatFragment extends ListFragment {
 			Toast.makeText(getActivity(), toTast, Toast.LENGTH_LONG).show();
 		}
 	};
-
-	
 
 	private void setBtnMoreListener() {
 		btnMore.setOnClickListener(new Button.OnClickListener() {
@@ -191,16 +192,20 @@ public class ChatFragment extends ListFragment {
 	public void update() {
 		final Runnable getMessageFromTrain = new Runnable() {
 			public void run() {
-				listOfMessage = UtilsWeb.requestPhpRead(trainId, 0, total, getActivity());
+				listOfMessage = UtilsWeb.requestPhpRead(trainId, 0, total,
+						getActivity());
 				if (listOfMessage != null) {
 					Log.i(TAG, "count= " + listOfMessage.size());
-					if (listOfMessage.size() == 0)
-						getActivity().runOnUiThread(updateEmpty);
-					else
-						getActivity().runOnUiThread(returnRes);
-					toEmpty=getString(R.string.txt_no_message);
-				} else{
-					toEmpty=getString(R.string.txt_connection);
+					if (listOfMessage.size() == 0) {
+						if (getActivity() != null)
+							getActivity().runOnUiThread(updateEmpty);
+					} else {
+						if (getActivity() != null)
+							getActivity().runOnUiThread(returnRes);
+					}
+					toEmpty = getString(R.string.txt_no_message);
+				} else {
+					toEmpty = getString(R.string.txt_connection);
 					getActivity().runOnUiThread(returnRes);
 				}
 			}
@@ -209,7 +214,7 @@ public class ChatFragment extends ListFragment {
 		Thread thread = new Thread(null, getMessageFromTrain, "ChatThread");
 		thread.start();
 	}
-	
+
 	private Runnable returnRes = new Runnable() {
 
 		public void run() {
@@ -228,6 +233,7 @@ public class ChatFragment extends ListFragment {
 		}
 
 	};
+
 	public void onResume() {
 		super.onResume();
 		Log.i("BETRAINS", "train ID= " + trainId);
@@ -308,13 +314,11 @@ public class ChatFragment extends ListFragment {
 		}
 	}
 
-	
-
 	public static boolean requestPhpSend(String pseudo, String message,
 			String trainId) {
 		try {
 			String txt = "";
-			
+
 			// On cree le client
 			HttpClient client = new HttpClient();
 
@@ -322,30 +326,32 @@ public class ChatFragment extends ListFragment {
 			clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
 					"UTF-8");
 			client.setParams(clientParams);
-			/*HttpClient client = new DefaultHttpClient();
-			
-			client.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, 
-				    "UTF-8");
-				    
-				    			HttpPost httppost = new HttpPost(
-					"http://christophe.frandroid.com/betrains/php/messages.php");
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("code",
-					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
-			nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
-			nameValuePairs.add(new BasicNameValuePair("user_message", message));
-			nameValuePairs.add(new BasicNameValuePair("user_name", pseudo));
-			nameValuePairs.add(new BasicNameValuePair("mode", "write"));
-			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
-			
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-			HttpResponse response = client.execute(httppost);
-
-			BasicResponseHandler myHandler = new BasicResponseHandler();
-			txt = myHandler.handleResponse(response);
-
-			*/
+			/*
+			 * HttpClient client = new DefaultHttpClient();
+			 * 
+			 * client.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET
+			 * , "UTF-8");
+			 * 
+			 * HttpPost httppost = new HttpPost(
+			 * "http://christophe.frandroid.com/betrains/php/messages.php");
+			 * List<NameValuePair> nameValuePairs = new
+			 * ArrayList<NameValuePair>(2); nameValuePairs.add(new
+			 * BasicNameValuePair("code",
+			 * "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
+			 * nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
+			 * nameValuePairs.add(new BasicNameValuePair("user_message",
+			 * message)); nameValuePairs.add(new BasicNameValuePair("user_name",
+			 * pseudo)); nameValuePairs.add(new BasicNameValuePair("mode",
+			 * "write")); nameValuePairs.add(new BasicNameValuePair("order",
+			 * "DESC"));
+			 * 
+			 * httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			 * 
+			 * HttpResponse response = client.execute(httppost);
+			 * 
+			 * BasicResponseHandler myHandler = new BasicResponseHandler(); txt
+			 * = myHandler.handleResponse(response);
+			 */
 			PostMethod methode = new PostMethod(
 					"http://christophe.frandroid.com/betrains/php/messages.php");
 			// On ajoute les parametres du formulaire
@@ -366,8 +372,8 @@ public class ChatFragment extends ListFragment {
 				// nombre renvoye.
 				// System.out.println("La reponse de executeMethod est : " +
 				// retour);
-				br = new BufferedReader(new InputStreamReader(methode
-						.getResponseBodyAsStream()));
+				br = new BufferedReader(new InputStreamReader(
+						methode.getResponseBodyAsStream()));
 				String readLine;
 
 				// Tant que la ligne en cours n'est pas vide
