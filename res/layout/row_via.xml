@@ -55,7 +55,7 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/tv_departure_platform"
+            android:id="@+id/tv_arrival_platform"
             android:layout_width="33dip"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -65,7 +65,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_departure_time"
+            android:id="@+id/tv_arrival_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -92,7 +92,7 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/tv_arrival_platform"
+            android:id="@+id/tv_departure_platform"
             android:layout_width="33dip"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -102,7 +102,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_arrival_time"
+            android:id="@+id/tv_departure_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XX:XX"
