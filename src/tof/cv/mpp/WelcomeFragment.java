@@ -11,7 +11,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class WelcomeFragment extends SherlockFragment{
 
@@ -31,7 +31,7 @@ public class WelcomeFragment extends SherlockFragment{
 		MenuAdapter adapter = new MenuAdapter();
 		mPager.setAdapter(adapter);
 
-		TitlePageIndicator indicator = (TitlePageIndicator) getActivity().findViewById(R.id.indicator);
+		CirclePageIndicator indicator = (CirclePageIndicator) getActivity().findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
 	}
 	
