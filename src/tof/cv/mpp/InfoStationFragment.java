@@ -201,7 +201,8 @@ public class InfoStationFragment extends SherlockListFragment {
 		menu.add(0, 0, 0, clicked.getVehicle());
 	}
 
-	public boolean onContextItemSelected(MenuItem item) {
+	@Override
+	public boolean onContextItemSelected(android.view.MenuItem item) {
 		switch (item.getItemId()) {
 		case 0:
 			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
@@ -214,7 +215,7 @@ public class InfoStationFragment extends SherlockListFragment {
 			startActivity(i);
 			return true;
 		default:
-			return super.onContextItemSelected((android.view.MenuItem) item);
+			return super.onContextItemSelected(item);
 		}
 
 	}

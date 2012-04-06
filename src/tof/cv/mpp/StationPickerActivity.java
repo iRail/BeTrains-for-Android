@@ -44,6 +44,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 	ViewPager mPager;
 	private static final int ADD_ID = 1;
 	private static final int REMOVE_ID = 2;
+	private static final int ADD_EUROPE_ID = 3;
 	static StationFavListFragment f;
 
 	private static DbAdapterConnection mDbHelper;
@@ -245,20 +246,36 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		public void onCreateContextMenu(ContextMenu menu, View v,
 				ContextMenuInfo menuInfo) {
 			super.onCreateContextMenu(menu, v, menuInfo);
-			menu.add(0, ADD_ID, 0, "Favorite");
+			switch (mNum) {
+			case 1:
+				menu.add(0, ADD_ID, 0, "Favorite");
+				break;
+			case 2:
+				menu.add(0, ADD_EUROPE_ID, 0, "Favorite (Eu)");
+				break;
+			}
+				
 		}
 
-		public boolean onContextItemSelected(MenuItem item) {
+		@Override
+		public boolean onContextItemSelected(android.view.MenuItem item) {
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+					.getMenuInfo();
 			switch (item.getItemId()) {
 			case ADD_ID:
-				AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
-						.getMenuInfo();
+
 				String sName = (String) getListAdapter().getItem(
 						(int) menuInfo.id);
 				Utils.addAsStarred(sName, "", 1, getActivity());
 				return true;
+			case ADD_EUROPE_ID:
+				sName = (String) getListAdapter().getItem(
+						(int) menuInfo.id);
+				Utils.addAsStarred(sName, "", 1, getActivity());
+				return true;
 			default:
-				return super.onContextItemSelected((android.view.MenuItem) item);
+				return super
+						.onContextItemSelected((android.view.MenuItem) item);
 			}
 
 		}
@@ -354,11 +371,13 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		public void updateList() {
 			mDbHelper.open();
 			Cursor mCursor = mDbHelper.fetchAllFavStations();
-			
-			String[] from={DbAdapterConnection.KEY_FAV_NAME};
-			int[] to={android.R.id.text1};
-			
-			SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, mCursor, from, to);
+
+			String[] from = { DbAdapterConnection.KEY_FAV_NAME };
+			int[] to = { android.R.id.text1 };
+
+			SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+					getActivity(), android.R.layout.simple_list_item_1,
+					mCursor, from, to);
 			setListAdapter(adapter);
 			mDbHelper.close();
 		}
@@ -367,10 +386,17 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		public void onListItemClick(ListView l, View v, int position, long id) {
 			Bundle bundle = new Bundle();
 			mDbHelper.open();
-			Cursor c=mDbHelper.fetchAllFav();
+			Cursor c = mDbHelper.fetchAllFav();
 			c.moveToPosition(position);
-			
-			bundle.putString("GARE", mDbHelper.fetchFav(c.getInt(c.getColumnIndex(DbAdapterConnection.KEY_ROWID))).getString(c.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+
+			bundle.putString(
+					"GARE",
+					mDbHelper
+							.fetchFav(
+									c.getInt(c
+											.getColumnIndex(DbAdapterConnection.KEY_ROWID)))
+							.getString(
+									c.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
 			mDbHelper.close();
 			Intent i = new Intent();
 			i.putExtras(bundle);
@@ -384,20 +410,22 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 			menu.add(0, REMOVE_ID, 0, "Remove");
 		}
 
-		public boolean onContextItemSelected(MenuItem item) {
+		@Override
+		public boolean onContextItemSelected(android.view.MenuItem item) {
 			switch (item.getItemId()) {
 			case REMOVE_ID:
 				AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
 						.getMenuInfo();
 				mDbHelper.open();
-				Log.i("","ID "+menuInfo.id);
+				Log.i("", "ID " + menuInfo.id);
 				mDbHelper.deleteFav(menuInfo.id);
 				mDbHelper.close();
-				
+
 				updateList();
 				return true;
 			default:
-				return super.onContextItemSelected((android.view.MenuItem) item);
+				return super
+						.onContextItemSelected((android.view.MenuItem) item);
 			}
 
 		}
@@ -418,11 +446,11 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			if (position == 0){
-				f=StationFavListFragment.newInstance();
+			if (position == 0) {
+				f = StationFavListFragment.newInstance();
 				return f;
 			}
-				
+
 			return StationListFragment.newInstance(position);
 		}
 

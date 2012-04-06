@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -240,10 +241,11 @@ public class InfoTrainFragment extends SherlockListFragment {
 		menu.add(0, 0, 0, clicked.getStation());
 	}
 
-	public boolean onContextItemSelected(MenuItem item) {
+	@Override
+	public boolean onContextItemSelected(android.view.MenuItem item) {
 		switch (item.getItemId()) {
 		case 0:
-			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+			AdapterView.AdapterContextMenuInfo menuInfo =  (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			VehicleStop stop = (VehicleStop) getListAdapter().getItem(
 					(int) menuInfo.id);
@@ -254,7 +256,7 @@ public class InfoTrainFragment extends SherlockListFragment {
 
 			return true;
 		default:
-			return super.onContextItemSelected((android.view.MenuItem) item);
+			return super.onContextItemSelected(item);
 		}
 
 	}

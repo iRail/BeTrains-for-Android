@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
@@ -19,8 +20,9 @@ import com.actionbarsherlock.view.MenuItem;
 public class StarredFragment extends SherlockListFragment {
 	protected static final String TAG = "StarredFragment";
 	private static DbAdapterConnection mDbHelper;
-	private Cursor mCursor ;
+	private Cursor mCursor;
 	private static final int REMOVE_ID = 1;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class StarredFragment extends SherlockListFragment {
 		mDbHelper = new DbAdapterConnection(getActivity());
 
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -48,8 +50,8 @@ public class StarredFragment extends SherlockListFragment {
 		super.onResume();
 		populateList();
 	}
-	
-	public void populateList(){
+
+	public void populateList() {
 		mDbHelper.open();
 		mCursor = mDbHelper.fetchAllFav();
 		FavAdapter fAdapter = new FavAdapter(getActivity(), mCursor);
@@ -60,35 +62,32 @@ public class StarredFragment extends SherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+
 		mCursor.moveToPosition(position);
-		String item=mCursor.getString(mCursor
+		String item = mCursor.getString(mCursor
 				.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME));
-		String itemTwo=mCursor.getString(mCursor
+		String itemTwo = mCursor.getString(mCursor
 				.getColumnIndex(DbAdapterConnection.KEY_FAV_NAMETWO));
-		int type=mCursor.getInt(mCursor
+		int type = mCursor.getInt(mCursor
 				.getColumnIndex(DbAdapterConnection.KEY_FAV_TYPE));
 		Intent i;
 		switch (type) {
 		case 1:
-			i = new Intent(getActivity(),
-					InfoStationActivity.class);
+			i = new Intent(getActivity(), InfoStationActivity.class);
 			i.putExtra("Name", item);
 			startActivity(i);
 			break;
 		case 2:
-			i = new Intent(getActivity(),
-					InfoTrainActivity.class);
-			i.putExtra("Name",item);
+			i = new Intent(getActivity(), InfoTrainActivity.class);
+			i.putExtra("Name", item);
 			startActivity(i);
 			break;
 		case 3:
-			i = new Intent(getActivity(),
-					PlannerActivity.class);
-			i.putExtra("Departure",item);
-			i.putExtra("Arrival",itemTwo);
+			i = new Intent(getActivity(), PlannerActivity.class);
+			i.putExtra("Departure", item);
+			i.putExtra("Arrival", itemTwo);
 			startActivity(i);
-		
+
 			break;
 		}
 	}
@@ -106,18 +105,20 @@ public class StarredFragment extends SherlockListFragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, REMOVE_ID, 0, R.string.txt_remove);
 	}
 
-	public boolean onContextItemSelected(MenuItem item) {
+	@Override
+	public boolean onContextItemSelected(android.view.MenuItem item) {
+		System.out.println("YAHOO DEBUG ++++++");
 		switch (item.getItemId()) {
 		case REMOVE_ID:
-			
-			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			mDbHelper.open();
 			mDbHelper.deleteFav(menuInfo.id);
@@ -125,7 +126,7 @@ public class StarredFragment extends SherlockListFragment {
 			populateList();
 			return true;
 		default:
-			return super.onContextItemSelected((android.view.MenuItem) item);
+			return super.onContextItemSelected(item);
 		}
 
 	}
