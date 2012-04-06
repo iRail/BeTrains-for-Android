@@ -16,6 +16,7 @@ public class ChatActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.activity_chat);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_chat);
 		String trainId = null;
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {

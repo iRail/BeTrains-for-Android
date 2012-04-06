@@ -15,6 +15,7 @@ public class TwitterActivity extends SherlockFragmentActivity {
 		
 		setContentView(R.layout.activity_twitter);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_twit);
 	}
 	
 

@@ -26,6 +26,7 @@ public class TrafficActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.activity_traffic);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_traffic);
 
 		mAdapter = new MenuAdapter(getSupportFragmentManager());
 

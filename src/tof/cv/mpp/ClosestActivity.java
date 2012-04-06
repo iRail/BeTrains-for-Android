@@ -16,6 +16,7 @@ public class ClosestActivity extends SherlockFragmentActivity {
 		
 		setContentView(R.layout.activity_closest);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_closest);
 	}
 
 	

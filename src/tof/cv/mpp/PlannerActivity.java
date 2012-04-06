@@ -15,6 +15,7 @@ public class PlannerActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.activity_planner);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_planner);
 
 		Bundle extras = getIntent().getExtras();
 

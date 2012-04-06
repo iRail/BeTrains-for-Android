@@ -15,6 +15,7 @@ public class StarredActivity extends SherlockFragmentActivity {
 		
 		setContentView(R.layout.activity_starred);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_starred);	
 	}
 
 	
