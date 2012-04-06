@@ -61,15 +61,19 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 			switch (Integer.valueOf(settings.getString("Activitypref", "1"))) {
 			case 1:
 				setFragment(new PlannerFragment());
+				getSupportActionBar().setIcon(R.drawable.home_btn_planner);
 				break;
 			case 3:
 				setFragment(new StarredFragment());
+				getSupportActionBar().setIcon(R.drawable.home_btn_starred);
 				break;
 			case 4:
 				setFragment(new TrafficFragment());
+				getSupportActionBar().setIcon(R.drawable.home_btn_traffic);
 				break;
 			case 5:
 				setFragment(new ClosestFragment());
+				getSupportActionBar().setIcon(R.drawable.home_btn_closest);
 				break;
 			default:
 				setFragment(new WelcomeFragment());

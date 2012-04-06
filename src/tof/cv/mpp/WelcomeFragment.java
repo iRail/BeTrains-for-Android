@@ -23,7 +23,7 @@ public class WelcomeFragment extends SherlockFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		setHasOptionsMenu(true);
 		
 		ViewPager mPager = (ViewPager) getActivity().findViewById(R.id.pager);
