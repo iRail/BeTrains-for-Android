@@ -66,10 +66,10 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//if (true)
-			return inflater.inflate(R.layout.activity_preference, null);
-		//else
-		//	return super.onCreateView(inflater, container, savedInstanceState);
+		// if (true)
+		return inflater.inflate(R.layout.activity_preference, null);
+		// else
+		// return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
@@ -85,18 +85,21 @@ public class StockPreferenceFragment extends PreferenceFragment implements
 		if (key.contentEquals("prefPseudo")) {
 			Log.i("", "PseudoChanged1");
 			Preference pref = findPreference("prefPseudo");
-			pref.setSummary(((EditTextPreference) pref).getText());
+			if (pref != null)
+				pref.setSummary(((EditTextPreference) pref).getText());
 		}
 		if (key.contentEquals(a.getString(R.string.key_activity))) {
 			Log.i("", "FirstChanged1");
 			Preference pref = findPreference(a.getString(R.string.key_activity));
-			pref.setSummary(((ListPreference) pref).getEntry());
+			if (pref != null)
+				pref.setSummary(((ListPreference) pref).getEntry());
 		}
 		if (key.contentEquals(a.getString(R.string.key_planner_da))) {
 			Preference pref = findPreference(a
 					.getString(R.string.key_planner_da));
 			Log.i("", "PlannerChanged1" + pref);
-			pref.setSummary(((ListPreference) pref).getEntry());
+			if (pref != null)
+				pref.setSummary(((ListPreference) pref).getEntry());
 		}
 
 	}

@@ -53,18 +53,18 @@
         android:text="@string/btn_closest_stations" />
 
     <Button
-        android:id="@+id/btn_iRail"
-        style="@style/HomeButton"
-        android:drawableTop="@drawable/home_btn_irail"
-        android:onClick="onIrailClick"
-        android:text="Liveboards" />
-
-    <Button
         android:id="@+id/btn_home_settings"
         style="@style/HomeButton"
         android:drawableTop="@drawable/home_btn_settings"
         android:onClick="onSettingsClick"
         android:text="@string/btn_home_settings" />
+
+    <Button
+        android:id="@+id/btn_iRail"
+        style="@style/HomeButton"
+        android:drawableTop="@drawable/home_btn_irail"
+        android:onClick="onIrailClick"
+        android:text="Liveboards" />
 
     <Button
         android:id="@+id/btn_home_help"

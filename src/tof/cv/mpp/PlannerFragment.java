@@ -127,7 +127,7 @@ public class PlannerFragment extends SherlockListFragment {
 	public void fillStations(String departure, String arrival) {
 		Log.i("", "fill " + departure + " - " + arrival + " - " + fromIntent);
 		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
-		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
+		tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
 
 		if (fromIntent) {
 			fromIntent = false;

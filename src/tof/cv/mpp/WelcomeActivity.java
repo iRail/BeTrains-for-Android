@@ -150,7 +150,7 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 			@Override
 			public void onClick(View arg0) {
 				Intent profileIntent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse("https://plus.google.com/117418174673875366560"));
+						.parse("https://plus.google.com/108315424589085456181"));
 				startActivity(profileIntent);
 
 			}

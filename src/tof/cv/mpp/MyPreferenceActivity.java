@@ -17,7 +17,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
-
+	Boolean hasHeader = false;
 	// private MyPrefAdapter mAdapter;
 	// private ViewPager mPager;
 	public static int PAGE_GENERAL = 0;
@@ -32,6 +32,7 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		Utils.setFullscreenIfNecessary(this);
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.home_btn_settings);
 
 		Bundle extras = this.getIntent().getExtras();
 		if (extras != null)
@@ -39,7 +40,7 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 
 		// if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 
-		Boolean hasHeader = false;
+		
 		try {
 			hasHeader = this.hasHeaders();
 		} catch (NoSuchMethodError e) {
@@ -118,7 +119,7 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 
 		Log.i("", "onBuildHeaders" + page);
 
-		if (page == 99)
+		if (hasHeader)
 			loadHeadersFromResource(R.xml.preference_headers, target);
 
 		this.setContentView(R.layout.activity_preference);
