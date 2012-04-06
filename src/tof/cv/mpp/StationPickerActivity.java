@@ -56,8 +56,8 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 	protected void onSaveInstanceState(Bundle outState) {
 
 		super.onSaveInstanceState(outState);
-		getSupportFragmentManager().putFragment(outState,
-				StationFavListFragment.class.getName(), f);
+		// getSupportFragmentManager().putFragment(outState,
+		// StationFavListFragment.class.getName(), f);
 	}
 
 	/** Called when the activity is first created. */
@@ -67,7 +67,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 		Utils.setFullscreenIfNecessary(this);
 		setContentView(R.layout.fragment_tab_picker);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		// getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mAdapter = new MyAdapter(getSupportFragmentManager());
 
@@ -94,9 +94,68 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		}
 	}
 
+	public static class EuroStationListFragment extends StationListFragment {
+
+		public void onCreateContextMenu(ContextMenu menu, View v,
+				ContextMenuInfo menuInfo) {
+			// super.onCreateContextMenu(menu, v, menuInfo);
+			menu.add(0, ADD_EUROPE_ID, 0, "Favorite (Eu)");
+		}
+
+		@Override
+		public boolean onContextItemSelected(android.view.MenuItem item) {
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+					.getMenuInfo();
+			switch (item.getItemId()) {
+			case ADD_EUROPE_ID:
+				String sName = (String) getListAdapter().getItem(
+						(int) menuInfo.id);
+				Utils.addAsStarred(sName, "", 1, getActivity());
+				return true;
+			default:
+				return super
+						.onContextItemSelected((android.view.MenuItem) item);
+			}
+
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+
+			View v = null;
+			v = inflater.inflate(R.layout.fragment_station_list, container,
+					false);
+
+			return v;
+		}
+
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+
+			String[] list = ConnectionMaker.LIST_OF_EURO_STATIONS;
+
+			getListView().setFastScrollEnabled(true);
+			registerForContextMenu(getListView());
+
+			ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_1, list);
+
+			this.setListAdapter(a);
+		}
+		
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+			//System.out.println("DO NOTHING!");
+
+		}
+
+	}
+
 	public static class StationListFragment extends ListFragment implements
 			OnScrollListener {
-		static int mNum;
 		private char mPrevLetter = '\'';
 		private TextView mDialogText;
 		private boolean mShowing;
@@ -118,20 +177,6 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		private RemoveWindow mRemoveWindow = new RemoveWindow();
 		Handler mHandler = new Handler();
 		private WindowManager mWindowManager;
-
-		/**
-		 * Create a new instance of CountingFragment, providing "num" as an
-		 * argument.
-		 */
-		static StationListFragment newInstance(int num) {
-			StationListFragment f = new StationListFragment();
-			// Supply num input as an argument.
-			Bundle args = new Bundle();
-			args.putInt("num", num);
-			f.setArguments(args);
-
-			return f;
-		}
 
 		@Override
 		public void onResume() {
@@ -161,15 +206,10 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			mNum = getArguments() != null ? getArguments().getInt("num") : 1;
+			// mNum = getArguments() != null ? getArguments().getInt("num") : 1;
 			View v = null;
-			if (mNum != 1)
-				v = inflater.inflate(R.layout.fragment_station_list, container,
-						false);
-			else {
-				v = inflater.inflate(R.layout.fragment_station_picker,
-						container, false);
-			}
+			v = inflater.inflate(R.layout.fragment_station_picker, container,
+					false);
 
 			return v;
 		}
@@ -178,15 +218,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			String[] list = {};
-			switch (mNum) {
-			case 1:
-				list = ConnectionMaker.LIST_OF_STATIONS;
-				break;
-			case 2:
-				list = ConnectionMaker.LIST_OF_EURO_STATIONS;
-				break;
-			}
+			String[] list = ConnectionMaker.LIST_OF_STATIONS;
 
 			getListView().setFastScrollEnabled(true);
 			registerForContextMenu(getListView());
@@ -194,38 +226,35 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 			ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
 					android.R.layout.simple_list_item_1, list);
 
-			if (mNum == 1) {
+			mWindowManager = (WindowManager) getActivity().getSystemService(
+					Context.WINDOW_SERVICE);
 
-				mWindowManager = (WindowManager) getActivity()
-						.getSystemService(Context.WINDOW_SERVICE);
+			LayoutInflater inflate = (LayoutInflater) getActivity()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			mDialogText = (TextView) inflate.inflate(R.layout.list_position,
+					null);
+			mDialogText.setVisibility(View.INVISIBLE);
 
-				LayoutInflater inflate = (LayoutInflater) getActivity()
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				mDialogText = (TextView) inflate.inflate(
-						R.layout.list_position, null);
-				mDialogText.setVisibility(View.INVISIBLE);
+			mHandler.post(new Runnable() {
 
-				mHandler.post(new Runnable() {
-
-					public void run() {
-						WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-								LayoutParams.WRAP_CONTENT,
-								LayoutParams.WRAP_CONTENT,
-								WindowManager.LayoutParams.TYPE_APPLICATION,
-								WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-										| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-								PixelFormat.TRANSLUCENT);
-						mWindowManager.addView(mDialogText, lp);
-					}
-				});
-
-				EditText filterText = (EditText) getActivity().findViewById(
-						R.id.search_box);
-				FilterTextWatcher filterTextWatcher = new FilterTextWatcher(a);
-				if (filterText != null) {
-					filterText.addTextChangedListener(filterTextWatcher);
-					getListView().setTextFilterEnabled(true);
+				public void run() {
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT,
+							WindowManager.LayoutParams.TYPE_APPLICATION,
+							WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+									| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+							PixelFormat.TRANSLUCENT);
+					mWindowManager.addView(mDialogText, lp);
 				}
+			});
+
+			EditText filterText = (EditText) getActivity().findViewById(
+					R.id.search_box);
+			FilterTextWatcher filterTextWatcher = new FilterTextWatcher(a);
+			if (filterText != null) {
+				filterText.addTextChangedListener(filterTextWatcher);
+				getListView().setTextFilterEnabled(true);
 			}
 
 			getListView().setOnScrollListener(this);
@@ -246,15 +275,8 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		public void onCreateContextMenu(ContextMenu menu, View v,
 				ContextMenuInfo menuInfo) {
 			super.onCreateContextMenu(menu, v, menuInfo);
-			switch (mNum) {
-			case 1:
-				menu.add(0, ADD_ID, 0, "Favorite");
-				break;
-			case 2:
-				menu.add(0, ADD_EUROPE_ID, 0, "Favorite (Eu)");
-				break;
-			}
-				
+			menu.add(0, ADD_ID, 0, "Favorite");
+
 		}
 
 		@Override
@@ -263,13 +285,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 					.getMenuInfo();
 			switch (item.getItemId()) {
 			case ADD_ID:
-
 				String sName = (String) getListAdapter().getItem(
-						(int) menuInfo.id);
-				Utils.addAsStarred(sName, "", 1, getActivity());
-				return true;
-			case ADD_EUROPE_ID:
-				sName = (String) getListAdapter().getItem(
 						(int) menuInfo.id);
 				Utils.addAsStarred(sName, "", 1, getActivity());
 				return true;
@@ -311,9 +327,10 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 	}
 
 	public static class StationFavListFragment extends ListFragment {
-		static int mNum;
+
 		private TextView mDialogText;
 		private boolean mShowing;
+		Cursor mCursor;
 
 		private void removeWindow() {
 			if (mShowing) {
@@ -330,7 +347,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		 * argument.
 		 */
 		static StationFavListFragment newInstance() {
-			StationFavListFragment f = new StationFavListFragment();
+			f = new StationFavListFragment();
 			return f;
 		}
 
@@ -354,7 +371,6 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			mNum = getArguments() != null ? getArguments().getInt("num") : 1;
 			View v = null;
 			v = inflater.inflate(R.layout.fragment_station_list, container,
 					false);
@@ -370,7 +386,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 		public void updateList() {
 			mDbHelper.open();
-			Cursor mCursor = mDbHelper.fetchAllFavStations();
+			mCursor = mDbHelper.fetchAllFavStations();
 
 			String[] from = { DbAdapterConnection.KEY_FAV_NAME };
 			int[] to = { android.R.id.text1 };
@@ -385,19 +401,12 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
 			Bundle bundle = new Bundle();
-			mDbHelper.open();
-			Cursor c = mDbHelper.fetchAllFav();
-			c.moveToPosition(position);
 
-			bundle.putString(
-					"GARE",
-					mDbHelper
-							.fetchFav(
-									c.getInt(c
-											.getColumnIndex(DbAdapterConnection.KEY_ROWID)))
-							.getString(
-									c.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
-			mDbHelper.close();
+			mCursor.moveToPosition(position);
+
+			bundle.putString("GARE", mCursor.getString(mCursor
+					.getColumnIndex(DbAdapterConnection.KEY_FAV_NAME)));
+
 			Intent i = new Intent();
 			i.putExtras(bundle);
 			getActivity().setResult(RESULT_OK, i);
@@ -446,12 +455,16 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			if (position == 0) {
-				f = StationFavListFragment.newInstance();
-				return f;
-			}
 
-			return StationListFragment.newInstance(position);
+			switch (position) {
+			case 0:
+				return StationFavListFragment.newInstance();
+			case 1:
+				return new StationListFragment();
+			case 2:
+				return new EuroStationListFragment();
+			}
+			return null;
 		}
 
 		@Override
