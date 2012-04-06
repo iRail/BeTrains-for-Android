@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
+import com.google.gson.Gson;
+
 import tof.cv.mpp.bo.Connections;
 import android.app.Activity;
 import android.content.Context;
@@ -28,8 +30,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.google.gson.Gson;
 
 public class Utils {
 

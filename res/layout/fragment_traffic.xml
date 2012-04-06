@@ -29,7 +29,7 @@
         android:layout_marginTop="5dip" />
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/feedempty"
         style="@style/TextElement"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

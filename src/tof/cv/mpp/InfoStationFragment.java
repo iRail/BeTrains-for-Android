@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,13 +119,12 @@ public class InfoStationFragment extends SherlockListFragment {
 					setTitle(Utils.formatDate(new Date(timestamp),
 							"dd MMM HH:mm"));
 				} else {
-					
 
 					Toast.makeText(getActivity(), R.string.txt_no_result,
 							Toast.LENGTH_LONG).show();
 					setTitle(Utils.formatDate(new Date(timestamp),
 							"dd MMM HH:mm"));
-					
+
 				}
 			else {
 
@@ -139,11 +137,6 @@ public class InfoStationFragment extends SherlockListFragment {
 
 	public void setTitle(String txt) {
 		mTitleText.setText(txt);
-	}
-
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,20 +26,25 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -63,6 +69,7 @@ public class ClosestFragment extends SherlockListFragment {
 	Cursor locationCursor;
 	private TextView tvEmpty;
 	private Button btEmpty;
+	StationLocation clicked;
 
 	private static final long INT_MINTIME = 3000;
 	private static final long INT_MINDISTANCE = 50;
@@ -113,8 +120,56 @@ public class ClosestFragment extends SherlockListFragment {
 
 	}
 
-	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		l.showContextMenuForChild(v);
+	}
+
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+		clicked = (StationLocation) getListAdapter().getItem((int) info.id);
+
+		menu.add(0, 0, 0, "" + clicked.getLat());
+		menu.add(0, 0, 0, "" + clicked.getLon());
+	}
+
+	@Override
+	public boolean onContextItemSelected(android.view.MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			try {
+				Uri uri = Uri.parse("google.navigation:q="
+						+ ((double) clicked.getLat() / 1E6) + ","
+						+ ((double) clicked.getLon() / 1E6));
+				Intent it = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(it);
+			} catch (ActivityNotFoundException e) {
+				(Toast.makeText(getActivity(), "Navigation not found",
+						Toast.LENGTH_LONG)).show();
+			}
+			return true;
+		case 1:
+			try {
+				Intent i = new Intent(getActivity(), MapStationActivity.class);
+
+				i.putExtra("nom", clicked.getStation());
+				i.putExtra("lat", "" + (clicked.getLat() / 1E6));
+
+				i.putExtra("lon", "" + (clicked.getLon() / 1E6));
+
+				startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				(Toast.makeText(getActivity(), "GoogleMap not found",
+						Toast.LENGTH_LONG)).show();
+			}
+
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
 
 	}
 
@@ -156,7 +211,7 @@ public class ClosestFragment extends SherlockListFragment {
 				btnUpdate.setVisibility(View.VISIBLE);
 				btnUpdate.setText(getActivity().getString(
 						R.string.update_gps_btn, loc.getAccuracy()));
-				
+
 				if (!threadLock)
 					notifyList(false);
 
@@ -203,7 +258,6 @@ public class ClosestFragment extends SherlockListFragment {
 		}
 
 	}
-
 
 	private void updateListToBestLocation() {
 		mDbHelper.open();
@@ -314,7 +368,7 @@ public class ClosestFragment extends SherlockListFragment {
 		mDbHelper.open();
 		final Cursor locationCursor = mDbHelper.fetchAllLocations();
 		if (locationCursor.getCount() > 0) {
-//TODO Refresh
+			// TODO Refresh
 			mDbHelper.close();
 		} else {
 			getActivity().runOnUiThread(hideProgressdialog);
@@ -324,8 +378,6 @@ public class ClosestFragment extends SherlockListFragment {
 		mDbHelper.close();
 
 	}
-
-
 
 	/**
 	 * Each time I come back in the activity, I listen to GPS
@@ -506,7 +558,7 @@ public class ClosestFragment extends SherlockListFragment {
 	public void notifyList(boolean manual) {
 		threadLock = true;
 		Log.v(TAG, "notifyList");
-		//m_ProgressDialog.hide();
+		// m_ProgressDialog.hide();
 		m_ProgressDialog = new MyProgressDialog(this.getActivity());
 		m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		m_ProgressDialog.setCancelable(false);

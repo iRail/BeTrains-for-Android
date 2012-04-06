@@ -43,7 +43,7 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 				trafFrag.setRssFeed(myRssFeed);
 			} else {
 				TextView feedEmpty = (TextView) trafFrag.getActivity()
-						.findViewById(android.R.id.empty);
+						.findViewById(R.id.feedempty);
 				feedEmpty.setText(trafFrag.getString(R.string.txt_no_issue));
 			}
 		} else {
