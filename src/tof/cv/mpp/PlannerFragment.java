@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.ConnectionAdapter;
@@ -19,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -118,7 +120,7 @@ public class PlannerFragment extends SherlockListFragment {
 		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 
 		setAllBtnListener();
-		
+
 		fillStations(settings.getString("pStart", "MONS"),
 				settings.getString("pStop", "TOURNAI"));
 
@@ -269,7 +271,8 @@ public class PlannerFragment extends SherlockListFragment {
 			return true;
 		case (MENU_PREF):
 			startActivity(new Intent(getActivity(), MyPreferenceActivity.class)
-					.putExtra("screen", MyPreferenceActivity.PAGE_PLANNER));
+					.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+							Prefs1Fragment.class.getName()));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -278,7 +281,7 @@ public class PlannerFragment extends SherlockListFragment {
 
 	private void fillData() {
 		if (allConnections != null && allConnections.connection != null) {
-			Log.i(TAG, "*** Remplis avec les infos");
+			//Log.i(TAG, "*** Remplis avec les infos");
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
@@ -288,7 +291,7 @@ public class PlannerFragment extends SherlockListFragment {
 		}
 
 		else {
-			Log.i(TAG, "*** Remplis avec le Cache");
+			//Log.i(TAG, "*** Remplis avec le Cache");
 			allConnections = Utils.getCachedConnections();
 			if (allConnections != null) {
 				connAdapter = new ConnectionAdapter(this.getActivity()
@@ -297,7 +300,7 @@ public class PlannerFragment extends SherlockListFragment {
 				setListAdapter(connAdapter);
 				registerForContextMenu(getListView());
 			} else {
-				Log.i(TAG, "*** Erreur avec le Cache");
+				//Log.i(TAG, "*** Erreur avec le Cache");
 				fillWithTips();
 			}
 

@@ -1,14 +1,28 @@
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
-		android:title="@string/btn_home_settings" android:summary="">
-		<extra android:name="resource" android:value="activity_preferences" />
-	</header>
-	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
-		android:title="@string/btn_home_planner" android:summary="">
-		<extra android:name="resource" android:value="activity_planner_preferences" />
-	</header>
-	<header android:fragment="tof.cv.mpp.view.StockPreferenceFragment"
-		android:title="@string/btn_home_twitter" android:summary="">
-		<extra android:name="resource" android:value="activity_twitter_preferences" />
-	</header>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="tof.cv.mpp.MyPreferenceActivity$Prefs1Fragment"
+        android:summary=""
+        android:title="@string/app_name" >
+        <extra
+            android:name="resource"
+            android:value="activity_preferences" />
+    </header>
+    <header
+        android:fragment="tof.cv.mpp.MyPreferenceActivity$Prefs2Fragment"
+        android:summary=""
+        android:title="@string/btn_home_planner" >
+        <extra
+            android:name="resource"
+            android:value="activity_planner_preferences" />
+    </header>
+    <header
+        android:fragment="tof.cv.mpp.MyPreferenceActivity$Prefs3Fragment"
+        android:summary=""
+        android:title="@string/btn_home_twitter" >
+        <extra
+            android:name="resource"
+            android:value="activity_twitter_preferences" />
+    </header>
+
 </preference-headers>

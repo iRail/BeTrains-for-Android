@@ -144,14 +144,17 @@ public class ClosestFragment extends SherlockListFragment {
 					break;
 				case 1:
 					try {
-						Intent i = new Intent(getActivity(),
+						
+						Intent i = new Intent(android.content.Intent.ACTION_VIEW, 
+								Uri.parse("geo:0,0?q="+(clicked.getLat() / 1E6)+","+(clicked.getLon() / 1E6)+" (" + clicked.getStation() + ")"));
+						/*Intent i = new Intent(getActivity(),
 								MapStationActivity.class);
 
 						i.putExtra("Name", clicked.getStation());
 						i.putExtra("lat", (clicked.getLat() / 1E6));
 
 						i.putExtra("lon", (clicked.getLon() / 1E6));
-
+*/
 						startActivity(i);
 					} catch (ActivityNotFoundException e) {
 						(Toast.makeText(getActivity(), "Google Maps not found",

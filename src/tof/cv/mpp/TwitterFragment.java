@@ -2,9 +2,11 @@ package tof.cv.mpp;
 
 import java.io.File;
 
+import tof.cv.mpp.MyPreferenceActivity.Prefs3Fragment;
 import tof.cv.mpp.Utils.UtilsWeb;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +64,7 @@ public class TwitterFragment extends SherlockListFragment{
 			startActivity(intent);
 			return true;
 		case (0):
-			startActivity(new Intent(getActivity(), MyPreferenceActivity.class).putExtra("screen", MyPreferenceActivity.PAGE_TWITTER));
+			startActivity(new Intent(getActivity(), MyPreferenceActivity.class).putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, Prefs3Fragment.class.getName()));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
