@@ -236,6 +236,7 @@ public class PlannerFragment extends SherlockListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
 		menu.add(Menu.NONE, MENU_DT, Menu.NONE, "Date/Time")
 				.setIcon(R.drawable.ic_menu_time)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
 
+    <string name="svTitle">StreetView ne semble pas installé</string>
+    <string name="svMessage">Veuillez l\'installer depuis le Google Play Store</string>
+    <string name="noMarket">Désolé, il semble que votre appareil n\'aie pas accès au Play Store (Android Market)</string>
     <string name="lecorse">Le Corse: utilisateur sympathique et Beta Testeur</string>
     <string name="kindhelp">Avec l\'aide de:</string>
     <string name="tipa">Débuter avec BeTrains</string>

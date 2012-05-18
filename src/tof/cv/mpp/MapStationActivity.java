@@ -46,6 +46,7 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 
 		setContentView(R.layout.my_map);
 		setResult(RESULT_OK);
+
 		mMap = (MapView) findViewById(R.id.myGmap);
 		mMap.setBuiltInZoomControls(true);
 		mMap.setSatellite(false);
@@ -64,7 +65,7 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 			Toast.makeText(this, "Error while getting train position",
 					Toast.LENGTH_LONG).show();
 
-		Toast.makeText(this, glat + " // " + glon, Toast.LENGTH_LONG).show();
+		// Toast.makeText(this, glat + " // " + glon, Toast.LENGTH_LONG).show();
 
 		gpStation = new GeoPoint((int) (glat * 1E6), (int) (glon * 1E6));
 
@@ -111,11 +112,13 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// menu.add(0,100,0,"Zoom In");
 		// menu.add(0,101,0,"Zoom Out");
-		menu.add(0, 102, 0, "Satellite");
+		menu.add(0, 102, 0, "Satellite").setIcon(R.drawable.ic_menu_mapmode)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		;
 		// menu.add(0,103,0,"Trafic");
 		// menu.add(0,104,0,"Street view");
-		menu.add(0, 105, 0, "Exit").setIcon(
-				android.R.drawable.ic_menu_close_clear_cancel);
+		// menu.add(0, 105, 0, "Exit").setIcon(
+		// android.R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
 
@@ -152,6 +155,8 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 
 		AlertDialog.Builder ad = new AlertDialog.Builder(this);
 		ad.setTitle(nom);
+		ad.setMessage(gpStation.getLatitudeE6() / 1E6 + " - "
+				+ gpStation.getLongitudeE6() / 1E6);
 		ad.setNeutralButton(android.R.string.ok,
 				new android.content.DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int arg1) {
@@ -184,11 +189,10 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 			final GeoPoint gpMiddle = new GeoPoint((int) ((lat1 + lat2) / 2.0),
 					(int) ((lon1 + lon2) / 2.0));
 			final Document doc = UtilsWeb.getKml(gpMyLocation, gpStation);
-			
 
 			this.runOnUiThread(new Thread(new Runnable() {
 				public void run() {
-					DrawPath(gpMyLocation, gpStation, Color.BLUE, mMap,doc);
+					DrawPath(gpMyLocation, gpStation, Color.BLUE, mMap, doc);
 					mController.setCenter(gpMiddle);
 
 					final double spanLat;
@@ -224,7 +228,7 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 	}
 
 	private void DrawPath(GeoPoint src, GeoPoint dest, int color,
-			MapView mMapView01,Document doc) {
+			MapView mMapView01, Document doc) {
 
 		if (doc != null
 				&& doc.getElementsByTagName("GeometryCollection").getLength() > 0) {

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
- <string name="lecorse">Le Corse: Sympatieke gebruiker en Beta Tester </string>
-  <string name="kindhelp">Met hulp van:</string>
+
+    <string name="svTitle">StreetView not installed</string>
+    <string name="svMessage">Please install Google StreetView</string>
+    <string name="noMarket">Sorry, cannot detect Android Market</string>
+    <string name="lecorse">Le Corse: Sympatieke gebruiker en Beta Tester </string>
+    <string name="kindhelp">Met hulp van:</string>
     <string name="tipa">Om te beginnen</string>
     <string name="tipatitle">Om onmiddellijk te starten, klik op \'zoeken\'</string>
     <string name="tipb">Stationskeuze</string>
@@ -34,7 +38,7 @@
     <string name="add_widget">Voeg toe aan widget</string>
     <string name="url_lang">nl</string>
     <string name="url_lang_2">nl</string>
-        <string name="url_lang_for_him">n</string>
+    <string name="url_lang_for_him">n</string>
     <string name="txt_connection">Gelieve uw internetverbinding te controleren...</string>
     <string name="txt_def_title">Default titel</string>
     <string name="txt_type_subway">Metro</string>

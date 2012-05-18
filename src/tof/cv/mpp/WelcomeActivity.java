@@ -211,7 +211,9 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 		if (savedInstanceState == null) {
 			FragmentTransaction ft = getSupportFragmentManager()
 					.beginTransaction();
-
+			Fragment old=getSupportFragmentManager().findFragmentById(R.id.fragment);
+			if(old!=null)
+				ft.remove(old);
 			ft.add(R.id.fragment, fragment);
 			ft.commit();
 		}

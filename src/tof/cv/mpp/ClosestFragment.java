@@ -33,14 +33,11 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -121,23 +118,95 @@ public class ClosestFragment extends SherlockListFragment {
 	}
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		l.showContextMenuForChild(v);
-	}
+		final CharSequence[] items = { getString(R.string.txt_nav),getString(R.string.txt_map), "StreetView" };
+		final StationLocation clicked = (StationLocation) l
+				.getItemAtPosition(position);
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
+		builder.setTitle(clicked.getStation());
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				//Toast.makeText(getActivity().getApplicationContext(),
+				//		items[item], Toast.LENGTH_SHORT).show();
+				switch (item) {
+				case 0:
+					try {
+						Uri uri = Uri.parse("google.navigation:q="
+								+ ((double) clicked.getLat() / 1E6) + ","
+								+ ((double) clicked.getLon() / 1E6));
+						Intent it = new Intent(Intent.ACTION_VIEW, uri);
+						startActivity(it);
+					} catch (ActivityNotFoundException e) {
+						(Toast.makeText(getActivity(),
+								"Google Navigation not found",
+								Toast.LENGTH_LONG)).show();
+					}
+					break;
+				case 1:
+					try {
+						Intent i = new Intent(getActivity(),
+								MapStationActivity.class);
 
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
+						i.putExtra("Name", clicked.getStation());
+						i.putExtra("lat", (clicked.getLat() / 1E6));
 
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+						i.putExtra("lon", (clicked.getLon() / 1E6));
 
-		clicked = (StationLocation) getListAdapter().getItem((int) info.id);
+						startActivity(i);
+					} catch (ActivityNotFoundException e) {
+						(Toast.makeText(getActivity(), "Google Maps not found",
+								Toast.LENGTH_LONG)).show();
+					}
+					break;
+				case 2:
+					try {
+						Intent streetIntent = new Intent(Intent.ACTION_VIEW,
+								Uri.parse("google.streetview:cbll=" + clicked.getLat()/ 1E6
+										+ "," + clicked.getLon()/ 1E6));
+						startActivity(streetIntent);
+					} catch (ActivityNotFoundException e) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setTitle(R.string.svTitle)
+								.setMessage(R.string.svMessage)
+								.setCancelable(false)
+								.setPositiveButton(android.R.string.ok,
+										new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog,
+													int id) {
+												Intent goToMarket = new Intent(
+														Intent.ACTION_VIEW,
+														Uri.parse("market://details?id=com.google.android.street"));
+												try {
+													startActivity(goToMarket);
+												} catch (Exception e) {
+													Toast.makeText(getActivity(),
+															R.string.noMarket,
+															Toast.LENGTH_LONG).show();
 
-		menu.add(0, 0, 0, "" + clicked.getLat());
-		menu.add(0, 0, 0, "" + clicked.getLon());
+												}
+											}
+										})
+								.setNegativeButton(android.R.string.cancel,
+										new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog,
+													int id) {
+												dialog.cancel();
+											}
+										});
+						AlertDialog alert = builder.create();
+						alert.show();
+					}
+					break;
+				}
+			
+			}
+		});
+		builder.create().show();
 	}
 
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
+		System.out.println("YAHOO DEBUG ++++++");
 		switch (item.getItemId()) {
 		case 0:
 			try {
