@@ -118,7 +118,8 @@ public class ClosestFragment extends SherlockListFragment {
 	}
 
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		final CharSequence[] items = { getString(R.string.txt_nav),getString(R.string.txt_map), "StreetView" };
+		final CharSequence[] items = { "Info", getString(R.string.txt_nav),
+				getString(R.string.txt_map) };
 		final StationLocation clicked = (StationLocation) l
 				.getItemAtPosition(position);
 		AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -126,123 +127,60 @@ public class ClosestFragment extends SherlockListFragment {
 		builder.setTitle(clicked.getStation());
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				//Toast.makeText(getActivity().getApplicationContext(),
-				//		items[item], Toast.LENGTH_SHORT).show();
+				// Toast.makeText(getActivity().getApplicationContext(),
+				// items[item], Toast.LENGTH_SHORT).show();
 				switch (item) {
 				case 0:
+					Intent it = new Intent(getActivity(),
+							InfoStationActivity.class);
+					it.putExtra("Name", clicked.getStation());
+					startActivity(it);
+
+					break;
+				case 1:
 					try {
 						Uri uri = Uri.parse("google.navigation:q="
 								+ ((double) clicked.getLat() / 1E6) + ","
 								+ ((double) clicked.getLon() / 1E6));
-						Intent it = new Intent(Intent.ACTION_VIEW, uri);
-						startActivity(it);
+						Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+						startActivity(intent);
 					} catch (ActivityNotFoundException e) {
 						(Toast.makeText(getActivity(),
 								"Google Navigation not found",
 								Toast.LENGTH_LONG)).show();
 					}
 					break;
-				case 1:
+				case 2:
 					try {
-						
-						Intent i = new Intent(android.content.Intent.ACTION_VIEW, 
-								Uri.parse("geo:0,0?q="+(clicked.getLat() / 1E6)+","+(clicked.getLon() / 1E6)+" (" + clicked.getStation() + ")"));
-						/*Intent i = new Intent(getActivity(),
-								MapStationActivity.class);
 
-						i.putExtra("Name", clicked.getStation());
-						i.putExtra("lat", (clicked.getLat() / 1E6));
-
-						i.putExtra("lon", (clicked.getLon() / 1E6));
-*/
+						Intent i = new Intent(
+								android.content.Intent.ACTION_VIEW, Uri
+										.parse("geo:0,0?q="
+												+ (clicked.getLat() / 1E6)
+												+ ","
+												+ (clicked.getLon() / 1E6)
+												+ " (" + clicked.getStation()
+												+ ")"));
+						/*
+						 * Intent i = new Intent(getActivity(),
+						 * MapStationActivity.class);
+						 * 
+						 * i.putExtra("Name", clicked.getStation());
+						 * i.putExtra("lat", (clicked.getLat() / 1E6));
+						 * 
+						 * i.putExtra("lon", (clicked.getLon() / 1E6));
+						 */
 						startActivity(i);
 					} catch (ActivityNotFoundException e) {
 						(Toast.makeText(getActivity(), "Google Maps not found",
 								Toast.LENGTH_LONG)).show();
 					}
 					break;
-				case 2:
-					try {
-						Intent streetIntent = new Intent(Intent.ACTION_VIEW,
-								Uri.parse("google.streetview:cbll=" + clicked.getLat()/ 1E6
-										+ "," + clicked.getLon()/ 1E6));
-						startActivity(streetIntent);
-					} catch (ActivityNotFoundException e) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-						builder.setTitle(R.string.svTitle)
-								.setMessage(R.string.svMessage)
-								.setCancelable(false)
-								.setPositiveButton(android.R.string.ok,
-										new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface dialog,
-													int id) {
-												Intent goToMarket = new Intent(
-														Intent.ACTION_VIEW,
-														Uri.parse("market://details?id=com.google.android.street"));
-												try {
-													startActivity(goToMarket);
-												} catch (Exception e) {
-													Toast.makeText(getActivity(),
-															R.string.noMarket,
-															Toast.LENGTH_LONG).show();
-
-												}
-											}
-										})
-								.setNegativeButton(android.R.string.cancel,
-										new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
-						AlertDialog alert = builder.create();
-						alert.show();
-					}
-					break;
 				}
-			
+
 			}
 		});
 		builder.create().show();
-	}
-
-	@Override
-	public boolean onContextItemSelected(android.view.MenuItem item) {
-		System.out.println("YAHOO DEBUG ++++++");
-		switch (item.getItemId()) {
-		case 0:
-			try {
-				Uri uri = Uri.parse("google.navigation:q="
-						+ ((double) clicked.getLat() / 1E6) + ","
-						+ ((double) clicked.getLon() / 1E6));
-				Intent it = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(it);
-			} catch (ActivityNotFoundException e) {
-				(Toast.makeText(getActivity(), "Navigation not found",
-						Toast.LENGTH_LONG)).show();
-			}
-			return true;
-		case 1:
-			try {
-				Intent i = new Intent(getActivity(), MapStationActivity.class);
-
-				i.putExtra("nom", clicked.getStation());
-				i.putExtra("lat", "" + (clicked.getLat() / 1E6));
-
-				i.putExtra("lon", "" + (clicked.getLon() / 1E6));
-
-				startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				(Toast.makeText(getActivity(), "GoogleMap not found",
-						Toast.LENGTH_LONG)).show();
-			}
-
-			return true;
-		default:
-			return super.onContextItemSelected(item);
-		}
-
 	}
 
 	@Override

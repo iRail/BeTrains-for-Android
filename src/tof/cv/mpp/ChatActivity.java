@@ -25,7 +25,8 @@ public class ChatActivity extends SherlockFragmentActivity {
 
 		ChatFragment fragment = (ChatFragment) this.getSupportFragmentManager()
 				.findFragmentById(R.id.fragment);
-		fragment.trainId = trainId;
+		if (trainId != null)
+			fragment.trainId = getString(R.string.txt_train) + " " + trainId.replaceAll(getString(R.string.txt_train)+ " ","");
 	}
 
 }

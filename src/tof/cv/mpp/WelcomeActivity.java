@@ -82,6 +82,8 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 		} else {
 			setFragment(new WelcomeFragment());
 		}
+		
+
 	}
 
 	public void onTwitClick(View v) {
@@ -207,7 +209,9 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 	// start screen.
 	public void setFragment(Fragment fragment) {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+		//getSupportActionBar().setDisplayShowHomeEnabled(false);
+		//getSupportActionBar().setDisplayShowTitleEnabled(false);
+		
 		if (savedInstanceState == null) {
 			FragmentTransaction ft = getSupportFragmentManager()
 					.beginTransaction();

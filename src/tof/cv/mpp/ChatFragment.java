@@ -430,8 +430,7 @@ public class ChatFragment extends SherlockListFragment {
 
 							Bundle bundle = new Bundle();
 							bundle.putString(DbAdapterConnection.KEY_NAME,
-									getString(R.string.txt_train) + " "
-											+ input.getText().toString());
+									input.getText().toString());
 							Intent mIntent = new Intent(getActivity(),
 									ChatActivity.class);
 							mIntent.putExtras(bundle);

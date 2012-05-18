@@ -149,11 +149,15 @@ public class InfoTrainFragment extends SherlockListFragment {
 
 		menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
 				.setIcon(R.drawable.ic_menu_star)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
 		menu.add(Menu.NONE, 2, Menu.NONE, "Map")
 				.setIcon(R.drawable.ic_menu_mapmode)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
+		menu.add(Menu.NONE, 3, Menu.NONE, "Map")
+		.setIcon(R.drawable.ic_menu_start_conversation)
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 	}
 
 	@Override
@@ -177,6 +181,15 @@ public class InfoTrainFragment extends SherlockListFragment {
 				i.putExtra("Name", currentVehicle.getId());
 				startActivity(i);
 			}
+			return true;
+		case 3:
+			Bundle bundle = new Bundle();
+			bundle.putString(DbAdapterConnection.KEY_NAME,
+					currentVehicle.getId());
+			Intent mIntent = new Intent(getActivity(),
+					ChatActivity.class);
+			mIntent.putExtras(bundle);
+			startActivityForResult(mIntent, 0);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
