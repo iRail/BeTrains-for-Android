@@ -2,6 +2,7 @@ package tof.cv.mpp;
 
 import java.util.List;
 
+import tof.cv.mpp.Activity.BeTrainsPreferenceActivity;
 import tof.cv.mpp.Utils.Utils;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,14 +11,13 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity.Header;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class MyPreferenceActivity extends SherlockPreferenceActivity implements
+public class MyPreferenceActivity extends BeTrainsPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 	// private MyPrefAdapter mAdapter;
 	// private ViewPager mPager;
@@ -28,13 +28,13 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Utils.setFullscreenIfNecessary(this);
+		this.index=6;
+		
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setIcon(R.drawable.home_btn_settings);
-		// Add a button to the header list.
-		boolean hasNoHeader = true;
+		Utils.setFullscreenIfNecessary(this);
+		
 
+		boolean hasNoHeader = true;
 		try {
 			hasNoHeader = !hasHeaders();
 		} catch (Error e) {

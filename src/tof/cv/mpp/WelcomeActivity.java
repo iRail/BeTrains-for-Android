@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.Activity.BeTrainsActivity;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.search.SearchDatabase;
@@ -19,9 +20,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class WelcomeActivity extends SherlockFragmentActivity {
+public class WelcomeActivity extends BeTrainsActivity {
 	/** Called when the activity is first created. */
 	Bundle savedInstanceState;
 
@@ -82,7 +81,6 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 		} else {
 			setFragment(new WelcomeFragment());
 		}
-		
 
 	}
 
@@ -97,7 +95,6 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 
 	public void onTrafficClick(View v) {
 		if (findViewById(R.id.istablet) != null) {
-
 			setFragment(new TrafficFragment());
 		} else {
 			startActivity(new Intent(this, TrafficActivity.class));
@@ -137,7 +134,7 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 	}
 
 	public void onSettingsClick(View v) {
-			startActivity(new Intent(this, MyPreferenceActivity.class));
+		startActivity(new Intent(this, MyPreferenceActivity.class));
 	}
 
 	public void onHelpClick(View v) {
@@ -208,15 +205,12 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 	// Display the Fragment when the user does not want the dashboard as his
 	// start screen.
 	public void setFragment(Fragment fragment) {
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		//getSupportActionBar().setDisplayShowHomeEnabled(false);
-		//getSupportActionBar().setDisplayShowTitleEnabled(false);
-		
 		if (savedInstanceState == null) {
 			FragmentTransaction ft = getSupportFragmentManager()
 					.beginTransaction();
-			Fragment old=getSupportFragmentManager().findFragmentById(R.id.fragment);
-			if(old!=null)
+			Fragment old = getSupportFragmentManager().findFragmentById(
+					R.id.fragment);
+			if (old != null)
 				ft.remove(old);
 			ft.add(R.id.fragment, fragment);
 			ft.commit();
@@ -240,16 +234,12 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 
 	private void launchTrainActivity(String trainNumber) {
 		Intent i = new Intent(this, InfoTrainActivity.class);
-
 		i.putExtra("fromto", getString(R.string.app_name));
-
 		i.putExtra(DbAdapterConnection.KEY_NAME, trainNumber);
-
 		startActivity(i);
 	}
 
 	private void launchStationActivity(String station) {
-
 		Intent i = new Intent(WelcomeActivity.this, InfoStationActivity.class);
 		i.putExtra(DbAdapterConnection.KEY_NAME, station);
 		startActivity(i);

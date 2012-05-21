@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.Activity.BeTrainsActivity;
 import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,11 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
-public class TrafficActivity extends SherlockFragmentActivity {
+public class TrafficActivity extends BeTrainsActivity {
 	/** Called when the activity is first created. */
 
 	protected static final String[] TITLES = new String[] { "RAILTIME",
@@ -20,6 +20,7 @@ public class TrafficActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		this.index=2;
 		super.onCreate(savedInstanceState);
 
 		Utils.setFullscreenIfNecessary(this);
