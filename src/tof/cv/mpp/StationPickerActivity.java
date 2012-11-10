@@ -35,7 +35,6 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.TitlePageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 public class StationPickerActivity extends BeTrainsActivity implements
 		ViewPager.OnPageChangeListener {
@@ -440,8 +439,7 @@ public class StationPickerActivity extends BeTrainsActivity implements
 		}
 	}
 
-	public static class MyAdapter extends FragmentPagerAdapter implements
-			TitleProvider {
+	public static class MyAdapter extends FragmentPagerAdapter {
 		private int mCount = TITLES.length;
 
 		public MyAdapter(FragmentManager fm) {
@@ -468,7 +466,7 @@ public class StationPickerActivity extends BeTrainsActivity implements
 		}
 
 		@Override
-		public String getTitle(int position) {
+		public CharSequence getPageTitle(int position) {
 			return TITLES[position % TITLES.length];
 		}
 	}

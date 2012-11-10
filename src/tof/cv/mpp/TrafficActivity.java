@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.viewpagerindicator.TitlePageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 public class TrafficActivity extends BeTrainsActivity {
 	/** Called when the activity is first created. */
@@ -39,8 +38,7 @@ public class TrafficActivity extends BeTrainsActivity {
 
 	}
 
-	public static class MenuAdapter extends FragmentPagerAdapter implements
-			TitleProvider {
+	public static class MenuAdapter extends FragmentPagerAdapter{
 		private int mCount = TITLES.length;
 
 		public MenuAdapter(FragmentManager fm) {
@@ -64,7 +62,7 @@ public class TrafficActivity extends BeTrainsActivity {
 		}
 
 		@Override
-		public String getTitle(int position) {
+		public CharSequence getPageTitle(int position) {
 			return TITLES[position % TITLES.length];
 		}
 	}

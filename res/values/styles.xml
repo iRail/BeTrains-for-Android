@@ -8,7 +8,7 @@
 	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
 	the specific language governing permissions and limitations under the License.
 -->
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="TextHeader2">
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -64,7 +64,7 @@
     </style>
 
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light">
-        <item name="textColor">@color/darkblue</item>
+        <item name="android:textColor">@color/darkblue</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
     </style>
 
@@ -89,7 +89,7 @@
     <style name="CustomTitlePageIndicator">
         <item name="footerColor">@color/action_bar_tint</item>
         <item name="footerLineHeight">2dp</item>
-        <item name="textColor">#FF999999</item>
+        <item name="android:textColor">#FF999999</item>
         <item name="selectedColor">@color/darkblue</item>
         <item name="selectedBold">true</item>
         <item name="footerColor">@color/darkblue</item>
