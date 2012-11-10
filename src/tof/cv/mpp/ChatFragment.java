@@ -63,8 +63,11 @@ public class ChatFragment extends SherlockListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		boolean isTablet=this.getSherlockActivity().getResources().getBoolean(R.bool.tablet_layout);
+		
 		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(
-				true);
+				!isTablet);
 
 		setHasOptionsMenu(true);
 		getSherlockActivity().getSupportActionBar().setTitle(
