@@ -5,7 +5,7 @@
     <string name="svTitle">StreetView not installed</string>
     <string name="svMessage">Please install Google StreetView</string>
     <string name="noMarket">Sorry, cannot detect Android Market</string>
-    
+    <string name="btn_home_planner">Planner</string>
     <string name="tipa">Getting started</string>
     <string name="tipatitle">If you want to start immediately, click on the search button</string>
     <string name="tipb">Change stations</string>

@@ -407,9 +407,13 @@ public class ClosestFragment extends SherlockListFragment {
 							: "OFF") + "</b>");
 		txt += "<br><br>" + getString(R.string.txt_location);
 		tvEmpty.setText(Html.fromHtml(txt));
-
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				INT_MINTIME, INT_MINDISTANCE, locationGpsListener);
+		try {
+			locationManager.requestLocationUpdates(
+					LocationManager.GPS_PROVIDER, INT_MINTIME, INT_MINDISTANCE,
+					locationGpsListener);
+		} catch (Exception e) {
+			Log.i("", "No GPS on this device");
+		}
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, INT_MINTIME, INT_MINDISTANCE,
