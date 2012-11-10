@@ -29,7 +29,7 @@
     <string name="btn_home_planner">Demande d\'itinéraire</string>
     <string name="btn_home_chat">Chat</string>
     <string name="btn_home_notif">Notifications</string>
-    <string name="btn_home_traffic">Perturbations trafic</string>
+    <string name="btn_home_traffic">Perturbations traffic</string>
     <string name="btn_home_settings">Préférences</string>
     <string name="btn_home_contact">Contact</string>
     <string name="btn_home_starred">Favoris</string>

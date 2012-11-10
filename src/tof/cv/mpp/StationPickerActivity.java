@@ -1,6 +1,5 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Activity.BeTrainsActivity;
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.FilterTextWatcher;
@@ -33,10 +32,11 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.TitlePageIndicator;
 
-public class StationPickerActivity extends BeTrainsActivity implements
+public class StationPickerActivity extends SherlockFragmentActivity implements
 		ViewPager.OnPageChangeListener {
 
 	MyAdapter mAdapter;

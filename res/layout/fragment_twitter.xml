@@ -2,8 +2,7 @@
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/home_root" android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:background="#FFFFFFFF">
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
 		<include layout="@layout/colorstrip" />
 		<TextView android:id="@+id/fail" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:text="@string/txt_connection"

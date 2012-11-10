@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFFFF"
     android:orientation="vertical" >
 
     <include layout="@layout/colorstrip" />
@@ -12,17 +11,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="10dip"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
+        android:orientation="horizontal"
+        android:paddingBottom="3dip"
         android:paddingTop="5dip" >
 
         <LinearLayout
             android:id="@+id/Ly_start"
-            android:layout_width="fill_parent"
-            android:layout_height="35dip"
-            android:layout_marginBottom="10dip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -37,19 +34,20 @@
                 android:text="City START" />
 
             <Button
+                style="?android:attr/buttonStyleSmall"
                 android:id="@+id/btn_infos_departure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="info" >
+                android:text="i" >
             </Button>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/Ly_stop"
-            android:layout_width="fill_parent"
-            android:layout_height="35dip"
-            android:layout_marginBottom="10dip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -64,57 +62,61 @@
                 android:text="City STOP" />
 
             <Button
+                style="?android:attr/buttonStyleSmall"
                 android:id="@+id/btn_info_arrival"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="info" >
+                android:text="i" >
             </Button>
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/boutonweb"
-            android:layout_width="fill_parent"
-            android:layout_height="35dip"
-            android:orientation="horizontal" >
+    <LinearLayout
+        android:id="@+id/boutonweb"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/mybuttonBefore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dip"
-                android:text="&lt;&lt;"
-                android:textStyle="bold" >
-            </Button>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/mybuttonBefore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dip"
+            android:text="&lt;&lt;"
+            android:textStyle="bold" >
+        </Button>
 
-            <Button
-                android:id="@+id/mybuttonSearch"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dip"
-                android:layout_weight="1"
-                android:text="@string/txt_search"
-                android:textStyle="bold" >
-            </Button>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/mybuttonSearch"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dip"
+            android:layout_weight="1"
+            android:text="@string/txt_search"
+            android:textStyle="bold" >
+        </Button>
 
-            <Button
-                android:id="@+id/mybuttonInvert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dip"
-                android:text="&gt;&lt;"
-                android:textStyle="bold" >
-            </Button>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/mybuttonInvert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dip"
+            android:text=">&lt;"
+            android:textStyle="bold" >
+        </Button>
 
-            <Button
-                android:id="@+id/mybuttonAfter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="&gt;&gt;"
-                android:textStyle="bold" >
-            </Button>
-
-        </LinearLayout>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/mybuttonAfter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">>"
+            android:textStyle="bold" >
+        </Button>
     </LinearLayout>
 
     <ListView

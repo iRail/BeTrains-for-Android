@@ -28,8 +28,7 @@
         android:theme="@style/Theme.MyTheme" >
         <activity
             android:name=".WelcomeActivity"
-            android:label="@string/app_name"
-            android:theme="@style/StyledIndicators" >
+            android:label="@string/app_name">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
@@ -46,7 +45,7 @@
         <activity
             android:name=".TwitterActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/btn_home_twitter"
+            android:label="Twitter"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".StarredActivity"

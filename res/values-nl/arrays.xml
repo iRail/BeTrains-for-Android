@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string-array name="menu">
+        <item>Routeplanner</item>
+        <item>Verkeershinder</item>
+        <item>Chat</item>
+        <item>Twitter</item>
+        <item>Favorieten</item>
+        <item>dichtste station</item>
+        <item>Instellingen</item>
+        <item>Extras</item>
+    </string-array>
 	<string-array name="planner_da_entries">
 		<item>Vertrek</item>
 		<item>Aankomst</item>

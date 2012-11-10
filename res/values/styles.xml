@@ -66,6 +66,8 @@
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light">
         <item name="android:textColor">@color/darkblue</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
+        <item name="homeAsUpIndicator">@drawable/new_indicator</item>
+        <item name="android:homeAsUpIndicator">@drawable/new_indicator</item>
     </style>
 
     <!--

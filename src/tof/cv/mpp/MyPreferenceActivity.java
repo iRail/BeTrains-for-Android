@@ -2,7 +2,6 @@ package tof.cv.mpp;
 
 import java.util.List;
 
-import tof.cv.mpp.Activity.BeTrainsPreferenceActivity;
 import tof.cv.mpp.Utils.Utils;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +10,13 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity.Header;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class MyPreferenceActivity extends BeTrainsPreferenceActivity implements
+public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 	// private MyPrefAdapter mAdapter;
 	// private ViewPager mPager;
@@ -28,7 +27,6 @@ public class MyPreferenceActivity extends BeTrainsPreferenceActivity implements
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		this.index=6;
 		
 		super.onCreate(savedInstanceState);
 		Utils.setFullscreenIfNecessary(this);

@@ -19,7 +19,7 @@
     <header
         android:fragment="tof.cv.mpp.MyPreferenceActivity$Prefs3Fragment"
         android:summary=""
-        android:title="@string/btn_home_twitter" >
+        android:title="Twitter" >
         <extra
             android:name="resource"
             android:value="activity_twitter_preferences" />

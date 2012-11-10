@@ -20,13 +20,7 @@
     <string name="settings_activity">Eerste scherm</string>
     <string name="settings_activity_summary">Waar moet de applicatie opstarten?</string>
     <string name="app_name">BeTrains</string>
-    <string name="btn_home_planner">Routeplanner</string>
-    <string name="btn_home_chat">Chat</string>
-    <string name="btn_home_notif">Meldingen</string>
-    <string name="btn_home_traffic">Verkeershinder</string>
-    <string name="btn_home_settings">Instellingen</string>
-    <string name="btn_home_contact">Contact</string>
-    <string name="btn_home_starred">Favorieten</string>
+
     <string name="txt_loading">Laden...</string>
     <string name="txt_patient">Even geduld, de data worden geladen...</string>
     <string name="txt_traffic_issues">Overzicht van de huidige storingen</string>
@@ -103,7 +97,6 @@
     <string name="txt_no_result">Excuses, er werden geen resultaten gevonden.</string>
     <string name="txt_error">Er ging iets mis. Probeert u later even opnieuw?</string>
     <string name="txt_create_connections">Gelieve uw zoekopdracht in te vullen.</string>
-    <string name="btn_closest_stations">dichtste station</string>
     <string name="txt_first_dl">Dit is de eerste keer dat je de "naburige stations"
 		functie wilt gebruiken. Voor een keer zullen we de lijst moeten
 		initialiseren. De volgende keer zal dit proces sneller verlopen.</string>
