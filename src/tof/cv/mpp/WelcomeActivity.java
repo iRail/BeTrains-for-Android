@@ -50,7 +50,7 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 		// set the Behind View Fragment
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.menu_frame, new MenuFragment()).commit();
-		
+
 		// customize the SlidingMenu
 		SlidingMenu sm = getSlidingMenu();
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -68,7 +68,8 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			toggle();
+			if (!this.getResources().getBoolean(R.bool.tablet_layout))
+				toggle();
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -82,7 +83,7 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	public void switchContent(final Fragment fragment) {
 		mContent = fragment;
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, fragment).commit();
+				.replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
 			public void run() {

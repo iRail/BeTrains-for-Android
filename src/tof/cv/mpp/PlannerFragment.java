@@ -255,12 +255,6 @@ public class PlannerFragment extends SherlockListFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case (android.R.id.home):
-			// app icon in ActionBar is clicked; Go home
-			Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			return true;
 		case (MENU_DT):
 			showDateTimeDialog();
 			return true;

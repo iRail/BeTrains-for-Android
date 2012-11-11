@@ -6,6 +6,8 @@
     <string name="noMarket">Sorry, cannot detect Android Market</string>
     <string name="lecorse">Le Corse: Sympatieke gebruiker en Beta Tester </string>
     <string name="kindhelp">Met hulp van:</string>
+    <string name="btn_home_planner">Routeplanner</string>
+      <string name="btn_closest_stations">Dichtste station</string>
     <string name="tipa">Om te beginnen</string>
     <string name="tipatitle">Om onmiddellijk te starten, klik op \'zoeken\'</string>
     <string name="tipb">Stationskeuze</string>
@@ -20,7 +22,6 @@
     <string name="settings_activity">Eerste scherm</string>
     <string name="settings_activity_summary">Waar moet de applicatie opstarten?</string>
     <string name="app_name">BeTrains</string>
-
     <string name="txt_loading">Laden...</string>
     <string name="txt_patient">Even geduld, de data worden geladen...</string>
     <string name="txt_traffic_issues">Overzicht van de huidige storingen</string>
@@ -120,5 +121,39 @@
     <string name="stationpicker">Kies een station</string>
     <string name="key_planner_da">Plannerdapref</string>
     <string name="key_activity">Activitypref</string>
+    
+    <!-- Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] -->
+    <string name="abs__action_bar_home_description">Navigate home</string>
+    <!-- Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] -->
+    <string name="abs__action_bar_up_description">Navigate up</string>
+    <!-- Content description for the action menu overflow button. [CHAR LIMIT=NONE] -->
+    <string name="abs__action_menu_overflow_description">More options</string>
+
+    <!-- Label for the "Done" button on the far left of action mode toolbars. -->
+    <string name="abs__action_mode_done">Done</string>
+
+    <!-- Title for a button to expand the list of activities in ActivityChooserView [CHAR LIMIT=25] -->
+    <string name="abs__activity_chooser_view_see_all">See all...</string>
+    <!-- Title default for a dialog showing possible activities in ActivityChooserView [CHAR LIMIT=25] -->
+    <string name="abs__activity_chooser_view_dialog_title_default">Select activity</string>
+    <!-- Title for a dialog showing possible activities for sharing in ShareActionProvider [CHAR LIMIT=25] -->
+    <string name="abs__share_action_provider_share_with">Share with...</string>
+    <!-- Description of the shwoing of a popup window with activities to choose from. [CHAR LIMIT=NONE] -->
+    <string name="abs__activitychooserview_choose_application">Choose an application</string>
+    <!-- Description of the choose target button in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] -->
+    <string name="abs__shareactionprovider_share_with">Share with</string>
+    <!-- Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] -->
+    <string name="abs__shareactionprovider_share_with_application">Share with</string>
+
+    <!-- SearchView accessibility description for search button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_search">Search</string>
+    <!-- SearchView accessibility description for search text field [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_query">Search query</string>
+    <!-- SearchView accessibility description for clear button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_clear">Clear query</string>
+    <!-- SearchView accessibility description for submit button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_submit">Submit query</string>
+    <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_voice">Voice search</string>
 
 </resources>

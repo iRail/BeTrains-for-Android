@@ -10,13 +10,7 @@
         <item>Closest stations</item>
         <item>Extras</item>
     </string-array>
-    <string-array name="locations">
-        <item>Home</item>
-        <item>Email</item>
-        <item>Calendar</item>
-        <item>Browser</item>
-        <item>Clock</item>
-    </string-array>
+
     <string-array name="planner_da_entries">
         <item>Departure</item>
         <item>Arrival</item>

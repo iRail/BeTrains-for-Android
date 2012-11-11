@@ -6,7 +6,7 @@
     android:versionName="3.12" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="7"
         android:targetSdkVersion="11" />
     
     <uses-feature android:name="android.hardware.location.gps" 
@@ -45,11 +45,6 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity
-            android:name=".TwitterActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="Twitter"
-            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".StarredActivity"
             android:configChanges="keyboardHidden|orientation"

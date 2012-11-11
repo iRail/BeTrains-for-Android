@@ -163,9 +163,6 @@ public class InfoTrainFragment extends SherlockListFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case (android.R.id.home):
-			getActivity().finish();
-			return true;
 		case 0:
 			widget();
 			return true;
