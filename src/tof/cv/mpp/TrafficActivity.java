@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class TrafficActivity extends SherlockFragmentActivity {
@@ -38,7 +39,7 @@ public class TrafficActivity extends SherlockFragmentActivity {
 
 	}
 
-	public static class MenuAdapter extends FragmentPagerAdapter{
+	public static class MenuAdapter extends FragmentPagerAdapter {
 		private int mCount = TITLES.length;
 
 		public MenuAdapter(FragmentManager fm) {
@@ -64,6 +65,17 @@ public class TrafficActivity extends SherlockFragmentActivity {
 		@Override
 		public CharSequence getPageTitle(int position) {
 			return TITLES[position % TITLES.length];
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 

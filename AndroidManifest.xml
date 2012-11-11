@@ -31,7 +31,8 @@
         android:theme="@style/Theme.MyTheme" >
         <activity
             android:name=".WelcomeActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyThemeSlide">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 

@@ -53,7 +53,6 @@
     <style name="GenericProgressBackground" parent="android:Theme">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:background">#DD989898</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -66,7 +65,8 @@
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light">
         <item name="android:textColor">@color/darkblue</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
-        <item name="homeAsUpIndicator">@drawable/new_indicator</item>
+    </style>
+        <style name="Theme.MyThemeSlide" parent="Theme.MyTheme">
         <item name="android:homeAsUpIndicator">@drawable/new_indicator</item>
     </style>
 

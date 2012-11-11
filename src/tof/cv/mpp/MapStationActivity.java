@@ -110,33 +110,24 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// menu.add(0,100,0,"Zoom In");
-		// menu.add(0,101,0,"Zoom Out");
+
 		menu.add(0, 102, 0, "Satellite").setIcon(R.drawable.ic_menu_mapmode)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		;
-		// menu.add(0,103,0,"Trafic");
-		// menu.add(0,104,0,"Street view");
-		// menu.add(0, 105, 0, "Exit").setIcon(
-		// android.R.drawable.ic_menu_close_clear_cancel);
+
 		return true;
 	}
+	
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case 100:
-			mController.setZoom(mMap.getZoomLevel() + 1);
-			break;
-		case 101:
-			mController.setZoom(mMap.getZoomLevel() - 1);
-			break;
 		case 102:
 			mMap.setSatellite(!mMap.isSatellite());
 			break;
 		// case 103: maMap.setTraffic(!maMap.isTraffic()) ;break;
 		// case 104: maMap.setStreetView(!maMap.isStreetView()) ;break;
-		case 105:
+		case android.R.id.home:
 			finish();
 
 		}
@@ -296,4 +287,6 @@ public class MapStationActivity extends MapActivity implements LocationListener 
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 }

@@ -5,6 +5,7 @@ import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class ChatActivity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */
@@ -25,6 +26,17 @@ public class ChatActivity extends SherlockFragmentActivity {
 				.findFragmentById(R.id.fragment);
 		if (trainId != null)
 			fragment.trainId = getString(R.string.txt_train) + " " + trainId.replaceAll(getString(R.string.txt_train)+ " ","");
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

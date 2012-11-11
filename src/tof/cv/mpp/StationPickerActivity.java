@@ -83,10 +83,7 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case (android.R.id.home):
-			// app icon in ActionBar is clicked; Go home
-			Intent intent = new Intent(this, PlannerActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -143,11 +140,11 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 			this.setListAdapter(a);
 		}
-		
+
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
-			//System.out.println("DO NOTHING!");
+			// System.out.println("DO NOTHING!");
 
 		}
 
@@ -491,4 +488,6 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		// Log.i("","CHANGED "+state);
 
 	}
+	
+	
 }

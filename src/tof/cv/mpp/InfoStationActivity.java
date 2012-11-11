@@ -4,6 +4,7 @@ import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class InfoStationActivity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */
@@ -23,6 +24,17 @@ public class InfoStationActivity extends SherlockFragmentActivity {
 		
 		InfoStationFragment fragment = (InfoStationFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
 		fragment.displayInfo(name,timestamp);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	

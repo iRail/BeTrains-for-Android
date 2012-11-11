@@ -90,8 +90,6 @@ public class MapVehicleActivity extends MapActivity {
 		menu.add(0, 102, 0, "Satellite");
 		// menu.add(0,103,0,"Trafic");
 		// menu.add(0,104,0,"Street view");
-		menu.add(0, 105, 0, "Exit").setIcon(
-				android.R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
 
@@ -109,7 +107,7 @@ public class MapVehicleActivity extends MapActivity {
 			break;
 		// case 103: maMap.setTraffic(!maMap.isTraffic()) ;break;
 		// case 104: maMap.setStreetView(!maMap.isStreetView()) ;break;
-		case 105:
+		case android.R.id.home:
 			finish();
 
 		}

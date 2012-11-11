@@ -27,10 +27,9 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		Utils.setFullscreenIfNecessary(this);
-		
 
 		boolean hasNoHeader = true;
 		try {
@@ -172,10 +171,7 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case (android.R.id.home):
-			// app icon in ActionBar is clicked; Go home
-			Intent intent = new Intent(this, WelcomeActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			finish();
 			return true;
 
 		default:

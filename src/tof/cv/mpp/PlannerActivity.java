@@ -4,6 +4,7 @@ import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class PlannerActivity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */
@@ -24,10 +25,21 @@ public class PlannerActivity extends SherlockFragmentActivity {
 				.findFragmentById(R.id.fragment);
 
 		if (extras != null) {
-			fragment.fromIntentArrivalStation=extras.getString("Arrival");
-			fragment.fromIntentDepartureStation=extras.getString("Departure");
-			fragment.fromIntent=true;
-		} 
+			fragment.fromIntentArrivalStation = extras.getString("Arrival");
+			fragment.fromIntentDepartureStation = extras.getString("Departure");
+			fragment.fromIntent = true;
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

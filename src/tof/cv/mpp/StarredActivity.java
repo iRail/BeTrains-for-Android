@@ -4,6 +4,7 @@ import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class StarredActivity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */
@@ -13,6 +14,18 @@ public class StarredActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		Utils.setFullscreenIfNecessary(this);
 		setContentView(R.layout.activity_starred);
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	

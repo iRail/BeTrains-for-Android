@@ -57,7 +57,7 @@ public class InfoTrainFragment extends SherlockListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		
+
 	}
 
 	@Override
@@ -65,56 +65,53 @@ public class InfoTrainFragment extends SherlockListFragment {
 		super.onActivityCreated(savedInstanceState);
 		mTitleText = (TextView) getActivity().findViewById(R.id.title);
 		mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
-		
+
 		mMessageText.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
 				bundle.putString(DbAdapterConnection.KEY_NAME,
 						currentVehicle.getId());
-				Intent mIntent = new Intent(v.getContext(),
-						ChatActivity.class);
+				Intent mIntent = new Intent(v.getContext(), ChatActivity.class);
 				mIntent.putExtras(bundle);
 				startActivityForResult(mIntent, 0);
 
 			}
 		});
-		
-		Log.i("'",""+mMessageText);
+
+		Log.i("'", "" + mMessageText);
 		registerForContextMenu(getListView());
 	}
 
-	public void displayInfo(String vehicle, String fromTo,long timestamp) {
+	public void displayInfo(String vehicle, String fromTo, long timestamp) {
 		this.fromTo = fromTo;
-		if(timestamp!=0)
-			this.timestamp=timestamp;
+		if (timestamp != 0)
+			this.timestamp = timestamp;
 		else
-			this.timestamp=System.currentTimeMillis();
+			this.timestamp = System.currentTimeMillis();
 		mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
-		if (PreferenceManager
-				.getDefaultSharedPreferences(this.getActivity()).getBoolean("preffirstM", false)) {
+		if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
+				.getBoolean("preffirstM", false)) {
 			new DownloadLastMessageTask(this).execute(vehicle);
 			setLastMessageText(getString(R.string.txt_load_message));
 		} else
-			mMessageText.setText(Html.fromHtml(
-					"<small>"
-					+ getText(R.string.txt_infrabel)
-					+ "</small>"));
+			mMessageText.setText(Html.fromHtml("<small>"
+					+ getText(R.string.txt_infrabel) + "</small>"));
 
-		myTrainSearchThread(vehicle,timestamp);
+		myTrainSearchThread(vehicle, timestamp);
 	}
 
-	private void myTrainSearchThread(final String vehicle,final long timestamp) {
+	private void myTrainSearchThread(final String vehicle, final long timestamp) {
 		Runnable trainSearch = new Runnable() {
 			public void run() {
-				currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity(),timestamp);
-				if(getActivity()!=null)
+				currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity(),
+						timestamp);
+				if (getActivity() != null)
 					getActivity().runOnUiThread(displayResult);
 			}
 		};
 		Thread thread = new Thread(null, trainSearch, "MyThread");
 		thread.start();
 	}
-
 
 	private Runnable displayResult = new Runnable() {
 		public void run() {
@@ -125,12 +122,10 @@ public class InfoTrainFragment extends SherlockListFragment {
 						getActivity(), R.layout.row_info_train, currentVehicle
 								.getVehicleStops().getVehicleStop());
 				setListAdapter(trainInfoAdapter);
-				setTitle(Utils
-						.formatDate(
-								new Date(timestamp),
-								"dd MMM HH:mm"));
+				setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
 			} else {
-				Toast.makeText(getActivity(), R.string.txt_connection, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.txt_connection,
+						Toast.LENGTH_LONG).show();
 				getActivity().finish();
 			}
 		}
@@ -154,10 +149,10 @@ public class InfoTrainFragment extends SherlockListFragment {
 		menu.add(Menu.NONE, 2, Menu.NONE, "Map")
 				.setIcon(R.drawable.ic_menu_mapmode)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		menu.add(Menu.NONE, 3, Menu.NONE, "Map")
-		.setIcon(R.drawable.ic_menu_start_conversation)
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+		menu.add(Menu.NONE, 3, Menu.NONE, "Chat")
+				.setIcon(R.drawable.ic_menu_start_conversation)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 	}
 
 	@Override
@@ -180,14 +175,16 @@ public class InfoTrainFragment extends SherlockListFragment {
 			}
 			return true;
 		case 3:
-			Bundle bundle = new Bundle();
-			bundle.putString(DbAdapterConnection.KEY_NAME,
-					currentVehicle.getId());
-			Intent mIntent = new Intent(getActivity(),
-					ChatActivity.class);
-			mIntent.putExtras(bundle);
-			startActivityForResult(mIntent, 0);
-			return true;
+			if (currentVehicle != null) {
+				Bundle bundle = new Bundle();
+				bundle.putString(DbAdapterConnection.KEY_NAME,
+						currentVehicle.getId());
+				Intent mIntent = new Intent(getActivity(), ChatActivity.class);
+				mIntent.putExtras(bundle);
+				startActivityForResult(mIntent, 0);
+				return true;
+			}
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -209,8 +206,8 @@ public class InfoTrainFragment extends SherlockListFragment {
 								.replace("BE.NMBS.", ""), "1", "", fromTo);
 						for (VehicleStop oneStop : currentVehicle
 								.getVehicleStops().getVehicleStop())
-							mDbHelper.createWidgetStop(oneStop.getStation(),
-									""+oneStop.getTime(), oneStop.getDelay(),
+							mDbHelper.createWidgetStop(oneStop.getStation(), ""
+									+ oneStop.getTime(), oneStop.getDelay(),
 									oneStop.getStatus());
 						Intent intent = new Intent(
 								TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
@@ -241,13 +238,12 @@ public class InfoTrainFragment extends SherlockListFragment {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		
-		AdapterView.AdapterContextMenuInfo info =
-	            (AdapterView.AdapterContextMenuInfo) menuInfo;
-		
+
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
 		VehicleStop clicked = (VehicleStop) getListAdapter().getItem(
 				(int) info.id);
-		
+
 		menu.add(0, 0, 0, clicked.getStation());
 	}
 
@@ -255,7 +251,7 @@ public class InfoTrainFragment extends SherlockListFragment {
 	public boolean onContextItemSelected(android.view.MenuItem item) {
 		switch (item.getItemId()) {
 		case 0:
-			AdapterView.AdapterContextMenuInfo menuInfo =  (AdapterContextMenuInfo) item
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			VehicleStop stop = (VehicleStop) getListAdapter().getItem(
 					(int) menuInfo.id);
@@ -270,15 +266,15 @@ public class InfoTrainFragment extends SherlockListFragment {
 		}
 
 	}
-	
+
 	public void setLastMessageText(Spanned spanned) {
 		mMessageText.setText(spanned);
 	}
-	
+
 	public void setLastMessageText(String text) {
 		mMessageText.setText(text);
 	}
-	
+
 	public void addMessage(Message message) {
 		this.mSaveMessageList.add(message);
 	}
