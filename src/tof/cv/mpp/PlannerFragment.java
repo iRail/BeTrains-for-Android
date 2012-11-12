@@ -70,8 +70,6 @@ public class PlannerFragment extends SherlockListFragment {
 
 	private ProgressDialog progressDialog;
 
-	private int style;
-
 	public String fromIntentArrivalStation = null;
 	public String fromIntentDepartureStation = null;
 	public boolean fromIntent = false;
@@ -103,15 +101,9 @@ public class PlannerFragment extends SherlockListFragment {
 		editor = settings.edit();
 		context = this.getActivity();
 		mDate = Calendar.getInstance();
-		
-		
+
 		setHasOptionsMenu(true);
-		
 
-
-		style = android.R.style.Theme_Dialog;
-		if (Build.VERSION.SDK_INT >= 14)
-			style = android.R.style.Theme_DeviceDefault_Dialog;
 	}
 
 	@Override
@@ -125,11 +117,13 @@ public class PlannerFragment extends SherlockListFragment {
 
 		fillStations(settings.getString("pStart", "MONS"),
 				settings.getString("pStop", "TOURNAI"));
-		
-		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_planner);
-		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_home_planner);
+
+		getSherlockActivity().getSupportActionBar().setIcon(
+				R.drawable.ab_planner);
+		getSherlockActivity().getSupportActionBar().setTitle(
+				R.string.btn_home_planner);
 		getSherlockActivity().getSupportActionBar().setSubtitle("");
-		
+
 		updateActionBar();
 
 	}
@@ -272,9 +266,15 @@ public class PlannerFragment extends SherlockListFragment {
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):
-			startActivity(new Intent(getActivity(), MyPreferenceActivity.class)
-					.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-							Prefs2Fragment.class.getName()));
+			if (Build.VERSION.SDK_INT>=11)
+				startActivity(new Intent(getActivity(),
+						MyPreferenceActivity.class).putExtra(
+						PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+						Prefs2Fragment.class.getName()));
+			else{
+				startActivity(new Intent(getActivity(),MyPreferenceActivity.class));
+			}
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -283,7 +283,7 @@ public class PlannerFragment extends SherlockListFragment {
 
 	private void fillData() {
 		if (allConnections != null && allConnections.connection != null) {
-			//Log.i(TAG, "*** Remplis avec les infos");
+			// Log.i(TAG, "*** Remplis avec les infos");
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
@@ -293,7 +293,7 @@ public class PlannerFragment extends SherlockListFragment {
 		}
 
 		else {
-			//Log.i(TAG, "*** Remplis avec le Cache");
+			// Log.i(TAG, "*** Remplis avec le Cache");
 			allConnections = Utils.getCachedConnections();
 			if (allConnections != null) {
 				connAdapter = new ConnectionAdapter(this.getActivity()
@@ -302,7 +302,7 @@ public class PlannerFragment extends SherlockListFragment {
 				setListAdapter(connAdapter);
 				registerForContextMenu(getListView());
 			} else {
-				//Log.i(TAG, "*** Erreur avec le Cache");
+				// Log.i(TAG, "*** Erreur avec le Cache");
 				fillWithTips();
 			}
 
@@ -363,8 +363,7 @@ public class PlannerFragment extends SherlockListFragment {
 					&& currentConnection.getVias().via.size() > 0) {
 
 				new ConnectionDialog(getActivity(),
-						allConnections.connection.get(positionClicked), style)
-						.show();
+						allConnections.connection.get(positionClicked)).show();
 			} else {
 				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
@@ -532,11 +531,8 @@ public class PlannerFragment extends SherlockListFragment {
 
 	private void showDateTimeDialog() {
 
-		if (Build.VERSION.SDK_INT >= 14)
-			style = android.R.style.Theme_DeviceDefault_Light_Dialog;
-
 		final DateTimePicker mDateTimeDialog = new DateTimePicker(
-				(Context) getActivity(), style, this);
+				(Context) getActivity(), this);
 
 		final String timeS = android.provider.Settings.System.getString(
 				getActivity().getContentResolver(),

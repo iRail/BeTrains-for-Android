@@ -2,7 +2,7 @@
 <resources>
     <bool name="nmbs">false</bool>
     <bool name="sncb">true</bool>
-    <bool name="navetteurs">true</bool>
+    <bool name="navetteurs">false</bool>
     <bool name="tablet_layout">false</bool>
     
 </resources>

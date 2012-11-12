@@ -42,8 +42,8 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 	// Calendar reference
 	private Calendar mCalendar;
 
-	public DateTimePicker(Context context, int defStyle,final PlannerFragment fragment) {
-		super(context, defStyle);
+	public DateTimePicker(Context context,final PlannerFragment fragment) {
+		super(context);
 
 		// Get LayoutInflater instance
 		final LayoutInflater inflater = (LayoutInflater) context
@@ -64,7 +64,6 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 
 		// Init time picker
 		timePicker = (TimePicker) v.findViewById(R.id.TimePicker);
-		timePicker.setOnTimeChangedListener(this);
 
 		Button okButton = (Button) v.findViewById(R.id.positiveButton);
 		okButton.setOnClickListener(new Button.OnClickListener() {
@@ -74,14 +73,6 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 				fragment.getSherlockActivity().getSupportActionBar().setSubtitle(
 						getFormatedDate(PlannerFragment.abDatePattern));
 				fragment.mDate = mCalendar;
-				mThis.dismiss();
-			}
-		});
-		
-		Button cancelButton = (Button) v.findViewById(R.id.negativeButton);
-		if(cancelButton!=null)
-		cancelButton.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
 				mThis.dismiss();
 			}
 		});
@@ -102,6 +93,7 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 				PlannerFragment.datePattern));
 
 	}
+	
 
 	// Called every time the user changes TimePicker values
 	public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -125,7 +117,11 @@ public class DateTimePicker extends Dialog implements OnDateChangedListener,
 
 	// Convenience wrapper for internal TimePicker instance
 	public void setIs24HourView(boolean is24HourView) {
+		
 		timePicker.setIs24HourView(is24HourView);
+		timePicker.setOnTimeChangedListener(this);
+		timePicker.setCurrentHour(mCalendar.get(Calendar.HOUR_OF_DAY));
+		
 	}
 
 	// Convenience wrapper for internal TimePicker instance

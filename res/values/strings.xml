@@ -4,8 +4,10 @@
     <string name="lecorse">Le Corse: Golden user and Beta Tester</string>
     <string name="kindhelp">With the kind help of</string>
     <string name="svTitle">StreetView not installed</string>
+         <string name="txt_quai">Platform </string>
     <string name="svMessage">Please install Google StreetView</string>
     <string name="noMarket">Sorry, cannot detect Android Market</string>
+    <string name="btn_home_settings">Preferences</string>
     <string name="btn_home_planner">Planner</string>
     <string name="btn_home_traffic">Traffic issues</string>
     <string name="btn_home_starred">Starred</string>
@@ -98,7 +100,7 @@
     <string name="txt_create_connections">Please update your search to see your trip
 		informations.</string>
     <string name="btn_closest_stations">Closest Stations</string>
-    <string name="txt_first_dl">he station list download will start. This is a
+    <string name="txt_first_dl">The station list download will start. This is a
 		slow process,
 		but next time you will use it, everything will be faster.</string>
     <string name="txt_accuracy">Accuracy: %sm.</string>

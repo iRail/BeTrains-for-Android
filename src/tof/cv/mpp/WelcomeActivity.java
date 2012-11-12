@@ -1,6 +1,5 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.Utils;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
@@ -79,23 +79,32 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		try{
-			getSupportFragmentManager().putFragment(outState, "mContent", mContent);
-		}catch(Exception e){
+		try {
+			getSupportFragmentManager().putFragment(outState, "mContent",
+					mContent);
+		} catch (Exception e) {
 		}
 	}
 
 	public void switchContent(final Fragment fragment) {
 		mContent = fragment;
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, fragment).addToBackStack(null)
-				.commit();
-		Handler h = new Handler();
-		h.postDelayed(new Runnable() {
-			public void run() {
-				getSlidingMenu().showAbove();
-			}
-		}, 50);
+
+		Fragment f = (Fragment) getSupportFragmentManager().findFragmentById(
+				R.id.content_frame);
+
+		if (!fragment.getClass().equals(f.getClass())) {
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.content_frame, fragment).addToBackStack(null)
+					.commit();
+			Handler h = new Handler();
+			h.postDelayed(new Runnable() {
+				public void run() {
+					getSlidingMenu().showAbove();
+				}
+			}, 50);
+		}
+		else
+			toggle();
 	}
 
 	public void onPlusClick(View v) {
@@ -106,11 +115,11 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	}
 
 	public void onMailClick(View v) {
-		 Intent intent = new Intent(Intent.ACTION_SEND); 
-		   intent.setType("plain/text");
-		   intent.putExtra(Intent.EXTRA_EMAIL, "christophe.versieux@gmail.com");  
-		   intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android"); 
-		   startActivity(Intent.createChooser(intent, "Mail"));
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("plain/text");
+		intent.putExtra(Intent.EXTRA_EMAIL, "christophe.versieux@gmail.com");
+		intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android");
+		startActivity(Intent.createChooser(intent, "Mail"));
 	}
 
 	public void oniRailClick(View v) {

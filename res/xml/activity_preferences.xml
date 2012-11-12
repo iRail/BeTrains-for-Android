@@ -3,13 +3,6 @@
 
 
     <PreferenceCategory android:title="BETrains" >
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/activity_entries"
-            android:entryValues="@array/activity_values"
-            android:key="@string/key_activity"
-            android:summary="@string/settings_activity_summary"
-            android:title="@string/settings_activity" />
 
         <CheckBoxPreference
             android:defaultValue="false"

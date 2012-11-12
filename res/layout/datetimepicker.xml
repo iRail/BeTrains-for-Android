@@ -2,47 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/DateTimePicker"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:padding="5dip" >
+    android:orientation="vertical" >
 
     <DatePicker
         android:id="@+id/DatePicker"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dip"
-        android:layout_marginTop="5dip" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:calendarViewShown="false" />
 
     <TimePicker
         android:id="@+id/TimePicker"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dip"
-        android:layout_marginTop="5dip" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/positiveButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/positiveButton"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dip"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@android:string/ok" />
-
-        <Button
-            android:id="@+id/negativeButton"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dip"
-            android:layout_weight="1"
-            android:singleLine="true" 
-             android:text="@android:string/cancel" />
-    </LinearLayout>
+        android:layout_gravity="bottom"
+        android:singleLine="true"
+        android:text="@android:string/ok" />
 
 </LinearLayout>

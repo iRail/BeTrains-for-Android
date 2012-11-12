@@ -33,13 +33,11 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 		if (conn != null) {
 			TextView delayD = (TextView) v.findViewById(R.id.delayD);
 			TextView delayA = (TextView) v.findViewById(R.id.delayA);
-			TextView departure = (TextView) v.findViewById(R.id.text1);
-			TextView arrival = (TextView) v.findViewById(R.id.text2);
-			TextView triptime = (TextView) v.findViewById(R.id.text3);
-			TextView departtime = (TextView) v.findViewById(R.id.text4);
-			TextView arrivaltime = (TextView) v.findViewById(R.id.text5);
-			TextView quai1 = (TextView) v.findViewById(R.id.quai1);
-			TextView quai2 = (TextView) v.findViewById(R.id.quai2);
+			TextView departure = (TextView) v.findViewById(R.id.departure);
+			TextView arrival = (TextView) v.findViewById(R.id.arrival);
+			TextView triptime = (TextView) v.findViewById(R.id.duration);
+			TextView departtime = (TextView) v.findViewById(R.id.departtime);
+			TextView arrivaltime = (TextView) v.findViewById(R.id.arrivaltime);
 			TextView numberoftrains = (TextView) v
 					.findViewById(R.id.numberoftrains);
 
@@ -60,22 +58,23 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 				delayA.setText("");
 
 			if (departure != null) {
-				departure.setText(conn.getDeparture().getStation());
+
+				departure
+						.setText((conn.getDeparture().getPlatform()
+										.contentEquals("") ? "" : getContext().getString(R.string.txt_quai)+ " "+conn
+										.getDeparture().getPlatform()) );
 			}
 			if (arrival != null) {
-				arrival.setText(conn.getArrival().getStation());
-			}
-
-			if (quai1 != null) {
-				quai1.setText(" (" + conn.getDeparture().getPlatform() + ")");
-			}
-			if (quai2 != null) {
-				quai2.setText(" (" + conn.getArrival().getPlatform() + ")");
+				arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
+								: getContext().getString(R.string.txt_quai)+" "+conn.getArrival().getPlatform()));
 			}
 
 			if (triptime != null) {
-				triptime.setText(Utils.formatDate(conn.getDuration(), true,
-						false));
+				triptime.setText(Html.fromHtml(getContext().getString(
+						R.string.txt_duration)
+						+ " <b>"
+						+ Utils.formatDate(conn.getDuration(), true, false)
+						+ "</b>"));
 			}
 			if (departtime != null) {
 				departtime.setText(Utils.formatDate(conn.getDeparture()
@@ -96,7 +95,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 							.getDeparture().getVehicle())));
 			}
 
-			int color1 = 0x00101010;
+			int color1 = 0xffffffff;
 			int color2 = 0xfff5f5f5;
 
 			if (position % 2 == 0) {

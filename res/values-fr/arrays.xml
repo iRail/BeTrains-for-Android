@@ -18,20 +18,7 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-    <string-array name="activity_entries">
-        <item>Demande d\'itinéraire</item>
-        <item>Accueil</item>
-        <item>Favoris</item>
-        <item>Perturbations trafic</item>
-        <item>Gares à proximité</item>
-    </string-array>
-    <string-array name="activity_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
+
     <string-array name="listArray">
         <item>Lundi</item>
         <item>Mardi</item>

@@ -40,16 +40,14 @@ public class DownloadOtherTrafficTask extends AsyncTask<URL, Integer, Long> {
 					Log.i("", myRssFeed.getList().get(0).getDescription());
 					TrafficAdapter a = (TrafficAdapter) trafFrag
 							.getListAdapter();
-					Log.i("", "*** ADAPTER" + a);
 					if (a == null) {
 						a = new TrafficAdapter(context, R.layout.row_rss,
 								myRssFeed.getList(), layoutInflater, myRssFeed);
 						trafFrag.setListAdapter(a);
 					} else {
-						for (RSSItem item : myRssFeed.itemList) {
-							Log.i("", "*** ITEM" + item.getTitle());
+						for (RSSItem item : myRssFeed.itemList)
 							a.add(item);
-						}
+
 						a.notifyDataSetChanged();
 					}
 

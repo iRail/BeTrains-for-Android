@@ -33,7 +33,6 @@
             android:gravity="left"
             android:paddingLeft="4dip"
             android:singleLine="true"
-            android:textColor="#FFFFFF"
             android:text="Station"
             android:textSize="16dip"
             android:textStyle="bold" />
@@ -43,7 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="#FFFFFF"
             android:text="IC XXXX"
             android:textSize="16dip" />
     </LinearLayout>
@@ -79,7 +77,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:textColor="#FFFFFF"
             android:text="00:00"
             android:textSize="16dip"
             android:textStyle="bold" />

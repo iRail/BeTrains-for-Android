@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/nowCardStyle"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -115,7 +115,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="3dp"
-        android:cacheColorHint="#00000000"
+        android:cacheColorHint="#0FFF"
         android:scrollbars="none" />
 
 </LinearLayout>

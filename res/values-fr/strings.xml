@@ -19,10 +19,7 @@
     <string name="tipdtitle">Cliquer sur l\'icone \'Home\' dans le coin supérieur
 		gauche pour arriver au menu principal.</string>
     <string name="app_name">BeTrains</string>
-    <string name="fuck">Suite à des modifs du site de la SNCB, BeTrains
-		souffre un peu. Je vais essayer de trouver quelques heures de mes
-		temps libres pour un correctif avant le 9 septembre. Merci de votre
-		patience et scrutez l\'Android Market pour une mise à jour.</string>
+     <string name="txt_quai">Quai </string>
     <string name="btn_home_planner">Demande d\'itinéraire</string>
     <string name="btn_home_chat">Chat</string>
     <string name="btn_home_notif">Notifications</string>

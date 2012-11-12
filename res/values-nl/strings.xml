@@ -11,6 +11,7 @@
     <string name="btn_closest_stations">Dichtste station</string>
     <string name="btn_home_chat">Chat</string>
     <string name="btn_home_starred">Favorieten</string>
+    <string name="txt_quai">Spoor </string>
     <string name="tipa">Om te beginnen</string>
     <string name="tipatitle">Om onmiddellijk te starten, klik op \'zoeken\'</string>
     <string name="tipb">Stationskeuze</string>
@@ -18,6 +19,7 @@
     <string name="tipc">Datum- en uurwijziging</string>
     <string name="tipctitle">Klik op de datum en de tijd in het bovenste deel van het scherm om deze te wijzigen
 .</string>
+    <string name="btn_home_settings">Instellingen</string>
     <string name="tipd">Hoofdmenu</string>
     <string name="tipdtitle">Gebruik het item \'Home\' bovenaan links op het scherm om het hoofdmenu te doen verschijnen.</string>
     <string name="settings_activity">Eerste scherm</string>

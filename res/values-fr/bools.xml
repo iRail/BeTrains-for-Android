@@ -2,5 +2,5 @@
 <resources>
     <bool name="nmbs">false</bool>
     <bool name="sncb">true</bool>
-    <bool name="navetteurs">true</bool>
+    <bool name="navetteurs">false</bool>
 </resources>

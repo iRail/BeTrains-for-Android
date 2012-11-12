@@ -33,12 +33,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * A dialog that can edit a shortcut intent. For now the icon is displayed, and
@@ -54,12 +54,11 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	private View arrivalRow;
 	private Connection currentConnection;
 
-	public ConnectionDialog(Activity plannerActivity, Connection connection,
-			int theme) {
-		super(plannerActivity, theme);
+	public ConnectionDialog(Activity plannerActivity, Connection connection) {
+		super(plannerActivity);
 
 		currentConnection = connection;
-
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// Setup the dialog
 		View finalView = getLayoutInflater().inflate(
 				R.layout.dialog_connection_detail, null, false);
@@ -69,8 +68,8 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		fillDetailRow(arrivalRow, connection.getArrival(), false);
 		listview = (ListView) finalView.findViewById(R.id.listConnections);
 
-		setTitle(connection.getDeparture().getStation() + " - "
-				+ connection.getArrival().getStation());
+		// setTitle(connection.getDeparture().getStation() + " - "
+		// + connection.getArrival().getStation());
 
 		setOnListListener();
 		setLlDepartureListener();

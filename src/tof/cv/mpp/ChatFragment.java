@@ -9,6 +9,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 
+import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.MessageAdapter;
@@ -17,7 +18,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
@@ -189,9 +192,14 @@ public class ChatFragment extends SherlockListFragment {
 	private void setBtnSettingsListener() {
 		btnSettings.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(),
-						MyPreferenceActivity.class).putExtra("screen",
-						MyPreferenceActivity.PAGE_GENERAL));
+				if (Build.VERSION.SDK_INT>=11)
+					startActivity(new Intent(getActivity(),
+							MyPreferenceActivity.class).putExtra(
+							PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+							Prefs1Fragment.class.getName()));
+				else{
+					startActivity(new Intent(getActivity(),MyPreferenceActivity.class));
+				}
 			}
 		});
 

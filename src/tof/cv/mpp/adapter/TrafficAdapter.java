@@ -6,6 +6,7 @@ import tof.cv.mpp.R;
 import tof.cv.mpp.rss.RSSFeed;
 import tof.cv.mpp.rss.RSSItem;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,14 @@ public class TrafficAdapter extends ArrayAdapter<RSSItem>{
 
 		TextView listTitle = (TextView) row.findViewById(R.id.listtitle);
 		listTitle.setText(myRssFeed.getList().get(position).getTitle());
+
 		TextView listPubdate = (TextView) row
 				.findViewById(R.id.listpubdate);
 		listPubdate.setText(myRssFeed.getList().get(position).getPubdate());
+		
+		TextView message = (TextView) row
+				.findViewById(R.id.message);
+		message.setText(Html.fromHtml(myRssFeed.getList().get(position).getDescription()));
 		
 		int color1=0x00101010;
 		int color2=0xfff5f5f5;

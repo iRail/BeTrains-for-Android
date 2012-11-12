@@ -1,21 +1,15 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.rss.DownloadOtherTrafficTask;
 import tof.cv.mpp.rss.DownloadTrafficTask;
 import tof.cv.mpp.rss.RSSFeed;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.MenuItem;
 
 public class TrafficFragment extends SherlockListFragment {
 	protected static final String TAG = "ActivityTraffic";
@@ -67,13 +61,16 @@ public class TrafficFragment extends SherlockListFragment {
 		this.myRssFeed = rssFeed;
 	}
 
-	@Override
+	/*@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Log.i("FragmentList", "Item clicked: " + id);
+		
+		TrafficAdapter a=(TrafficAdapter) this.getListAdapter();
+		
 		AlertDialog.Builder alertbox = new AlertDialog.Builder(
 				this.getActivity());
-		alertbox.setTitle(myRssFeed.getItem(position).getTitle());
-		alertbox.setMessage(myRssFeed.getItem(position).getDescription());
+		alertbox.setTitle(a.getItem(position).getTitle());
+		alertbox.setMessage(Html.fromHtml(a.getItem(position).getDescription()));
 		// "\n\n"+myRssFeed.getItem(position).getPubdate());
 		alertbox.setNeutralButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
@@ -81,13 +78,6 @@ public class TrafficFragment extends SherlockListFragment {
 					}
 				});
 		alertbox.show();
-	}
+	}*/
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
 }

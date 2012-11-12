@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_margin="5dp" 
-    android:padding="5dp"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
     <LinearLayout
-        android:id="@+id/departureline"
+        android:id="@+id/timeline"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/text4"
+            android:id="@+id/departtime"
             style="@style/TextElement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dip"
             android:text="00:00"
             android:textStyle="bold" />
 
@@ -28,8 +25,6 @@
             style="@style/TextElement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dip"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="+X&apos;"
@@ -37,81 +32,18 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text1"
-            style="@style/TextElement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dip"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="DEPARTURE" />
-
-        <TextView
-            android:id="@+id/quai1"
-            style="@style/TextElement"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dip"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="left"
-            android:singleLine="true"
-            android:text="99" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/thirdline"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/secondline"
-        android:orientation="horizontal" >
-
-        <TextView
             android:id="@+id/numberoftrains"
             style="@style/TextElement"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dip"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:text="Train" />
 
         <TextView
-            android:id="@+id/duration"
+            android:id="@+id/arrivaltime"
             style="@style/TextElement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="6dip"
-            android:layout_toLeftOf="@+id/text3"
-            android:text="@string/txt_duration"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/text3"
-            style="@style/TextElement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="6dip"
-            android:text="DURATION"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/arrivalline"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/firstline"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/text5"
-            style="@style/TextElement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@+id/intertime"
             android:text="99:99"
             android:textStyle="bold" />
 
@@ -120,36 +52,48 @@
             style="@style/TextElement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dip"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="+X&apos;"
             android:textColor="@color/red"
             android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondline"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/text2"
+            android:id="@+id/departure"
             style="@style/TextElement"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dip"
+            android:layout_weight="1"
+            android:gravity="left"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="DEPARTURE" />
 
         <TextView
-            android:id="@+id/quai2"
+            android:id="@+id/duration"
             style="@style/TextElement"
-            android:layout_width="0dip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
+            android:text="@string/txt_duration"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/arrival"
+            style="@style/TextElement"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="left"
+             android:gravity="right"
             android:singleLine="true"
-            android:text="99" />
+            android:text="DEPARTURE" />
     </LinearLayout>
 
 </LinearLayout>

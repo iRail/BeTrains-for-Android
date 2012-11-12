@@ -16,7 +16,6 @@
 
         <TextView
             android:id="@+id/tv_station"
-            android:textColor="#FFFFFF"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="#FFFFFF"
             android:text="IC XXXX"
             android:textSize="16dip" />
     </LinearLayout>
