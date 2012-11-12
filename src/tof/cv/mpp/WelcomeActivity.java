@@ -1,9 +1,11 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.Utils.Utils;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -21,7 +23,7 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.responsive_content_frame);
-
+		setSlidingActionBarEnabled(false);
 		// check if the content frame contains the menu frame
 		if (findViewById(R.id.menu_frame) == null) {
 			setBehindContentView(R.layout.menu_frame);
@@ -77,18 +79,44 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+		try{
+			getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+		}catch(Exception e){
+		}
 	}
 
 	public void switchContent(final Fragment fragment) {
 		mContent = fragment;
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+				.replace(R.id.content_frame, fragment).addToBackStack(null)
+				.commit();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
 			public void run() {
 				getSlidingMenu().showAbove();
 			}
 		}, 50);
+	}
+
+	public void onPlusClick(View v) {
+		String url = "https://plus.google.com/b/108315424589085456181/108315424589085456181/posts";
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(url));
+		startActivity(i);
+	}
+
+	public void onMailClick(View v) {
+		 Intent intent = new Intent(Intent.ACTION_SEND); 
+		   intent.setType("plain/text");
+		   intent.putExtra(Intent.EXTRA_EMAIL, "christophe.versieux@gmail.com");  
+		   intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android"); 
+		   startActivity(Intent.createChooser(intent, "Mail"));
+	}
+
+	public void oniRailClick(View v) {
+		Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
+		marketLaunch.setData(Uri
+				.parse("market://details?id=be.irail.liveboards"));
+		startActivity(marketLaunch);
 	}
 }

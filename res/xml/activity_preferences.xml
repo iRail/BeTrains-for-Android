@@ -13,11 +13,6 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="preffullscreen"
-            android:summary="@string/settings_restart"
-            android:title="@string/settings_fullscreen" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="prefnl"
             android:summary="@string/settings_english"
             android:title="@string/settings_force_dutch" />

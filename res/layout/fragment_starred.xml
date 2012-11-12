@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/nowCardStyle"
     android:layout_width="fill_parent"
-    android:layout_height="0dp"
-     android:background="#FFFFFFFF"
-    android:layout_weight="1" >
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <include layout="@layout/colorstrip" />
+
+    <ListView
+        android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:cacheColorHint="#00000000" />
 
-        <include layout="@layout/colorstrip" />
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:padding="5dip"
+        android:text="@string/fav_no_fav_body"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/darkblue" />
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="0dip"
-            android:layout_marginTop="3px"
-            android:layout_weight="1"
-            android:cacheColorHint="#00000000" />
-
-        <TextView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@android:id/empty"
-            android:layout_width="fill_parent"
-            android:layout_height="0dip"
-            android:layout_gravity="center"
-            android:padding="5dip"
-            android:layout_weight="1"
-            android:text="@string/fav_no_fav_body"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/darkblue" />
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

@@ -82,6 +82,10 @@ public class ClosestFragment extends SherlockListFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		setHasOptionsMenu(true);
+		
+		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_closest);
+		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_closest_stations);
+		getSherlockActivity().getSupportActionBar().setSubtitle(null);
 
 		m_ProgressDialog = new MyProgressDialog(getActivity());
 		mDbHelper = new DbAdapterLocation(getActivity());
@@ -242,7 +246,7 @@ public class ClosestFragment extends SherlockListFragment {
 
 		public void onLocationChanged(final Location loc) {
 
-			if (loc != null) {
+			if (loc != null && btnUpdate!=null && getActivity()!=null) {
 				bestLocationFound = loc;
 				btnUpdate.setVisibility(View.VISIBLE);
 				btnUpdate.setText(getActivity().getString(

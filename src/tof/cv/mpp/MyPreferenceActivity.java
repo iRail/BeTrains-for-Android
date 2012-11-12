@@ -2,8 +2,6 @@ package tof.cv.mpp;
 
 import java.util.List;
 
-import tof.cv.mpp.Utils.Utils;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -29,8 +27,8 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		Utils.setFullscreenIfNecessary(this);
 
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		boolean hasNoHeader = true;
 		try {
 			hasNoHeader = !hasHeaders();

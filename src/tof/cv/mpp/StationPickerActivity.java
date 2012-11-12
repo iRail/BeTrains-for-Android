@@ -49,8 +49,8 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 	private static DbAdapterConnection mDbHelper;
 
 	protected static final String[] TITLES = new String[] { "FAVOURITE",
-			"BELGIUM", "EUROPE" };
-
+			"BELGIUM" };
+//, "EUROPE"
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 
@@ -64,9 +64,8 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Utils.setFullscreenIfNecessary(this);
 		setContentView(R.layout.fragment_tab_picker);
-		// getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mAdapter = new MyAdapter(getSupportFragmentManager());
 

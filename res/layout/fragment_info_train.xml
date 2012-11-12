@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/nowCardStyle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-     android:background="#FFFFFFFF">
-
-    <include layout="@layout/colorstrip" />
+    android:orientation="vertical" >
 
     <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -21,6 +18,8 @@
         android:textColor="@color/darkblue"
         android:textStyle="bold" />
 
+    <include layout="@layout/colorstrip" />
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
@@ -28,13 +27,13 @@
         android:layout_weight="1" />
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@android:id/empty"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="vertical" >
+
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
@@ -42,7 +41,6 @@
     </LinearLayout>
 
     <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/More_info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -54,9 +52,9 @@
         android:id="@+id/last_message"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@color/action_bar_tint"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@color/action_bar_tint"
         android:textColor="#FF000000" >
     </TextView>
 

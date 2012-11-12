@@ -7,7 +7,10 @@
     <string name="lecorse">Le Corse: Sympatieke gebruiker en Beta Tester </string>
     <string name="kindhelp">Met hulp van:</string>
     <string name="btn_home_planner">Routeplanner</string>
-      <string name="btn_closest_stations">Dichtste station</string>
+    <string name="btn_home_traffic">Verkeershinder</string>
+    <string name="btn_closest_stations">Dichtste station</string>
+    <string name="btn_home_chat">Chat</string>
+    <string name="btn_home_starred">Favorieten</string>
     <string name="tipa">Om te beginnen</string>
     <string name="tipatitle">Om onmiddellijk te starten, klik op \'zoeken\'</string>
     <string name="tipb">Stationskeuze</string>
@@ -17,13 +20,11 @@
 .</string>
     <string name="tipd">Hoofdmenu</string>
     <string name="tipdtitle">Gebruik het item \'Home\' bovenaan links op het scherm om het hoofdmenu te doen verschijnen.</string>
-    <string name="tipe">Hernieuw startscherm</string>
-    <string name="tipetitle">Om een ander startscherm in te stellen, wijzig dit in de configuratie</string>
     <string name="settings_activity">Eerste scherm</string>
     <string name="settings_activity_summary">Waar moet de applicatie opstarten?</string>
     <string name="app_name">BeTrains</string>
-    <string name="txt_loading">Laden...</string>
-    <string name="txt_patient">Even geduld, de data worden geladen...</string>
+    <string name="txt_loading">Laden.</string>
+    <string name="txt_patient">Even geduld, de data worden geladen.</string>
     <string name="txt_traffic_issues">Overzicht van de huidige storingen</string>
     <string name="txt_no_issue">Geen verkeershinder</string>
     <string name="txt_duration">Duur :</string>
@@ -32,7 +33,7 @@
     <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Voeg toe aan widget</string>
     <string name="url_lang">nl</string>
-    <string name="url_lang_2">nl</string>
+    <string name="url_lang_2">n</string>
     <string name="url_lang_for_him">n</string>
     <string name="txt_connection">Gelieve uw internetverbinding te controleren...</string>
     <string name="txt_def_title">Default titel</string>
@@ -121,7 +122,7 @@
     <string name="stationpicker">Kies een station</string>
     <string name="key_planner_da">Plannerdapref</string>
     <string name="key_activity">Activitypref</string>
-    
+
     <!-- Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] -->
     <string name="abs__action_bar_home_description">Navigate home</string>
     <!-- Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] -->

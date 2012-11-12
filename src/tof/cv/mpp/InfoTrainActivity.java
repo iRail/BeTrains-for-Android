@@ -1,6 +1,5 @@
 package tof.cv.mpp;
 
-import tof.cv.mpp.Utils.Utils;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -11,9 +10,7 @@ public class InfoTrainActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Utils.setFullscreenIfNecessary(this);
-		
+
 		setContentView(R.layout.activity_info_train);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		

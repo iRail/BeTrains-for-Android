@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
+import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.ConnectionAdapter;
@@ -103,9 +103,11 @@ public class PlannerFragment extends SherlockListFragment {
 		editor = settings.edit();
 		context = this.getActivity();
 		mDate = Calendar.getInstance();
-
-		updateActionBar();
+		
+		
 		setHasOptionsMenu(true);
+		
+
 
 		style = android.R.style.Theme_Dialog;
 		if (Build.VERSION.SDK_INT >= 14)
@@ -123,6 +125,12 @@ public class PlannerFragment extends SherlockListFragment {
 
 		fillStations(settings.getString("pStart", "MONS"),
 				settings.getString("pStop", "TOURNAI"));
+		
+		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_planner);
+		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_home_planner);
+		getSherlockActivity().getSupportActionBar().setSubtitle("");
+		
+		updateActionBar();
 
 	}
 
@@ -241,15 +249,15 @@ public class PlannerFragment extends SherlockListFragment {
 
 		menu.add(Menu.NONE, MENU_DT, Menu.NONE, "Date/Time")
 				.setIcon(R.drawable.ic_menu_time)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
 		menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Add to Fav.")
 				.setIcon(R.drawable.ic_menu_star)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
 		menu.add(Menu.NONE, MENU_PREF, Menu.NONE, "Settings")
 				.setIcon(R.drawable.ic_menu_preferences)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 	}
 
 	@Override
@@ -266,7 +274,7 @@ public class PlannerFragment extends SherlockListFragment {
 		case (MENU_PREF):
 			startActivity(new Intent(getActivity(), MyPreferenceActivity.class)
 					.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-							Prefs1Fragment.class.getName()));
+							Prefs2Fragment.class.getName()));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -324,11 +332,6 @@ public class PlannerFragment extends SherlockListFragment {
 		map = new HashMap<String, String>();
 		map.put("tip", getString(R.string.tipd));
 		map.put("title", getString(R.string.tipdtitle));
-		list.add(map);
-
-		map = new HashMap<String, String>();
-		map.put("tip", getString(R.string.tipe));
-		map.put("title", getString(R.string.tipetitle));
 		list.add(map);
 
 		// Use a SimpleAdapter to display tips

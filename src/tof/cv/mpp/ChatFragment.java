@@ -64,11 +64,16 @@ public class ChatFragment extends SherlockListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
 		boolean isTablet=this.getSherlockActivity().getResources().getBoolean(R.bool.tablet_layout);
 		
 		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(
 				!isTablet);
-
+		
+		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_chat);
+		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_home_chat);
+		getSherlockActivity().getSupportActionBar().setSubtitle(null);
+		
 		setHasOptionsMenu(true);
 		getSherlockActivity().getSupportActionBar().setTitle(
 				getString(R.string.txt_messages));
@@ -195,22 +200,28 @@ public class ChatFragment extends SherlockListFragment {
 	public void update() {
 		final Runnable getMessageFromTrain = new Runnable() {
 			public void run() {
-				listOfMessage = UtilsWeb.requestPhpRead(trainId, 0, total,
-						getActivity());
-				if (listOfMessage != null) {
-					Log.i(TAG, "count= " + listOfMessage.size());
-					if (listOfMessage.size() == 0) {
-						if (getActivity() != null)
-							getActivity().runOnUiThread(updateEmpty);
+				try {
+					listOfMessage = UtilsWeb.requestPhpRead(trainId, 0, total,
+							getActivity());
+					if (listOfMessage != null) {
+						Log.i(TAG, "count= " + listOfMessage.size());
+						if (listOfMessage.size() == 0) {
+							if (getActivity() != null)
+								getActivity().runOnUiThread(updateEmpty);
+						} else {
+							if (getActivity() != null)
+								getActivity().runOnUiThread(returnRes);
+						}
+						toEmpty = getString(R.string.txt_no_message);
 					} else {
-						if (getActivity() != null)
-							getActivity().runOnUiThread(returnRes);
+						toEmpty = getString(R.string.txt_connection);
+						getActivity().runOnUiThread(returnRes);
 					}
-					toEmpty = getString(R.string.txt_no_message);
-				} else {
-					toEmpty = getString(R.string.txt_connection);
-					getActivity().runOnUiThread(returnRes);
+				}catch (Exception e){
+					e.printStackTrace();
 				}
+				
+
 			}
 		};
 

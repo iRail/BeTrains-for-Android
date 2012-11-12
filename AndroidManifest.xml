@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tof.cv.mpp"
     android:installLocation="auto"
-    android:versionCode="6312"
-    android:versionName="3.12" >
+    android:versionCode="6350"
+    android:versionName="3.5RC1" >
 
     <uses-sdk
         android:minSdkVersion="7"

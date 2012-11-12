@@ -44,6 +44,9 @@ public class StarredFragment extends SherlockListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
+		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_starred);
+		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_home_starred);
+		getSherlockActivity().getSupportActionBar().setSubtitle(null);
 	}
 
 	public void onResume() {

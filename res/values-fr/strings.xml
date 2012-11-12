@@ -18,9 +18,6 @@
     <string name="tipd">Menu principal</string>
     <string name="tipdtitle">Cliquer sur l\'icone \'Home\' dans le coin supérieur
 		gauche pour arriver au menu principal.</string>
-    <string name="tipe">Ecran de démarrage</string>
-    <string name="tipetitle">Dans les paramètres, il sera facile de choisir
-		l\écran sur lequel vous arrivez en lancant l\'application.</string>
     <string name="app_name">BeTrains</string>
     <string name="fuck">Suite à des modifs du site de la SNCB, BeTrains
 		souffre un peu. Je vais essayer de trouver quelques heures de mes
@@ -43,7 +40,7 @@
     <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Widget</string>
     <string name="url_lang">fr</string>
-    <string name="url_lang_2">fr</string>
+    <string name="url_lang_2">f</string>
     <string name="url_lang_for_him">f</string>
     <string name="txt_connection">Vérifiez votre connection.</string>
     <string name="txt_def_title">Titre</string>

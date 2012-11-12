@@ -54,8 +54,9 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	private View arrivalRow;
 	private Connection currentConnection;
 
-	public ConnectionDialog(Activity plannerActivity, Connection connection, int theme) {
-		super(plannerActivity,theme);
+	public ConnectionDialog(Activity plannerActivity, Connection connection,
+			int theme) {
+		super(plannerActivity, theme);
 
 		currentConnection = connection;
 
@@ -111,18 +112,17 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 		tvStation.setText(station.getStation());
 
 		TextView tvTrain = (TextView) row.findViewById(R.id.tv_train);
-		if (isDeparture) 
+		if (isDeparture)
 			tvTrain.setText("");
-		
+
 		else
 			tvTrain.setText(Utils.getTrainId(station.getVehicle()));
-		
+
 		TextView tvPlatform = (TextView) row.findViewById(R.id.tv_platform);
 		tvPlatform.setText(station.getPlatform());
 
 		TextView tvTime = (TextView) row.findViewById(R.id.tv_time);
-		tvTime.setText(Utils.formatDate(station.getTime(), false,
-				false));
+		tvTime.setText(Utils.formatDate(station.getTime(), false, false));
 
 		TextView tvDelay = (TextView) row.findViewById(R.id.tv_delay);
 		if (!station.getDelay().contentEquals("0")) {
@@ -161,8 +161,8 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 
 				final CharSequence[] items = {
 						getArrival(),
-						Utils.getTrainId(currentConnection
-								.getArrival().getVehicle()) };
+						Utils.getTrainId(currentConnection.getArrival()
+								.getVehicle()) };
 				showStationDialog(currentConnection.getArrival(), items);
 			}
 		});
@@ -170,8 +170,8 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 
 	private void showViaDialog(final int position) {
 
-		final String vehicle = Utils.getTrainId(currentConnection
-				.getVias().via.get(position).getVehicle());
+		final String vehicle = Utils.getTrainId(currentConnection.getVias().via
+				.get(position).getVehicle());
 		final Via currentVia = currentConnection.getVias().via.get(position);
 		final CharSequence[] items = { currentVia.getName(), vehicle };
 
@@ -239,16 +239,8 @@ public class ConnectionDialog extends Dialog implements OnClickListener {
 	private void startTrainInfoActivity(String vehicle) {
 		Intent i = new Intent(getContext(), InfoTrainActivity.class);
 		i.putExtra("fromto", getDeparture() + " - " + getArrival());
-		try {
-
-			i.putExtra("Name", vehicle);
-			// i.putExtra("Hour", mDate.getHours());
-			// i.putExtra("Minute", mDate.getMinutes());
-			getContext().startActivity(i);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-		}
+		i.putExtra("Name", vehicle);
+		getContext().startActivity(i);
 	}
 
 }

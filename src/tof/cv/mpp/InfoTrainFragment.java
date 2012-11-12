@@ -138,7 +138,7 @@ public class InfoTrainFragment extends SherlockListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, 0, Menu.NONE, "Widget")
+		menu.add(Menu.NONE, 0, Menu.NONE, "Add to Widget")
 				.setIcon(R.drawable.ic_menu_save)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
@@ -148,7 +148,7 @@ public class InfoTrainFragment extends SherlockListFragment {
 
 		menu.add(Menu.NONE, 2, Menu.NONE, "Map")
 				.setIcon(R.drawable.ic_menu_mapmode)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
 		menu.add(Menu.NONE, 3, Menu.NONE, "Chat")
 				.setIcon(R.drawable.ic_menu_start_conversation)

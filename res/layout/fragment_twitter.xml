@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_root"
+    style="@style/nowCardStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/home_root" android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<include layout="@layout/colorstrip" />
-		<TextView android:id="@+id/fail" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:text="@string/txt_connection"
-			android:textColor="@color/darkblue" android:visibility="gone" />
+    <include layout="@layout/colorstrip" />
 
-		<ListView android:cacheColorHint="#00000000" android:id="@android:id/list"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/fail"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/txt_connection"
+        android:textColor="@color/darkblue"
+        android:visibility="gone" />
 
-		<RelativeLayout style="@style/GenericProgressBackground"
-			android:id="@android:id/empty">
-			<ProgressBar style="@style/GenericProgressIndicator" />
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000" />
 
-		</RelativeLayout>
+    <RelativeLayout
+        android:id="@android:id/empty"
+        style="@style/GenericProgressBackground" >
 
-	</LinearLayout>
+        <ProgressBar style="@style/GenericProgressIndicator" />
+    </RelativeLayout>
 
+</LinearLayout>

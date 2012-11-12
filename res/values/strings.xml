@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<resources><string name="lecorse">Le Corse: Golden user and Beta Tester</string>
-    <string name="kindhelp">With the kind help of</string>
+<resources>
 
+    <string name="lecorse">Le Corse: Golden user and Beta Tester</string>
+    <string name="kindhelp">With the kind help of</string>
     <string name="svTitle">StreetView not installed</string>
     <string name="svMessage">Please install Google StreetView</string>
     <string name="noMarket">Sorry, cannot detect Android Market</string>
     <string name="btn_home_planner">Planner</string>
+    <string name="btn_home_traffic">Traffic issues</string>
+    <string name="btn_home_starred">Starred</string>
     <string name="tipa">Getting started</string>
     <string name="tipatitle">If you want to start immediately, click on the search button</string>
     <string name="tipb">Change stations</string>
@@ -13,11 +16,9 @@
     <string name="tipc">Change date/Time</string>
     <string name="tipctitle">Click on the date and time fields in the upper part to change your desired trip time.</string>
     <string name="tipd">Main menu</string>
-    <string name="tipdtitle">Use the \nHome\n icon in the upper left part to go the the main menu.</string>
-    <string name="tipe">Change first screen</string>
-    <string name="tipetitle">If you want to start on other screen, you can configure that in the settings.</string>
+    <string name="tipdtitle">Use the \'Home\' icon in the upper left part to go the the main menu.</string>
     <string name="app_name">BeTrains</string>
-
+    <string name="btn_home_chat">Chat</string>
     <string name="txt_loading">Loading...</string>
     <string name="txt_patient">Please be patient...</string>
     <string name="txt_traffic_issues">Traffic Issues</string>
@@ -28,7 +29,7 @@
     <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Add to Widget</string>
     <string name="url_lang">en</string>
-    <string name="url_lang_2">fr</string>
+    <string name="url_lang_2">f</string>
     <string name="url_lang_for_him">f</string>
     <string name="txt_connection">Please check your Internet connection.</string>
     <string name="txt_def_title">Default Title</string>

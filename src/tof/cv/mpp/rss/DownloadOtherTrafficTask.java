@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import tof.cv.mpp.R;
-import tof.cv.mpp.TrafficHimFragment;
+import tof.cv.mpp.TrafficFragment;
 import tof.cv.mpp.adapter.TrafficAdapter;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -18,14 +18,14 @@ public class DownloadOtherTrafficTask extends AsyncTask<URL, Integer, Long> {
 	private Context context;
 	private LayoutInflater layoutInflater;
 	private String lang;
-	private TrafficHimFragment trafFrag;
+	private TrafficFragment trafFrag;
 
-	public DownloadOtherTrafficTask(TrafficHimFragment trafFrag) {
-		this.trafFrag = trafFrag;
-		context = trafFrag.getActivity();
-		myRssFeed = trafFrag.getRssFeed();
-		layoutInflater = trafFrag.getActivity().getLayoutInflater();
-		lang = trafFrag.getLang();
+	public DownloadOtherTrafficTask(TrafficFragment trafFrag2) {
+		this.trafFrag = trafFrag2;
+		context = trafFrag2.getActivity();
+		myRssFeed = trafFrag2.getRssFeed();
+		layoutInflater = trafFrag2.getActivity().getLayoutInflater();
+		lang = trafFrag2.getLang();
 	}
 
 	protected Long doInBackground(URL... params) {
@@ -37,12 +37,22 @@ public class DownloadOtherTrafficTask extends AsyncTask<URL, Integer, Long> {
 		try {
 			if (myRssFeed != null) {
 				if (myRssFeed.getList().size() > 0) {
-					Log.i("",myRssFeed.getList().get(0).getDescription());
-					TrafficAdapter adapter = new TrafficAdapter(context,
-							R.layout.row_rss, myRssFeed.getList(),
-							layoutInflater, myRssFeed);
-					trafFrag.setListAdapter(adapter);
-					trafFrag.setRssFeed(myRssFeed);
+					Log.i("", myRssFeed.getList().get(0).getDescription());
+					TrafficAdapter a = (TrafficAdapter) trafFrag
+							.getListAdapter();
+					Log.i("", "*** ADAPTER" + a);
+					if (a == null) {
+						a = new TrafficAdapter(context, R.layout.row_rss,
+								myRssFeed.getList(), layoutInflater, myRssFeed);
+						trafFrag.setListAdapter(a);
+					} else {
+						for (RSSItem item : myRssFeed.itemList) {
+							Log.i("", "*** ITEM" + item.getTitle());
+							a.add(item);
+						}
+						a.notifyDataSetChanged();
+					}
+
 				} else {
 					TextView feedEmpty = (TextView) trafFrag.getActivity()
 							.findViewById(android.R.id.empty);
@@ -50,7 +60,7 @@ public class DownloadOtherTrafficTask extends AsyncTask<URL, Integer, Long> {
 							.setText(trafFrag.getString(R.string.txt_no_issue));
 				}
 			} else {
-				TextView feedEmpty = (TextView) trafFrag.getActivity()
+				TextView feedEmpty = (TextView) trafFrag.getView()
 						.findViewById(android.R.id.empty);
 				feedEmpty.setText(trafFrag.getString(R.string.txt_connection));
 			}

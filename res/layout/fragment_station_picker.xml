@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/nowCardStyle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-     android:background="#FFFFFFFF"
-    android:paddingRight="8dp" >
+    android:orientation="vertical" >
 
     <EditText
         android:id="@+id/search_box"

@@ -33,27 +33,18 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 	}
 
 	protected void onPostExecute(Long result) {
-		try{
+
 		if (myRssFeed != null) {
-			if (myRssFeed.getList().size() > 0) {
-				TrafficAdapter adapter = new TrafficAdapter(context,
-						R.layout.row_rss, myRssFeed.getList(), layoutInflater,
-						myRssFeed);
-				trafFrag.setListAdapter(adapter);
-				trafFrag.setRssFeed(myRssFeed);
-			} else {
-				TextView feedEmpty = (TextView) trafFrag.getActivity()
-						.findViewById(R.id.feedempty);
-				feedEmpty.setText(trafFrag.getString(R.string.txt_no_issue));
-			}
-		} else {
-			TextView feedEmpty = (TextView) trafFrag.getActivity()
-					.findViewById(android.R.id.empty);
-			feedEmpty.setText(trafFrag.getString(R.string.txt_connection));
+
+			TrafficAdapter adapter = new TrafficAdapter(context,
+					R.layout.row_rss, myRssFeed.getList(), layoutInflater,
+					myRssFeed);
+			trafFrag.setListAdapter(adapter);
+			trafFrag.setRssFeed(myRssFeed);
+
 		}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+
+		new DownloadOtherTrafficTask(trafFrag).execute();
 	}
 
 	private void updateData() {

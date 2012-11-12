@@ -1,10 +1,10 @@
 package tof.cv.mpp;
 
+import tof.cv.mpp.rss.DownloadOtherTrafficTask;
 import tof.cv.mpp.rss.DownloadTrafficTask;
 import tof.cv.mpp.rss.RSSFeed;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -38,17 +38,21 @@ public class TrafficFragment extends SherlockListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 
-		// TODO: ActionBAr
-		// GDActionBar mABar = getGDActionBar();
-		// mABar.setTitle(getString(R.string.app_name));
-
 		lang = this.getString(R.string.url_lang_2);
 		if (settings.getBoolean("prefnl", false)) {
 			lang = "nl";
 		}
 
 		new DownloadTrafficTask(this).execute();
-
+		
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_traffic);
+		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_home_traffic);
+		getSherlockActivity().getSupportActionBar().setSubtitle(null);
 	}
 
 	public String getLang() {

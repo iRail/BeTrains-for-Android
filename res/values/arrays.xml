@@ -3,7 +3,7 @@
 
     <string-array name="menu">
         <item>Route Planner</item>
-        <item>Perturbations</item>
+        <item>Traffic Issues</item>
         <item>Chat</item>
         <item>Twitter</item>
         <item>Starred</item>

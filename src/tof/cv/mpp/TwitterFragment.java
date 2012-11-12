@@ -30,6 +30,10 @@ public class TwitterFragment extends SherlockListFragment{
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 		UtilsWeb.loadTweets(getActivity(), getListView());
+		
+		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_twit);
+		getSherlockActivity().getSupportActionBar().setTitle("Twitter");
+		getSherlockActivity().getSupportActionBar().setSubtitle(null);
 	}
 
 	
@@ -58,7 +62,8 @@ public class TwitterFragment extends SherlockListFragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case (0):
-			startActivity(new Intent(getActivity(), MyPreferenceActivity.class).putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, Prefs3Fragment.class.getName()));
+			startActivity(new Intent(getActivity(), MyPreferenceActivity.class)
+					.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, Prefs3Fragment.class.getName()));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

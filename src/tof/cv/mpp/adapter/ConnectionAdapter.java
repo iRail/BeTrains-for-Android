@@ -49,8 +49,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			if (!conn.getDeparture().getDelay().contentEquals("0"))
 				delayD.setText(delayStr);
 			else
-				// delayD.setText(delayStr);
-				delayD.setVisibility(View.GONE);
+				delayD.setText("");
 
 			delayStr = "+"
 					+ (Integer.valueOf(conn.getArrival().getDelay()) / 60)
@@ -58,8 +57,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			if (!conn.getArrival().getDelay().contentEquals("0"))
 				delayA.setText(delayStr);
 			else
-				// delayA.setText(delayStr);
-				delayA.setVisibility(View.GONE);
+				delayA.setText("");
 
 			if (departure != null) {
 				departure.setText(conn.getDeparture().getStation());
@@ -76,26 +74,26 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			}
 
 			if (triptime != null) {
-				triptime.setText(Utils.formatDate(conn.getDuration(),
-						true, false));
+				triptime.setText(Utils.formatDate(conn.getDuration(), true,
+						false));
 			}
 			if (departtime != null) {
-				departtime.setText(Utils.formatDate(conn
-						.getDeparture().getTime(), false, false));
+				departtime.setText(Utils.formatDate(conn.getDeparture()
+						.getTime(), false, false));
 			}
 			if (arrivaltime != null) {
-				arrivaltime.setText(Utils.formatDate(conn
-						.getArrival().getTime(), false, false));
+				arrivaltime.setText(Utils.formatDate(conn.getArrival()
+						.getTime(), false, false));
 			}
 
 			if (numberoftrains != null) { //
-				//Log.i("BETRAINS", "number" + conn.getVias()));
-				if (conn.getVias()!=null)
+				// Log.i("BETRAINS", "number" + conn.getVias()));
+				if (conn.getVias() != null)
 					numberoftrains.setText(Html.fromHtml("Trains: <b>"
-							+ (conn.getVias().getNumberOfVias()+1) + "</b>"));
+							+ (conn.getVias().getNumberOfVias() + 1) + "</b>"));
 				else
-					numberoftrains.setText(Html.fromHtml(Utils
-							.getTrainId(conn.getDeparture().getVehicle())));
+					numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn
+							.getDeparture().getVehicle())));
 			}
 
 			int color1 = 0x00101010;
@@ -108,6 +106,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 				v.setBackgroundColor(color2);
 
 			}
+
 		}
 		return v;
 	}

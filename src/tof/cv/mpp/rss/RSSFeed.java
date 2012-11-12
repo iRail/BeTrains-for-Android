@@ -9,7 +9,7 @@ public class RSSFeed {
 	private String description = null;
 	private String link = null;
 	private String pubdate = null;
-	private List<RSSItem> itemList;
+	public List<RSSItem> itemList;
 
 	RSSFeed() {
 		itemList = new Vector<RSSItem>(0);

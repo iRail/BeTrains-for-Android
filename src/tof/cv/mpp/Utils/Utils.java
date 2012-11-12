@@ -36,19 +36,6 @@ public class Utils {
 	final static String FILENAMECONN = "connections.txt";
 	final static String DIRPATH = "/Android/data/BeTrains";
 
-	public static void setFullscreenIfNecessary(Activity context) {
-
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		if (settings.getBoolean("preffullscreen", false)) {
-			context.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			context.getWindow().setFlags(
-					WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
-
-	}
-
 	public static String getHourFromDate(long dateFromAPI, boolean isDuration) {
 		Date date;
 		DateFormat dateFormat = new SimpleDateFormat("HH");

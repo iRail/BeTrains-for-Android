@@ -143,11 +143,11 @@ public class InfoStationFragment extends SherlockListFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, 0, Menu.NONE, "Fav")
 				.setIcon(R.drawable.ic_menu_star)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
 		menu.add(Menu.NONE, 1, Menu.NONE, "Map")
 				.setIcon(R.drawable.ic_menu_mapmode)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 	}
 
 	@Override

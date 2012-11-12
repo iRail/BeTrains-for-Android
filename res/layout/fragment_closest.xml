@@ -1,55 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="0dp" android:layout_width="fill_parent"
-	android:layout_weight="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     style="@style/nowCardStyle"
+    android:orientation="vertical" >
 
-	<LinearLayout 
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:orientation="vertical" android:background="#FFFFFFFF">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-		<include layout="@layout/colorstrip" />
+        <TextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tv_title"
+            style="@style/HomeButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:text="@string/txt_wait_gps"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:orientation="horizontal" android:layout_gravity="center"
-			android:gravity="center">
-			<TextView android:id="@+id/tv_title" style="@style/HomeButton"
-				xmlns:android="http://schemas.android.com/apk/res/android"
-				android:layout_width="0dip" android:layout_weight="1"
-				android:layout_height="wrap_content" android:layout_gravity="center"
-				android:gravity="center" android:text="@string/txt_wait_gps"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:paddingBottom="10dip" android:paddingTop="10dip" />
-			<Button android:id="@+id/btn_update" android:text="@string/txt_change"
-				android:layout_width="wrap_content" android:visibility="gone"
-				android:layout_height="wrap_content" android:layout_gravity="center"
-				android:gravity="center" />
-		</LinearLayout>
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/txt_change"
+            android:visibility="gone" />
+    </LinearLayout>
 
-		<include layout="@layout/colorstrip" />
+    <include layout="@layout/colorstrip" />
 
-		<ListView android:id="@android:id/list" style="@style/TextElement"
-			android:textColor="@color/darkblue" android:gravity="top|left"
-			android:paddingLeft="6dip" android:paddingRight="6dip"
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent" android:layout_height="0dip"
-			android:layout_weight="1" android:cacheColorHint="#00000000"
-			android:text="@string/txt_loading" />
-		<LinearLayout android:id="@android:id/empty"
-			android:layout_width="fill_parent" android:layout_height="0dip"
-			android:layout_weight="1" android:gravity="center"
-			android:orientation="vertical">
+    <ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@android:id/list"
+        style="@style/TextElement"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:gravity="top|left"
+        android:paddingLeft="6dip"
+        android:paddingRight="6dip"
+        android:text="@string/txt_loading"
+        android:textColor="@color/darkblue" />
 
-			<TextView android:id="@+id/empty_tv" android:layout_width="fill_parent"
-				android:layout_height="0dip" android:layout_weight="1" android:text="Loading..."
-				android:gravity="center" />
+    <LinearLayout
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
 
-			<Button android:id="@+id/empty_bt" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:text="Click here to open GPS settings"
-				android:gravity="center" />
+        <TextView
+            android:id="@+id/empty_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Loading..." />
 
-		</LinearLayout>
+        <Button
+            android:id="@+id/empty_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Click here to open GPS settings" />
+    </LinearLayout>
 
-	</LinearLayout>
-
-</FrameLayout>
+</LinearLayout>
