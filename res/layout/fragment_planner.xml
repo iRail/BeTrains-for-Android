@@ -1,121 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/nowCardStyle"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
     <LinearLayout
-        android:id="@+id/Ly_Pannel_Sup"
-        style="@style/nowSearchStyle"
+        style="@style/nowCardStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/Ly_start"
+            android:id="@+id/Ly_Pannel_Sup"
+            style="@style/nowSearchStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/tv_start"
-                style="@style/HomeButton"
-                android:layout_width="0dip"
+            <LinearLayout
+                android:id="@+id/Ly_start"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="marquee"
                 android:gravity="center"
-                android:maxLines="2"
-                android:text="City START" />
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_infos_departure"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="i" >
-            </Button>
+                <TextView
+                    android:id="@+id/tv_start"
+                    style="@style/HomeButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="City START" />
 
-            <TextView
-                android:id="@+id/tv_stop"
-                style="@style/HomeButton"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="marquee"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="City STOP" />
+                <Button
+                    android:id="@+id/btn_infos_departure"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="i" >
+                </Button>
 
-            <Button
-                android:id="@+id/btn_info_arrival"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_stop"
+                    style="@style/HomeButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="City STOP" />
+
+                <Button
+                    android:id="@+id/btn_info_arrival"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="i" >
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/boutonweb"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="i" >
-            </Button>
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/mybuttonBefore"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dip"
+                    android:text="&lt;&lt;"
+                    android:textStyle="bold" >
+                </Button>
+
+                <Button
+                    android:id="@+id/mybuttonSearch"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dip"
+                    android:layout_weight="1"
+                    android:text="@string/txt_search"
+                    android:textStyle="bold" >
+                </Button>
+
+                <Button
+                    android:id="@+id/mybuttonInvert"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dip"
+                    android:text=">&lt;"
+                    android:textStyle="bold" >
+                </Button>
+
+                <Button
+                    android:id="@+id/mybuttonAfter"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">>"
+                    android:textStyle="bold" >
+                </Button>
+            </LinearLayout>
+
+            <include layout="@layout/colorstrip" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/boutonweb"
+        <ListView
+            android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/mybuttonBefore"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dip"
-                android:text="&lt;&lt;"
-                android:textStyle="bold" >
-            </Button>
-
-            <Button
-                android:id="@+id/mybuttonSearch"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dip"
-                android:layout_weight="1"
-                android:text="@string/txt_search"
-                android:textStyle="bold" >
-            </Button>
-
-            <Button
-                android:id="@+id/mybuttonInvert"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dip"
-                android:text=">&lt;"
-                android:textStyle="bold" >
-            </Button>
-
-            <Button
-                android:id="@+id/mybuttonAfter"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=">>"
-                android:textStyle="bold" >
-            </Button>
-        </LinearLayout>
-
-        <include layout="@layout/colorstrip" />
+            android:layout_marginTop="3dp"
+            android:cacheColorHint="#0FFF"
+            android:scrollbars="none" />
     </LinearLayout>
+)
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="3dp"
-        android:cacheColorHint="#0FFF"
-        android:scrollbars="none" />
-
-</LinearLayout>
+</FrameLayout>

@@ -47,17 +47,6 @@ public class TrafficAdapter extends ArrayAdapter<RSSItem>{
 		TextView message = (TextView) row
 				.findViewById(R.id.message);
 		message.setText(Html.fromHtml(myRssFeed.getList().get(position).getDescription()));
-		
-		int color1=0x00101010;
-		int color2=0xfff5f5f5;
-		
-		if (position % 2 == 0) {
-			listTitle.setBackgroundColor(color1);
-			listPubdate.setBackgroundColor(color1);
-		} else {
-			listTitle.setBackgroundColor(color2);
-			listPubdate.setBackgroundColor(color2);
-		}
 
 		return row;
 	}

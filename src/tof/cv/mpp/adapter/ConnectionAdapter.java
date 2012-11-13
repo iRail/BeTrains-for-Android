@@ -41,7 +41,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			TextView numberoftrains = (TextView) v
 					.findViewById(R.id.numberoftrains);
 
-			String delayStr = "+"
+			String delayStr = " +"
 					+ (Integer.valueOf(conn.getDeparture().getDelay()) / 60)
 					+ "'";
 			if (!conn.getDeparture().getDelay().contentEquals("0"))
@@ -49,7 +49,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			else
 				delayD.setText("");
 
-			delayStr = "+"
+			delayStr = " +"
 					+ (Integer.valueOf(conn.getArrival().getDelay()) / 60)
 					+ "'";
 			if (!conn.getArrival().getDelay().contentEquals("0"))
