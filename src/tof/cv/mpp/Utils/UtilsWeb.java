@@ -84,7 +84,7 @@ public class UtilsWeb {
 	public static Connections getAPIConnections(String year, String month,
 			String day, String hour, String minutes, String language,
 			String departure, String arrival, String departureArrival,
-			String trainsOnly, final Context context) {
+			final Context context) {
 		String TAG = "BETRAINS";
 
 		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
@@ -102,8 +102,8 @@ public class UtilsWeb {
 				// String url = "http://dev.api.irail.be/connections.php?to="
 				+ arrival + "&from=" + departure + "&date=" + day + month
 				+ year + "&time=" + hour + minutes + "&timeSel="
-				+ departureArrival + "&lang=" + language + "&typeOfTransport="
-				+ trainsOnly + "&format=json&fast=true";
+				+ departureArrival + "&lang=" + language
+				+ "&typeOfTransport=train&format=json&fast=true";
 		url = url.replace(" ", "%20");
 		Log.v(TAG, url);
 
@@ -279,22 +279,25 @@ public class UtilsWeb {
 			return "+" + Integer.valueOf(delay) / 60 + "'";
 		}
 	}
-	
-	public static Vehicle getAPIvehicle(String vehicle, final Context context,long timestamp) {
+
+	public static Vehicle getAPIvehicle(String vehicle, final Context context,
+			long timestamp) {
 		// TODO
 		String langue = context.getString(R.string.url_lang_2);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
-		String dateTime="";
-		if(timestamp!=0){
-			String formattedDate=Utils.formatDate(new Date(timestamp),"ddMMyy");
-			String formattedTime=Utils.formatDate(new Date(timestamp),"HHmm");
-			dateTime="&date=" + formattedDate+ "&time=" + formattedTime;
+		String dateTime = "";
+		if (timestamp != 0) {
+			String formattedDate = Utils.formatDate(new Date(timestamp),
+					"ddMMyy");
+			String formattedTime = Utils
+					.formatDate(new Date(timestamp), "HHmm");
+			dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
 		}
-		
+
 		String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
-				+ "&lang=" + langue + dateTime+ "&format=JSON&fast=true" ;
+				+ "&lang=" + langue + dateTime + "&format=JSON&fast=true";
 		System.out.println("Affiche les infos train depuis la page: " + url);
 
 		try {
@@ -310,21 +313,25 @@ public class UtilsWeb {
 
 	}
 
-	public static Station getAPIstation(String station,long timestamp, final Context context) {
+	public static Station getAPIstation(String station, long timestamp,
+			final Context context) {
 		// TODO
 		String langue = context.getString(R.string.url_lang_2);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
-		String dateTime="";
-		if(timestamp!=0){
-			String formattedDate=Utils.formatDate(new Date(timestamp),"ddMMyy");
-			String formattedTime=Utils.formatDate(new Date(timestamp),"HHmm");
-			dateTime="&date=" + formattedDate+ "&time=" + formattedTime;
+		String dateTime = "";
+		if (timestamp != 0) {
+			String formattedDate = Utils.formatDate(new Date(timestamp),
+					"ddMMyy");
+			String formattedTime = Utils
+					.formatDate(new Date(timestamp), "HHmm");
+			dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
 		}
-		
-		String url = "http://api.irail.be/liveboard.php/?station=" + station.replace(" ", "%20")+dateTime
-				 +"&format=JSON&fast=true" + "&lang=" + langue;
+
+		String url = "http://api.irail.be/liveboard.php/?station="
+				+ station.replace(" ", "%20") + dateTime
+				+ "&format=JSON&fast=true" + "&lang=" + langue;
 		System.out.println("Show station from: " + url);
 
 		try {
@@ -363,7 +370,7 @@ public class UtilsWeb {
 		public StationDepartures getStationDepartures() {
 			return departures;
 		}
-		
+
 		public long getTimeStamp() {
 			return this.timestamp;
 		}
@@ -490,35 +497,36 @@ public class UtilsWeb {
 			read = br.readLine();
 			while (!foundLat || !foundLon) {
 				if (read.contains("PARAMS.CenterLat")) {
-					String[]array=read.split("=");
-					lat=array[1].trim().replaceAll(";","");
-					foundLat = true;	
+					String[] array = read.split("=");
+					lat = array[1].trim().replaceAll(";", "");
+					foundLat = true;
 				}
 
 				if (read.contains("PARAMS.CenterLon")) {
-					String[]array=read.split("=");
-					lon=array[1].trim().replaceAll(";","");
+					String[] array = read.split("=");
+					lon = array[1].trim().replaceAll(";", "");
 					foundLon = true;
 				}
 				read = br.readLine();
-				if (read==null)
-						break;
+				if (read == null)
+					break;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return new GeoPoint((int) (Float.valueOf(lat) * 1E6), (int) (Float.valueOf(lon)  * 1E6));
+		return new GeoPoint((int) (Float.valueOf(lat) * 1E6),
+				(int) (Float.valueOf(lon) * 1E6));
 
 	}
-	
+
 	public static ArrayList<Message> requestPhpRead(String trainId, int start,
 			int span, Context context) {
 
-		if(trainId!=null)
-			trainId=trainId.replaceAll("[^0-9]+", "");
-		
+		if (trainId != null)
+			trainId = trainId.replaceAll("[^0-9]+", "");
+
 		String TAG = "requestPhpRead";
 		ArrayList<Message> listOfMessages = new ArrayList<Message>();
 

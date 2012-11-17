@@ -66,7 +66,6 @@
     <string name="settings_force_dutch">Forcer le néerlandais</string>
     <string name="settings_english">Pour les utilisateurs anglophones</string>
     <string name="settings_planner_da_summary">...</string>
-    <string name="key_train_only">OnlyTrainPref</string>
     <string name="txt_filter_message">Entrez un numéro de train\n( exemple: 589 pour IC
 		589)</string>
     <string name="txt_filter">Filtre</string>

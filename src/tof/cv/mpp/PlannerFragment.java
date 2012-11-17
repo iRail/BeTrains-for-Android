@@ -487,20 +487,13 @@ public class PlannerFragment extends SherlockListFragment {
 				.contentEquals("2"))
 			dA = "arrive";
 
-		String trainOnly = "";
-		if (settings.getBoolean(context.getString(R.string.key_train_only),
-				true))
-			trainOnly = "train";
-		else
-			trainOnly = "train;bus";
-
 		allConnections = UtilsWeb.getAPIConnections(
 				"" + (mDate.get(Calendar.YEAR) - 2000),
 				"" + (mDate.get(Calendar.MONTH) + 1),
 				"" + mDate.get(Calendar.DAY_OF_MONTH),
 				Utils.formatDate(mDate.getTime(), "HH"),
 				Utils.formatDate(mDate.getTime(), "mm"), langue, myStart,
-				myArrival, dA, trainOnly, getActivity());
+				myArrival, dA, getActivity());
 
 		if (allConnections == null) {
 			Log.e(TAG, "API failure!!!");

@@ -77,7 +77,6 @@
 		door op steer te klikken in de treinslijst of triplijst.</string>
     <string name="fav_no_fav_title">Geen "starred" items</string>
     <string name="settings_planner_da_summary">...</string>
-    <string name="key_train_only">OnlyTrainPref</string>
     <string name="txt_remove">Delete</string>
     <string name="search_wrong_string">Kies een station uit de lijst, of typ een trein in
 		bv: "984" die staat voor IC 984</string>

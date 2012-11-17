@@ -86,7 +86,6 @@
     <string name="txt_time">Time</string>
     <string name="settings_planner_da">Arrival/Departure time.</string>
     <string name="settings_planner_da_summary">...</string>
-    <string name="key_train_only">OnlyTrainPref</string>
     <string name="settings_activity">First Screen.</string>
     <string name="settings_activity_summary">Where to start the application?</string>
     <string name="settings_train_only_summary">Will not show buses and subway</string>
