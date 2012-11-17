@@ -283,7 +283,7 @@ public class UtilsWeb {
 	public static Vehicle getAPIvehicle(String vehicle, final Context context,
 			long timestamp) {
 		// TODO
-		String langue = context.getString(R.string.url_lang_2);
+		String langue = context.getString(R.string.url_lang);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
@@ -316,7 +316,7 @@ public class UtilsWeb {
 	public static Station getAPIstation(String station, long timestamp,
 			final Context context) {
 		// TODO
-		String langue = context.getString(R.string.url_lang_2);
+		String langue = context.getString(R.string.url_lang);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))
 			langue = "nl";
