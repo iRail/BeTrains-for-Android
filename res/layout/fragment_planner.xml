@@ -35,12 +35,22 @@
                     android:text="City START" />
 
                 <Button
+                    android:id="@+id/mybuttonInvert"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">&lt;"
+                    android:textStyle="bold" >
+                </Button>
+
+                <Button
                     android:id="@+id/btn_infos_departure"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="i" >
+                    android:text="i"
+                    android:visibility="gone" >
                 </Button>
 
                 <TextView
@@ -60,7 +70,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="i" >
+                    android:text="i"
+                    android:visibility="gone" >
                 </Button>
             </LinearLayout>
 
@@ -92,16 +103,6 @@
                 </Button>
 
                 <Button
-                    android:id="@+id/mybuttonInvert"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dip"
-                    android:text=">&lt;"
-                    android:textStyle="bold" >
-                </Button>
-
-                <Button
                     android:id="@+id/mybuttonAfter"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
@@ -118,8 +119,7 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:cacheColorHint="#0FFF"
+            android:cacheColorHint="#00000000"
             android:scrollbars="none" />
     </LinearLayout>
 )

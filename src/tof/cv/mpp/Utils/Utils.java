@@ -234,6 +234,10 @@ public class Utils {
 			return (InputStream) new ByteArrayInputStream(_copy.toByteArray());
 		}
 	}
+	
+	public void sendErrorMessage(){
+		
+	}
 
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;

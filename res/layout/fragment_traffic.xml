@@ -10,6 +10,7 @@
         android:background="@drawable/search_bg_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:textColor="@color/darkblue"
         android:gravity="center"
         android:text="@string/txt_loading" />
 

@@ -10,6 +10,9 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
+    </style>
+
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light.DarkActionBar">
         <item name="android:windowBackground">@color/mybg</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
@@ -119,7 +122,6 @@
 
     <style name="MyListViewTheme" parent="@android:style/Widget.ListView">
         <item name="android:textColor">@color/darkblue</item>
-        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>

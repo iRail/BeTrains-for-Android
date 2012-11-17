@@ -87,12 +87,12 @@ public class ChatFragment extends SherlockListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mTitleText = (TextView) getActivity().findViewById(R.id.pseudo);
+		mTitleText = (TextView) getView().findViewById(R.id.pseudo);
 		// mBodyText = (TextView) findViewById(R.id.messagesblock);
-		btnSettings = (Button) getActivity().findViewById(R.id.settings);
-		btnSend = (Button) getActivity().findViewById(R.id.send);
-		btnMore = (Button) getActivity().findViewById(R.id.more);
-		messageTxtField = (EditText) getActivity().findViewById(
+		btnSettings = (Button) getView().findViewById(R.id.settings);
+		btnSend = (Button) getView().findViewById(R.id.send);
+		btnMore = (Button) getView().findViewById(R.id.more);
+		messageTxtField = (EditText) getView().findViewById(
 				R.id.yourmessage);
 
 		setBtnSettingsListener();
@@ -249,7 +249,7 @@ public class ChatFragment extends SherlockListFragment {
 	private Runnable updateEmpty = new Runnable() {
 
 		public void run() {
-			TextView messagesEmpty = (TextView) getActivity().findViewById(
+			TextView messagesEmpty = (TextView) getView().findViewById(
 					android.R.id.empty);
 			messagesEmpty.setText(toEmpty);
 		}
@@ -267,7 +267,7 @@ public class ChatFragment extends SherlockListFragment {
 			mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
 					getActivity()).getString("prefPseudo", "Anonymous"));
 
-		LinearLayout mSendLayout = (LinearLayout) getActivity().findViewById(
+		LinearLayout mSendLayout = (LinearLayout) getView().findViewById(
 				R.id.send_layout);
 
 		if (trainId == null) {

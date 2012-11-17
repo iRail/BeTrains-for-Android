@@ -16,17 +16,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockMapActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
-public class MapStationActivity extends MapActivity implements LocationListener {
+public class MapStationActivity extends SherlockMapActivity implements LocationListener {
 
 	// PSOTIT: Pour le train:
 	// http://railtime.be/website/apercu-du-trafic-trains?tn=3835

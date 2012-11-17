@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;

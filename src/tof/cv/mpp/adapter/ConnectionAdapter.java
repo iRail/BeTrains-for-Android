@@ -97,12 +97,15 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 
 			int color1 = 0xffffffff;
 			int color2 = 0xfff5f5f5;
-
+			
+			
+			color1 = 0xfff;
+			color2 = 0xfff5f5f5;
 			if (position % 2 == 0) {
-				v.setBackgroundColor(color1);
+				//v.setBackgroundColor(color1);
 
 			} else {
-				v.setBackgroundColor(color2);
+				//v.setBackgroundColor(color2);
 
 			}
 

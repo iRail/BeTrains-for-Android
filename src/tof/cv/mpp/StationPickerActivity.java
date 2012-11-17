@@ -50,7 +50,8 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 	protected static final String[] TITLES = new String[] { "FAVOURITE",
 			"BELGIUM" };
-//, "EUROPE"
+
+	// , "EUROPE"
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 
@@ -381,15 +382,21 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 
 		public void updateList() {
 			mDbHelper.open();
-			mCursor = mDbHelper.fetchAllFavStations();
+			try{
+				
+				mCursor = mDbHelper.fetchAllFavStations();
 
-			String[] from = { DbAdapterConnection.KEY_FAV_NAME };
-			int[] to = { android.R.id.text1 };
+				String[] from = { DbAdapterConnection.KEY_FAV_NAME };
+				int[] to = { android.R.id.text1 };
 
-			SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-					getActivity(), android.R.layout.simple_list_item_1,
-					mCursor, from, to);
-			setListAdapter(adapter);
+				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+						getActivity(), android.R.layout.simple_list_item_1,
+						mCursor, from, to);
+				setListAdapter(adapter);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
 			mDbHelper.close();
 		}
 
@@ -487,6 +494,5 @@ public class StationPickerActivity extends SherlockFragmentActivity implements
 		// Log.i("","CHANGED "+state);
 
 	}
-	
-	
+
 }

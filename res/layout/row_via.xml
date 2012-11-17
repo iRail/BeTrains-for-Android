@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/list_selector_background"
     android:orientation="vertical"
-    android:paddingRight="6dip" 
-    android:paddingTop="6dip"
-    android:paddingBottom="6dip">
+    android:paddingBottom="6dip"
+    android:paddingRight="6dip"
+    android:paddingTop="6dip" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -20,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="+X&apos;"
-            android:textColor="#FF0000"
+            android:textColor="#FFFF0000"
             android:textSize="16dip"
             android:textStyle="bold" />
 
@@ -34,6 +32,7 @@
             android:paddingLeft="4dip"
             android:singleLine="true"
             android:text="Station"
+            android:textColor="@color/darkblue"
             android:textSize="16dip"
             android:textStyle="bold" />
 
@@ -43,11 +42,11 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="IC XXXX"
+            android:textColor="@color/darkblue"
             android:textSize="16dip" />
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -58,7 +57,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="X"
-            android:textColor="@color/lightblue"
             android:textSize="16dip"
             android:textStyle="bold" />
 
@@ -83,7 +81,6 @@
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -94,7 +91,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="X"
-            android:textColor="@color/lightblue"
             android:textSize="16dip"
             android:textStyle="bold" />
 

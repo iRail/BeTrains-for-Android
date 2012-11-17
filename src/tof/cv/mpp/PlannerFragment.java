@@ -11,7 +11,6 @@ import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
-import tof.cv.mpp.view.ConnectionDialog;
 import tof.cv.mpp.view.DateTimePicker;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -81,7 +81,6 @@ public class PlannerFragment extends SherlockListFragment {
 	private static final int ACTIVITY_STATION = 2;
 	private static final int ACTIVITY_GETSTARTSTATION = 3;
 	private static final int ACTIVITY_GETSTOPSTATION = 4;
-
 	private static final int CONNECTION_DIALOG_ID = 0;
 
 	public void onStart() {
@@ -109,7 +108,6 @@ public class PlannerFragment extends SherlockListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
 		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
 
@@ -188,7 +186,7 @@ public class PlannerFragment extends SherlockListFragment {
 			}
 		});
 
-		Button btnInfoArrival = (Button) getActivity().findViewById(
+		Button btnInfoArrival = (Button) getView().findViewById(
 				R.id.btn_info_arrival);
 		btnInfoArrival.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -266,13 +264,14 @@ public class PlannerFragment extends SherlockListFragment {
 			startActivity(new Intent(getActivity(), StarredActivity.class));
 			return true;
 		case (MENU_PREF):
-			if (Build.VERSION.SDK_INT>=11)
+			if (Build.VERSION.SDK_INT >= 11)
 				startActivity(new Intent(getActivity(),
 						MyPreferenceActivity.class).putExtra(
 						PreferenceActivity.EXTRA_SHOW_FRAGMENT,
 						Prefs2Fragment.class.getName()));
-			else{
-				startActivity(new Intent(getActivity(),MyPreferenceActivity.class));
+			else {
+				startActivity(new Intent(getActivity(),
+						MyPreferenceActivity.class));
 			}
 
 			return true;
@@ -281,9 +280,17 @@ public class PlannerFragment extends SherlockListFragment {
 		}
 	}
 
+	public String getHeader(Connection c) {
+		return c.getDeparture().getStation() + " - "
+				+ c.getArrival().getStation();
+
+	}
+
 	private void fillData() {
+
 		if (allConnections != null && allConnections.connection != null) {
 			// Log.i(TAG, "*** Remplis avec les infos");
+
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
@@ -295,6 +302,7 @@ public class PlannerFragment extends SherlockListFragment {
 		else {
 			// Log.i(TAG, "*** Remplis avec le Cache");
 			allConnections = Utils.getCachedConnections();
+
 			if (allConnections != null) {
 				connAdapter = new ConnectionAdapter(this.getActivity()
 						.getBaseContext(), R.layout.row_planner,
@@ -351,7 +359,7 @@ public class PlannerFragment extends SherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		positionClicked = position;
+		positionClicked = position ;
 		getActivity().removeDialog(CONNECTION_DIALOG_ID);
 
 		try {
@@ -362,8 +370,14 @@ public class PlannerFragment extends SherlockListFragment {
 			if (currentConnection.getVias() != null
 					&& currentConnection.getVias().via.size() > 0) {
 
-				new ConnectionDialog(getActivity(),
-						allConnections.connection.get(positionClicked)).show();
+				// TODO new ConnectionDialog(getActivity(),
+				// allConnections.connection.get(positionClicked)).show();
+
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				DialogViaFragment editNameDialog = new DialogViaFragment(
+						allConnections.connection.get(positionClicked));
+				editNameDialog.show(fm, "fragment_edit_name");
+
 			} else {
 				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
 				i.putExtra("Name", currentConnection.getDeparture()
@@ -473,8 +487,8 @@ public class PlannerFragment extends SherlockListFragment {
 				.contentEquals("2"))
 			dA = "arrive";
 
-		String trainOnly = "1";
-		if (!settings.getBoolean(context.getString(R.string.key_train_only),
+		String trainOnly = "";
+		if (settings.getBoolean(context.getString(R.string.key_train_only),
 				true))
 			trainOnly = "train";
 		else
@@ -490,12 +504,13 @@ public class PlannerFragment extends SherlockListFragment {
 
 		if (allConnections == null) {
 			Log.e(TAG, "API failure!!!");
-			getActivity().runOnUiThread(new Runnable() {
-				public void run() {
-					Toast.makeText(getActivity(), R.string.txt_error,
-							Toast.LENGTH_LONG).show();
-				}
-			});
+			if (getActivity() != null)
+				getActivity().runOnUiThread(new Runnable() {
+					public void run() {
+						Toast.makeText(getActivity(), R.string.txt_error,
+								Toast.LENGTH_LONG).show();
+					}
+				});
 
 		}
 	}

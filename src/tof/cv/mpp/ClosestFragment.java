@@ -90,9 +90,9 @@ public class ClosestFragment extends SherlockListFragment {
 		m_ProgressDialog = new MyProgressDialog(getActivity());
 		mDbHelper = new DbAdapterLocation(getActivity());
 
-		tvEmpty = (TextView) getActivity().findViewById(R.id.empty_tv);
+		tvEmpty = (TextView) getView().findViewById(R.id.empty_tv);
 
-		btEmpty = (Button) getActivity().findViewById(R.id.empty_bt);
+		btEmpty = (Button) getView().findViewById(R.id.empty_bt);
 		btEmpty.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				Intent myIntent = new Intent(
@@ -101,7 +101,7 @@ public class ClosestFragment extends SherlockListFragment {
 			}
 		});
 
-		btnUpdate = (Button) getActivity().findViewById(R.id.btn_update);
+		btnUpdate = (Button) getView().findViewById(R.id.btn_update);
 		btnUpdate.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
