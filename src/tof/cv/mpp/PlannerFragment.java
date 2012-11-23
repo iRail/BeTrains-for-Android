@@ -13,7 +13,6 @@ import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -42,7 +42,6 @@ import com.actionbarsherlock.view.MenuItem;
 public class PlannerFragment extends SherlockListFragment {
 
 	boolean isDebug = false;
-
 	private static final int MENU_DT = 0;
 	private static final int MENU_FAV = 1;
 	private static final int MENU_PREF = 2;
@@ -68,8 +67,6 @@ public class PlannerFragment extends SherlockListFragment {
 	private static SharedPreferences settings;
 	private SharedPreferences.Editor editor;
 
-	private ProgressDialog progressDialog;
-
 	public String fromIntentArrivalStation = null;
 	public String fromIntentDepartureStation = null;
 	public boolean fromIntent = false;
@@ -81,7 +78,13 @@ public class PlannerFragment extends SherlockListFragment {
 	private static final int ACTIVITY_STATION = 2;
 	private static final int ACTIVITY_GETSTARTSTATION = 3;
 	private static final int ACTIVITY_GETSTOPSTATION = 4;
-	private static final int CONNECTION_DIALOG_ID = 0;
+
+	private void updateActionBar() {
+		getSherlockActivity().getSupportActionBar().setTitle(
+				Utils.formatDate(mDate.getTime(), abTimePattern));
+		getSherlockActivity().getSupportActionBar().setSubtitle(
+				Utils.formatDate(mDate.getTime(), abDatePattern));
+	}
 
 	public void onStart() {
 		super.onStart();
@@ -95,7 +98,6 @@ public class PlannerFragment extends SherlockListFragment {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
 		context = this.getActivity();
@@ -118,9 +120,6 @@ public class PlannerFragment extends SherlockListFragment {
 
 		getSherlockActivity().getSupportActionBar().setIcon(
 				R.drawable.ab_planner);
-		getSherlockActivity().getSupportActionBar().setTitle(
-				R.string.btn_home_planner);
-		getSherlockActivity().getSupportActionBar().setSubtitle("");
 
 		updateActionBar();
 
@@ -145,13 +144,6 @@ public class PlannerFragment extends SherlockListFragment {
 
 	}
 
-	private Runnable dismissPd = new Runnable() {
-		public void run() {
-			fillData();
-			progressDialog.dismiss();
-		}
-	};
-
 	private void setAllBtnListener() {
 		Button btnInvert = (Button) getActivity().findViewById(
 				R.id.mybuttonInvert);
@@ -163,9 +155,13 @@ public class PlannerFragment extends SherlockListFragment {
 		});
 
 		Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
+
+		final FragmentActivity a = this.getActivity();
+
 		btnSearch.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				mySearchThread();
+				a.setProgressBarIndeterminateVisibility(true);
+				mySearchThread(a);
 
 			}
 		});
@@ -218,9 +214,10 @@ public class PlannerFragment extends SherlockListFragment {
 				R.id.mybuttonAfter);
 		btnAfter.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
+				a.setProgressBarIndeterminateVisibility(true);
 				mDate.add(Calendar.HOUR, 1);
 				updateActionBar();
-				mySearchThread();
+				mySearchThread(a);
 			}
 		});
 
@@ -228,9 +225,10 @@ public class PlannerFragment extends SherlockListFragment {
 				R.id.mybuttonBefore);
 		btnBefore.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
+				a.setProgressBarIndeterminateVisibility(true);
 				mDate.add(Calendar.HOUR, -1);
 				updateActionBar();
-				mySearchThread();
+				mySearchThread(a);
 			}
 		});
 
@@ -359,8 +357,7 @@ public class PlannerFragment extends SherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		positionClicked = position ;
-		getActivity().removeDialog(CONNECTION_DIALOG_ID);
+		positionClicked = position;
 
 		try {
 
@@ -369,9 +366,6 @@ public class PlannerFragment extends SherlockListFragment {
 
 			if (currentConnection.getVias() != null
 					&& currentConnection.getVias().via.size() > 0) {
-
-				// TODO new ConnectionDialog(getActivity(),
-				// allConnections.connection.get(positionClicked)).show();
 
 				FragmentManager fm = getActivity().getSupportFragmentManager();
 				DialogViaFragment editNameDialog = new DialogViaFragment(
@@ -449,25 +443,28 @@ public class PlannerFragment extends SherlockListFragment {
 
 	}
 
-	private void mySearchThread() {
+	private void mySearchThread(final Activity a) {
 		Runnable trainSearch = new Runnable() {
-
 			public void run() {
 
-				getActivity().runOnUiThread(new Runnable() {
+				makeApiRequest();
+				a.runOnUiThread(new Runnable() {
 					public void run() {
-						progressDialog = ProgressDialog.show(getActivity(), "",
-								getString(R.string.txt_patient), true);
+						//
+						try {
+							fillData();
+							a.setProgressBarIndeterminateVisibility(false);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				});
-				makeApiRequest();
-				getActivity().runOnUiThread(dismissPd);
+
 			}
 		};
 
 		Thread thread = new Thread(null, trainSearch, "MyThread");
 		thread.start();
-
 	}
 
 	public void makeApiRequest() {
@@ -550,13 +547,6 @@ public class PlannerFragment extends SherlockListFragment {
 		mDateTimeDialog.setIs24HourView(is24h);
 
 		mDateTimeDialog.show();
-	}
-
-	private void updateActionBar() {
-		getSherlockActivity().getSupportActionBar().setTitle(
-				Utils.formatDate(mDate.getTime(), abTimePattern));
-		getSherlockActivity().getSupportActionBar().setSubtitle(
-				Utils.formatDate(mDate.getTime(), abDatePattern));
 	}
 
 }
