@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
+    <string name="settings_back">Terug</string>
+    <string name="settings_back_sum">Hou alle schermen in geheugen</string>
     <string name="svTitle">StreetView not installed</string>
     <string name="svMessage">Please install Google StreetView</string>
     <string name="noMarket">Sorry, cannot detect Android Market</string>
-    <string name="lecorse">Le Corse: Sympatieke gebruiker en Beta Tester </string>
     <string name="kindhelp">Met hulp van:</string>
     <string name="btn_home_planner">Routeplanner</string>
     <string name="btn_home_traffic">Verkeershinder</string>
@@ -81,9 +81,6 @@
     <string name="search_wrong_string">Kies een station uit de lijst, of typ een trein in
 		bv: "984" die staat voor IC 984</string>
     <string name="search_hint">Trein / Station</string>
-    <string name="changelog">v 2.0.2\n\n* Nieuwe feature: vind naburige
-		stations\n\n* Betere User Interface\n\n* Al je favorieten gaan
-		verloren door een interne update. Excuses voor het ongemak.</string>
     <string name="changelog_title">Updatelog</string>
     <string name="confirm_message_train">Wilt u de treinberichten openen?</string>
     <string name="confirm_info_train">Wilt u de treininfos openen?</string>

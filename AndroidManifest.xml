@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tof.cv.mpp"
     android:installLocation="auto"
-    android:versionCode="6402"
-    android:versionName="4.02" >
+    android:versionCode="6414"
+    android:versionName="4.14" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -11,6 +11,9 @@
 
     <uses-feature
         android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
         android:required="false" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -36,7 +39,6 @@
             android:theme="@style/Theme.MyThemeSlide" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
             <intent-filter>
@@ -59,6 +61,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".InfoTrainActivity"
+            android:taskAffinity=""
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -97,7 +100,7 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <receiver android:name="tof.cv.widget.TrainAppWidgetProvider" >
+        <receiver android:name=".widget.TrainAppWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="BETRAIN_WIDGET_UPDATE" />
@@ -113,6 +116,35 @@
             android:authorities="tof.cv.search.SearchProvider" />
 
         <uses-library android:name="com.google.android.maps" />
+
+        <!-- The widget provider -->
+        <receiver
+            android:name=".widget.TrainWidgetProvider"
+            android:enabled="@bool/isApi11"
+            android:label="BeTrains Scrollable" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="tof.cv.mpp.widget.action.REFRESH" />
+                <action android:name="tof.cv.mpp.widget.action.UPDATE" />
+            </intent-filter>
+            <!-- This specifies the widget provider info -->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
+        </receiver>
+
+        <!-- The service serving the RemoteViews to the collection widget -->
+        <service
+            android:name=".widget.TrainWidgetService"
+            android:enabled="@bool/isApi11"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!-- The content provider serving the (fake) weather data -->
+        <provider
+            android:name=".widget.TrainDataProvider"
+            android:authorities="tof.cv.mpp.widget.provider"
+            android:enabled="@bool/isApi11" />
     </application>
 
 </manifest>

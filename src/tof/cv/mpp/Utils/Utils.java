@@ -88,8 +88,7 @@ public class Utils {
 		try {
 
 			date = new Date((Long.valueOf(dateFromAPI)) * 1000);
-			Log.i("", "getMinutsFromDate: " + date.toString());
-
+			//Log.i("", "getMinutsFromDate: " + date.toString());
 			return dateFormat.format(date);
 		} catch (Exception e) {
 			return dateFromAPI;
@@ -112,6 +111,13 @@ public class Utils {
 			boolean isDelay) {
 
 		return formatDate(Long.valueOf(dateFromAPI), isDuration, isDelay);
+
+	}
+	
+	
+	public static String formatDateWidget(Date dateFromAPI) {
+
+		return formatDate(dateFromAPI,"dd MMM HH:mm:ss");
 
 	}
 

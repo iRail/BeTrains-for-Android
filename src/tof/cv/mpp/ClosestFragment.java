@@ -16,6 +16,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import tof.cv.mpp.Utils.DbAdapterLocation;
 import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -82,9 +83,11 @@ public class ClosestFragment extends SherlockListFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		setHasOptionsMenu(true);
-		
-		getSherlockActivity().getSupportActionBar().setIcon(R.drawable.ab_closest);
-		getSherlockActivity().getSupportActionBar().setTitle(R.string.btn_closest_stations);
+
+		getSherlockActivity().getSupportActionBar().setIcon(
+				R.drawable.ab_closest);
+		getSherlockActivity().getSupportActionBar().setTitle(
+				R.string.btn_closest_stations);
 		getSherlockActivity().getSupportActionBar().setSubtitle(null);
 
 		m_ProgressDialog = new MyProgressDialog(getActivity());
@@ -246,7 +249,7 @@ public class ClosestFragment extends SherlockListFragment {
 
 		public void onLocationChanged(final Location loc) {
 
-			if (loc != null && btnUpdate!=null && getActivity()!=null) {
+			if (loc != null && btnUpdate != null && getActivity() != null) {
 				bestLocationFound = loc;
 				btnUpdate.setVisibility(View.VISIBLE);
 				btnUpdate.setText(getActivity().getString(
@@ -347,10 +350,9 @@ public class ClosestFragment extends SherlockListFragment {
 									m_ProgressDialog.hide();
 									m_ProgressDialog = new MyProgressDialog(
 											getActivity());
-								} catch (Exception e) {
 									Looper.prepare();
-									m_ProgressDialog = new MyProgressDialog(
-											getActivity());
+								} catch (Exception e) {
+									e.printStackTrace();
 								}
 								m_ProgressDialog.setCancelable(false);
 								m_ProgressDialog
@@ -379,8 +381,11 @@ public class ClosestFragment extends SherlockListFragment {
 			// TODO Refresh
 			mDbHelper.close();
 		} else {
-			getActivity().runOnUiThread(hideProgressdialog);
-			getActivity().runOnUiThread(noConnexion);
+			Activity a = getActivity();
+			if (a != null) {
+				a.runOnUiThread(hideProgressdialog);
+				a.runOnUiThread(noConnexion);
+			}
 		}
 		getActivity().runOnUiThread(lockOn);
 		mDbHelper.close();
@@ -533,7 +538,13 @@ public class ClosestFragment extends SherlockListFragment {
 				// if (state == stateStation && !thread.isInterrupted()) {
 				if (!thread.isInterrupted()) {
 					m_ProgressDialog.incrementProgressBy(1);
-					getActivity().runOnUiThread(changeProgressDialogMessage);
+					try {
+						getActivity()
+								.runOnUiThread(changeProgressDialogMessage);
+					} catch (Exception e) {
+						Log.i("BeTrains", strCharacters);
+						e.printStackTrace();
+					}
 					mDbHelper.createStationLocation(strCharacters, "0", lat,
 							lon, 0.0);
 				}

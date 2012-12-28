@@ -64,7 +64,8 @@ public class UtilsWeb {
 
 		httpClient.getParams().setParameter(
 				"http.useragent",
-				"BeTrains " + myVersion + " for Android - "
+				"Waza_Be: BeTrains " + myVersion
+				+ " for Android - "
 						+ System.getProperty("http.agent"));
 
 		URI uri;
@@ -139,7 +140,8 @@ public class UtilsWeb {
 		}
 
 		request.setHeader("User-Agent", "Waza_Be: BeTrains " + myVersion
-				+ " for Android");
+				+ " for Android - "
+						+ System.getProperty("http.agent"));
 
 		Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
 
@@ -282,7 +284,7 @@ public class UtilsWeb {
 
 	public static Vehicle getAPIvehicle(String vehicle, final Context context,
 			long timestamp) {
-		// TODO
+		
 		String langue = context.getString(R.string.url_lang);
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				"prefnl", false))

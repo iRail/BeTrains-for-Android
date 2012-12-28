@@ -74,7 +74,7 @@ public class DownloadOtherTrafficTask extends AsyncTask<URL, Integer, Long> {
 			 * getting rss feed from the railtime.be website
 			 */
 			URL rssUrl = new URL(
-					"http://him-hari.b-rail.be/him/rss/export/rss_feed_" + lang
+					"http://him-hari.b-rail.be/him/rss/export/rss_feed_" + lang.substring(0,1)
 							+ "_8192.xml");
 
 			RSSDocument rssDoc = new RSSDocument(rssUrl);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
+    <string name="settings_back">Bouton \'Retour\'</string>
+    <string name="settings_back_sum">Garder tous les écrans en mémoire</string>
     <string name="svTitle">StreetView ne semble pas installé</string>
     <string name="svMessage">Veuillez l\'installer depuis le Google Play Store</string>
     <string name="noMarket">Désolé, il semble que votre appareil n\'aie pas accès au Play Store (Android Market)</string>
-    <string name="lecorse">Le Corse: utilisateur sympathique et Beta Testeur</string>
     <string name="kindhelp">Avec l\'aide de:</string>
     <string name="tipa">Débuter avec BeTrains</string>
     <string name="tipatitle">Il suffit de cliquer sur le bouton "Chercher" pour
@@ -22,10 +22,8 @@
      <string name="txt_quai">Quai </string>
     <string name="btn_home_planner">Demande d\'itinéraire</string>
     <string name="btn_home_chat">Chat</string>
-    <string name="btn_home_notif">Notifications</string>
     <string name="btn_home_traffic">Perturbations traffic</string>
     <string name="btn_home_settings">Préférences</string>
-    <string name="btn_home_contact">Contact</string>
     <string name="btn_home_starred">Favoris</string>
     <string name="txt_loading">Chargement en cours...</string>
     <string name="txt_patient">Un instant SVP...</string>
@@ -44,7 +42,7 @@
     <string name="txt_type_subway">Métro</string>
     <string name="txt_type_walk">Marche</string>
     <string name="txt_your_train">Votre train</string>
-    <string name="settings_activity">Premier écran.</string>
+    <string name="settings_activity">Premier écran</string>
     <string name="settings_activity_summary">Où démarrer l\'application?</string>
     <string name="txt_load_message">Chargement du dernier message en cours</string>
     <string name="txt_infrabel">Les infos de cette page proviennent du site
@@ -86,10 +84,7 @@
     <string name="search_wrong_string">Veuillez choisir une gare depuis la liste ou
 		écrivez votre numéro de train: "984" pour IC 984.</string>
     <string name="search_hint">N° de train/ Gare</string>
-    <string name="changelog"> 2.0.2\n\n* Nouvelle fonction: Trouvez les gares
-		les plus proches\n\n* Améliorations graphiques\n\n* Je suis désolé,
-		toutes la base de donnée a du être réécrite et vos gares favorites
-		sont perdues avec la mise à jour. Cela ne devrait plus se reproduire.</string>
+   
     <string name="changelog_title">Nouveautés:</string>
     <string name="confirm_message_train">Ouvrir les messages du train %s ?</string>
     <string name="confirm_info_train">Ouvrir les infos du train %s ?</string>

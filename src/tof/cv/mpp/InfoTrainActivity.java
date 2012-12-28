@@ -1,6 +1,8 @@
 package tof.cv.mpp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -17,6 +19,8 @@ public class InfoTrainActivity extends SherlockFragmentActivity {
 		Bundle bundle = this.getIntent().getExtras();
 		long timestamp = bundle.getLong("timestamp")*1000;
 		String name = bundle.getString("Name").replaceAll("[^0-9]+", "");
+		Log.i("***","bundle: "+ bundle.getString("Name"));
+		Log.i("***","NAME: "+ name);
 		String fromTo = bundle.getString("fromto");
 		getSupportActionBar().setTitle(name+" infos:");
 		
@@ -28,7 +32,11 @@ public class InfoTrainActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+	         Intent intent = new Intent(this, WelcomeActivity.class);            
+	         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+	         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	         startActivity(intent);  
+	         finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

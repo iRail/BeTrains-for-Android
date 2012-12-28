@@ -2,7 +2,6 @@ package tof.cv.mpp;
 
 import java.io.File;
 
-import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.MyPreferenceActivity.Prefs3Fragment;
 import tof.cv.mpp.Utils.UtilsWeb;
 import android.content.Intent;

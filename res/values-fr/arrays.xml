@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="menu_pref">
+        <item>Itinéraire</item>
+        <item>Perturbations</item>
+        <item>Chat</item>
+        <item>Twitter</item>
+        <item>Favoris</item>
+        <item>A proximité</item>
+    </string-array>
+    <string-array name="menu_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
     <string-array name="menu">
         <item>Itinéraire</item>
         <item>Perturbations</item>
@@ -18,7 +34,6 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-
     <string-array name="listArray">
         <item>Lundi</item>
         <item>Mardi</item>

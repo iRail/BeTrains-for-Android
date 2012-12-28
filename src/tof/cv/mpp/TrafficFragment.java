@@ -32,7 +32,7 @@ public class TrafficFragment extends SherlockListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 
-		lang = this.getString(R.string.url_lang_2);
+		lang = this.getString(R.string.url_lang);
 		if (settings.getBoolean("prefnl", false)) {
 			lang = "nl";
 		}

@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -26,7 +27,11 @@ public class InfoStationActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+	         Intent intent = new Intent(this, WelcomeActivity.class);            
+	         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+	         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	         startActivity(intent);  
+	         finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

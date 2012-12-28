@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
-    <string name="lecorse">Le Corse: Golden user and Beta Tester</string>
+      <string name="widgetTitle">Title</string>
+    <string name="toast_format_string">%1$s!</string>
+    <string name="item_format_string">%1$d\u00B0 on %2$s</string>
+    <string name="header_format_string">%1$d\u00B0 in %2$s</string>
+    
+    <string name="empty_view_text">Click on the Widget Button in your train information</string>
+    <string name="refresh">Refresh</string>
     <string name="kindhelp">With the kind help of</string>
     <string name="svTitle">StreetView not installed</string>
-         <string name="txt_quai">Platform </string>
+    <string name="txt_quai">Platform </string>
     <string name="svMessage">Please install Google StreetView</string>
     <string name="noMarket">Sorry, cannot detect Android Market</string>
     <string name="btn_home_settings">Preferences</string>
@@ -31,7 +36,7 @@
     <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Add to Widget</string>
     <string name="url_lang">en</string>
-    <string name="url_lang_2">f</string>
+    <string name="url_lang_2">e</string>
     <string name="url_lang_for_him">f</string>
     <string name="txt_connection">Please check your Internet connection.</string>
     <string name="txt_def_title">Default Title</string>
@@ -51,6 +56,8 @@
     <string name="settings_display_lm">Display Last Message</string>
     <string name="settings_pseudo">Nickname</string>
     <string name="settings_fullscreen">Fullscreen</string>
+    <string name="settings_back">Back Button</string>
+    <string name="settings_back_sum">Keep every screen in memory</string>
     <string name="settings_restart">You\'ll need to restart BETrains</string>
     <string name="settings_force_dutch">Force Dutch/Nederlands</string>
     <string name="settings_english">Only for english users</string>
@@ -72,9 +79,6 @@
     <string name="search_wrong_string">Please pick a station in the list or write a train
 		number: ex: "984" for IC 984</string>
     <string name="search_hint">Train nb. / Station</string>
-    <string name="changelog"> 2.0.2\n\n* New Feature: find closest station\n\n*
-		User Interface Improved\n\n* Sorry, all you favorites stations are
-		lost. I needed to rewrite the Database. That won\'t happen again</string>
     <string name="changelog_title">ChangeLog</string>
     <string name="confirm_message_train">Open train %s messages?</string>
     <string name="confirm_info_train">Open train %s infos?</string>
@@ -84,9 +88,9 @@
     <string name="txt_invert_da">Departure/Arrival</string>
     <string name="txt_date">Date</string>
     <string name="txt_time">Time</string>
-    <string name="settings_planner_da">Arrival/Departure time.</string>
+    <string name="settings_planner_da">Arrival/Departure time</string>
     <string name="settings_planner_da_summary">...</string>
-    <string name="settings_activity">First Screen.</string>
+    <string name="settings_activity">First Screen</string>
     <string name="settings_activity_summary">Where to start the application?</string>
     <string name="settings_train_only_summary">Will not show buses and subway</string>
     <string name="key_planner_da">Plannerdapref</string>

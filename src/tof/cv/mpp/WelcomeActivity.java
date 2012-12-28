@@ -1,10 +1,14 @@
 package tof.cv.mpp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -16,15 +20,25 @@ import com.slidingmenu.lib.app.SlidingFragmentActivity;
 public class WelcomeActivity extends SlidingFragmentActivity {
 
 	private Fragment mContent;
+	int value = -1;
 
 	/** Called when the activity is first created. */
+	SharedPreferences settings;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		try {
+			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		setContentView(R.layout.responsive_content_frame);
+		setProgressBarIndeterminateVisibility(false);
+
 		setSlidingActionBarEnabled(false);
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		// check if the content frame contains the menu frame
 		if (findViewById(R.id.menu_frame) == null) {
 			setBehindContentView(R.layout.menu_frame);
@@ -45,10 +59,38 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 		if (savedInstanceState != null)
 			mContent = getSupportFragmentManager().getFragment(
 					savedInstanceState, "mContent");
-		if (mContent == null)
-			mContent = new PlannerFragment();
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, mContent).commit();
+		
+		if (mContent == null) {
+			switch (Integer.valueOf(settings.getString(
+					getString(R.string.key_activity), "1"))) {
+			case 1:
+				mContent = new PlannerFragment();
+				break;
+			case 2:
+				mContent = new TrafficFragment();
+				break;
+			case 3:
+				mContent = new ChatFragment();
+				break;
+			case 4:
+				mContent = new TwitterFragment();
+				break;
+			case 5:
+				mContent = new StarredFragment();
+				break;
+			case 6:
+				mContent = new ClosestFragment();
+				break;
+			default:
+				mContent = new PlannerFragment();
+				break;
+			}
+			
+			getSupportFragmentManager().beginTransaction()
+			.replace(R.id.content_frame, mContent).commit();
+
+		}
+
 
 		// set the Behind View Fragment
 		getSupportFragmentManager().beginTransaction()
@@ -80,11 +122,12 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		try {
-			getSupportFragmentManager().putFragment(outState, "mContent",
-					mContent);
-		} catch (Exception e) {
+		try{
+			getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
+		
 	}
 
 	public void switchContent(final Fragment fragment) {
@@ -93,18 +136,19 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 		Fragment f = (Fragment) getSupportFragmentManager().findFragmentById(
 				R.id.content_frame);
 
-		if (!fragment.getClass().equals(f.getClass())) {
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.content_frame, fragment).addToBackStack(null)
-					.commit();
+		if (f != null && !fragment.getClass().equals(f.getClass())) {
+			FragmentTransaction trans = getSupportFragmentManager()
+					.beginTransaction().replace(R.id.content_frame, fragment);
+
+			trans.commit();
+
 			Handler h = new Handler();
 			h.postDelayed(new Runnable() {
 				public void run() {
 					getSlidingMenu().showAbove();
 				}
 			}, 50);
-		}
-		else
+		} else
 			toggle();
 	}
 
@@ -127,6 +171,12 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 		Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
 		marketLaunch.setData(Uri
 				.parse("market://details?id=be.irail.liveboards"));
+		startActivity(marketLaunch);
+	}
+
+	public void onGuiardClick(View v) {
+		Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
+		marketLaunch.setData(Uri.parse("http://sph1re.fr/"));
 		startActivity(marketLaunch);
 	}
 }

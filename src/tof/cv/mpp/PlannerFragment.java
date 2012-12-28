@@ -93,16 +93,19 @@ public class PlannerFragment extends SherlockListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.i(TAG, "*** onCreateView");
 		return inflater.inflate(R.layout.fragment_planner, null);
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
+		Log.i(TAG, "*** onCreate");
 		super.onCreate(savedInstanceState);
+		//this.setRetainInstance(true);
 		settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		editor = settings.edit();
 		context = this.getActivity();
 		mDate = Calendar.getInstance();
-
+		getActivity().setProgressBarIndeterminateVisibility(false);
 		setHasOptionsMenu(true);
 
 	}
@@ -111,7 +114,7 @@ public class PlannerFragment extends SherlockListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
-		tvArrival = (TextView) getActivity().findViewById(R.id.tv_stop);
+		tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
 
 		setAllBtnListener();
 
@@ -145,14 +148,14 @@ public class PlannerFragment extends SherlockListFragment {
 	}
 
 	private void setAllBtnListener() {
-		Button btnInvert = (Button) getActivity().findViewById(
+		Button btnInvert = (Button) getView().findViewById(
 				R.id.mybuttonInvert);
-		btnInvert.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				fillStations((String) tvArrival.getText(),
-						(String) tvDeparture.getText());
-			}
-		});
+			btnInvert.setOnClickListener(new Button.OnClickListener() {
+				public void onClick(View v) {
+					fillStations((String) tvArrival.getText(),
+							(String) tvDeparture.getText());
+				}
+			});
 
 		Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
 
@@ -196,7 +199,7 @@ public class PlannerFragment extends SherlockListFragment {
 
 			}
 		});
-		Button btnInfoDeparture = (Button) getActivity().findViewById(
+		Button btnInfoDeparture = (Button) getView().findViewById(
 				R.id.btn_infos_departure);
 		btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -210,7 +213,7 @@ public class PlannerFragment extends SherlockListFragment {
 			}
 		});
 
-		Button btnAfter = (Button) getActivity().findViewById(
+		Button btnAfter = (Button) getView().findViewById(
 				R.id.mybuttonAfter);
 		btnAfter.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -221,7 +224,7 @@ public class PlannerFragment extends SherlockListFragment {
 			}
 		});
 
-		Button btnBefore = (Button) getActivity().findViewById(
+		Button btnBefore = (Button) getView().findViewById(
 				R.id.mybuttonBefore);
 		btnBefore.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -287,8 +290,6 @@ public class PlannerFragment extends SherlockListFragment {
 	private void fillData() {
 
 		if (allConnections != null && allConnections.connection != null) {
-			// Log.i(TAG, "*** Remplis avec les infos");
-
 			connAdapter = new ConnectionAdapter(this.getActivity()
 					.getBaseContext(), R.layout.row_planner,
 					allConnections.connection);
@@ -298,7 +299,6 @@ public class PlannerFragment extends SherlockListFragment {
 		}
 
 		else {
-			// Log.i(TAG, "*** Remplis avec le Cache");
 			allConnections = Utils.getCachedConnections();
 
 			if (allConnections != null) {
@@ -308,7 +308,6 @@ public class PlannerFragment extends SherlockListFragment {
 				setListAdapter(connAdapter);
 				registerForContextMenu(getListView());
 			} else {
-				// Log.i(TAG, "*** Erreur avec le Cache");
 				fillWithTips();
 			}
 
@@ -316,7 +315,6 @@ public class PlannerFragment extends SherlockListFragment {
 	}
 
 	public void fillWithTips() {
-		Log.i(TAG, "*** Remplis avec les tips");
 		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
 		// fill the map with data
@@ -391,7 +389,8 @@ public class PlannerFragment extends SherlockListFragment {
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		// Log.d(TAG,"requestCode is: "+requestCode);
+		Log.d(TAG, "requestCode is: " + requestCode);
+		Log.d(TAG, "Extra is: " + intent.getStringExtra("GARE"));
 
 		switch (requestCode) {
 		case ACTIVITY_DISPLAY:
@@ -448,17 +447,18 @@ public class PlannerFragment extends SherlockListFragment {
 			public void run() {
 
 				makeApiRequest();
-				a.runOnUiThread(new Runnable() {
-					public void run() {
-						//
-						try {
-							fillData();
-							a.setProgressBarIndeterminateVisibility(false);
-						} catch (Exception e) {
-							e.printStackTrace();
+				if (a != null)
+					a.runOnUiThread(new Runnable() {
+						public void run() {
+							//
+							try {
+								fillData();
+								a.setProgressBarIndeterminateVisibility(false);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				});
+					});
 
 			}
 		};

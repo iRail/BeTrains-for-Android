@@ -11,7 +11,8 @@ import tof.cv.mpp.Utils.UtilsWeb.Vehicle;
 import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.bo.Message;
-import tof.cv.widget.TrainAppWidgetProvider;
+import tof.cv.mpp.widget.TrainAppWidgetProvider;
+import tof.cv.mpp.widget.TrainWidgetProvider;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -68,13 +69,16 @@ public class InfoTrainFragment extends SherlockListFragment {
 
 		mMessageText.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				Bundle bundle = new Bundle();
-				bundle.putString(DbAdapterConnection.KEY_NAME,
-						currentVehicle.getId());
-				Intent mIntent = new Intent(v.getContext(), ChatActivity.class);
-				mIntent.putExtras(bundle);
-				startActivityForResult(mIntent, 0);
+				if (currentVehicle != null) {
+					Bundle bundle = new Bundle();
 
+					bundle.putString(DbAdapterConnection.KEY_NAME,
+							currentVehicle.getId());
+					Intent mIntent = new Intent(v.getContext(),
+							ChatActivity.class);
+					mIntent.putExtras(bundle);
+					startActivityForResult(mIntent, 0);
+				}
 			}
 		});
 
@@ -202,17 +206,36 @@ public class InfoTrainFragment extends SherlockListFragment {
 								getActivity());
 						mDbHelper.open();
 						mDbHelper.deleteAllWidgetStops();
+						if (fromTo == null)
+							fromTo = currentVehicle.getVehicleStops()
+									.getVehicleStop().get(0).getStation()
+									+ " - "
+									+ currentVehicle
+											.getVehicleStops()
+											.getVehicleStop()
+											.get(currentVehicle
+													.getVehicleStops()
+													.getVehicleStop().size()-1).getStation();
+						
 						mDbHelper.createWidgetStop(currentVehicle.getId()
-								.replace("BE.NMBS.", ""), "1", "", fromTo);
+								.replace("BE.NMBS.", ""), "1", Utils
+								.formatDateWidget(new Date()), fromTo);
+						
 						for (VehicleStop oneStop : currentVehicle
 								.getVehicleStops().getVehicleStop())
 							mDbHelper.createWidgetStop(oneStop.getStation(), ""
 									+ oneStop.getTime(), oneStop.getDelay(),
 									oneStop.getStatus());
+
+						mDbHelper.close();
+
 						Intent intent = new Intent(
 								TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
 						getActivity().sendBroadcast(intent);
-						mDbHelper.close();
+
+						intent = new Intent(TrainWidgetProvider.REFRESH_ACTION);
+						getActivity().sendBroadcast(intent);
+
 						Toast.makeText(getActivity(),
 								getString(R.string.wid_added, ""),
 								Toast.LENGTH_SHORT).show();

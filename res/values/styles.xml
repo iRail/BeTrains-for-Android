@@ -11,6 +11,11 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
+         <item name="android:padding">50dp</item>
+    </style>
+
+    <style name="NoTitleDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="Theme.MyTheme" parent="@style/Theme.Sherlock.Light.DarkActionBar">

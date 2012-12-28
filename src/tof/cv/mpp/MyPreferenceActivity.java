@@ -67,21 +67,7 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.activity_preferences);
 
-			Preference pref2 = findPreference(getString(R.string.key_activity));
-			if (pref2 != null) {
-				pref2.setSummary(((ListPreference) pref2).getEntry());
-				pref2.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
-					@Override
-					public boolean onPreferenceChange(Preference preference,
-							Object newValue) {
-						preference.setSummary(((ListPreference) preference)
-								.getEntries()[Integer.valueOf(newValue
-								.toString()) - 1]);
-						return true;
-					}
-				});
-			}
 			Preference pref3 = findPreference("prefPseudo");
 			if (pref3 != null) {
 				pref3.setSummary(((EditTextPreference) pref3).getText());
@@ -116,6 +102,22 @@ public class MyPreferenceActivity extends SherlockPreferenceActivity implements
 			if (pref != null) {
 				pref.setSummary(((ListPreference) pref).getEntry());
 				pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+					@Override
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+						preference.setSummary(((ListPreference) preference)
+								.getEntries()[Integer.valueOf(newValue
+								.toString()) - 1]);
+						return true;
+					}
+				});
+			}
+			
+			Preference pref2 = findPreference(getString(R.string.key_activity));
+			if (pref2 != null) {
+				pref2.setSummary(((ListPreference) pref2).getEntry());
+				pref2.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
 					@Override
 					public boolean onPreferenceChange(Preference preference,

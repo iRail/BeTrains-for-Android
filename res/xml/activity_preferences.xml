@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
-
-    <PreferenceCategory android:title="BETrains" >
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="prefnl"
-            android:summary="@string/settings_english"
-            android:title="@string/settings_force_dutch" />
-    </PreferenceCategory>
-    
-        <PreferenceCategory android:title="@string/txt_messages" >
+    <PreferenceCategory android:title="@string/txt_messages" >
         <EditTextPreference
             android:defaultValue="Anonymous"
             android:key="prefPseudo"
