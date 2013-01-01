@@ -390,7 +390,6 @@ public class PlannerFragment extends SherlockListFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		Log.d(TAG, "requestCode is: " + requestCode);
-		Log.d(TAG, "Extra is: " + intent.getStringExtra("GARE"));
 
 		switch (requestCode) {
 		case ACTIVITY_DISPLAY:

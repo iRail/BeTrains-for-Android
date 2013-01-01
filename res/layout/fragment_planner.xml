@@ -11,7 +11,6 @@
 
         <LinearLayout
             android:id="@+id/Ly_Pannel_Sup"
-            style="@style/nowSearchStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >

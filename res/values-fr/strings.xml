@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="settings_back">Bouton \'Retour\'</string>
-    <string name="settings_back_sum">Garder tous les écrans en mémoire</string>
+
+    <string name="emptydetail">Pas de détail, cliquez pour en ajouter.</string>
+    <string name="detail">Détail</string>
+    <plurals name="txt_days">
+        <item quantity="zero">%d jour</item>
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
+    <string name="compensateurl">http://www.belgianrail.be/fr/service-clientele/compensations.aspx</string>
+    <string name="txt_editdelay">Changer le retard</string>
+    <string name="txt_edittext">Changer le texte</string>
+
+    <string name="btn_home_compensate">Compensation</string>
+    <string name="html_compensate"><![CDATA[ <h1>Compensations</h1>Pour profiter de la nction Compensations, il suffit de cliquer sur le menu de l\écran Information Train.<br/><br/><img src=\'comptuto.png\' width="100\%%"  /><br /><br />Vous avez subi un retard lors d\'un voyage en train national? Vous pouvez <strong>obtenir une compensation</strong> pour les d&eacute;sagr&eacute;ments subis, sous certaines conditions.</td></tr></tbody></table><p><a href="http://www.belgianrail.be/fr/service-clientele/compensations/demande.aspx">Demande de compensation</a></p><h2>Compensation: dans quel cas et combien?</h2><p>Les compensations sont octroy&eacute;es en fonction de l&rsquo;importance du retard et sur base du prix d\'un trajet simple.</p><h3>Retard occasionnel de longue dur&eacute;e</h3><ul><li>Retard de <strong>60 minutes au minimum</strong>: compensation forfaitaire de <strong>100\%%<br /></strong></li></ul><h3>Retards fr&eacute;quents</h3><p>Retards r&eacute;p&eacute;t&eacute;s dans une <strong>p&eacute;riode de 6 mois</strong>.</p><ul><li><strong>Minimum 20 retards de 15 minutes</strong>: compens&eacute;s &agrave; <strong>25\%%</strong> par retard</li><li><strong>Minimum 10 retards de 30 minutes</strong>: compens&eacute;s &agrave; <strong>50%</strong> par retard</li></ul><p>Certains cas ne donnent <a href="http://www.belgianrail.be/fr/service-clientele/compensations/pas-de-compensation.aspx">pas droit &agrave; une compensation</a></p><h2>Introduire une demande de compensation</h2><p>Introduisez votre demande <strong>dans les 15 jours calendrier</strong></p><ul><li>Apr&egrave;s un retard d&rsquo;au moins 60 minutes</li><li>Suivant la p&eacute;riode de 6 mois &agrave; dater de votre premier retard</li><li>Apr&egrave;s avoir utilis&eacute; la derni&egrave;re ligne de votre pass ou d&rsquo;une carte &agrave; compl&eacute;ter (Campus ou Carte Train Mi-Temps inclus), &agrave; joindre lors de l&rsquo;envoi au Service client&egrave;le</li></ul><p><a href="http://www.belgianrail.be/fr/service-clientele/compensations/demande.aspx">Demande de compensation</a><br /><br /><a href="http://www.belgianrail.be/fr/service-clientele/compensations/combien-compensation.aspx">Calculez vous-m&ecirc;me votre compensation</a><br />pensation?</a></p><p>Then you can submit it via this <a href="http://www.belgianrail.be/en/customer-service/contact.aspx">contact form</a>.</p></html> ]]></string>
+
     <string name="svTitle">StreetView ne semble pas installé</string>
     <string name="svMessage">Veuillez l\'installer depuis le Google Play Store</string>
     <string name="noMarket">Désolé, il semble que votre appareil n\'aie pas accès au Play Store (Android Market)</string>
@@ -24,6 +37,7 @@
     <string name="btn_home_chat">Chat</string>
     <string name="btn_home_traffic">Perturbations traffic</string>
     <string name="btn_home_settings">Préférences</string>
+
     <string name="btn_home_starred">Favoris</string>
     <string name="txt_loading">Chargement en cours...</string>
     <string name="txt_patient">Un instant SVP...</string>
@@ -165,5 +179,6 @@
     <string name="abs__searchview_description_submit">Submit query</string>
     <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
     <string name="abs__searchview_description_voice">Voice search</string>
+    <string name="txt_days"/>
 
 </resources>

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="settings_back">Terug</string>
+    <string name="detail">Detail</string>
+    <string name="emptydetail">No user info. Click to add.</string>
+    <plurals name="txt_days">
+        <item quantity="zero">%d dag</item>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
+    <string name="compensateurl">http://www.belgianrail.be/nl/klantendienst/compensatie-bij-vertraging.aspx</string>
+    <string name="txt_editdelay">Edit delay value</string>
+    <string name="txt_edittext">Edit text value</string>
+    <string name="btn_home_compensate">Compensaties</string>
+    <string name="html_compensate"><![CDATA[ <h1>Compensations</h1>If you want to use the Compensation feature in the app, press the Menu Button in the Train Information screen.<br/><br/><img src=\'comptuto.png\' width="100\%%"  /><br /><br />Eigenlijk vinden we het jammer dat je op deze pagina terechtkomt. Ondanks al onze inspanningen, liep je toch een vertraging op bij je binnenlandse treinreis. Weet dan dat je in bepaalde gevallen een <strong>vergoeding</strong> kunt krijgen voor de hinder.<a href="http://www.belgianrail.be/nl/klantendienst/compensatie-bij-vertraging.aspx"><br /><br />Compensatie aanvragen</a>&nbsp;</p><h2>Recht op compensatie. Wanneer? Hoeveel?</h2><p>We maken een onderscheid tussen een occasionele langdurige vertraging en herhaaldelijke vertragingen.</p><h3>Occasionele langdurige vertraging</h3><ul><li>Vertraging van <strong>minstens 60 minuten</strong> vergoed aan <strong>100\%%</strong> van de waarde van een enkele reis.</li></ul><h3>Herhaaldelijke vertragingen</h3><p>Meerdere vertragingen in een <strong>periode van 6 maanden</strong>.</p><ul><li><strong>Minimum 20 vertragingen van minstens 15 minuten</strong> vergoed per vertraging aan <strong>25\%%</strong> van de waarde van een enkele reis.</li><li><strong>Minimum 10 vertragingen van minstens 30 minuten</strong> vergoed per vertraging aan <strong>50\%%</strong> van de waarde van een enkele reis.</li></ul><p><strong>Opgelet</strong>: Soms heb je <a href="http://www.belgianrail.be/nl/klantendienst/compensatie-bij-vertraging.aspx">geen recht op compensatie</a>. </p><h2>Compensatie aanvragen</h2><p>Dien je aanvraag in <strong>binnen de 15 kalenderdagen</strong></p><ul><li>Na je reis met vertraging van minstens 60 minuten</li><li>Na je periode van 6 maand die start vanaf je eerste vertraging</li><li>Na gebruik van de laatste lijn van je Pass, Kaart, Campus of Halftijdse Treinkaart die meegestuurd wordt met je aanvraag</li></ul><p><a href="http://www.belgianrail.be/nl/klantendienst/compensatie-bij-vertraging.aspx">Compensatie aanvragen</a></p><p><a href="http://www.belgianrail.be/nl/klantendienst/compensatie-bij-vertraging.aspx">Bereken zelf je compensatie</a></p><p><a href="http://www.belgianrail.be/nl/klantendienst/compensatie-bij-vertraging.aspx">Hoe betalen we je compensatie uit?</a></p></html> ]]></string>
+ <string name="settings_back">Terug</string>
     <string name="settings_back_sum">Hou alle schermen in geheugen</string>
     <string name="svTitle">StreetView not installed</string>
     <string name="svMessage">Please install Google StreetView</string>
@@ -154,5 +166,6 @@
     <string name="abs__searchview_description_submit">Submit query</string>
     <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
     <string name="abs__searchview_description_voice">Voice search</string>
+    <string name="txt_days"/>
 
 </resources>

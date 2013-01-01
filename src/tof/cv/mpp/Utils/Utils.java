@@ -117,7 +117,7 @@ public class Utils {
 	
 	public static String formatDateWidget(Date dateFromAPI) {
 
-		return formatDate(dateFromAPI,"dd MMM HH:mm:ss");
+		return formatDate(dateFromAPI,"HH:mm:ss");
 
 	}
 

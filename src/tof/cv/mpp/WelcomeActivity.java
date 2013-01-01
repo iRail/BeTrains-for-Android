@@ -137,17 +137,15 @@ public class WelcomeActivity extends SlidingFragmentActivity {
 				R.id.content_frame);
 
 		if (f != null && !fragment.getClass().equals(f.getClass())) {
-			FragmentTransaction trans = getSupportFragmentManager()
-					.beginTransaction().replace(R.id.content_frame, fragment);
 
-			trans.commit();
 
-			Handler h = new Handler();
-			h.postDelayed(new Runnable() {
-				public void run() {
-					getSlidingMenu().showAbove();
-				}
-			}, 50);
+            mContent = fragment;
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+            getSlidingMenu().showContent();
+
 		} else
 			toggle();
 	}

@@ -1,10 +1,6 @@
 package tof.cv.mpp.Utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -256,7 +252,7 @@ public class UtilsWeb {
 		}
 	}
 
-	public class VehicleStop {
+	public static class VehicleStop {
 
 		private String station;
 		private long time;
@@ -282,6 +278,40 @@ public class UtilsWeb {
 		}
 	}
 
+    public static Vehicle getMemoryvehicle(String fileName, Context context) {
+
+        try {
+            File f = context.getDir("COMPENSATION", Context.MODE_PRIVATE);
+            File file = new File(f, fileName);
+            Gson gson = new Gson();
+            return gson.fromJson(getFromFile(file), Vehicle.class);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static BufferedReader getFromFile(File file) {
+        try {
+            Log.i("", file.getCanonicalPath());
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        StringBuilder text = new StringBuilder();
+
+        try {
+            return new BufferedReader(new FileReader(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 	public static Vehicle getAPIvehicle(String vehicle, final Context context,
 			long timestamp) {
 		
@@ -306,7 +336,7 @@ public class UtilsWeb {
 			// Log.i(TAG, "Json Parser started..");
 			Gson gson = new Gson();
 			Reader r = new InputStreamReader(getJSONData(url, context));
-			return gson.fromJson(r, Vehicle.class);
+            return gson.fromJson(r, Vehicle.class);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -314,6 +344,7 @@ public class UtilsWeb {
 		}
 
 	}
+
 
 	public static Station getAPIstation(String station, long timestamp,
 			final Context context) {

@@ -17,14 +17,10 @@
 <resources>
 
     <dimen name="multipane_half_padding">8dp</dimen>
-    <dimen name="text_size_medium">14sp</dimen>
     <dimen name="slidingmenu_offset">60dp</dimen>
     <dimen name="list_padding">10dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
-    <dimen name="widget_margin_top">8dp</dimen>
-    <dimen name="widget_margin_bottom">8dp</dimen>
-    <dimen name="widget_margin_left">8dp</dimen>
-    <dimen name="widget_margin_right">8dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
 
     <integer name="num_cols">1</integer>
 
