@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="menu_pref">
+        <item>Routeplanner</item>
+        <item>Verkeershinder</item>
+        <item>Chat</item>
+        <item>Favorieten</item>
+        <item>Dichtste station</item>
+        <item>Game</item>
+    </string-array>
+    <string-array name="menu">
+        <item>Routeplanner</item>
+        <item>Verkeershinder</item>
+        <item>Chat</item>
+        <item>Favorieten</item>
+        <item>Compensaties</item>
+        <item>Dichtste station</item>
+        <item>Game</item>
+        <item>Extras</item>
+    </string-array>
+    <string-array name="planner_da_entries">
+        <item>Vertrek</item>
+        <item>Aankomst</item>
+    </string-array>
+    <string-array name="planner_da_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="listArray">
+        <item>Maandag</item>
+        <item>Dinsdag</item>
+        <item>Woensdag</item>
+        <item>Donderdag</item>
+        <item>Vrijdag</item>
+        <item>Zaterdag</item>
+        <item>zondag</item>
+    </string-array>
+    <string-array name="listValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="titles">
+        <item>Check-in</item>
+        <item>This week</item>
+        <item>Achievements</item>
+    </string-array>
+</resources>

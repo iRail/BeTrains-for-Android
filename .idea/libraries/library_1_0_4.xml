@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="library-1.0.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/BeTrains/build/exploded-aar/com.etsy.android.grid/library/1.0.4/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/BeTrains/build/exploded-aar/com.etsy.android.grid/library/1.0.4/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

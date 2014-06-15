@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <string name="emptydetail">Pas de détail, cliquez pour en ajouter.</string>
+    <string name="detail">Détail</string>
+    <plurals name="txt_days">
+        <item quantity="zero">%d jour</item>
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
+    <string name="compensateurl">http://www.belgianrail.be/fr/service-clientele/compensations.aspx</string>
+    <string name="txt_editdelay">Changer le retard</string>
+    <string name="txt_edittext">Changer le texte</string>
+
+    <string name="btn_home_compensate">Compensation</string>
+    <string name="html_compensate"><![CDATA[ <h1>Compensations</h1>Pour profiter de la fonction Compensations, il suffit d\'ouvrir le menu de l\'écran Information Train.<br/><br/><img src=\'comptuto.png\' width="100\%%"  /><br /><br />Vous avez subi un retard lors d\'un voyage en train national? Vous pouvez <strong>obtenir une compensation</strong> pour les d&eacute;sagr&eacute;ments subis, sous certaines conditions.</td></tr></tbody></table><p><a href="http://www.belgianrail.be/fr/service-clientele/compensations/demande.aspx">Demande de compensation</a></p><h2>Compensation: dans quel cas et combien?</h2><p>Les compensations sont octroy&eacute;es en fonction de l&rsquo;importance du retard et sur base du prix d\'un trajet simple.</p><h3>Retard occasionnel de longue dur&eacute;e</h3><ul><li>Retard de <strong>60 minutes au minimum</strong>: compensation forfaitaire de <strong>100\%%<br /></strong></li></ul><h3>Retards fr&eacute;quents</h3><p>Retards r&eacute;p&eacute;t&eacute;s dans une <strong>p&eacute;riode de 6 mois</strong>.</p><ul><li><strong>Minimum 20 retards de 15 minutes</strong>: compens&eacute;s &agrave; <strong>25\%%</strong> par retard</li><li><strong>Minimum 10 retards de 30 minutes</strong>: compens&eacute;s &agrave; <strong>50%</strong> par retard</li></ul><p>Certains cas ne donnent <a href="http://www.belgianrail.be/fr/service-clientele/compensations/pas-de-compensation.aspx">pas droit &agrave; une compensation</a></p><h2>Introduire une demande de compensation</h2><p>Introduisez votre demande <strong>dans les 15 jours calendrier</strong></p><ul><li>Apr&egrave;s un retard d&rsquo;au moins 60 minutes</li><li>Suivant la p&eacute;riode de 6 mois &agrave; dater de votre premier retard</li><li>Apr&egrave;s avoir utilis&eacute; la derni&egrave;re ligne de votre pass ou d&rsquo;une carte &agrave; compl&eacute;ter (Campus ou Carte Train Mi-Temps inclus), &agrave; joindre lors de l&rsquo;envoi au Service client&egrave;le</li></ul><p><a href="http://www.belgianrail.be/fr/service-clientele/compensations/demande.aspx">Demande de compensation</a><br /><br /><a href="http://www.belgianrail.be/fr/service-clientele/compensations/combien-compensation.aspx">Calculez vous-m&ecirc;me votre compensation</a><br />pensation?</a></p><p>Then you can submit it via this <a href="http://www.belgianrail.be/en/customer-service/contact.aspx">contact form</a>.</p></html> ]]></string>
+
+    <string name="svTitle">StreetView ne semble pas installé</string>
+    <string name="svMessage">Veuillez l\'installer depuis le Google Play Store</string>
+    <string name="noMarket">Désolé, il semble que votre appareil n\'aie pas accès au Play Store (Android Market)</string>
+    <string name="kindhelp">Avec l\'aide de:</string>
+    <string name="tipa">Débuter avec BeTrains</string>
+    <string name="tipatitle">Il suffit de cliquer sur le bouton "Chercher" pour
+		commencer.</string>
+    <string name="tipb">Changer de gare</string>
+    <string name="tipbtitle">Pour trouver un autre itinéraire, cliquer sur le
+		nom des gares pour le schanger. </string>
+    <string name="tipc">Changer la date et l\'heure</string>
+    <string name="tipctitle">La bannière du dessus permet de changer la date et
+		l\'heure de votre recherche.</string>
+    <string name="tipd">Menu principal</string>
+    <string name="tipdtitle">Cliquer sur l\'icone \'Home\' dans le coin supérieur
+		gauche pour arriver au menu principal.</string>
+    <string name="app_name">BeTrains</string>
+    <string name="txt_quai">Quai </string>
+    <string name="btn_home_planner">Demande d\'itinéraire</string>
+    <string name="btn_home_chat">Chat</string>
+    <string name="btn_home_traffic">Perturbations traffic</string>
+    <string name="btn_home_settings">Préférences</string>
+
+    <string name="btn_home_starred">Favoris</string>
+    <string name="txt_loading">Chargement en cours...</string>
+    <string name="txt_patient">Un instant SVP...</string>
+    <string name="txt_traffic_issues">Résumé des pertubations en cours</string>
+    <string name="txt_no_issue">Pas de problèmes de circulation</string>
+    <string name="txt_duration">Dur:</string>
+    <string name="txt_search">Chercher</string>
+    <string name="api_key_prod">0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg</string>
+    <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
+    <string name="add_widget">Widget</string>
+    <string name="url_lang">fr</string>
+    <string name="url_lang_2">f</string>
+    <string name="url_lang_for_him">f</string>
+    <string name="txt_connection">Vérifiez votre connection.</string>
+    <string name="txt_def_title">Titre</string>
+    <string name="txt_type_subway">Métro</string>
+    <string name="txt_type_walk">Marche</string>
+    <string name="txt_your_train">Votre train</string>
+    <string name="settings_activity">Premier écran</string>
+    <string name="settings_activity_summary">Où démarrer l\'application?</string>
+    <string name="txt_load_message">Chargement du dernier message en cours</string>
+    <string name="txt_infrabel">Les infos de cette page proviennent du site
+		Infrabel/Railtime. Les délais inférieurs à 5 minutes sont cachés et
+		peuvent être différents de la page précédente.</string>
+    <string name="txt_no_message">Pas de message.</string>
+    <string name="wid_empty">Pas de train sélectionné. Ouvrez BETrains et
+		choisissez-en un.</string>
+    <string name="wid_confirm">Ajouter au Widget?</string>
+    <string name="wid_added">%s ajouté au widget</string>
+    <string name="txt_messages">Messages</string>
+    <string name="txt_more_messages">Plus de messages</string>
+    <string name="txt_change">Changer</string>
+    <string name="settings_display_lm_desc">En dessous de vos infos sur le train</string>
+    <string name="settings_display_lm">Affiche le dernier message</string>
+    <string name="settings_pseudo">Pseudo</string>
+    <string name="settings_fullscreen">Plein écran</string>
+    <string name="settings_restart">Redémarrage nécessaire</string>
+    <string name="settings_force_dutch">Forcer le néerlandais</string>
+    <string name="settings_english">Pour les utilisateurs anglophones</string>
+    <string name="settings_planner_da_summary">...</string>
+    <string name="txt_filter_message">Entrez un numéro de train\n( exemple: 589 pour IC
+		589)</string>
+    <string name="txt_filter">Filtre</string>
+    <string name="txt_numberoftrains">Trains : </string>
+    <string name="txt_station">Gare</string>
+    <string name="txt_confirm_map">Lancer Google Maps?</string>
+    <string name="txt_confirm_nav">Lancer Google Nav?</string>
+    <string name="txt_add_fav">Favori</string>
+    <string name="txt_train">Train</string>
+    <string name="txt_trip">Itinéraire</string>
+    <string name="fav_no_fav_body">Vous pouvez rajouter ici vos trajets, trains et
+		gares favorites pour un accès rapide.\n\n* Pour ajouter une gare,
+		gardez votre doigt appuyé sur son nom dans la liste des
+		gares.\n\n*Utilisez l\'icone avec l\'étoile pour ajouter un train ou un
+		voyage dans leurs vues respectives.</string>
+    <string name="fav_no_fav_title">Pas de favoris</string>
+    <string name="txt_remove">Supprimer</string>
+    <string name="search_wrong_string">Veuillez choisir une gare depuis la liste ou
+		écrivez votre numéro de train: "984" pour IC 984.</string>
+    <string name="search_hint">N° de train/ Gare</string>
+
+    <string name="changelog_title">Nouveautés:</string>
+    <string name="confirm_message_train">Ouvrir les messages du train %s ?</string>
+    <string name="confirm_info_train">Ouvrir les infos du train %s ?</string>
+    <string name="txt_server_down">Problèmes serveur</string>
+    <string name="txt_map">Carte</string>
+    <string name="txt_nav">Navigation</string>
+    <string name="txt_invert_da">Départ/Arrivée</string>
+    <string name="txt_date">Date</string>
+    <string name="txt_time">Heure</string>
+    <string name="settings_planner_da">Heure de départ ou arrivée?</string>
+    <string name="settings_train_only">Seulement les trains</string>
+    <string name="settings_train_only_summary">Ne montre ni les bus ni le métro</string>
+    <string name="txt_no_driving">Aucune info sur ce train.</string>
+    <string name="txt_no_result">Désolé, pas de résultat</string>
+    <string name="txt_error">Une erreur s\'est produite. Vérifiez votre
+		connexion Internet.\n\nPeut-être que notre serveur éprouve des
+		difficultés.</string>
+    <string name="txt_create_connections">Veuillez relancer une recherche pour mettre à jours
+		les infos.</string>
+    <string name="btn_closest_stations">Gares à proximité</string>
+    <string name="txt_first_dl">Téléchargement de la liste GPS. Le premier
+		lancement est assez lent.\nNe vous inquiétez pas, les prochaines
+		recherches seront instantanées.</string>
+    <string name="txt_accuracy">Précision: %sm.</string>
+    <string name="txt_wait_gps">Attente du GPS</string>
+    <string name="update_gps_btn">Mise à jour:\n%sm</string>
+    <string name="txt_info_station">Détails gare</string>
+    <string name="txt_dl_stations">Téléchargement de la liste des gares</string>
+    <string name="txt_fill_closest">Tri des résultats</string>
+    <string name="txt_sort">Tri en cours.</string>
+    <string name="txt_location">Si ce processus prend trop de temps, vous pouvez
+		activer les options de localisation en cliquant ici:</string>
+    <string name="pref_selectTrain">Votre train</string>
+    <string name="pref_stations">Gares à vérifier</string>
+    <string name="pref_weekdays">Jours de vérification</string>
+    <string name="pref_selectStartHour">Commence à:</string>
+    <string name="pref_selectEndHour">Termine à:</string>
+    <string name="pref_selectFreq">Fréquence des vérifications</string>
+    <string name="pref_selectStartHour_sum">Pour la batterie, évitez les connections durant la
+		nuit</string>
+    <string name="pref_selectEndHour_sum">Pour la batterie, évitez les connections durant la
+		nuit</string>
+    <string name="pref_selectFreq_sum">1 heure</string>
+    <string name="stationpicker">Choisissez votre gare</string>
+    <string name="key_planner_da">Plannerdapref</string>
+    <string name="key_activity">Activitypref</string>
+
+    <!-- Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] -->
+    <string name="abs__action_bar_home_description">Navigate home</string>
+    <!-- Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] -->
+    <string name="abs__action_bar_up_description">Navigate up</string>
+    <!-- Content description for the action menu overflow button. [CHAR LIMIT=NONE] -->
+    <string name="abs__action_menu_overflow_description">More options</string>
+
+    <!-- Label for the "Done" button on the far left of action mode toolbars. -->
+    <string name="abs__action_mode_done">Done</string>
+
+    <!-- Title for a button to expand the list of activities in ActivityChooserView [CHAR LIMIT=25] -->
+    <string name="abs__activity_chooser_view_see_all">See all...</string>
+    <!-- Title default for a dialog showing possible activities in ActivityChooserView [CHAR LIMIT=25] -->
+    <string name="abs__activity_chooser_view_dialog_title_default">Select activity</string>
+    <!-- Title for a dialog showing possible activities for sharing in ShareActionProvider [CHAR LIMIT=25] -->
+    <string name="abs__share_action_provider_share_with">Share with...</string>
+    <!-- Description of the shwoing of a popup window with activities to choose from. [CHAR LIMIT=NONE] -->
+    <string name="abs__activitychooserview_choose_application">Choose an application</string>
+    <!-- Description of the choose target button in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] -->
+    <string name="abs__shareactionprovider_share_with">Share with</string>
+    <!-- Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] -->
+    <string name="abs__shareactionprovider_share_with_application">Share with </string>
+
+    <!-- SearchView accessibility description for search button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_search">Search</string>
+    <!-- SearchView accessibility description for search text field [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_query">Search query</string>
+    <!-- SearchView accessibility description for clear button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_clear">Clear query</string>
+    <!-- SearchView accessibility description for submit button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_submit">Submit query</string>
+    <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_voice">Voice search</string>
+    <string name="game_cooling">Prochain:</string>
+    <string name="game_text">Rendez-vous à moins de 100m d\'une gare, au plus il y a du retard, au plus vous aurez des points!</string>
+    <string name="tutoswipe">Glissez votre doigt depuis le bord gauche du téléphone pour faire apparaitre le menu.</string>
+    <string name="toofar">Vous êtes trop loin:</string>
+    <string name="no_gps">GPS is OFF. Click here to turn on.</string>
+</resources>

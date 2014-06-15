@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <LinearLayout
+        android:id="@+id/timeline"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/departtime"
+            style="@style/TextElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/delayD"
+            style="@style/TextElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="+X&apos;"
+            android:textColor="@color/red"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/numberoftrains"
+            style="@style/TextElement"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Train" />
+
+        <TextView
+            android:id="@+id/arrivaltime"
+            style="@style/TextElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99:99"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/delayA"
+            style="@style/TextElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="+X&apos;"
+            android:textColor="@color/red"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondline"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/departure"
+            style="@style/TextElement"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="DEPARTURE" />
+
+        <TextView
+            android:id="@+id/duration"
+            style="@style/TextElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_duration"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/arrival"
+            style="@style/TextElement"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+             android:gravity="right"
+            android:singleLine="true"
+            android:text="DEPARTURE" />
+    </LinearLayout>
+
+</LinearLayout>

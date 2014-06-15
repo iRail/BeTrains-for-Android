@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/nickname"
+			android:text="Nickname" android:textColor="@color/darkblue"
+			android:textStyle="bold" />
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:id="@+id/trainid"
+			android:text="IC_999" android:textColor="@color/darkblue"
+			android:textStyle="italic" android:layout_marginLeft="6dip" />
+	</LinearLayout>
+
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="fill_parent" android:text="BODY" 
+		android:id="@+id/messagebody"
+		android:textColor="@color/darkblue"
+		android:layout_marginBottom="2dip"/>
+
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/time"
+		android:text="" android:textColor="@color/darkblue"
+		android:textSize="11sp" />
+
+</LinearLayout>

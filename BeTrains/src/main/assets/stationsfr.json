@@ -1,0 +1,3765 @@
+{
+version: "1.1",
+timestamp: "1364910458",
+station: [
+{
+id: "BE.NMBS.008895125",
+locationX: "4.024773",
+locationY: "50.948316",
+name: "Aalst Kerrebroek",
+standardname: "Aalst Kerrebroek"
+},
+{
+id: "BE.NMBS.008891140",
+locationX: "3.447856",
+locationY: "51.092258",
+name: "Aalter",
+standardname: "Aalter"
+},
+{
+id: "BE.NMBS.008833209",
+locationX: "4.824036",
+locationY: "50.984408",
+name: "Aarschot",
+standardname: "Aarschot"
+},
+{
+id: "BE.NMBS.008892288",
+locationX: "3.418361",
+locationY: "50.984458",
+name: "Aarsele",
+standardname: "Aarsele"
+},
+{
+id: "BE.NMBS.008886546",
+locationX: "3.846683",
+locationY: "50.732936",
+name: "Acren",
+standardname: "Acren"
+},
+{
+id: "BE.NMBS.008874583",
+locationX: "4.584378",
+locationY: "50.429545",
+name: "Aiseau",
+standardname: "Aiseau"
+},
+{
+id: "BE.NMBS.008831039",
+locationX: "5.29173",
+locationY: "50.886419",
+name: "Alken",
+standardname: "Alken"
+},
+{
+id: "BE.NMBS.008895000",
+locationX: "4.038586",
+locationY: "50.943053",
+name: "Alost",
+standardname: "Aalst"
+},
+{
+id: "BE.NMBS.008843331",
+locationX: "5.320489",
+locationY: "50.546006",
+name: "Amay",
+standardname: "Amay"
+},
+{
+id: "BE.NMBS.008843323",
+locationX: "5.288855",
+locationY: "50.539236",
+name: "Ampsin",
+standardname: "Ampsin"
+},
+{
+id: "BE.NMBS.008863404",
+locationX: "5.095972",
+locationY: "50.496799",
+name: "Andenne",
+standardname: "Andenne"
+},
+{
+id: "BE.NMBS.008842002",
+locationX: "5.600949",
+locationY: "50.61253",
+name: "Angleur",
+standardname: "Angleur"
+},
+{
+id: "BE.NMBS.008841202",
+locationX: "5.509703",
+locationY: "50.661214",
+name: "Ans",
+standardname: "Ans"
+},
+{
+id: "BE.NMBS.008863818",
+locationX: "4.905525",
+locationY: "50.238016",
+name: "Anseremme",
+standardname: "Anseremme"
+},
+{
+id: "BE.NMBS.008885522",
+locationX: "3.451308",
+locationY: "50.569628",
+name: "Antoing",
+standardname: "Antoing"
+},
+{
+id: "BE.NMBS.008821121",
+locationX: "4.4332",
+locationY: "51.198914",
+name: "Anvers Berchem",
+standardname: "Antwerp Berchem"
+},
+{
+id: "BE.NMBS.008821006",
+locationX: "4.421242",
+locationY: "51.21686",
+name: "Anvers Central",
+standardname: "Antwerp Central"
+},
+{
+id: "BE.NMBS.008821030",
+locationX: "4.426479",
+locationY: "51.231782",
+name: "Anvers Dam",
+standardname: "Anwerp Dam"
+},
+{
+id: "BE.NMBS.008821022",
+locationX: "4.434799",
+locationY: "51.206616",
+name: "Anvers Est",
+standardname: "Antwerp East"
+},
+{
+id: "BE.NMBS.008821089",
+locationX: "4.42874",
+locationY: "51.264045",
+name: "Anvers Noorderdokken",
+standardname: "Antwerp Noorderdokken"
+},
+{
+id: "BE.NMBS.008821196",
+locationX: "4.392258",
+locationY: "51.197514",
+name: "Anvers Sud",
+standardname: "Antwerp South"
+},
+{
+id: "BE.NMBS.00105",
+locationX: "4.425",
+locationY: "51.244722",
+name: "Anvers-Luchtbal",
+standardname: "Antwerpen-Luchtbal"
+},
+{
+id: "BE.NMBS.008892734",
+locationX: "3.495469",
+locationY: "50.826208",
+name: "Anzegem",
+standardname: "Anzegem"
+},
+{
+id: "BE.NMBS.008895745",
+locationX: "3.972025",
+locationY: "50.81345",
+name: "Appelterre",
+standardname: "Appelterre"
+},
+{
+id: "BE.NMBS.008811759",
+locationX: "4.662366",
+locationY: "50.754337",
+name: "Archennes",
+standardname: "Eerken"
+},
+{
+id: "BE.NMBS.008866001",
+locationX: "5.810614",
+locationY: "49.679975",
+name: "Arlon",
+standardname: "Arlon"
+},
+{
+id: "BE.NMBS.008812070",
+locationX: "4.208422",
+locationY: "50.906731",
+name: "Asse",
+standardname: "Asse"
+},
+{
+id: "BE.NMBS.008864931",
+locationX: "5.021306",
+locationY: "50.36855",
+name: "Assesse",
+standardname: "Assesse"
+},
+{
+id: "BE.NMBS.008886009",
+locationX: "3.776406",
+locationY: "50.6271",
+name: "Ath",
+standardname: "Ath"
+},
+{
+id: "BE.NMBS.008892601",
+locationX: "3.600803",
+locationY: "50.850558",
+name: "Audenarde",
+standardname: "Oudenaarde"
+},
+{
+id: "BE.NMBS.008874716",
+locationX: "4.6307",
+locationY: "50.44917",
+name: "Auvelais",
+standardname: "Auvelais"
+},
+{
+id: "BE.NMBS.008864352",
+locationX: "5.300689",
+locationY: "50.224872",
+name: "Aye",
+standardname: "Aye"
+},
+{
+id: "BE.NMBS.008842754",
+locationX: "5.672483",
+locationY: "50.473014",
+name: "Aywaille",
+standardname: "Aywaille"
+},
+{
+id: "BE.NMBS.008822160",
+locationX: "4.153992",
+locationY: "51.019236",
+name: "Baasrode Sud",
+standardname: "Baasrode South"
+},
+{
+id: "BE.NMBS.008895240",
+locationX: "3.805767",
+locationY: "50.900803",
+name: "Balegem Sud",
+standardname: "Balegem South"
+},
+{
+id: "BE.NMBS.008895257",
+locationX: "3.7907",
+locationY: "50.919953",
+name: "Balegem Village",
+standardname: "Balegem Village"
+},
+{
+id: "BE.NMBS.008832045",
+locationX: "5.16605",
+locationY: "51.168314",
+name: "Balen",
+standardname: "Balen"
+},
+{
+id: "BE.NMBS.008895463",
+locationX: "3.935661",
+locationY: "50.913903",
+name: "Bambrugge",
+standardname: "Bambrugge"
+},
+{
+id: "BE.NMBS.008864451",
+locationX: "5.502133",
+locationY: "50.349541",
+name: "Barvaux",
+standardname: "Barvaux"
+},
+{
+id: "BE.NMBS.008843430",
+locationX: "5.190939",
+locationY: "50.522625",
+name: "Bas Oha",
+standardname: "Bas Oha"
+},
+{
+id: "BE.NMBS.008811734",
+locationX: "4.621178",
+locationY: "50.724184",
+name: "Basse Wavre",
+standardname: "Basse Wavre"
+},
+{
+id: "BE.NMBS.008865128",
+locationX: "5.721388",
+locationY: "50.00716",
+name: "Bastogne Nord",
+standardname: "Bastogne North"
+},
+{
+id: "BE.NMBS.008865110",
+locationX: "5.709672",
+locationY: "49.99963",
+name: "Bastogne Sud",
+standardname: "Bastogne South"
+},
+{
+id: "BE.NMBS.008863867",
+locationX: "4.957029",
+locationY: "50.113836",
+name: "Beauraing",
+standardname: "Beauraing"
+},
+{
+id: "BE.NMBS.008891124",
+locationX: "3.329886",
+locationY: "51.128008",
+name: "Beernem",
+standardname: "Beernem"
+},
+{
+id: "BE.NMBS.008814423",
+locationX: "4.302274",
+locationY: "50.766404",
+name: "Beersel",
+standardname: "Beersel"
+},
+{
+id: "BE.NMBS.008891001",
+locationX: "3.879722",
+locationY: "51.086944",
+name: "Beervelde",
+standardname: "Beervelde"
+},
+{
+id: "BE.NMBS.008821865",
+locationX: "4.800344",
+locationY: "51.021972",
+name: "Begijnendijk",
+standardname: "Begijnendijk"
+},
+{
+id: "BE.NMBS.008871183",
+locationX: "4.406797",
+locationY: "50.333239",
+name: "Beignee",
+standardname: "Beignee"
+},
+{
+id: "BE.NMBS.008891157",
+locationX: "3.487367",
+locationY: "51.083908",
+name: "Bellem",
+standardname: "Bellem"
+},
+{
+id: "BE.NMBS.008894433",
+locationX: "4.089164",
+locationY: "51.150903",
+name: "Belsele",
+standardname: "Belsele"
+},
+{
+id: "BE.NMBS.008812211",
+locationX: "4.290961",
+locationY: "50.872831",
+name: "Berchem Sainte Agathe",
+standardname: "Sint Agatha Berchem"
+},
+{
+id: "BE.NMBS.008832227",
+locationX: "5.231867",
+locationY: "51.076814",
+name: "Beringen",
+standardname: "Beringen"
+},
+{
+id: "BE.NMBS.008821816",
+locationX: "4.638258",
+locationY: "51.113708",
+name: "Berlaar",
+standardname: "Berlaar"
+},
+{
+id: "BE.NMBS.008865300",
+locationX: "5.267703",
+locationY: "49.852199",
+name: "Bertrix",
+standardname: "Bertrix"
+},
+{
+id: "BE.NMBS.008873320",
+locationX: "4.405942",
+locationY: "50.285589",
+name: "Berzee",
+standardname: "Berzee"
+},
+{
+id: "BE.NMBS.008861424",
+locationX: "4.750092",
+locationY: "50.532914",
+name: "Beuzet",
+standardname: "Beuzet"
+},
+{
+id: "BE.NMBS.008894748",
+locationX: "4.26052",
+locationY: "51.20845",
+name: "Beveren",
+standardname: "Beveren"
+},
+{
+id: "BE.NMBS.008811718",
+locationX: "4.594753",
+locationY: "50.707772",
+name: "Bierges Walibi",
+standardname: "Bierges Walibi"
+},
+{
+id: "BE.NMBS.008841319",
+locationX: "5.46055",
+locationY: "50.658614",
+name: "Bierset Awans",
+standardname: "Bierset Awans"
+},
+{
+id: "BE.NMBS.008831138",
+locationX: "5.50918",
+locationY: "50.86869",
+name: "Bilzen",
+standardname: "Bilzen"
+},
+{
+id: "BE.NMBS.008882362",
+locationX: "4.172453",
+locationY: "50.408764",
+name: "Binche",
+standardname: "Binche"
+},
+{
+id: "BE.NMBS.008896388",
+locationX: "3.224047",
+locationY: "50.825844",
+name: "Bissegem",
+standardname: "Bissegem"
+},
+{
+id: "BE.NMBS.008891405",
+locationX: "3.133862",
+locationY: "51.312431",
+name: "Blankenberge",
+standardname: "Blankenberge"
+},
+{
+id: "BE.NMBS.008861531",
+locationX: "4.636386",
+locationY: "50.619447",
+name: "Blanmont",
+standardname: "Blanmont"
+},
+{
+id: "BE.NMBS.008884715",
+locationX: "3.665675",
+locationY: "50.505939",
+name: "Blaton",
+standardname: "Blaton"
+},
+{
+id: "BE.NMBS.008841434",
+locationX: "5.28599",
+locationY: "50.685161",
+name: "Bleret",
+standardname: "Bleret"
+},
+{
+id: "BE.NMBS.008812021",
+locationX: "4.348507",
+locationY: "50.879428",
+name: "Bockstael",
+standardname: "Bockstael"
+},
+{
+id: "BE.NMBS.008821634",
+locationX: "4.494047",
+locationY: "51.163828",
+name: "Boechout",
+standardname: "Boechout"
+},
+{
+id: "BE.NMBS.008811437",
+locationX: "4.407986",
+locationY: "50.794458",
+name: "Boitsfort",
+standardname: "Bosvoorde"
+},
+{
+id: "BE.NMBS.008831781",
+locationX: "5.408728",
+locationY: "50.955514",
+name: "Bokrijk",
+standardname: "Bokrijk"
+},
+{
+id: "BE.NMBS.008864469",
+locationX: "5.519342",
+locationY: "50.37691",
+name: "Bomal",
+standardname: "Bomal"
+},
+{
+id: "BE.NMBS.008821857",
+locationX: "4.772797",
+locationY: "51.0375",
+name: "Booischot",
+standardname: "Booischot"
+},
+{
+id: "BE.NMBS.008822814",
+locationX: "4.360297",
+locationY: "51.091006",
+name: "Boom",
+standardname: "Boom"
+},
+{
+id: "BE.NMBS.008814456",
+locationX: "4.393523",
+locationY: "50.801975",
+name: "Boondaal",
+standardname: "Boondaal"
+},
+{
+id: "BE.NMBS.008822475",
+locationX: "4.573897",
+locationY: "50.98185",
+name: "Boortmeerbeek",
+standardname: "Boortmeerbeek"
+},
+{
+id: "BE.NMBS.008811163",
+locationX: "4.409992",
+locationY: "50.877782",
+name: "Bordet",
+standardname: "Bordet"
+},
+{
+id: "BE.NMBS.008822772",
+locationX: "4.240431",
+locationY: "51.098819",
+name: "Bornem",
+standardname: "Bornem"
+},
+{
+id: "BE.NMBS.008832003",
+locationX: "5.257289",
+locationY: "51.117314",
+name: "Bourg Leopold",
+standardname: "Leopoldsburg"
+},
+{
+id: "BE.NMBS.008884319",
+locationX: "3.79585",
+locationY: "50.436239",
+name: "Boussu",
+standardname: "Boussu"
+},
+{
+id: "BE.NMBS.008821725",
+locationX: "4.747581",
+locationY: "51.165844",
+name: "Bouwel",
+standardname: "Bouwel"
+},
+{
+id: "BE.NMBS.008881463",
+locationX: "4.126332",
+locationY: "50.474413",
+name: "Bracquegnies",
+standardname: "Bracquegnies"
+},
+{
+id: "BE.NMBS.008814258",
+locationX: "4.375525",
+locationY: "50.684778",
+name: "Braine L'alleud",
+standardname: "Eigenbrakel"
+},
+{
+id: "BE.NMBS.008883006",
+locationX: "4.137658",
+locationY: "50.605075",
+name: "Braine Le Comte",
+standardname: "Braine Le Comte"
+},
+{
+id: "BE.NMBS.008843901",
+locationX: "5.612496",
+locationY: "50.644473",
+name: "Bressoux",
+standardname: "Bressoux"
+},
+{
+id: "BE.NMBS.008886066",
+locationX: "3.85305",
+locationY: "50.594131",
+name: "Brugelette",
+standardname: "Brugelette"
+},
+{
+id: "BE.NMBS.008891009",
+locationX: "3.216728",
+locationY: "51.197225",
+name: "Bruges",
+standardname: "Bruges"
+},
+{
+id: "BE.NMBS.008813003",
+locationX: "4.357131",
+locationY: "50.845175",
+name: "Bruxelles Central",
+standardname: "Brussels Central"
+},
+{
+id: "BE.NMBS.008813037",
+locationX: "4.347869",
+locationY: "50.841131",
+name: "Bruxelles Chapelle",
+standardname: "Brussels Chapelle"
+},
+{
+id: "BE.NMBS.008813045",
+locationX: "4.362634",
+locationY: "50.851671",
+name: "Bruxelles Congres",
+standardname: "Brussels Congres"
+},
+{
+id: "BE.NMBS.008811304",
+locationX: "4.37382",
+locationY: "50.83886",
+name: "Bruxelles Luxembourg",
+standardname: "Brussels Luxembourg"
+},
+{
+id: "BE.NMBS.008814001",
+locationX: "4.336922",
+locationY: "50.836782",
+name: "Bruxelles Midi",
+standardname: "Brussels South"
+},
+{
+id: "BE.NMBS.008819406",
+locationX: "4.484444",
+locationY: "50.901389",
+name: "Bruxelles National Aeroport",
+standardname: "Brussels Airport"
+},
+{
+id: "BE.NMBS.008812005",
+locationX: "4.360854",
+locationY: "50.859658",
+name: "Bruxelles Nord",
+standardname: "Brussels North"
+},
+{
+id: "BE.NMBS.008811916",
+locationX: "4.380022",
+locationY: "50.842851",
+name: "Bruxelles Schuman",
+standardname: "Brussels Schuman"
+},
+{
+id: "BE.NMBS.008811148",
+locationX: "4.417053",
+locationY: "50.908281",
+name: "Buda",
+standardname: "Buda"
+},
+{
+id: "BE.NMBS.008822145",
+locationX: "4.200575",
+locationY: "51.016228",
+name: "Buggenhout",
+standardname: "Buggenhout"
+},
+{
+id: "BE.NMBS.008814340",
+locationX: "4.258561",
+locationY: "50.751581",
+name: "Buizingen",
+standardname: "Buizingen"
+},
+{
+id: "BE.NMBS.008895455",
+locationX: "3.920911",
+locationY: "50.907103",
+name: "Burst",
+standardname: "Burst"
+},
+{
+id: "BE.NMBS.008884889",
+locationX: "3.526182",
+locationY: "50.527192",
+name: "Callenelle",
+standardname: "Callenelle"
+},
+{
+id: "BE.NMBS.008886074",
+locationX: "3.874183",
+locationY: "50.587131",
+name: "Cambron Casteau",
+standardname: "Cambron Casteau"
+},
+{
+id: "BE.NMBS.008865565",
+locationX: "5.097419",
+locationY: "49.903539",
+name: "Carlsbourg",
+standardname: "Carlsbourg"
+},
+{
+id: "BE.NMBS.008882248",
+locationX: "4.264386",
+locationY: "50.4477",
+name: "Carnieres",
+standardname: "Carnieres"
+},
+{
+id: "BE.NMBS.008811817",
+locationX: "4.568547",
+locationY: "50.659325",
+name: "Ceroux Mousty",
+standardname: "Ceroux Mousty"
+},
+{
+id: "BE.NMBS.008861317",
+locationX: "4.698662",
+locationY: "50.557902",
+name: "Chapelle Dieu",
+standardname: "Chapelle Dieu"
+},
+{
+id: "BE.NMBS.008864824",
+locationX: "5.124278",
+locationY: "50.262372",
+name: "Chapois",
+standardname: "Chapois"
+},
+{
+id: "BE.NMBS.008872066",
+locationX: "4.435644",
+locationY: "50.409741",
+name: "Charleroi Ouest",
+standardname: "Charleroi West"
+},
+{
+id: "BE.NMBS.008872009",
+locationX: "4.438567",
+locationY: "50.404713",
+name: "Charleroi Sud",
+standardname: "Charleroi South"
+},
+{
+id: "BE.NMBS.008861523",
+locationX: "4.649833",
+locationY: "50.607464",
+name: "Chastre",
+standardname: "Chastre"
+},
+{
+id: "BE.NMBS.008863438",
+locationX: "5.081753",
+locationY: "50.49721",
+name: "Chateau De Seilles",
+standardname: "Chateau De Seilles"
+},
+{
+id: "BE.NMBS.008874005",
+locationX: "4.52186",
+locationY: "50.410103",
+name: "Chatelet",
+standardname: "Chatelet"
+},
+{
+id: "BE.NMBS.008842036",
+locationX: "5.61484",
+locationY: "50.608327",
+name: "Chenee",
+standardname: "Chenee"
+},
+{
+id: "BE.NMBS.008864501",
+locationX: "5.090581",
+locationY: "50.292022",
+name: "Ciney",
+standardname: "Ciney"
+},
+{
+id: "BE.NMBS.008842838",
+locationX: "5.567193",
+locationY: "50.45663",
+name: "Comblain La Tour",
+standardname: "Comblain La Tour"
+},
+{
+id: "BE.NMBS.008896412",
+locationX: "2.999117",
+locationY: "50.77225",
+name: "Comines",
+standardname: "Comines"
+},
+{
+id: "BE.NMBS.008845229",
+locationX: "5.880883",
+locationY: "50.391311",
+name: "Coo",
+standardname: "Coo"
+},
+{
+id: "BE.NMBS.008874054",
+locationX: "4.469343",
+locationY: "50.392727",
+name: "Couillet",
+standardname: "Couillet"
+},
+{
+id: "BE.NMBS.008873379",
+locationX: "4.392258",
+locationY: "50.300889",
+name: "Cour Sur Heure",
+standardname: "Cour Sur Heure"
+},
+{
+id: "BE.NMBS.008871225",
+locationX: "4.400528",
+locationY: "50.462014",
+name: "Courcelles Motte",
+standardname: "Courcelles Motte"
+},
+{
+id: "BE.NMBS.008864949",
+locationX: "4.995732",
+locationY: "50.387727",
+name: "Courriere",
+standardname: "Courriere"
+},
+{
+id: "BE.NMBS.008811825",
+locationX: "4.565819",
+locationY: "50.645566",
+name: "Court Saint Etienne",
+standardname: "Court Saint Etienne"
+},
+{
+id: "BE.NMBS.008896008",
+locationX: "3.265676",
+locationY: "50.824339",
+name: "Courtrai",
+standardname: "Courtrai"
+},
+{
+id: "BE.NMBS.008875127",
+locationX: "4.492653",
+locationY: "50.057871",
+name: "Couvin",
+standardname: "Couvin"
+},
+{
+id: "BE.NMBS.008863362",
+locationX: "4.884233",
+locationY: "50.429042",
+name: "Dave Saint Martin",
+standardname: "Dave Saint Martin"
+},
+{
+id: "BE.NMBS.008814175",
+locationX: "4.370128",
+locationY: "50.739181",
+name: "De Hoek",
+standardname: "De Hoek"
+},
+{
+id: "BE.NMBS.008892080",
+locationX: "3.650883",
+locationY: "50.99735",
+name: "De Pinte",
+standardname: "De Pinte"
+},
+{
+id: "BE.NMBS.008892106",
+locationX: "3.53494",
+locationY: "50.97824",
+name: "Deinze",
+standardname: "Deinze"
+},
+{
+id: "BE.NMBS.008811205",
+locationX: "4.403972",
+locationY: "50.819281",
+name: "Delta",
+standardname: "Delta"
+},
+{
+id: "BE.NMBS.008895802",
+locationX: "4.071828",
+locationY: "50.891925",
+name: "Denderleeuw",
+standardname: "Denderleeuw"
+},
+{
+id: "BE.NMBS.008811213",
+locationX: "4.441931",
+locationY: "50.890481",
+name: "Diegem",
+standardname: "Diegem"
+},
+{
+id: "BE.NMBS.008831112",
+locationX: "5.416061",
+locationY: "50.911414",
+name: "Diepenbeek",
+standardname: "Diepenbeek"
+},
+{
+id: "BE.NMBS.008831401",
+locationX: "5.050025",
+locationY: "50.993342",
+name: "Diest",
+standardname: "Diest"
+},
+{
+id: "BE.NMBS.008812237",
+locationX: "4.243389",
+locationY: "50.866731",
+name: "Dilbeek",
+standardname: "Dilbeek"
+},
+{
+id: "BE.NMBS.008863503",
+locationX: "4.908179",
+locationY: "50.260724",
+name: "Dinant",
+standardname: "Dinant"
+},
+{
+id: "BE.NMBS.008892452",
+locationX: "2.869156",
+locationY: "51.033075",
+name: "Dixmude",
+standardname: "Diksmuide"
+},
+{
+id: "BE.NMBS.008844545",
+locationX: "5.936683",
+locationY: "50.616374",
+name: "Dolhain Gileppe",
+standardname: "Dolhain Gileppe"
+},
+{
+id: "BE.NMBS.008822210",
+locationX: "4.492194",
+locationY: "51.091633",
+name: "Duffel",
+standardname: "Duffel"
+},
+{
+id: "BE.NMBS.008891652",
+locationX: "3.26295",
+locationY: "51.338108",
+name: "Duinbergen",
+standardname: "Duinbergen"
+},
+{
+id: "BE.NMBS.008883212",
+locationX: "4.156094",
+locationY: "50.5621",
+name: "Ecaussinnes",
+standardname: "Ecaussinnes"
+},
+{
+id: "BE.NMBS.008895877",
+locationX: "3.987761",
+locationY: "50.911203",
+name: "Ede",
+standardname: "Ede"
+},
+{
+id: "BE.NMBS.008893708",
+locationX: "3.575256",
+locationY: "51.180567",
+name: "Eeklo",
+standardname: "Eeklo"
+},
+{
+id: "BE.NMBS.008895752",
+locationX: "3.993659",
+locationY: "50.823878",
+name: "Eichem",
+standardname: "Eichem"
+},
+{
+id: "BE.NMBS.008892627",
+locationX: "3.623697",
+locationY: "50.871008",
+name: "Eine",
+standardname: "Eine"
+},
+{
+id: "BE.NMBS.008892650",
+locationX: "3.627192",
+locationY: "50.961558",
+name: "Eke Nazareth",
+standardname: "Eke Nazareth"
+},
+{
+id: "BE.NMBS.008821071",
+locationX: "4.433047",
+locationY: "51.277214",
+name: "Ekeren",
+standardname: "Ekeren"
+},
+{
+id: "BE.NMBS.008883311",
+locationX: "4.04725",
+locationY: "50.697198",
+name: "Enghien",
+standardname: "Edingen"
+},
+{
+id: "BE.NMBS.008843240",
+locationX: "5.401992",
+locationY: "50.582964",
+name: "Engis",
+standardname: "Engis"
+},
+{
+id: "BE.NMBS.008822269",
+locationX: "4.457486",
+locationY: "50.9584",
+name: "Eppegem",
+standardname: "Eppegem"
+},
+{
+id: "BE.NMBS.008881158",
+locationX: "3.888717",
+locationY: "50.507814",
+name: "Erbisoeul",
+standardname: "Erbisoeul"
+},
+{
+id: "BE.NMBS.008895091",
+locationX: "4.055543",
+locationY: "50.919302",
+name: "Erembodegem",
+standardname: "Erembodegem"
+},
+{
+id: "BE.NMBS.008861515",
+locationX: "4.667119",
+locationY: "50.592412",
+name: "Ernage",
+standardname: "Ernage"
+},
+{
+id: "BE.NMBS.008895471",
+locationX: "3.962461",
+locationY: "50.928603",
+name: "Erpe Mere",
+standardname: "Erpe Mere"
+},
+{
+id: "BE.NMBS.008811262",
+locationX: "4.584997",
+locationY: "50.896506",
+name: "Erps Kwerps",
+standardname: "Erps Kwerps"
+},
+{
+id: "BE.NMBS.008871605",
+locationX: "4.113564",
+locationY: "50.304189",
+name: "Erquelinnes",
+standardname: "Erquelinnes"
+},
+{
+id: "BE.NMBS.008871647",
+locationX: "4.130281",
+locationY: "50.309539",
+name: "Erquelinnes Village",
+standardname: "Erquelinnes Village"
+},
+{
+id: "BE.NMBS.008842663",
+locationX: "5.572658",
+locationY: "50.529628",
+name: "Esneux",
+standardname: "Esneux"
+},
+{
+id: "BE.NMBS.008821402",
+locationX: "4.451106",
+locationY: "51.462736",
+name: "Essen",
+standardname: "Essen"
+},
+{
+id: "BE.NMBS.008812260",
+locationX: "4.115169",
+locationY: "50.882447",
+name: "Essene Lombeek",
+standardname: "Essene Lombeek"
+},
+{
+id: "BE.NMBS.008811411",
+locationX: "4.390222",
+locationY: "50.821208",
+name: "Etterbeek",
+standardname: "Etterbeek"
+},
+{
+id: "BE.NMBS.008844628",
+locationX: "6.037114",
+locationY: "50.635164",
+name: "Eupen",
+standardname: "Eupen"
+},
+{
+id: "BE.NMBS.008811106",
+locationX: "4.4012",
+locationY: "50.868281",
+name: "Evere",
+standardname: "Evere"
+},
+{
+id: "BE.NMBS.008833449",
+locationX: "4.994222",
+locationY: "50.772131",
+name: "Ezemaal",
+standardname: "Ezemaal"
+},
+{
+id: "BE.NMBS.008883238",
+locationX: "4.211575",
+locationY: "50.519364",
+name: "Familleureux",
+standardname: "Familleureux"
+},
+{
+id: "BE.NMBS.008874567",
+locationX: "4.565091",
+locationY: "50.435567",
+name: "Farciennes",
+standardname: "Farciennes"
+},
+{
+id: "BE.NMBS.008872611",
+locationX: "4.549264",
+locationY: "50.621833",
+name: "Faux",
+standardname: "Faux"
+},
+{
+id: "BE.NMBS.008841467",
+locationX: "5.397297",
+locationY: "50.664364",
+name: "Fexhe Le Haut Clocher",
+standardname: "Fexhe Le Haut Clocher"
+},
+{
+id: "BE.NMBS.008861127",
+locationX: "4.8063",
+locationY: "50.456244",
+name: "Flawinne",
+standardname: "Flawinne"
+},
+{
+id: "BE.NMBS.008843166",
+locationX: "5.480983",
+locationY: "50.605352",
+name: "Flemalle Grande",
+standardname: "Flemalle Grande"
+},
+{
+id: "BE.NMBS.008843208",
+locationX: "5.456364",
+locationY: "50.594591",
+name: "Flemalle Haute",
+standardname: "Flemalle Haute"
+},
+{
+id: "BE.NMBS.008872413",
+locationX: "4.542909",
+locationY: "50.481021",
+name: "Fleurus",
+standardname: "Fleurus"
+},
+{
+id: "BE.NMBS.008864923",
+locationX: "5.056275",
+locationY: "50.357516",
+name: "Floree",
+standardname: "Floree"
+},
+{
+id: "BE.NMBS.008861135",
+locationX: "4.762781",
+locationY: "50.443733",
+name: "Floreffe",
+standardname: "Floreffe"
+},
+{
+id: "BE.NMBS.008866845",
+locationX: "5.331119",
+locationY: "49.706969",
+name: "Florenville",
+standardname: "Florenville"
+},
+{
+id: "BE.NMBS.008811767",
+locationX: "4.653873",
+locationY: "50.761503",
+name: "Florival",
+standardname: "Florival"
+},
+{
+id: "BE.NMBS.008871688",
+locationX: "4.211775",
+locationY: "50.320439",
+name: "Fontaine Valmont",
+standardname: "Fontaine Valmont"
+},
+{
+id: "BE.NMBS.008871514",
+locationX: "4.323483",
+locationY: "50.43305",
+name: "Forchies",
+standardname: "Forchies"
+},
+{
+id: "BE.NMBS.008814118",
+locationX: "4.320936",
+locationY: "50.810204",
+name: "Forest Est",
+standardname: "Vorst East"
+},
+{
+id: "BE.NMBS.008814373",
+locationX: "4.310025",
+locationY: "50.810158",
+name: "Forest Midi",
+standardname: "Vorst South"
+},
+{
+id: "BE.NMBS.008864311",
+locationX: "5.276572",
+locationY: "50.133072",
+name: "Forrieres",
+standardname: "Forrieres"
+},
+{
+id: "BE.NMBS.008844255",
+locationX: "5.723475",
+locationY: "50.565414",
+name: "Fraipont",
+standardname: "Fraipont"
+},
+{
+id: "BE.NMBS.008881570",
+locationX: "3.906314",
+locationY: "50.405539",
+name: "Frameries",
+standardname: "Frameries"
+},
+{
+id: "BE.NMBS.008844347",
+locationX: "5.822594",
+locationY: "50.525214",
+name: "Franchimont",
+standardname: "Franchimont"
+},
+{
+id: "BE.NMBS.008861143",
+locationX: "4.733547",
+locationY: "50.439544",
+name: "Franiere",
+standardname: "Franiere"
+},
+{
+id: "BE.NMBS.008885068",
+locationX: "3.355508",
+locationY: "50.629856",
+name: "Froyennes",
+standardname: "Froyennes"
+},
+{
+id: "BE.NMBS.008892304",
+locationX: "2.669742",
+locationY: "51.073897",
+name: "Furnes",
+standardname: "Furnes"
+},
+{
+id: "BE.NMBS.008895620",
+locationX: "3.964938",
+locationY: "50.743998",
+name: "Gammerages",
+standardname: "Galmaarden"
+},
+{
+id: "BE.NMBS.008893120",
+locationX: "3.740491",
+locationY: "51.05665",
+name: "Gand Dampoort",
+standardname: "Ghent Dampoort"
+},
+{
+id: "BE.NMBS.008892007",
+locationX: "3.710232",
+locationY: "51.035763",
+name: "Gand Saint Pierre",
+standardname: "Ghent Sint Pieters"
+},
+{
+id: "BE.NMBS.008811742",
+locationX: "4.649597",
+locationY: "50.736647",
+name: "Gastuche",
+standardname: "Gastuche"
+},
+{
+id: "BE.NMBS.008892643",
+locationX: "3.638958",
+locationY: "50.930558",
+name: "Gavere Asper",
+standardname: "Gavere Asper"
+},
+{
+id: "BE.NMBS.008865649",
+locationX: "4.977867",
+locationY: "49.984133",
+name: "Gedinne",
+standardname: "Gedinne"
+},
+{
+id: "BE.NMBS.008832433",
+locationX: "4.989567",
+locationY: "51.169244",
+name: "Geel",
+standardname: "Geel"
+},
+{
+id: "BE.NMBS.008861200",
+locationX: "4.690778",
+locationY: "50.571292",
+name: "Gembloux",
+standardname: "Gembloux"
+},
+{
+id: "BE.NMBS.008863834",
+locationX: "4.964598",
+locationY: "50.210804",
+name: "Gendron Celles",
+standardname: "Gendron Celles"
+},
+{
+id: "BE.NMBS.008831765",
+locationX: "5.49803",
+locationY: "50.967056",
+name: "Genk",
+standardname: "Genk"
+},
+{
+id: "BE.NMBS.008881562",
+locationX: "3.911636",
+locationY: "50.390639",
+name: "Genly",
+standardname: "Genly"
+},
+{
+id: "BE.NMBS.008893179",
+locationX: "3.755975",
+locationY: "51.038714",
+name: "Gentbrugge",
+standardname: "Gentbrugge"
+},
+{
+id: "BE.NMBS.008811528",
+locationX: "4.513725",
+locationY: "50.726408",
+name: "Genval",
+standardname: "Genval"
+},
+{
+id: "BE.NMBS.008881125",
+locationX: "3.906342",
+locationY: "50.487408",
+name: "Ghlin",
+standardname: "Ghlin"
+},
+{
+id: "BE.NMBS.008841731",
+locationX: "5.535468",
+locationY: "50.750543",
+name: "Glons",
+standardname: "Glons"
+},
+{
+id: "BE.NMBS.008871381",
+locationX: "4.290314",
+locationY: "50.4928",
+name: "Godarville",
+standardname: "Godarville"
+},
+{
+id: "BE.NMBS.008863560",
+locationX: "4.869961",
+locationY: "50.348908",
+name: "Godinne",
+standardname: "Godinne"
+},
+{
+id: "BE.NMBS.008893047",
+locationX: "3.801559",
+locationY: "50.979844",
+name: "Gontrode",
+standardname: "Gontrode"
+},
+{
+id: "BE.NMBS.008845005",
+locationX: "5.953908",
+locationY: "50.189414",
+name: "Gouvy",
+standardname: "Gouvy"
+},
+{
+id: "BE.NMBS.008871373",
+locationX: "4.325064",
+locationY: "50.4957",
+name: "Gouy Lez Pieton",
+standardname: "Gouy Lez Pieton"
+},
+{
+id: "BE.NMBS.008865615",
+locationX: "5.043708",
+locationY: "49.933789",
+name: "Graide",
+standardname: "Graide"
+},
+{
+id: "BE.NMBS.008895505",
+locationX: "3.871956",
+locationY: "50.771025",
+name: "Grammont",
+standardname: "Geraardsbergen"
+},
+{
+id: "BE.NMBS.008811445",
+locationX: "4.44935",
+locationY: "50.76614",
+name: "Groenendaal",
+standardname: "Groenendaal"
+},
+{
+id: "BE.NMBS.008812229",
+locationX: "4.27455",
+locationY: "50.868231",
+name: "Groot Bijgaarden",
+standardname: "Groot Bijgaarden"
+},
+{
+id: "BE.NMBS.008864337",
+locationX: "5.280228",
+locationY: "50.090622",
+name: "Grupont",
+standardname: "Grupont"
+},
+{
+id: "BE.NMBS.008822517",
+locationX: "4.613314",
+locationY: "50.966238",
+name: "Haacht",
+standardname: "Haacht"
+},
+{
+id: "BE.NMBS.008895869",
+locationX: "4.021797",
+locationY: "50.907375",
+name: "Haaltert",
+standardname: "Haaltert"
+},
+{
+id: "BE.NMBS.008866142",
+locationX: "5.632569",
+locationY: "49.718619",
+name: "Habay",
+standardname: "Habay"
+},
+{
+id: "BE.NMBS.008884327",
+locationX: "3.766787",
+locationY: "50.428042",
+name: "Hainin",
+standardname: "Hainin"
+},
+{
+id: "BE.NMBS.008814308",
+locationX: "4.2395",
+locationY: "50.7332",
+name: "Hal",
+standardname: "Halle"
+},
+{
+id: "BE.NMBS.008873387",
+locationX: "4.405086",
+locationY: "50.320539",
+name: "Ham Sur Heure",
+standardname: "Ham Sur Heure"
+},
+{
+id: "BE.NMBS.008861168",
+locationX: "4.672923",
+locationY: "50.452852",
+name: "Ham Sur Sambre",
+standardname: "Ham Sur Sambre"
+},
+{
+id: "BE.NMBS.008822533",
+locationX: "4.663011",
+locationY: "50.944247",
+name: "Hambos",
+standardname: "Hambos"
+},
+{
+id: "BE.NMBS.008842846",
+locationX: "5.53373",
+locationY: "50.428342",
+name: "Hamoir",
+standardname: "Hamoir"
+},
+{
+id: "BE.NMBS.008891165",
+locationX: "3.537447",
+locationY: "51.072708",
+name: "Hansbeke",
+standardname: "Hansbeke"
+},
+{
+id: "BE.NMBS.008884640",
+locationX: "3.699",
+locationY: "50.481939",
+name: "Harchies",
+standardname: "Harchies"
+},
+{
+id: "BE.NMBS.008896115",
+locationX: "3.314617",
+locationY: "50.856308",
+name: "Harelbeke",
+standardname: "Harelbeke"
+},
+{
+id: "BE.NMBS.008811155",
+locationX: "4.419825",
+locationY: "50.889231",
+name: "Haren",
+standardname: "Haren"
+},
+{
+id: "BE.NMBS.008811130",
+locationX: "4.415109",
+locationY: "50.889567",
+name: "Haren Sud",
+standardname: "Haren South"
+},
+{
+id: "BE.NMBS.008831005",
+locationX: "5.32618",
+locationY: "50.931122",
+name: "Hasselt",
+standardname: "Hasselt"
+},
+{
+id: "BE.NMBS.008843349",
+locationX: "5.331097",
+locationY: "50.554331",
+name: "Haute Flone",
+standardname: "Haute Flone"
+},
+{
+id: "BE.NMBS.008864832",
+locationX: "5.194081",
+locationY: "50.249672",
+name: "Haversin",
+standardname: "Haversin"
+},
+{
+id: "BE.NMBS.008881430",
+locationX: "4.058311",
+locationY: "50.470739",
+name: "Havre",
+standardname: "Havre"
+},
+{
+id: "BE.NMBS.008821519",
+locationX: "4.461131",
+locationY: "51.365344",
+name: "Heide",
+standardname: "Heide"
+},
+{
+id: "BE.NMBS.008891645",
+locationX: "3.240611",
+locationY: "51.334008",
+name: "Heist",
+standardname: "Heist"
+},
+{
+id: "BE.NMBS.008821832",
+locationX: "4.709361",
+locationY: "51.073517",
+name: "Heist Op Den Berg",
+standardname: "Heist Op Den Berg"
+},
+{
+id: "BE.NMBS.008812153",
+locationX: "4.157117",
+locationY: "50.988814",
+name: "Heizijde",
+standardname: "Heizijde"
+},
+{
+id: "BE.NMBS.008824224",
+locationX: "4.338527",
+locationY: "51.136393",
+name: "Hemiksem",
+standardname: "Hemiksem"
+},
+{
+id: "BE.NMBS.008883022",
+locationX: "4.175892",
+locationY: "50.651008",
+name: "Hennuyeres",
+standardname: "Hennuyeres"
+},
+{
+id: "BE.NMBS.008811288",
+locationX: "4.672189",
+locationY: "50.903528",
+name: "Herent",
+standardname: "Herent"
+},
+{
+id: "BE.NMBS.008821717",
+locationX: "4.828608",
+locationY: "51.181",
+name: "Herentals",
+standardname: "Herentals"
+},
+{
+id: "BE.NMBS.00102",
+locationX: "6.042799",
+locationY: "50.709589",
+name: "Hergenrath",
+standardname: "Hergenrath"
+},
+{
+id: "BE.NMBS.008895646",
+locationX: "4.014376",
+locationY: "50.723701",
+name: "Herne",
+standardname: "Herne"
+},
+{
+id: "BE.NMBS.008885753",
+locationX: "3.244758",
+locationY: "50.71425",
+name: "Herseaux",
+standardname: "Herseaux"
+},
+{
+id: "BE.NMBS.008841608",
+locationX: "5.62235",
+locationY: "50.6604",
+name: "Herstal",
+standardname: "Herstal"
+},
+{
+id: "BE.NMBS.008895430",
+locationX: "3.879358",
+locationY: "50.897203",
+name: "Herzele",
+standardname: "Herzele"
+},
+{
+id: "BE.NMBS.008832243",
+locationX: "5.280683",
+locationY: "51.038314",
+name: "Heusden",
+standardname: "Heusden"
+},
+{
+id: "BE.NMBS.008822459",
+locationX: "4.539585",
+locationY: "50.996904",
+name: "Hever",
+standardname: "Hever"
+},
+{
+id: "BE.NMBS.008833126",
+locationX: "4.694414",
+locationY: "50.862442",
+name: "Heverlee",
+standardname: "Heverlee"
+},
+{
+id: "BE.NMBS.008895422",
+locationX: "3.857472",
+locationY: "50.891303",
+name: "Hillegem",
+standardname: "Hillegem"
+},
+{
+id: "BE.NMBS.008824158",
+locationX: "4.348442",
+locationY: "51.183414",
+name: "Hoboken Polder",
+standardname: "Hoboken Polder"
+},
+{
+id: "BE.NMBS.008811460",
+locationX: "4.467406",
+locationY: "50.760158",
+name: "Hoeilaart",
+standardname: "Hoeilaart"
+},
+{
+id: "BE.NMBS.008822277",
+locationX: "4.498342",
+locationY: "50.988661",
+name: "Hofstade",
+standardname: "Hofstade"
+},
+{
+id: "BE.NMBS.008814159",
+locationX: "4.354914",
+locationY: "50.767081",
+name: "Holleken",
+standardname: "Holleken"
+},
+{
+id: "BE.NMBS.008842655",
+locationX: "5.573494",
+locationY: "50.540336",
+name: "Hony",
+standardname: "Hony"
+},
+{
+id: "BE.NMBS.008886553",
+locationX: "3.835269",
+locationY: "50.702879",
+name: "Houraing",
+standardname: "Houraing"
+},
+{
+id: "BE.NMBS.008871829",
+locationX: "4.308742",
+locationY: "50.363689",
+name: "Hourpes",
+standardname: "Hourpes"
+},
+{
+id: "BE.NMBS.008863842",
+locationX: "5.005861",
+locationY: "50.190339",
+name: "Houyet",
+standardname: "Houyet"
+},
+{
+id: "BE.NMBS.008821337",
+locationX: "4.465469",
+locationY: "51.154114",
+name: "Hove",
+standardname: "Hove"
+},
+{
+id: "BE.NMBS.008814415",
+locationX: "4.265581",
+locationY: "50.75171",
+name: "Huizingen",
+standardname: "Huizingen"
+},
+{
+id: "BE.NMBS.008843307",
+locationX: "5.234206",
+locationY: "50.527239",
+name: "Huy",
+standardname: "Hoei"
+},
+{
+id: "BE.NMBS.008895844",
+locationX: "4.068503",
+locationY: "50.876855",
+name: "Iddergem",
+standardname: "Iddergem"
+},
+{
+id: "BE.NMBS.008895729",
+locationX: "3.921411",
+locationY: "50.801704",
+name: "Idegem",
+standardname: "Idegem"
+},
+{
+id: "BE.NMBS.008896925",
+locationX: "3.254289",
+locationY: "50.914758",
+name: "Ingelmunster",
+standardname: "Ingelmunster"
+},
+{
+id: "BE.NMBS.008896909",
+locationX: "3.21335",
+locationY: "50.920958",
+name: "Izegem",
+standardname: "Izegem"
+},
+{
+id: "BE.NMBS.008863115",
+locationX: "4.880256",
+locationY: "50.454804",
+name: "Jambes Est",
+standardname: "Jambes East"
+},
+{
+id: "BE.NMBS.008871175",
+locationX: "4.410997",
+locationY: "50.353039",
+name: "Jamioulx",
+standardname: "Jamioulx"
+},
+{
+id: "BE.NMBS.008884566",
+locationX: "3.885189",
+locationY: "50.452289",
+name: "Jemappes",
+standardname: "Jemappes"
+},
+{
+id: "BE.NMBS.008864006",
+locationX: "5.266375",
+locationY: "50.160472",
+name: "Jemelle",
+standardname: "Jemelle"
+},
+{
+id: "BE.NMBS.008843158",
+locationX: "5.49779",
+locationY: "50.61843",
+name: "Jemeppe Sur Meuse",
+standardname: "Jemeppe Sur Meuse"
+},
+{
+id: "BE.NMBS.008874724",
+locationX: "4.662626",
+locationY: "50.450949",
+name: "Jemeppe Sur Sambre",
+standardname: "Jemeppe Sur Sambre"
+},
+{
+id: "BE.NMBS.008812047",
+locationX: "4.328463",
+locationY: "50.88091",
+name: "Jette",
+standardname: "Jette"
+},
+{
+id: "BE.NMBS.008881166",
+locationX: "3.910686",
+locationY: "50.530503",
+name: "Jurbise",
+standardname: "Jurbise"
+},
+{
+id: "BE.NMBS.008844321",
+locationX: "5.810194",
+locationY: "50.544514",
+name: "Juslenville",
+standardname: "Juslenville"
+},
+{
+id: "BE.NMBS.008821444",
+locationX: "4.466942",
+locationY: "51.389744",
+name: "Kalmthout",
+standardname: "Kalmthout"
+},
+{
+id: "BE.NMBS.008822053",
+locationX: "4.358819",
+locationY: "51.010795",
+name: "Kapelle Op Den Bos",
+standardname: "Kapelle Op Den Bos"
+},
+{
+id: "BE.NMBS.008821535",
+locationX: "4.433081",
+locationY: "51.313375",
+name: "Kapellen",
+standardname: "Kapellen"
+},
+{
+id: "BE.NMBS.008821659",
+locationX: "4.618458",
+locationY: "51.151056",
+name: "Kessel",
+standardname: "Kessel"
+},
+{
+id: "BE.NMBS.008832375",
+locationX: "5.350553",
+locationY: "50.954364",
+name: "Kiewit",
+standardname: "Kiewit"
+},
+{
+id: "BE.NMBS.008821451",
+locationX: "4.467533",
+locationY: "51.379236",
+name: "Kijkuit",
+standardname: "Kijkuit"
+},
+{
+id: "BE.NMBS.008891660",
+locationX: "3.284097",
+locationY: "51.339608",
+name: "Knokke",
+standardname: "Knokke"
+},
+{
+id: "BE.NMBS.008892320",
+locationX: "2.654107",
+locationY: "51.078667",
+name: "Koksijde",
+standardname: "Koksijde"
+},
+{
+id: "BE.NMBS.008821311",
+locationX: "4.476695",
+locationY: "51.13364",
+name: "Kontich",
+standardname: "Kontich"
+},
+{
+id: "BE.NMBS.008892403",
+locationX: "3.043867",
+locationY: "51.025358",
+name: "Kortemark",
+standardname: "Kortemark"
+},
+{
+id: "BE.NMBS.008811254",
+locationX: "4.543297",
+locationY: "50.893072",
+name: "Kortenberg",
+standardname: "Kortenberg"
+},
+{
+id: "BE.NMBS.008893567",
+locationX: "3.833333",
+locationY: "50.991464",
+name: "Kwatrecht",
+standardname: "Kwatrecht"
+},
+{
+id: "BE.NMBS.008811510",
+locationX: "4.497064",
+locationY: "50.737958",
+name: "La Hulpe",
+standardname: "Terhulpen"
+},
+{
+id: "BE.NMBS.008882107",
+locationX: "4.179965",
+locationY: "50.477773",
+name: "La Louviere Centre",
+standardname: "La Louviere Center"
+},
+{
+id: "BE.NMBS.008882206",
+locationX: "4.190115",
+locationY: "50.465017",
+name: "La Louviere Sud",
+standardname: "La Louviere South"
+},
+{
+id: "BE.NMBS.008892338",
+locationX: "2.602397",
+locationY: "51.077288",
+name: "La Panne",
+standardname: "De Panne"
+},
+{
+id: "BE.NMBS.008871670",
+locationX: "4.186581",
+locationY: "50.316139",
+name: "Labuissiere",
+standardname: "Labuissiere"
+},
+{
+id: "BE.NMBS.008892056",
+locationX: "3.576889",
+locationY: "51.064114",
+name: "Landegem",
+standardname: "Landegem"
+},
+{
+id: "BE.NMBS.008871837",
+locationX: "4.350981",
+locationY: "50.377314",
+name: "Landelies",
+standardname: "Landelies"
+},
+{
+id: "BE.NMBS.008833605",
+locationX: "5.079658",
+locationY: "50.747925",
+name: "Landen",
+standardname: "Landen"
+},
+{
+id: "BE.NMBS.008893054",
+locationX: "3.791227",
+locationY: "50.970664",
+name: "Landskouter",
+standardname: "Landskouter"
+},
+{
+id: "BE.NMBS.008833258",
+locationX: "4.863539",
+locationY: "51.002469",
+name: "Langdorp",
+standardname: "Langdorp"
+},
+{
+id: "BE.NMBS.008874559",
+locationX: "4.552951",
+locationY: "50.429587",
+name: "Le Campinaire",
+standardname: "Le Campinaire"
+},
+{
+id: "BE.NMBS.008812161",
+locationX: "4.134544",
+locationY: "51.004606",
+name: "Lebbeke",
+standardname: "Lebbeke"
+},
+{
+id: "BE.NMBS.008895067",
+locationX: "3.984975",
+locationY: "50.970903",
+name: "Lede",
+standardname: "Lede"
+},
+{
+id: "BE.NMBS.008864816",
+locationX: "5.107781",
+locationY: "50.267772",
+name: "Leignon",
+standardname: "Leignon"
+},
+{
+id: "BE.NMBS.008843224",
+locationX: "5.467",
+locationY: "50.5995",
+name: "Leman",
+standardname: "Leman"
+},
+{
+id: "BE.NMBS.008814332",
+locationX: "4.221581",
+locationY: "50.715108",
+name: "Lembeek",
+standardname: "Lembeek"
+},
+{
+id: "BE.NMBS.008881190",
+locationX: "3.903279",
+locationY: "50.559128",
+name: "Lens",
+standardname: "Lens"
+},
+{
+id: "BE.NMBS.008886504",
+locationX: "3.836492",
+locationY: "50.712947",
+name: "Lessines",
+standardname: "Lessen"
+},
+{
+id: "BE.NMBS.008886348",
+locationX: "3.61677",
+locationY: "50.600576",
+name: "Leuze",
+standardname: "Leuze"
+},
+{
+id: "BE.NMBS.008882339",
+locationX: "4.211044",
+locationY: "50.4308",
+name: "Leval",
+standardname: "Leval"
+},
+{
+id: "BE.NMBS.008865003",
+locationX: "5.379272",
+locationY: "49.920425",
+name: "Libramont",
+standardname: "Libramont"
+},
+{
+id: "BE.NMBS.008892205",
+locationX: "3.126908",
+locationY: "51.025281",
+name: "Lichtervelde",
+standardname: "Lichtervelde"
+},
+{
+id: "BE.NMBS.008895836",
+locationX: "4.095286",
+locationY: "50.882525",
+name: "Liedekerke",
+standardname: "Liedekerke"
+},
+{
+id: "BE.NMBS.008841004",
+locationX: "5.568461",
+locationY: "50.622935",
+name: "Liege Guillemins",
+standardname: "Liege Guillemins"
+},
+{
+id: "BE.NMBS.008841558",
+locationX: "5.561125",
+locationY: "50.6403",
+name: "Liege Jonfosse",
+standardname: "Liege Jonfosse"
+},
+{
+id: "BE.NMBS.008841525",
+locationX: "5.57255",
+locationY: "50.64705",
+name: "Liege Palais",
+standardname: "Liege Palais"
+},
+{
+id: "BE.NMBS.008895570",
+locationX: "3.825947",
+locationY: "50.816822",
+name: "Lierde",
+standardname: "Lierde"
+},
+{
+id: "BE.NMBS.008821600",
+locationX: "4.561579",
+locationY: "51.136022",
+name: "Lierre",
+standardname: "Lier"
+},
+{
+id: "BE.NMBS.008841673",
+locationX: "5.566533",
+locationY: "50.698464",
+name: "Liers",
+standardname: "Liers"
+},
+{
+id: "BE.NMBS.008872520",
+locationX: "4.565608",
+locationY: "50.511514",
+name: "Ligny",
+standardname: "Ligny"
+},
+{
+id: "BE.NMBS.008814241",
+locationX: "4.363247",
+locationY: "50.643742",
+name: "Lillois",
+standardname: "Lillois"
+},
+{
+id: "BE.NMBS.008811635",
+locationX: "4.575297",
+locationY: "50.692144",
+name: "Limal",
+standardname: "Limal"
+},
+{
+id: "BE.NMBS.008814142",
+locationX: "4.339781",
+locationY: "50.773331",
+name: "Linkebeek",
+standardname: "Linkebeek"
+},
+{
+id: "BE.NMBS.008891629",
+locationX: "3.194506",
+locationY: "51.294708",
+name: "Lissewege",
+standardname: "Lissewege"
+},
+{
+id: "BE.NMBS.008871712",
+locationX: "4.260988",
+locationY: "50.346384",
+name: "Lobbes",
+standardname: "Lobbes"
+},
+{
+id: "BE.NMBS.008872306",
+locationX: "4.462947",
+locationY: "50.43245",
+name: "Lodelinsart",
+standardname: "Lodelinsart"
+},
+{
+id: "BE.NMBS.008894201",
+locationX: "3.985283",
+locationY: "51.107103",
+name: "Lokeren",
+standardname: "Lokeren"
+},
+{
+id: "BE.NMBS.008832565",
+locationX: "5.310547",
+locationY: "51.211664",
+name: "Lommel",
+standardname: "Lommel"
+},
+{
+id: "BE.NMBS.008822111",
+locationX: "4.296936",
+locationY: "51.009519",
+name: "Londerzeel",
+standardname: "Londerzeel"
+},
+{
+id: "BE.NMBS.008861416",
+locationX: "4.720097",
+locationY: "50.551939",
+name: "Lonzee",
+standardname: "Lonzee"
+},
+{
+id: "BE.NMBS.008814357",
+locationX: "4.272426",
+locationY: "50.765175",
+name: "Lot",
+standardname: "Lot"
+},
+{
+id: "BE.NMBS.008833001",
+locationX: "4.716096",
+locationY: "50.881356",
+name: "Louvain",
+standardname: "Leuven"
+},
+{
+id: "BE.NMBS.1088011",
+locationX: "4.614722",
+locationY: "50.669444",
+name: "Louvain-la-Neuve-Université",
+standardname: "Louvain-la-Neuve-Université"
+},
+{
+id: "BE.NMBS.008811676",
+locationX: "4.615745",
+locationY: "50.669793",
+name: "Louvain-la-Neuve-Universite",
+standardname: "Louvain-la-Neuve-Universite"
+},
+{
+id: "BE.NMBS.008863156",
+locationX: "4.877468",
+locationY: "50.369746",
+name: "Lustin",
+standardname: "Lustin"
+},
+{
+id: "BE.NMBS.008871308",
+locationX: "4.384119",
+locationY: "50.505864",
+name: "Luttre",
+standardname: "Luttre"
+},
+{
+id: "BE.NMBS.008886041",
+locationX: "3.800459",
+locationY: "50.614031",
+name: "Maffle",
+standardname: "Maffle"
+},
+{
+id: "BE.NMBS.008822137",
+locationX: "4.231403",
+locationY: "51.014325",
+name: "Malderen",
+standardname: "Malderen"
+},
+{
+id: "BE.NMBS.008822004",
+locationX: "4.48313",
+locationY: "51.01758",
+name: "Malines",
+standardname: "Malines"
+},
+{
+id: "BE.NMBS.008822343",
+locationX: "4.489986",
+locationY: "51.030012",
+name: "Malines Nekkerspoel",
+standardname: "Malines Nekkerspoel"
+},
+{
+id: "BE.NMBS.008882701",
+locationX: "4.234678",
+locationY: "50.506114",
+name: "Manage",
+standardname: "Manage"
+},
+{
+id: "BE.NMBS.008866175",
+locationX: "5.539533",
+locationY: "49.728319",
+name: "Marbehan",
+standardname: "Marbehan"
+},
+{
+id: "BE.NMBS.008864410",
+locationX: "5.346294",
+locationY: "50.222472",
+name: "Marche En Famenne",
+standardname: "Marche En Famenne"
+},
+{
+id: "BE.NMBS.008863461",
+locationX: "4.964581",
+locationY: "50.480739",
+name: "Marche Les Dames",
+standardname: "Marche Les Dames"
+},
+{
+id: "BE.NMBS.008883220",
+locationX: "4.176558",
+locationY: "50.545931",
+name: "Marche Lez Ecaussinnes",
+standardname: "Marche Lez Ecaussinnes"
+},
+{
+id: "BE.NMBS.008871100",
+locationX: "4.394223",
+locationY: "50.412173",
+name: "Marchienne Au Pont",
+standardname: "Marchienne Au Pont"
+},
+{
+id: "BE.NMBS.008871852",
+locationX: "4.389017",
+locationY: "50.397166",
+name: "Marchienne Zone",
+standardname: "Marchienne Zone"
+},
+{
+id: "BE.NMBS.008891132",
+locationX: "3.386725",
+locationY: "51.107608",
+name: "Maria Aalter",
+standardname: "Maria Aalter"
+},
+{
+id: "BE.NMBS.008875002",
+locationX: "4.525694",
+locationY: "50.095489",
+name: "Mariembourg",
+standardname: "Mariembourg"
+},
+{
+id: "BE.NMBS.008864345",
+locationX: "5.31456",
+locationY: "50.203115",
+name: "Marloie",
+standardname: "Marloie"
+},
+{
+id: "BE.NMBS.008881174",
+locationX: "3.962139",
+locationY: "50.536547",
+name: "Masnuy Saint Pierre",
+standardname: "Masnuy Saint Pierre"
+},
+{
+id: "BE.NMBS.008885530",
+locationX: "3.495487",
+locationY: "50.546947",
+name: "Maubray",
+standardname: "Maubray"
+},
+{
+id: "BE.NMBS.008861333",
+locationX: "4.675825",
+locationY: "50.513503",
+name: "Mazy",
+standardname: "Mazy"
+},
+{
+id: "BE.NMBS.008811171",
+locationX: "4.394025",
+locationY: "50.854558",
+name: "Meiser",
+standardname: "Meiser"
+},
+{
+id: "BE.NMBS.008821824",
+locationX: "4.671031",
+locationY: "51.095064",
+name: "Melkouwen",
+standardname: "Melkouwen"
+},
+{
+id: "BE.NMBS.008893039",
+locationX: "3.797086",
+locationY: "51.002814",
+name: "Melle",
+standardname: "Melle"
+},
+{
+id: "BE.NMBS.008864436",
+locationX: "5.440142",
+locationY: "50.283672",
+name: "Melreux Hotton",
+standardname: "Melreux Hotton"
+},
+{
+id: "BE.NMBS.008894755",
+locationX: "4.288533",
+locationY: "51.210714",
+name: "Melsele",
+standardname: "Melsele"
+},
+{
+id: "BE.NMBS.008896305",
+locationX: "3.113794",
+locationY: "50.799492",
+name: "Menin",
+standardname: "Menen"
+},
+{
+id: "BE.NMBS.008812120",
+locationX: "4.223492",
+locationY: "50.953853",
+name: "Merchtem",
+standardname: "Merchtem"
+},
+{
+id: "BE.NMBS.008893013",
+locationX: "3.764963",
+locationY: "51.020153",
+name: "Merelbeke",
+standardname: "Merelbeke"
+},
+{
+id: "BE.NMBS.008811197",
+locationX: "4.399058",
+locationY: "50.839881",
+name: "Merode",
+standardname: "Merode"
+},
+{
+id: "BE.NMBS.008842648",
+locationX: "5.586942",
+locationY: "50.548233",
+name: "Mery",
+standardname: "Mery"
+},
+{
+id: "BE.NMBS.00103",
+locationX: "5.81822",
+locationY: "49.59388",
+name: "Messancy",
+standardname: "Messancy"
+},
+{
+id: "BE.NMBS.008886058",
+locationX: "3.833003",
+locationY: "50.600333",
+name: "Mevergnies Attre",
+standardname: "Mevergnies Attre"
+},
+{
+id: "BE.NMBS.008841665",
+locationX: "5.599325",
+locationY: "50.693364",
+name: "Milmort",
+standardname: "Milmort"
+},
+{
+id: "BE.NMBS.008814431",
+locationX: "4.32979",
+locationY: "50.777909",
+name: "Moensberg",
+standardname: "Moensberg"
+},
+{
+id: "BE.NMBS.008832409",
+locationX: "5.114733",
+locationY: "51.191064",
+name: "Mol",
+standardname: "Mol"
+},
+{
+id: "BE.NMBS.008812112",
+locationX: "4.21675",
+locationY: "50.932808",
+name: "Mollem",
+standardname: "Mollem"
+},
+{
+id: "BE.NMBS.008841459",
+locationX: "5.367597",
+locationY: "50.669911",
+name: "Momalle",
+standardname: "Momalle"
+},
+{
+id: "BE.NMBS.008881000",
+locationX: "3.942303",
+locationY: "50.45445",
+name: "Mons",
+standardname: "Mons"
+},
+{
+id: "BE.NMBS.008861549",
+locationX: "4.612581",
+locationY: "50.638214",
+name: "Mont Saint Guibert",
+standardname: "Mont Saint Guibert"
+},
+{
+id: "BE.NMBS.008893062",
+locationX: "3.78055",
+locationY: "50.953053",
+name: "Moortsele",
+standardname: "Moortsele"
+},
+{
+id: "BE.NMBS.008882230",
+locationX: "4.247367",
+locationY: "50.458",
+name: "Morlanwelz",
+standardname: "Morlanwelz"
+},
+{
+id: "BE.NMBS.008821147",
+locationX: "4.440127",
+locationY: "51.190291",
+name: "Mortsel",
+standardname: "Mortsel"
+},
+{
+id: "BE.NMBS.008821154",
+locationX: "4.44383",
+locationY: "51.186039",
+name: "Mortsel Deurnesteenweg",
+standardname: "Mortsel Deurnesteenweg"
+},
+{
+id: "BE.NMBS.008821238",
+locationX: "4.455511",
+locationY: "51.171914",
+name: "Mortsel Oude God",
+standardname: "Mortsel Oude God"
+},
+{
+id: "BE.NMBS.008885704",
+locationX: "3.225307",
+locationY: "50.738372",
+name: "Mouscron",
+standardname: "Mouscron"
+},
+{
+id: "BE.NMBS.008861150",
+locationX: "4.693809",
+locationY: "50.452754",
+name: "Moustier",
+standardname: "Moustier"
+},
+{
+id: "BE.NMBS.008822426",
+locationX: "4.513839",
+locationY: "51.008203",
+name: "Muizen",
+standardname: "Muizen"
+},
+{
+id: "BE.NMBS.008895232",
+locationX: "3.731544",
+locationY: "50.875853",
+name: "Munkzwalm",
+standardname: "Munkzwalm"
+},
+{
+id: "BE.NMBS.008863453",
+locationX: "4.998369",
+locationY: "50.470381",
+name: "Nameche",
+standardname: "Nameche"
+},
+{
+id: "BE.NMBS.008863008",
+locationX: "4.862057",
+locationY: "50.469156",
+name: "Namur",
+standardname: "Namen"
+},
+{
+id: "BE.NMBS.008864964",
+locationX: "4.930342",
+locationY: "50.419394",
+name: "Naninne",
+standardname: "Naninne"
+},
+{
+id: "BE.NMBS.008864915",
+locationX: "5.0612",
+locationY: "50.343358",
+name: "Natoye",
+standardname: "Natoye"
+},
+{
+id: "BE.NMBS.008832615",
+locationX: "5.436692",
+locationY: "51.222414",
+name: "Neerpelt",
+standardname: "Neerpelt"
+},
+{
+id: "BE.NMBS.008833670",
+locationX: "5.036322",
+locationY: "50.763964",
+name: "Neerwinden",
+standardname: "Neerwinden"
+},
+{
+id: "BE.NMBS.008844230",
+locationX: "5.741708",
+locationY: "50.572043",
+name: "Nessonvaux",
+standardname: "Nessonvaux"
+},
+{
+id: "BE.NMBS.008866258",
+locationX: "5.452592",
+locationY: "49.853819",
+name: "Neufchateau",
+standardname: "Neufchateau"
+},
+{
+id: "BE.NMBS.008883121",
+locationX: "4.010669",
+locationY: "50.543597",
+name: "Neufvilles",
+standardname: "Neufvilles"
+},
+{
+id: "BE.NMBS.008824240",
+locationX: "4.340583",
+locationY: "51.110917",
+name: "Niel",
+standardname: "Niel"
+},
+{
+id: "BE.NMBS.008894714",
+locationX: "4.184414",
+locationY: "51.185114",
+name: "Nieuwkerken Waas",
+standardname: "Nieuwkerken Waas"
+},
+{
+id: "BE.NMBS.008821667",
+locationX: "4.664447",
+locationY: "51.159717",
+name: "Nijlen",
+standardname: "Nijlen"
+},
+{
+id: "BE.NMBS.008881315",
+locationX: "3.956505",
+locationY: "50.471812",
+name: "Nimy",
+standardname: "Nimy"
+},
+{
+id: "BE.NMBS.008895760",
+locationX: "4.026242",
+locationY: "50.839504",
+name: "Ninove",
+standardname: "Ninove"
+},
+{
+id: "BE.NMBS.008814209",
+locationX: "4.334678",
+locationY: "50.600536",
+name: "Nivelles",
+standardname: "Nijvel"
+},
+{
+id: "BE.NMBS.123456789",
+locationX: "4.2659",
+locationY: "51.2238",
+name: "Noorderkempen",
+standardname: "Noorderkempen"
+},
+{
+id: "BE.NMBS.008811247",
+locationX: "4.506108",
+locationY: "50.883308",
+name: "Nossegem",
+standardname: "Nossegem"
+},
+{
+id: "BE.NMBS.008871332",
+locationX: "4.363632",
+locationY: "50.535765",
+name: "Obaix Buzet",
+standardname: "Obaix Buzet"
+},
+{
+id: "BE.NMBS.008881406",
+locationX: "4.008558",
+locationY: "50.469539",
+name: "Obourg",
+standardname: "Obourg"
+},
+{
+id: "BE.NMBS.008895778",
+locationX: "4.053542",
+locationY: "50.857256",
+name: "Okegem",
+standardname: "Okegem"
+},
+{
+id: "BE.NMBS.008832458",
+locationX: "4.9025",
+locationY: "51.17403",
+name: "Olen",
+standardname: "Olen"
+},
+{
+id: "BE.NMBS.008891116",
+locationX: "3.257467",
+locationY: "51.154108",
+name: "Oostkamp",
+standardname: "Oostkamp"
+},
+{
+id: "BE.NMBS.008812146",
+locationX: "4.187442",
+locationY: "50.974503",
+name: "Opwijk",
+standardname: "Opwijk"
+},
+{
+id: "BE.NMBS.008891702",
+locationX: "2.927904",
+locationY: "51.226518",
+name: "Ostende",
+standardname: "Ostend"
+},
+{
+id: "BE.NMBS.008811601",
+locationX: "4.569615",
+locationY: "50.671632",
+name: "Ottignies",
+standardname: "Ottignies"
+},
+{
+id: "BE.NMBS.008833134",
+locationX: "4.653306",
+locationY: "50.835928",
+name: "Oud Heverlee",
+standardname: "Oud Heverlee"
+},
+{
+id: "BE.NMBS.008893518",
+locationX: "4.062361",
+locationY: "51.014903",
+name: "Oudegem",
+standardname: "Oudegem"
+},
+{
+id: "BE.NMBS.008832573",
+locationX: "5.423126",
+locationY: "51.21555",
+name: "Overpelt",
+standardname: "Overpelt"
+},
+{
+id: "BE.NMBS.008865540",
+locationX: "5.118997",
+locationY: "49.894789",
+name: "Paliseul",
+standardname: "Paliseul"
+},
+{
+id: "BE.NMBS.008886561",
+locationX: "3.823797",
+locationY: "50.687817",
+name: "Papignies",
+standardname: "Papegem"
+},
+{
+id: "BE.NMBS.008811775",
+locationX: "4.651031",
+locationY: "50.779208",
+name: "Pecrot",
+standardname: "Pecrot"
+},
+{
+id: "BE.NMBS.008844206",
+locationX: "5.808247",
+locationY: "50.568814",
+name: "Pepinster",
+standardname: "Pepinster"
+},
+{
+id: "BE.NMBS.008844313",
+locationX: "5.804611",
+locationY: "50.563381",
+name: "Pepinster Cite",
+standardname: "Pepinster Cite"
+},
+{
+id: "BE.NMBS.008884855",
+locationX: "3.592061",
+locationY: "50.513639",
+name: "Peruwelz",
+standardname: "Peruwelz"
+},
+{
+id: "BE.NMBS.008873122",
+locationX: "4.535958",
+locationY: "50.191639",
+name: "Philippeville",
+standardname: "Philippeville"
+},
+{
+id: "BE.NMBS.008871415",
+locationX: "4.288444",
+locationY: "50.434964",
+name: "Pieton",
+standardname: "Pieton"
+},
+{
+id: "BE.NMBS.008865227",
+locationX: "5.292058",
+locationY: "50.019772",
+name: "Poix Saint Hubert",
+standardname: "Poix Saint Hubert"
+},
+{
+id: "BE.NMBS.008871365",
+locationX: "4.354139",
+locationY: "50.5136",
+name: "Pont A Celles",
+standardname: "Pont A Celles"
+},
+{
+id: "BE.NMBS.008843141",
+locationX: "5.511328",
+locationY: "50.619968",
+name: "Pont De Seraing",
+standardname: "Pont De Seraing"
+},
+{
+id: "BE.NMBS.008896735",
+locationX: "2.736304",
+locationY: "50.854421",
+name: "Poperinge",
+standardname: "Poperinge"
+},
+{
+id: "BE.NMBS.008842689",
+locationX: "5.57819",
+locationY: "50.508958",
+name: "Poulseur",
+standardname: "Poulseur"
+},
+{
+id: "BE.NMBS.008811544",
+locationX: "4.54915",
+locationY: "50.693761",
+name: "Profondsart",
+standardname: "Profondsart"
+},
+{
+id: "BE.NMBS.008873312",
+locationX: "4.430361",
+locationY: "50.268789",
+name: "Pry",
+standardname: "Pry"
+},
+{
+id: "BE.NMBS.008822715",
+locationX: "4.283558",
+locationY: "51.077219",
+name: "Puurs",
+standardname: "Puurs"
+},
+{
+id: "BE.NMBS.008884541",
+locationX: "3.855461",
+locationY: "50.450039",
+name: "Quaregnon",
+standardname: "Quaregnon"
+},
+{
+id: "BE.NMBS.008881505",
+locationX: "3.909245",
+locationY: "50.341517",
+name: "Quevy",
+standardname: "Quevy"
+},
+{
+id: "BE.NMBS.008884335",
+locationX: "3.686067",
+locationY: "50.410514",
+name: "Quievrain",
+standardname: "Quievrain"
+},
+{
+id: "BE.NMBS.008886587",
+locationX: "3.793502",
+locationY: "50.661058",
+name: "Rebaix",
+standardname: "Rebaix"
+},
+{
+id: "BE.NMBS.008841442",
+locationX: "5.321406",
+locationY: "50.678608",
+name: "Remicourt",
+standardname: "Remicourt"
+},
+{
+id: "BE.NMBS.008892908",
+locationX: "3.60255",
+locationY: "50.742508",
+name: "Renaix",
+standardname: "Ronse"
+},
+{
+id: "BE.NMBS.008861440",
+locationX: "4.801872",
+locationY: "50.499347",
+name: "Rhisnes",
+standardname: "Rhisnes"
+},
+{
+id: "BE.NMBS.008814167",
+locationX: "4.361492",
+locationY: "50.748081",
+name: "Rhode Saint Genese",
+standardname: "Rhode Saint Genese"
+},
+{
+id: "BE.NMBS.008842705",
+locationX: "5.585186",
+locationY: "50.486422",
+name: "Rivage",
+standardname: "Rivage"
+},
+{
+id: "BE.NMBS.008811536",
+locationX: "4.532861",
+locationY: "50.711414",
+name: "Rixensart",
+standardname: "Rixensart"
+},
+{
+id: "BE.NMBS.008861119",
+locationX: "4.828415",
+locationY: "50.457735",
+name: "Ronet",
+standardname: "Ronet"
+},
+{
+id: "BE.NMBS.008896800",
+locationX: "3.130358",
+locationY: "50.949358",
+name: "Roulers",
+standardname: "Roulers"
+},
+{
+id: "BE.NMBS.008871217",
+locationX: "4.393197",
+locationY: "50.443114",
+name: "Roux",
+standardname: "Roux"
+},
+{
+id: "BE.NMBS.008814365",
+locationX: "4.295328",
+locationY: "50.791831",
+name: "Ruisbroek",
+standardname: "Ruisbroek"
+},
+{
+id: "BE.NMBS.008861432",
+locationX: "4.767792",
+locationY: "50.521297",
+name: "Saint Denis Bovesse",
+standardname: "Saint Denis Bovesse"
+},
+{
+id: "BE.NMBS.008884004",
+locationX: "3.820092",
+locationY: "50.442625",
+name: "Saint Ghislain",
+standardname: "Saint Ghislain"
+},
+{
+id: "BE.NMBS.008814449",
+locationX: "4.360403",
+locationY: "50.79362",
+name: "Saint Job",
+standardname: "Saint Job"
+},
+{
+id: "BE.NMBS.008894508",
+locationX: "4.14315",
+locationY: "51.17174",
+name: "Saint Nicolas",
+standardname: "Saint Nicolas"
+},
+{
+id: "BE.NMBS.008831807",
+locationX: "5.17665",
+locationY: "50.817617",
+name: "Saint Trond",
+standardname: "Saint Trond"
+},
+{
+id: "BE.NMBS.008864956",
+locationX: "4.948467",
+locationY: "50.406617",
+name: "Sart Bernard",
+standardname: "Sart Bernard"
+},
+{
+id: "BE.NMBS.008811007",
+locationX: "4.378644",
+locationY: "50.878508",
+name: "Schaerbeek",
+standardname: "Schaarbeek"
+},
+{
+id: "BE.NMBS.008893070",
+locationX: "3.777614",
+locationY: "50.937803",
+name: "Scheldewindeke",
+standardname: "Scheldewindeke"
+},
+{
+id: "BE.NMBS.008893542",
+locationX: "3.921372",
+locationY: "51.003153",
+name: "Schellebelle",
+standardname: "Schellebelle"
+},
+{
+id: "BE.NMBS.008895711",
+locationX: "3.899159",
+locationY: "50.797818",
+name: "Schendelbeke",
+standardname: "Schendelbeke"
+},
+{
+id: "BE.NMBS.008893526",
+locationX: "4.011276",
+locationY: "51.003116",
+name: "Schoonaarde",
+standardname: "Schoonaarde"
+},
+{
+id: "BE.NMBS.008831088",
+locationX: "5.188078",
+locationY: "50.96335",
+name: "Schulen",
+standardname: "Schulen"
+},
+{
+id: "BE.NMBS.008863446",
+locationX: "5.026374",
+locationY: "50.492204",
+name: "Sclaigneaux",
+standardname: "Sclaigneaux"
+},
+{
+id: "BE.NMBS.008843133",
+locationX: "5.556722",
+locationY: "50.610396",
+name: "Sclessin",
+standardname: "Sclessin"
+},
+{
+id: "BE.NMBS.008893583",
+locationX: "3.959356",
+locationY: "50.984403",
+name: "Serskamp",
+standardname: "Serskamp"
+},
+{
+id: "BE.NMBS.008883436",
+locationX: "3.937144",
+locationY: "50.663319",
+name: "Silly",
+standardname: "Silly"
+},
+{
+id: "BE.NMBS.00101",
+locationX: "4.330556",
+locationY: "50.863056",
+name: "Simonis",
+standardname: "Simonis"
+},
+{
+id: "BE.NMBS.008892692",
+locationX: "3.698397",
+locationY: "50.874303",
+name: "Sint Denijs Boekel",
+standardname: "Sint Denijs Boekel"
+},
+{
+id: "BE.NMBS.008893443",
+locationX: "4.11715",
+locationY: "51.021925",
+name: "Sint Gillis",
+standardname: "Sint Gillis"
+},
+{
+id: "BE.NMBS.008833159",
+locationX: "4.65195",
+locationY: "50.8013",
+name: "Sint Joris Weert",
+standardname: "Sint Joris Weert"
+},
+{
+id: "BE.NMBS.008822228",
+locationX: "4.495481",
+locationY: "51.070931",
+name: "Sint Katelijne Waver",
+standardname: "Sint Katelijne Waver"
+},
+{
+id: "BE.NMBS.008821543",
+locationX: "4.434961",
+locationY: "51.292714",
+name: "Sint Mariaburg",
+standardname: "Sint Mariaburg"
+},
+{
+id: "BE.NMBS.008812245",
+locationX: "4.205081",
+locationY: "50.867158",
+name: "Sint Martens Bodegem",
+standardname: "Sint Martens Bodegem"
+},
+{
+id: "BE.NMBS.008893260",
+locationX: "3.66776",
+locationY: "51.126428",
+name: "Sleidinge",
+standardname: "Sleidinge"
+},
+{
+id: "BE.NMBS.008883113",
+locationX: "4.069142",
+locationY: "50.573447",
+name: "Soignies",
+standardname: "Zinnik"
+},
+{
+id: "BE.NMBS.008871662",
+locationX: "4.158431",
+locationY: "50.312639",
+name: "Solre Sur Sambre",
+standardname: "Solre Sur Sambre"
+},
+{
+id: "BE.NMBS.008844404",
+locationX: "5.855831",
+locationY: "50.490163",
+name: "Spa",
+standardname: "Spa"
+},
+{
+id: "BE.NMBS.008843406",
+locationX: "5.219678",
+locationY: "50.528283",
+name: "Statte",
+standardname: "Statte"
+},
+{
+id: "BE.NMBS.008862018",
+locationX: "5.767712",
+locationY: "49.690736",
+name: "Stockem",
+standardname: "Stockem"
+},
+{
+id: "BE.NMBS.008842853",
+locationX: "5.523094",
+locationY: "50.403122",
+name: "Sy",
+standardname: "Sy"
+},
+{
+id: "BE.NMBS.008874609",
+locationX: "4.608861",
+locationY: "50.432088",
+name: "Tamines",
+standardname: "Tamines"
+},
+{
+id: "BE.NMBS.008894672",
+locationX: "4.221817",
+locationY: "51.125914",
+name: "Tamise",
+standardname: "Temse"
+},
+{
+id: "BE.NMBS.008895448",
+locationX: "3.897361",
+locationY: "50.902003",
+name: "Terhagen",
+standardname: "Terhagen"
+},
+{
+id: "BE.NMBS.008893401",
+locationX: "4.101431",
+locationY: "51.022775",
+name: "Termonde",
+standardname: "Dendermonde"
+},
+{
+id: "BE.NMBS.008812252",
+locationX: "4.165342",
+locationY: "50.874519",
+name: "Ternat",
+standardname: "Ternat"
+},
+{
+id: "BE.NMBS.008833266",
+locationX: "4.945833",
+locationY: "51.009864",
+name: "Testelt",
+standardname: "Testelt"
+},
+{
+id: "BE.NMBS.008844339",
+locationX: "5.815186",
+locationY: "50.536314",
+name: "Theux",
+standardname: "Theux"
+},
+{
+id: "BE.NMBS.008881455",
+locationX: "4.098522",
+locationY: "50.469539",
+name: "Thieu",
+standardname: "Thieu"
+},
+{
+id: "BE.NMBS.008871811",
+locationX: "4.288914",
+locationY: "50.342739",
+name: "Thuin",
+standardname: "Thuin"
+},
+{
+id: "BE.NMBS.008884350",
+locationX: "3.745783",
+locationY: "50.423789",
+name: "Thulin",
+standardname: "Thulin"
+},
+{
+id: "BE.NMBS.008821964",
+locationX: "4.893089",
+locationY: "51.241017",
+name: "Tielen",
+standardname: "Tielen"
+},
+{
+id: "BE.NMBS.008892254",
+locationX: "3.328611",
+locationY: "50.990058",
+name: "Tielt",
+standardname: "Tielt"
+},
+{
+id: "BE.NMBS.008842630",
+locationX: "5.582514",
+locationY: "50.570464",
+name: "Tilff",
+standardname: "Tilff"
+},
+{
+id: "BE.NMBS.008872553",
+locationX: "4.551353",
+locationY: "50.556742",
+name: "Tilly",
+standardname: "Tilly"
+},
+{
+id: "BE.NMBS.008833308",
+locationX: "4.925814",
+locationY: "50.808022",
+name: "Tirlemont",
+standardname: "Tienen"
+},
+{
+id: "BE.NMBS.008895638",
+locationX: "3.992833",
+locationY: "50.735382",
+name: "Tollembeek",
+standardname: "Tollembeek"
+},
+{
+id: "BE.NMBS.008831310",
+locationX: "5.473222",
+locationY: "50.784214",
+name: "Tongres",
+standardname: "Tongeren"
+},
+{
+id: "BE.NMBS.008891314",
+locationX: "3.105869",
+locationY: "51.064708",
+name: "Torhout",
+standardname: "Torhout"
+},
+{
+id: "BE.NMBS.008885001",
+locationX: "3.396936",
+locationY: "50.613125",
+name: "Tournai",
+standardname: "Tournai"
+},
+{
+id: "BE.NMBS.008845203",
+locationX: "5.872817",
+locationY: "50.369264",
+name: "Trois Ponts",
+standardname: "Trois Ponts"
+},
+{
+id: "BE.NMBS.008892031",
+locationX: "3.653483",
+locationY: "51.0474",
+name: "Tronchiennes",
+standardname: "Drongen"
+},
+{
+id: "BE.NMBS.008844271",
+locationX: "5.688504",
+locationY: "50.573337",
+name: "Trooz",
+standardname: "Trooz"
+},
+{
+id: "BE.NMBS.008883808",
+locationX: "4.205725",
+locationY: "50.691708",
+name: "Tubize",
+standardname: "Tubeke"
+},
+{
+id: "BE.NMBS.008821907",
+locationX: "4.937564",
+locationY: "51.322775",
+name: "Turnhout",
+standardname: "Turnhout"
+},
+{
+id: "BE.NMBS.008814134",
+locationX: "4.331383",
+locationY: "50.792131",
+name: "Uccle Calevoet",
+standardname: "Uccle Calevoet"
+},
+{
+id: "BE.NMBS.008814126",
+locationX: "4.323539",
+locationY: "50.802431",
+name: "Uccle Stalle",
+standardname: "Uccle Stalle"
+},
+{
+id: "BE.NMBS.008811270",
+locationX: "4.633522",
+locationY: "50.900519",
+name: "Veltem",
+standardname: "Veltem"
+},
+{
+id: "BE.NMBS.008833050",
+locationX: "4.836591",
+locationY: "50.8359",
+name: "Vertrijk",
+standardname: "Vertrijk"
+},
+{
+id: "BE.NMBS.008844008",
+locationX: "5.854597",
+locationY: "50.587821",
+name: "Verviers Central",
+standardname: "Verviers Central"
+},
+{
+id: "BE.NMBS.008844057",
+locationX: "5.865262",
+locationY: "50.590961",
+name: "Verviers Palais",
+standardname: "Verviers Palais"
+},
+{
+id: "BE.NMBS.008895612",
+locationX: "3.917055",
+locationY: "50.751914",
+name: "Viane Moerbeke",
+standardname: "Viane Moerbeke"
+},
+{
+id: "BE.NMBS.008896230",
+locationX: "3.392842",
+locationY: "50.833558",
+name: "Vichte",
+standardname: "Vichte"
+},
+{
+id: "BE.NMBS.008845146",
+locationX: "5.909",
+locationY: "50.278814",
+name: "Vielsalm",
+standardname: "Vielsalm"
+},
+{
+id: "BE.NMBS.008895489",
+locationX: "3.982651",
+locationY: "50.943327",
+name: "Vijfhuizen",
+standardname: "Vijfhuizen"
+},
+{
+id: "BE.NMBS.008884632",
+locationX: "3.724189",
+locationY: "50.464339",
+name: "Ville Pommeroeul",
+standardname: "Ville Pommeroeul"
+},
+{
+id: "BE.NMBS.008872579",
+locationX: "4.533432",
+locationY: "50.578028",
+name: "Villers La Ville",
+standardname: "Villers La Ville"
+},
+{
+id: "BE.NMBS.008811189",
+locationX: "4.432583",
+locationY: "50.924208",
+name: "Vilvorde",
+standardname: "Vilvoorde"
+},
+{
+id: "BE.NMBS.008866407",
+locationX: "5.518441",
+locationY: "49.560932",
+name: "Virton",
+standardname: "Virton"
+},
+{
+id: "BE.NMBS.008846201",
+locationX: "5.692835",
+locationY: "50.740296",
+name: "Vise",
+standardname: "Wezet"
+},
+{
+id: "BE.NMBS.008866118",
+locationX: "5.785497",
+locationY: "49.688369",
+name: "Viville",
+standardname: "Viville"
+},
+{
+id: "BE.NMBS.00104",
+locationX: "5.42958",
+locationY: "50.66168",
+name: "Voroux",
+standardname: "Voroux-Goreux"
+},
+{
+id: "BE.NMBS.008893815",
+locationX: "3.615353",
+locationY: "51.154608",
+name: "Waarschoot",
+standardname: "Waarschoot"
+},
+{
+id: "BE.NMBS.008873007",
+locationX: "4.435336",
+locationY: "50.258639",
+name: "Walcourt",
+standardname: "Walcourt"
+},
+{
+id: "BE.NMBS.008896149",
+locationX: "3.425514",
+locationY: "50.892458",
+name: "Waregem",
+standardname: "Waregem"
+},
+{
+id: "BE.NMBS.008841400",
+locationX: "5.248986",
+locationY: "50.694725",
+name: "Waremme",
+standardname: "Waremme"
+},
+{
+id: "BE.NMBS.008814266",
+locationX: "4.382925",
+locationY: "50.715558",
+name: "Waterloo",
+standardname: "Waterloo"
+},
+{
+id: "BE.NMBS.008811429",
+locationX: "4.399692",
+locationY: "50.809691",
+name: "Watermael",
+standardname: "Watermaal"
+},
+{
+id: "BE.NMBS.008811726",
+locationX: "4.604783",
+locationY: "50.716272",
+name: "Wavre",
+standardname: "Waver"
+},
+{
+id: "BE.NMBS.008822251",
+locationX: "4.470292",
+locationY: "50.977411",
+name: "Weerde",
+standardname: "Weerde"
+},
+{
+id: "BE.NMBS.008844503",
+locationX: "5.974261",
+locationY: "50.659464",
+name: "Welkenraedt",
+standardname: "Welkenraedt"
+},
+{
+id: "BE.NMBS.008895851",
+locationX: "4.050922",
+locationY: "50.903375",
+name: "Welle",
+standardname: "Welle"
+},
+{
+id: "BE.NMBS.008896396",
+locationX: "3.046975",
+locationY: "50.781861",
+name: "Wervik",
+standardname: "Wervik"
+},
+{
+id: "BE.NMBS.008822525",
+locationX: "4.637489",
+locationY: "50.958297",
+name: "Wespelaar Tildonk",
+standardname: "Wespelaar Tildonk"
+},
+{
+id: "BE.NMBS.008893559",
+locationX: "3.881881",
+locationY: "51.001603",
+name: "Wetteren",
+standardname: "Wetteren"
+},
+{
+id: "BE.NMBS.008896370",
+locationX: "3.182533",
+locationY: "50.811017",
+name: "Wevelgem",
+standardname: "Wevelgem"
+},
+{
+id: "BE.NMBS.008833233",
+locationX: "4.748314",
+locationY: "50.956206",
+name: "Wezemaal",
+standardname: "Wezemaal"
+},
+{
+id: "BE.NMBS.008893534",
+locationX: "3.974897",
+locationY: "51.001903",
+name: "Wichelen",
+standardname: "Wichelen"
+},
+{
+id: "BE.NMBS.008833175",
+locationX: "4.700242",
+locationY: "50.923017",
+name: "Wijgmaal",
+standardname: "Wijgmaal"
+},
+{
+id: "BE.NMBS.008821436",
+locationX: "4.463825",
+locationY: "51.427614",
+name: "Wildert",
+standardname: "Wildert"
+},
+{
+id: "BE.NMBS.008822608",
+locationX: "4.356083",
+locationY: "51.066608",
+name: "Willebroek",
+standardname: "Willebroek"
+},
+{
+id: "BE.NMBS.00999312",
+locationX: "4.784722",
+locationY: "51.168611",
+name: "Wolfstee",
+standardname: "Wolfstee"
+},
+{
+id: "BE.NMBS.008893211",
+locationX: "3.718372",
+locationY: "51.086864",
+name: "Wondelgem",
+standardname: "Wondelgem"
+},
+{
+id: "BE.NMBS.008896503",
+locationX: "2.876589",
+locationY: "50.8474",
+name: "Ypres",
+standardname: "Ieper"
+},
+{
+id: "BE.NMBS.008873239",
+locationX: "4.490469",
+locationY: "50.238039",
+name: "Yves Gomezee",
+standardname: "Yves Gomezee"
+},
+{
+id: "BE.NMBS.008863545",
+locationX: "4.878644",
+locationY: "50.320839",
+name: "Yvoir",
+standardname: "Yvoir"
+},
+{
+id: "BE.NMBS.008895737",
+locationX: "3.956928",
+locationY: "50.80715",
+name: "Zandbergen",
+standardname: "Zandbergen"
+},
+{
+id: "BE.NMBS.008811221",
+locationX: "4.469886",
+locationY: "50.88572",
+name: "Zaventem",
+standardname: "Zaventem"
+},
+{
+id: "BE.NMBS.008891264",
+locationX: "3.1634",
+locationY: "51.12641",
+name: "Zedelgem",
+standardname: "Zedelgem"
+},
+{
+id: "BE.NMBS.008891553",
+locationX: "3.195697",
+locationY: "51.326108",
+name: "Zeebrugge Dorp",
+standardname: "Zeebrugge Dorp"
+},
+{
+id: "BE.NMBS.008891173",
+locationX: "3.186668",
+locationY: "51.324546",
+name: "Zeebrugge Strand",
+standardname: "Zeebrugge Strand"
+},
+{
+id: "BE.NMBS.008894235",
+locationX: "4.041586",
+locationY: "51.073103",
+name: "Zele",
+standardname: "Zele"
+},
+{
+id: "BE.NMBS.008812062",
+locationX: "4.275583",
+locationY: "50.889731",
+name: "Zellik",
+standardname: "Zellik"
+},
+{
+id: "BE.NMBS.008833274",
+locationX: "4.987358",
+locationY: "51.006694",
+name: "Zichem",
+standardname: "Zichem"
+},
+{
+id: "BE.NMBS.008892635",
+locationX: "3.645875",
+locationY: "50.909158",
+name: "Zingem",
+standardname: "Zingem"
+},
+{
+id: "BE.NMBS.008895208",
+locationX: "3.814414",
+locationY: "50.869103",
+name: "Zottegem",
+standardname: "Zottegem"
+},
+{
+id: "BE.NMBS.008891611",
+locationX: "3.191564",
+locationY: "51.306408",
+name: "Zwankendamme",
+standardname: "Zwankendamme"
+},
+{
+id: "BE.NMBS.008894821",
+locationX: "4.329161",
+locationY: "51.214214",
+name: "Zwijndrecht",
+standardname: "Zwijndrecht"
+}
+]
+}

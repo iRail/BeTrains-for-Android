@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/list_selector_background"
+    android:orientation="vertical"
+    android:paddingBottom="6dip"
+    android:paddingRight="6dip"
+    android:paddingTop="6dip" >
+
+    <!-- list_selector_holo_dark // light -->
+
+    <TextView
+        android:id="@+id/tv_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="4dip"
+        android:text="Station"
+        android:textColor="@color/darkblue"
+        android:textSize="16dip"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_platform"
+            android:layout_width="33dip"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="X"
+            android:textSize="16dip"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="16dip" />
+
+        <TextView
+            android:id="@+id/tv_delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="6dip"
+            android:text="+XX&apos;"
+            android:textColor="#FF0000"
+            android:textSize="16dip" />
+    </LinearLayout>
+
+</LinearLayout>

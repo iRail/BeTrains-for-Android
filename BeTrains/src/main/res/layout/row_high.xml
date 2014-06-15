@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/nowCardStyle">
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="70dp"
+        android:scaleType="centerInside"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/profile"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/userName"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:singleLine="true" />
+
+
+        <TextView
+            android:id="@+id/userRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/TextAppearance.Medium"
+            android:fontFamily="sans-serif-light"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/userPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/TextAppearance.Medium"
+            android:fontFamily="sans-serif"
+            android:singleLine="true" />
+
+    </LinearLayout>
+</LinearLayout>
