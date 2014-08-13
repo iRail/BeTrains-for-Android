@@ -2,30 +2,30 @@
 <resources>
 
     <string-array name="menu">
-        <item>Route Planner</item>
-        <item>Traffic Issues</item>
-        <item>Chat</item>
-        <item>Starred</item>
-        <item>Compensation</item>
-        <item>Closest stations</item>
-        <item>Game</item>
-        <item>Extras</item>
+        <item>@string/menu_route_planner</item>
+        <item>@string/menu_traffic_issues</item>
+        <item>@string/menu_chat</item>
+        <item>@string/menu_starred</item>
+        <item>@string/menu_compensation</item>
+        <item>@string/menu_closest_stations</item>
+        <item>@string/menu_game</item>
+        <item>@string/menu_extra</item>
     </string-array>
     <string-array name="menu_pref">
-        <item>Route Planner</item>
-        <item>Traffic Issues</item>
-        <item>Chat</item>
-        <item>Starred</item>
-        <item>Closest stations</item>
-        <item>Game</item>
+        <item>@string/menu_pref_route_planner</item>
+        <item>@string/menu_pref_traffic_issues</item>
+        <item>@string/menu_pref_chat</item>
+        <item>@string/menu_pref_starred</item>
+        <item>@string/menu_pref_closest_stations</item>
+        <item>@string/menu_pref_game</item>
     </string-array>
-    <string-array name="menu_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
+    <string-array name="menu_pref_vs">
+        <item>menu_pref_route_planner</item>
+        <item>menu_pref_traffic_issues</item>
+        <item>menu_pref_chat</item>
+        <item>menu_pref_starred</item>
+        <item>menu_pref_closest_stations</item>
+        <item>menu_pref_game</item>
     </string-array>
     <string-array name="planner_da_entries">
         <item>Departure</item>

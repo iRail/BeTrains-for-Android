@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="menu_pref">
-        <item>Itinéraire</item>
-        <item>Perturbations</item>
-        <item>Chat</item>
-        <item>Favoris</item>
-        <item>A proximité</item>
-        <item>Le Jeu</item>
-    </string-array>
-    <string-array name="menu">
-        <item>Itinéraire</item>
-        <item>Perturbations</item>
-        <item>Chat</item>
-        <item>Favoris</item>
-        <item>Compensations</item>
-        <item>A proximité</item>
-        <item>Le Jeu</item>
-        <item>Extras</item>
-    </string-array>
     <string-array name="planner_da_entries">
         <item>Depart</item>
         <item>Arrivée</item>
