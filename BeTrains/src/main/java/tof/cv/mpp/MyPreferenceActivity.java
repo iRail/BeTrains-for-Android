@@ -133,13 +133,11 @@ public class MyPreferenceActivity extends PreferenceActivity implements
 			if (pref2 != null) {
 				pref2.setSummary(((ListPreference) pref2).getEntry());
 				pref2.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-
 					@Override
 					public boolean onPreferenceChange(Preference preference,
 							Object newValue) {
-						preference.setSummary(((ListPreference) preference)
-								.getEntries()[Integer.valueOf(newValue
-								.toString()) - 1]);
+						preference.setSummary(getResources().getIdentifier(
+								(String)newValue, "string", getActivity().getPackageName()));
 						return true;
 					}
 				});

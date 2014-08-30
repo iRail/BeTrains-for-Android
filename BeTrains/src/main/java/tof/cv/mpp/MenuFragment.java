@@ -69,34 +69,25 @@ public class MenuFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView lv, View v, int position, long id) {
         Fragment newContent = null;
+        String selected = getListView().getItemAtPosition(position).toString();
+        if (selected == null) return;
 
-        switch (position) {
-            case 0:
-                newContent = new PlannerFragment();
-                break;
-            case 1:
-                newContent = new TrafficFragment();
-                break;
-            case 2:
-                newContent = new ChatFragment();
-                break;
-            case 3:
-                newContent = new StarredFragment();
-                break;
-            case 4:
-                newContent = new CompensationFragment();
-                break;
-            case 5:
-                newContent = new ClosestFragment();
-                break;
-            case 6:
-                newContent = new GameFragment();
-                break;
-            case 7:
-                newContent = new ExtraFragment();
-                break;
-
-        }
+        if (selected.equals(getString(R.string.menu_route_planner)))
+          newContent = new PlannerFragment();
+        if (selected.equals(getString(R.string.menu_traffic_issues)))
+          newContent = new TrafficFragment();
+        if (selected.equals(getString(R.string.menu_chat)))
+          newContent = new ChatFragment();
+        if (selected.equals(getString(R.string.menu_starred)))
+          newContent = new StarredFragment();
+        if (selected.equals(getString(R.string.menu_compensation)))
+          newContent = new CompensationFragment();
+        if (selected.equals(getString(R.string.menu_closest_stations)))
+          newContent = new ClosestFragment();
+        if (selected.equals(getString(R.string.menu_game)))
+          newContent = new GameFragment();
+        if (selected.equals(getString(R.string.menu_extra)))
+          newContent = new ExtraFragment();
 
         if (newContent != null)
             switchFragment(newContent, position);

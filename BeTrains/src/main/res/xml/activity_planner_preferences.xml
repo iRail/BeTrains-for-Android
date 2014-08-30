@@ -17,7 +17,7 @@
 
     <ListPreference
         android:entries="@array/menu_pref"
-        android:entryValues="@array/menu_values"
+        android:entryValues="@array/menu_pref_vs"
         android:key="@string/key_activity"
         android:summary="@string/settings_activity_summary"
         android:title="@string/settings_activity" />

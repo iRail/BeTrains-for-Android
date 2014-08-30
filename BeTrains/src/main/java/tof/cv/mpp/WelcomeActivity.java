@@ -94,43 +94,43 @@ public class WelcomeActivity extends FragmentActivity {
             mContent = getSupportFragmentManager().getFragment(
                     savedInstanceState, "mContent");
 
-        int pos= Integer.valueOf(settings.getString(
-                getString(R.string.key_activity), "1"));
-
         if (mContent == null) {
-            switch (pos) {
-                case 1:
-                    mContent = new PlannerFragment();
-                    break;
-                case 2:
-                    mContent = new TrafficFragment();
-                    break;
-                case 3:
-                    mContent = new ChatFragment();
-                    break;
-                case 4:
-                    mContent = new StarredFragment();
-                    break;
-                case 5:
-                    mContent = new ClosestFragment();
-                    break;
-                case 6:
-                    mContent = new GameFragment();
-                    break;
-                default:
-                    mContent = new PlannerFragment();
-                    close = getString(R.string.btn_home_planner);
-                    break;
-            }
+          String selected = settings.getString(
+              getString(R.string.key_activity), "menu_pref_route_planner");
 
-            try {//Wrong number in previous app, need to try/catch
-                close=getResources().getStringArray(R.array.menu)[pos];
-            } catch (Resources.NotFoundException e) {
-                e.printStackTrace();
-            }
+          // Legacy - To be removed in 2015?
+          if (selected.matches("\\d+")) {
+            if (selected.equals("1")) selected = "menu_pref_route_planner";
+            if (selected.equals("2")) selected = "menu_pref_traffic_issues";
+            if (selected.equals("3")) selected = "menu_pref_chat";
+            if (selected.equals("4")) selected = "menu_pref_starred";
+            if (selected.equals("5")) selected = "menu_pref_closest_stations";
+            if (selected.equals("6")) selected = "menu_pref_game";
+            if (selected.matches("\\d+")) selected = "menu_pref_route_planner";
+          } // -- end Legacy
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, mContent).commit();
+          if ("menu_pref_route_planner".equals(selected))
+            mContent = new PlannerFragment();
+          if ("menu_pref_traffic_issues".equals(selected))
+            mContent = new TrafficFragment();
+          if ("menu_pref_chat".equals(selected))
+            mContent = new ChatFragment();
+          if ("menu_pref_starred".equals(selected))
+            mContent = new StarredFragment();
+          if ("menu_pref_closest_stations".equals(selected))
+            mContent = new ClosestFragment();
+          if ("menu_pref_game".equals(selected))
+            mContent = new GameFragment();
+          if (mContent == null) {
+            mContent = new PlannerFragment();
+            selected = "menu_pref_route_planner";
+          }
+
+          close = getString(getResources().getIdentifier(
+                selected, "string", WelcomeActivity.this.getPackageName()));
+
+          getSupportFragmentManager().beginTransaction()
+            .replace(R.id.content_frame, mContent).commit();
 
         }
 

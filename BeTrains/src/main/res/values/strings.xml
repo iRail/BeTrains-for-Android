@@ -160,4 +160,19 @@
     <string name="toofar">You are too far:</string>
     <string name="no_gps">GPS is OFF. Click here to turn on.</string>
 
+    <!-- Menu items -->
+    <string name="menu_route_planner">Route Planner</string>
+    <string name="menu_traffic_issues">Traffic Issues</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_starred">Starred</string>
+    <string name="menu_compensation">Compensation</string>
+    <string name="menu_closest_stations">Closest stations</string>
+    <string name="menu_game">Game</string>
+    <string name="menu_extra">Extras</string>
+    <string name="menu_pref_route_planner">Route Planner</string>
+    <string name="menu_pref_traffic_issues">Traffic Issues</string>
+    <string name="menu_pref_chat">Chat</string>
+    <string name="menu_pref_starred">Starred</string>
+    <string name="menu_pref_closest_stations">Closest stations</string>
+    <string name="menu_pref_game">Game</string>
 </resources>
