@@ -11,6 +11,14 @@
         <item>Game</item>
         <item>Extras</item>
     </string-array>
+    <string-array name="menuFdroid">
+        <item>Route Planner</item>
+        <item>Traffic Issues</item>
+        <item>Chat</item>
+        <item>Starred</item>
+        <item>Compensation</item>
+        <item>Extras</item>
+    </string-array>
     <string-array name="menu_pref">
         <item>Route Planner</item>
         <item>Traffic Issues</item>

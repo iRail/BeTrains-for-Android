@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="isFdroid">false</bool>
      <bool name="isApi11">false</bool>
     <bool name="nmbs">false</bool>
     <bool name="sncb">true</bool>

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 
 public class WelcomeActivity extends FragmentActivity {
@@ -40,6 +41,7 @@ public class WelcomeActivity extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
 

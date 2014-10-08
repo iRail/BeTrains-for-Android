@@ -26,14 +26,20 @@ public class MenuFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final String[] items = getResources().getStringArray(R.array.menu);
+        final String[] itemsFdroid = getResources().getStringArray(R.array.menuFdroid);
 
-        final int[] idArray = {R.drawable.ab_planner, R.drawable.ab_traffic,
+        final int[] drawableArray = {R.drawable.ab_planner, R.drawable.ab_traffic,
                 R.drawable.ab_chat,
                 R.drawable.ab_starred, R.drawable.ab_sncb, R.drawable.ab_closest, R.drawable.ic_game,
                 R.drawable.ab_irail};
 
-        setListAdapter(new ArrayAdapter<String>(this.getActivity(), R.id.label,
-                items) {
+        final int[] drawableArrayFdroid = {R.drawable.ab_planner, R.drawable.ab_traffic,
+                R.drawable.ab_chat,
+                R.drawable.ab_starred, R.drawable.ab_sncb, R.drawable.ab_irail};
+
+        setListAdapter(new ArrayAdapter<String>(this.getActivity(), R.layout.row_menu,
+                getResources().getBoolean(R.bool.isFdroid) ? itemsFdroid : items) {
+
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 // final View renderer = super.getView(position, convertView,
@@ -46,15 +52,9 @@ public class MenuFragment extends ListFragment {
                 ImageView iv = (ImageView) currentView.findViewById(R.id.icon);
                 TextView tv = (TextView) currentView.findViewById(R.id.label);
 
-                tv.setText(items[position]);
+                tv.setText(getResources().getBoolean(R.bool.isFdroid) ? itemsFdroid[position] : items[position]);
+                iv.setBackgroundResource(getResources().getBoolean(R.bool.isFdroid) ? drawableArrayFdroid[position] : drawableArray[position]);
 
-
-                try {
-                    //Just in case.. Lazy me.
-                    iv.setBackgroundResource(idArray[position]);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
                 return currentView;
             }
@@ -69,34 +69,58 @@ public class MenuFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView lv, View v, int position, long id) {
         Fragment newContent = null;
+        if (getResources().getBoolean(R.bool.isFdroid)) {
+            switch (position) {
+                case 0:
+                    newContent = new PlannerFragment();
+                    break;
+                case 1:
+                    newContent = new TrafficFragment();
+                    break;
+                case 2:
+                    newContent = new ChatFragment();
+                    break;
+                case 3:
+                    newContent = new StarredFragment();
+                    break;
+                case 4:
+                    newContent = new CompensationFragment();
+                    break;
+                case 5:
+                    newContent = new ExtraFragment();
+                    break;
 
-        switch (position) {
-            case 0:
-                newContent = new PlannerFragment();
-                break;
-            case 1:
-                newContent = new TrafficFragment();
-                break;
-            case 2:
-                newContent = new ChatFragment();
-                break;
-            case 3:
-                newContent = new StarredFragment();
-                break;
-            case 4:
-                newContent = new CompensationFragment();
-                break;
-            case 5:
-                newContent = new ClosestFragment();
-                break;
-            case 6:
-                newContent = new GameFragment();
-                break;
-            case 7:
-                newContent = new ExtraFragment();
-                break;
+            }
+        } else {
+            switch (position) {
+                case 0:
+                    newContent = new PlannerFragment();
+                    break;
+                case 1:
+                    newContent = new TrafficFragment();
+                    break;
+                case 2:
+                    newContent = new ChatFragment();
+                    break;
+                case 3:
+                    newContent = new StarredFragment();
+                    break;
+                case 4:
+                    newContent = new CompensationFragment();
+                    break;
+                case 5:
+                    newContent = new ClosestFragment();
+                    break;
+                case 6:
+                    newContent = new GameFragment();
+                    break;
+                case 7:
+                    newContent = new ExtraFragment();
+                    break;
 
+            }
         }
+
 
         if (newContent != null)
             switchFragment(newContent, position);
