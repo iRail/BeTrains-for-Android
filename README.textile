@@ -1,42 +1,11 @@
+h2. BeTrains ?
+BeTrains is an open sourced Android application based on the iRail api (http://project.irail.be/wiki/API/APIv1).
+
+This application is an alternative to the official SNCB/NMBS and Railtime (official trains company in Belgium), aiming to be really lighter, following the Android guidelines, and more intuitive and user friendly.
+
+!https://github.com/iRail/BeTrains-for-Android/raw/master/screen.png(Screenshot)!
+
 h2. How to install ?
 
-h3. Git clone in Eclipse
-
-*/!\ Clone ActionBarSherlock, ViewPagerIndicator and BeTrains in the same parent folder /!\*
-For example:
-* ~/documents/git/ActionBarSherlock
-* ~/documents/git/Android-ViewPagerIndicator
-* ~/documents/git/BeTrains-for-Android
-
-h4. ActionBarSherlock
-
-# In the Eclipse menu, select: *File* > *Import...* > *Projects from Git*
-# Git clone from: "https://github.com/JakeWharton/ActionBarSherlock":https://github.com/JakeWharton/ActionBarSherlock
-# After the cloning, abort the import process
-# Create a new Android project with the *ActionBarSherlock/library/* folder
-# Use *com.actionbarsherlock* as package name
-# In the properties of the project, *Android* menu, use Android *3.2* (API *13*)
-
-h4. ViewPagerIndicator
-
-# In the Eclipse menu, select: *File* > *Import...* > *Projects from Git*
-# Git clone from: "https://github.com/JakeWharton/":https://github.com/JakeWharton/Android-ViewPagerIndicator
-# After the cloning, abort the import process
-# Create a new project with the *ViewPagerIndicator/library/* folder
-# Use *com.viewpagerindicator* as package name
-# In the properties of the project, *Android* menu, use Android *1.6* (API *4*)
-
-h3. Clone BeTrains repository in Eclipse
-
-# In the Eclipse menu, select: *File* > *Import...* > *Projects from Git*
-# Git clone from: "https://github.com/iRail/BeTrains-for-Android":https://github.com/iRail/BeTrains-for-Android
-# Select *Import existing projects*
-
-h3. Add libraries
-
-# Create a *libs/* folder in the BeTrains-for-Android/ folder
-# In the *libs/* folder, copy:
-## "gson-2.0.jar":http://google-gson.googlecode.com/files/google-gson-2.0-release.zip
-## "actionbarsherlock-plugin-maps-3.5.0.jar":https://github.com/downloads/JakeWharton/ActionBarSherlock/actionbarsherlock-plugin-maps-3.5.0.jar
-## "actionbarsherlock-plugin-preference-3.5.0.jar":https://github.com/downloads/JakeWharton/ActionBarSherlock/actionbarsherlock-plugin-preference-3.5.0.jar
-# In the properties of the project, *Android* menu, use Google APIs *4.0.3* (API *15*)
+h3. Let Gradle and Android studio do the magic.
+You have nothing to worry, clone, import in Android Studio, and enjoy!
