@@ -29,7 +29,7 @@
     <string name="tipctitle">La bannière du dessus permet de changer la date et
 		l\'heure de votre recherche.</string>
     <string name="tipd">Menu principal</string>
-    <string name="tipdtitle">Cliquer sur l\'icone \'Home\' dans le coin supérieur
+    <string name="tipdtitle">Cliquer sur l\'icone du coin supérieur
 		gauche pour arriver au menu principal.</string>
     <string name="app_name">BeTrains</string>
     <string name="txt_quai">Quai </string>
@@ -180,7 +180,7 @@
     <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
     <string name="abs__searchview_description_voice">Voice search</string>
     <string name="game_cooling">Prochain:</string>
-    <string name="game_text">Rendez-vous à moins de 100m d\'une gare, au plus il y a du retard, au plus vous aurez des points!</string>
+    <string name="game_text">Rendez-vous à moins de 500m d\'une gare, au plus il y a du retard, au plus vous aurez des points!</string>
     <string name="tutoswipe">Glissez votre doigt depuis le bord gauche du téléphone pour faire apparaitre le menu.</string>
     <string name="toofar">Vous êtes trop loin:</string>
     <string name="no_gps">GPS is OFF. Click here to turn on.</string>

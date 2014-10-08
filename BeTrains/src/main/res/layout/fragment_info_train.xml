@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/nowCardStyle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/title"
@@ -14,8 +16,9 @@
         android:paddingBottom="10dip"
         android:paddingTop="10dip"
         android:text="@string/txt_loading"
+        android:background="@color/primarycolor"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/darkblue"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 
     <include layout="@layout/colorstrip" />
@@ -32,7 +35,7 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -55,7 +58,6 @@
         android:background="@color/action_bar_tint"
         android:gravity="center"
         android:orientation="horizontal"
-        android:textColor="#FF000000" >
-    </TextView>
+        android:textColor="#FF000000"></TextView>
 
 </LinearLayout>

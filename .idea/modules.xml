@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BeTrains.iml" filepath="$PROJECT_DIR$/BeTrains.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BeTrains/BeTrains.iml" filepath="$PROJECT_DIR$/BeTrains/BeTrains.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BeTrains-for-Android.iml" filepath="$PROJECT_DIR$/BeTrains-for-Android.iml" />
     </modules>
   </component>
 </project>

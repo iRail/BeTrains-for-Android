@@ -5,45 +5,53 @@
     android:layout_height="wrap_content"
     android:clickable="false"
     android:orientation="horizontal"
-    android:paddingRight="6dip" >
-
-    <TextView
-        android:id="@+id/arret1"
-        android:layout_width="16dip"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=" "
-        android:textColor="@color/stationsymbol"
-        android:textSize="16dip"
-        android:textStyle="bold" />
+    android:padding="16dip" >
 
     <TextView
         android:id="@+id/time"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/blackbg"
-        android:paddingLeft="2dip"
+        android:gravity="center"
+        android:padding="6dp"
         android:text="XX:XX"
         android:textColor="@color/darkyellow"
-        android:textSize="16dip" />
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/station"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Station"
-        android:textColor="@color/darkblue"
-        android:textSize="16dip" />
 
     <TextView
         android:id="@+id/delay"
+        style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:paddingLeft="6dip"
-        android:text="retard"
-        android:textColor="#FF0000"
-        android:textSize="16dip" />
+        android:text="delay"
+        android:textColor="#FF0000" />
+
+    <TextView
+        android:id="@+id/station"
+        style="@android:style/TextAppearance.Large"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="TRAIN"
+        android:textColor="@color/darkblue" />
+
+
+    <TextView
+        android:id="@+id/arret1"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:text="X"
+        android:textColor="@color/lightblue"
+        android:textSize="16dip"
+        android:textStyle="bold" />
+
 
 </LinearLayout>

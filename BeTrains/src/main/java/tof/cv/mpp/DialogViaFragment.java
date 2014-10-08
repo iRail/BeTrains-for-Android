@@ -219,7 +219,7 @@ public class DialogViaFragment extends DialogFragment {
 		v.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				startStationInfoActivity(s.getStation(),
-						s.getTime());
+						s.getTime(),s.getStationInfo().getId());
 
 			}
 		});
@@ -229,7 +229,7 @@ public class DialogViaFragment extends DialogFragment {
 		v.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				startStationInfoActivity(via.getName(),
-						via.getDeparture().getTime());
+						via.getDeparture().getTime(),via.getStationInfo().getId());
 
 			}
 		});
@@ -264,9 +264,10 @@ public class DialogViaFragment extends DialogFragment {
 	 * currentConnection.getArrival().getVehicle(); }
 	 */
 
-	private void startStationInfoActivity(String station, String time) {
+	private void startStationInfoActivity(String station, String time,String id) {
 		Intent i = new Intent(getActivity(), InfoStationActivity.class);
 		i.putExtra("Name", station);
+        i.putExtra("ID", id);
 		i.putExtra("Hour", Utils.getHourFromDate(time, false));
 		i.putExtra("Minute", Utils.getMinutsFromDate(time, false));
 		getActivity().startActivity(i);

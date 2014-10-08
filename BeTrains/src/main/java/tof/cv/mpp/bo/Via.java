@@ -1,5 +1,7 @@
 package tof.cv.mpp.bo;
 
+import tof.cv.mpp.Utils.ConnectionMaker;
+
 public class Via {
 
 	private String timeBetween;
@@ -7,6 +9,11 @@ public class Via {
 	private Station departure;
 	private String station;
 	private String vehicle;
+    ConnectionMaker.StationInfo stationinfo;
+
+    public ConnectionMaker.StationInfo getStationInfo() {
+        return stationinfo;
+    }
 
 	public String getTimeBetween() {
 		return timeBetween;

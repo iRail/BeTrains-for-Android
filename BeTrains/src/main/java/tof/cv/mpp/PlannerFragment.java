@@ -20,7 +20,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -116,21 +120,20 @@ public class PlannerFragment extends ListFragment {
         setAllBtnListener();
         String pStart = settings.getString("pStart", "MONS");
         try {
-            pStart= getActivity().getIntent().getExtras().getString("Departure", pStart);
+            pStart = getActivity().getIntent().getExtras().getString("Departure", pStart);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         String pStop = settings.getString("pStop", "TOURNAI");
         try {
-            pStop= getActivity().getIntent().getExtras().getString("Arrival",pStop);
-            getActivity().setProgressBarIndeterminateVisibility(true);
-            mySearchThread(this.getActivity());
+            pStop = getActivity().getIntent().getExtras().getString("Arrival", pStop);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        fillStations(pStart,pStop);
+        fillStations(pStart, pStop);
+
 
         getActivity().getActionBar().setIcon(
                 R.drawable.ab_planner);
@@ -140,6 +143,31 @@ public class PlannerFragment extends ListFragment {
         if (PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("tuto", true) && ((WelcomeActivity) this.getActivity()).mDrawerLayout != null)
             this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);
 
+        final LinearLayout layout = (LinearLayout) getView().findViewById(R.id.Ly_Pannel_Sup);
+        final ViewTreeObserver observer = layout.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                try {
+                    View fab = getView().findViewById(R.id.fab);
+
+                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
+
+                    params.topMargin = layout.getHeight() - (fab.getHeight() / 2);
+
+                    fab.setLayoutParams(params);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //observer.removeGlobalOnLayoutListener(this);
+            }
+        });
+
+    }
+
+    public void doSearch() {
+        getActivity().setProgressBarIndeterminateVisibility(true);
+        mySearchThread(this.getActivity());
     }
 
     public void fillStations(String departure, String arrival) {
@@ -198,7 +226,14 @@ public class PlannerFragment extends ListFragment {
             }
         });
 
-        Button btnInfoArrival = (Button) getView().findViewById(
+        ImageButton fab = (ImageButton) getView().findViewById(
+                R.id.fab);
+        fab.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                doSearch();
+            }
+        });
+       /* Button btnInfoArrival = (Button) getView().findViewById(
                 R.id.btn_info_arrival);
         btnInfoArrival.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -224,7 +259,7 @@ public class PlannerFragment extends ListFragment {
                 startActivityForResult(i, ACTIVITY_STATION);
 
             }
-        });
+        });*/
 
         Button btnAfter = (Button) getView().findViewById(R.id.mybuttonAfter);
         btnAfter.setOnClickListener(new Button.OnClickListener() {
@@ -323,6 +358,7 @@ public class PlannerFragment extends ListFragment {
             }
 
         }
+
     }
 
     public void fillWithTips() {

@@ -46,7 +46,7 @@ public class StationInfoAdapter extends ArrayAdapter<StationDeparture> {
 			}catch (Exception e){
 				delay.setText(trainstop.getDelay());
 			}
-				
+
 			platform.setText(trainstop.getPlatform());
 			train.setText(Utils.getTrainId(trainstop.getVehicle()));
 

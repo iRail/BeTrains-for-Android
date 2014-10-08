@@ -58,6 +58,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 			else
 				delayA.setText("");
 
+
 			if (departure != null) {
 
 				departure

@@ -33,7 +33,7 @@
 .</string>
     <string name="btn_home_settings">Instellingen</string>
     <string name="tipd">Hoofdmenu</string>
-    <string name="tipdtitle">Gebruik het item \'Home\' bovenaan links op het scherm om het hoofdmenu te doen verschijnen.</string>
+    <string name="tipdtitle">Gebruik het item \'Hamburger\' bovenaan links op het scherm om het hoofdmenu te doen verschijnen.</string>
     <string name="settings_activity">Eerste scherm</string>
     <string name="settings_activity_summary">Waar moet de applicatie opstarten?</string>
     <string name="app_name">BeTrains</string>
@@ -167,7 +167,7 @@
     <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
     <string name="abs__searchview_description_voice">Voice search</string>
     <string name="game_cooling">Next Checkin:</string>
-    <string name="game_text">you need to be closer than 100m from a station to check-in. The more delay at the station, the more points you get</string>
+    <string name="game_text">you need to be closer than 500m from a station to check-in. The more delay at the station, the more points you get</string>
     <string name="tutoswipe">Swipe van links naar rechts om het menu te openen.</string>
     <string name="toofar">You are too far:</string>
     <string name="no_gps">GPS is OFF. Click here to turn on.</string>

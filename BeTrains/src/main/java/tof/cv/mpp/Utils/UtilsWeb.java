@@ -41,124 +41,125 @@ import tof.cv.mpp.bo.Message;
 
 public class UtilsWeb {
 
-	public static InputStream getJSONData(String url, Context context) {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
+    public static InputStream getJSONData(String url, Context context) {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
 
-		String myVersion = "0.0";
-		PackageManager manager = context.getPackageManager();
+        String myVersion = "0.0";
+        PackageManager manager = context.getPackageManager();
 
-		try {
-			myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
+        try {
+            myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
-		httpClient.getParams().setParameter(
-				"http.useragent",
-				"Waza_Be: BeTrains " + myVersion
-				+ " for Android - "
-						+ System.getProperty("http.agent"));
+        httpClient.getParams().setParameter(
+                "http.useragent",
+                "Waza_Be: BeTrains " + myVersion
+                        + " for Android - "
+                        + System.getProperty("http.agent")
+        );
 
-		URI uri;
-		InputStream data = null;
-		try {
-			uri = new URI(url);
-			HttpGet method = new HttpGet(uri);
-			HttpResponse response = httpClient.execute(method);
-			data = response.getEntity().getContent();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        URI uri;
+        InputStream data = null;
+        try {
+            uri = new URI(url);
+            HttpGet method = new HttpGet(uri);
+            HttpResponse response = httpClient.execute(method);
+            data = response.getEntity().getContent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return data;
-	}
+        return data;
+    }
 
-	public static Connections getAPIConnections(String year, String month,
-			String day, String hour, String minutes, String language,
-			String departure, String arrival, String departureArrival,
-			final Context context) {
-		String TAG = "BETRAINS";
+    public static Connections getAPIConnections(String year, String month,
+                                                String day, String hour, String minutes, String language,
+                                                String departure, String arrival, String departureArrival,
+                                                final Context context) {
+        String TAG = "BETRAINS";
 
-		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
-		mDbHelper.open();
+        DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
+        mDbHelper.open();
 
-		if (day.length() == 1)
-			day = "0" + day;
+        if (day.length() == 1)
+            day = "0" + day;
 
-		if (month.length() == 1)
-			month = "0" + month;
-		if (month.contentEquals("13"))
-			month = "01";
+        if (month.length() == 1)
+            month = "0" + month;
+        if (month.contentEquals("13"))
+            month = "01";
 
-		String url = "http://api.irail.be/connections.php?to="
-				// String url = "http://dev.api.irail.be/connections.php?to="
-				+ arrival + "&from=" + departure + "&date=" + day + month
-				+ year + "&time=" + hour + minutes + "&timeSel="
-				+ departureArrival + "&lang=" + language
-				+ "&typeOfTransport=train&format=json&fast=true";
-		url = url.replace(" ", "%20");
-		Log.v(TAG, url);
+        String url = "http://api.irail.be/connections.php?to="
+                // String url = "http://dev.api.irail.be/connections.php?to="
+                + arrival + "&from=" + departure + "&date=" + day + month
+                + year + "&time=" + hour + minutes + "&timeSel="
+                + departureArrival + "&lang=" + language
+                + "&typeOfTransport=train&format=json&fast=true";
+        url = url.replace(" ", "%20");
+        Log.v(TAG, url);
 
-		try {
-			InputStream is = tof.cv.mpp.Utils.Utils.DownloadJsonFromUrlAndCacheToSd(url,
+        try {
+            InputStream is = tof.cv.mpp.Utils.Utils.DownloadJsonFromUrlAndCacheToSd(url,
                     tof.cv.mpp.Utils.Utils.DIRPATH, tof.cv.mpp.Utils.Utils.FILENAMECONN, context);
 
-			Gson gson = new Gson();
-			final Reader reader = new InputStreamReader(is);
-			return gson.fromJson(reader, Connections.class);
+            Gson gson = new Gson();
+            final Reader reader = new InputStreamReader(is);
+            return gson.fromJson(reader, Connections.class);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			Log.i("", "*******");
-			mDbHelper.close();
-			return null;
-		}
-	}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i("", "*******");
+            mDbHelper.close();
+            return null;
+        }
+    }
 
-	public static InputStream retrieveStream(String url, Context context) {
+    public static InputStream retrieveStream(String url, Context context) {
 
-		DefaultHttpClient client = new DefaultHttpClient();
+        DefaultHttpClient client = new DefaultHttpClient();
 
-		HttpGet request = new HttpGet(url);
+        HttpGet request = new HttpGet(url);
 
-		// TODO: stocker la version pour ne pas faire un appel à chaque fois.
-		String myVersion = "0.0";
-		PackageManager manager = context.getPackageManager();
-		try {
-			myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
+        // TODO: stocker la version pour ne pas faire un appel à chaque fois.
+        String myVersion = "0.0";
+        PackageManager manager = context.getPackageManager();
+        try {
+            myVersion = (manager.getPackageInfo(context.getPackageName(), 0).versionName);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
-		request.setHeader("User-Agent", "Waza_Be: BeTrains " + myVersion
-				+ " for Android - "
-						+ System.getProperty("http.agent"));
+        request.setHeader("User-Agent", "Waza_Be: BeTrains " + myVersion
+                + " for Android - "
+                + System.getProperty("http.agent"));
 
-		Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
+       // Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
 
-		try {
-			HttpResponse response = client.execute(request);
-			final int statusCode = response.getStatusLine().getStatusCode();
+        try {
+            HttpResponse response = client.execute(request);
+            final int statusCode = response.getStatusLine().getStatusCode();
 
-			if (statusCode != HttpStatus.SC_OK) {
-				Log.w("getClass().getSimpleName()", "Error " + statusCode
-						+ " for URL " + url);
-				return null;
-			}
+            if (statusCode != HttpStatus.SC_OK) {
+               // Log.w("getClass().getSimpleName()", "Error " + statusCode
+               //         + " for URL " + url);
+                return null;
+            }
 
-			HttpEntity getResponseEntity = response.getEntity();
-			Log.w("getClass().getSimpleName()", "Read the url:  " + url);
-			return getResponseEntity.getContent();
+            HttpEntity getResponseEntity = response.getEntity();
+            //Log.w("getClass().getSimpleName()", "Read the url:  " + url);
+            return getResponseEntity.getContent();
 
-		} catch (IOException e) {
-			Log.w("getClass().getSimpleName()", " Error for URL " + url, e);
-		}
+        } catch (IOException e) {
+            //Log.w("getClass().getSimpleName()", " Error for URL " + url, e);
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 /*
-	public static void loadTweets(final Activity a, final ListView l) {
+    public static void loadTweets(final Activity a, final ListView l) {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
@@ -214,65 +215,71 @@ public class UtilsWeb {
 	}
 	*/
 
-	public class Vehicle {
+    public class Vehicle {
 
-		private VehicleStops stops;
-		private String version;
-		private String vehicle;
-		private long timestamp;
+        private VehicleStops stops;
+        private String version;
+        private String vehicle;
+        private long timestamp;
 
-		public VehicleStops getVehicleStops() {
-			return stops;
-		}
+        public VehicleStops getVehicleStops() {
+            return stops;
+        }
 
-		public String getVersion() {
-			return version;
-		}
+        public String getVersion() {
+            return version;
+        }
 
-		public String getId() {
-			return vehicle;
-		}
+        public String getId() {
+            return vehicle;
+        }
 
-		public long getTimestamp() {
-			return timestamp;
-		}
+        public long getTimestamp() {
+            return timestamp;
+        }
 
-	}
+    }
 
-	public class VehicleStops {
+    public class VehicleStops {
 
-		private ArrayList<VehicleStop> stop;
+        private ArrayList<VehicleStop> stop;
 
-		public ArrayList<VehicleStop> getVehicleStop() {
-			return stop;
-		}
-	}
+        public ArrayList<VehicleStop> getVehicleStop() {
+            return stop;
+        }
+    }
 
-	public static class VehicleStop {
+    public static class VehicleStop {
 
-		private String station;
-		private long time;
-		private String delay;
+        private String station;
+        private long time;
+        private String delay;
+        ConnectionMaker.StationInfo stationinfo;
 
-		public String getStation() {
-			return Html.fromHtml(station).toString();
-		}
 
-		public long getTime() {
-			return time;
-		}
+        public ConnectionMaker.StationInfo getStationInfo() {
+            return stationinfo;
+        }
 
-		public String getDelay() {
-			return delay;
-		}
+        public String getStation() {
+            return Html.fromHtml(station).toString();
+        }
 
-		public String getStatus() {
-			if (delay.contentEquals("0"))
-				return "";
+        public long getTime() {
+            return time;
+        }
 
-			return "+" + Integer.valueOf(delay) / 60 + "'";
-		}
-	}
+        public String getDelay() {
+            return delay;
+        }
+
+        public String getStatus() {
+            if (delay.contentEquals("0"))
+                return "";
+
+            return "+" + Integer.valueOf(delay) / 60 + "'";
+        }
+    }
 
     public static Vehicle getMemoryvehicle(String fileName, Context context) {
 
@@ -308,167 +315,186 @@ public class UtilsWeb {
         return null;
     }
 
-	public static Vehicle getAPIvehicle(String vehicle, final Context context,
-			long timestamp) {
-		
-		String langue = context.getString(R.string.url_lang);
-		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				"prefnl", false))
-			langue = "nl";
-		String dateTime = "";
-		if (timestamp != 0) {
-			String formattedDate = tof.cv.mpp.Utils.Utils.formatDate(new Date(timestamp),
+    public static Vehicle getAPIvehicle(String vehicle, final Context context,
+                                        long timestamp) {
+
+        String langue = context.getString(R.string.url_lang);
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                "prefnl", false))
+            langue = "nl";
+        String dateTime = "";
+        if (timestamp != 0) {
+            String formattedDate = tof.cv.mpp.Utils.Utils.formatDate(new Date(timestamp),
                     "ddMMyy");
-			String formattedTime = tof.cv.mpp.Utils.Utils
-					.formatDate(new Date(timestamp), "HHmm");
-			dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
-		}
+            String formattedTime = tof.cv.mpp.Utils.Utils
+                    .formatDate(new Date(timestamp), "HHmm");
+            dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
+        }
 
-		String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
-				+ "&lang=" + langue + dateTime + "&format=JSON&fast=true";
-		System.out.println("Affiche les infos train depuis la page: " + url);
+        String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
+                + "&lang=" + langue + dateTime + "&format=JSON";//&fast=true";
+        System.out.println("Affiche les infos train depuis la page: " + url);
 
-		try {
-			// Log.i(TAG, "Json Parser started..");
-			Gson gson = new Gson();
-			Reader r = new InputStreamReader(getJSONData(url, context));
+        try {
+            Gson gson = new Gson();
+            Reader r = new InputStreamReader(getJSONData(url, context));
+           /* StringBuilder sb=new StringBuilder();
+            BufferedReader br = new BufferedReader(r);
+            String read = br.readLine();
+
+            while(read != null) {
+                //System.out.println(read);
+                sb.append(read);
+                Log.i("VEHIC", read);
+                read =br.readLine();
+            }*/
             return gson.fromJson(r, Vehicle.class);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
-	}
+    }
 
-
-	public static Station getAPIstation(String station, long timestamp,
-			final Context context) {
-		// TODO
-		String langue = context.getString(R.string.url_lang);
-		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				"prefnl", false))
-			langue = "nl";
-		String dateTime = "";
-		if (timestamp != 0) {
-			String formattedDate = tof.cv.mpp.Utils.Utils.formatDate(new Date(timestamp),
+    static String convertStreamToString(java.io.InputStream is) {
+        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        return s.hasNext() ? s.next() : "";
+    }
+    public static Station getAPIstation(String id, String station, long timestamp,
+                                        final Context context) {
+        // TODO
+        String langue = context.getString(R.string.url_lang);
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                "prefnl", false))
+            langue = "nl";
+        String dateTime = "";
+        if (timestamp != 0) {
+            String formattedDate = tof.cv.mpp.Utils.Utils.formatDate(new Date(timestamp),
                     "ddMMyy");
-			String formattedTime = tof.cv.mpp.Utils.Utils
-					.formatDate(new Date(timestamp), "HHmm");
-			dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
-		}
+            String formattedTime = tof.cv.mpp.Utils.Utils
+                    .formatDate(new Date(timestamp), "HHmm");
+            dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
+        }
 
-		String url = "http://api.irail.be/liveboard.php/?station="
-				+ station.replace(" ", "%20") + dateTime
-				+ "&format=JSON&fast=true" + "&lang=" + langue;
-		System.out.println("Show station from: " + url);
+        String url = "";
+        if (id != null && id.length() > 0)
+            url = "http://api.irail.be/liveboard.php/?id="
+                    + id + dateTime
+                    + "&format=JSON&fast=true" + "&lang=" + langue;
+        else
+            url = "http://api.irail.be/liveboard.php/?station="
+                    + station.replace(" ", "%20") + dateTime
+                    + "&format=JSON&fast=true" + "&lang=" + langue;
 
-		try {
-			// Log.i(TAG, "Json Parser started..");
-			Gson gson = new Gson();
-			Reader r = new InputStreamReader(getJSONData(url, context));
-			return gson.fromJson(r, Station.class);
+        Log.e("CVE","Show station from: " + url);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
+        try {
+            // Log.i(TAG, "Json Parser started..");
+            Gson gson = new Gson();
+            Reader r = new InputStreamReader(getJSONData(url, context));
+            return gson.fromJson(r, Station.class);
 
-	}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
-	public class Station {
+    }
 
-		private String version;
-		private String station;
-		private StationStationinfo stationinfo;
-		private StationDepartures departures;
-		private long timestamp;
+    public class Station {
 
-		public StationStationinfo getStationStationinfo() {
-			return stationinfo;
-		}
+        private String version;
+        private String station;
+        private StationStationinfo stationinfo;
+        private StationDepartures departures;
+        private long timestamp;
 
-		public String getVersion() {
-			return version;
-		}
+        public StationStationinfo getStationStationinfo() {
+            return stationinfo;
+        }
 
-		public String getStation() {
-			return station;
-		}
+        public String getVersion() {
+            return version;
+        }
 
-		public StationDepartures getStationDepartures() {
-			return departures;
-		}
+        public String getStation() {
+            return station;
+        }
 
-		public long getTimeStamp() {
-			return this.timestamp;
-		}
+        public StationDepartures getStationDepartures() {
+            return departures;
+        }
 
-	}
+        public long getTimeStamp() {
+            return this.timestamp;
+        }
 
-	public class StationStationinfo {
+    }
 
-		private String id;
-		private double locationX;
-		private double locationY;
+    public class StationStationinfo {
 
-		public String getId() {
-			return id;
-		}
+        private String id;
+        private double locationX;
+        private double locationY;
 
-		public double getLocationX() {
-			return locationX;
-		}
+        public String getId() {
+            return id;
+        }
 
-		public double getLocationY() {
-			return locationY;
-		}
-	}
+        public double getLocationX() {
+            return locationX;
+        }
 
-	public class StationDepartures {
+        public double getLocationY() {
+            return locationY;
+        }
+    }
 
-		private ArrayList<StationDeparture> departure;
+    public class StationDepartures {
 
-		public ArrayList<StationDeparture> getStationDeparture() {
-			return departure;
-		}
-	}
+        private ArrayList<StationDeparture> departure;
 
-	public class StationDeparture {
+        public ArrayList<StationDeparture> getStationDeparture() {
+            return departure;
+        }
+    }
 
-		private String station;
-		private long time;
-		private String delay;
-		private String platform;
-		private String vehicle;
+    public class StationDeparture {
 
-		public String getStation() {
-			return station;
-		}
+        private String station;
+        private long time;
+        private String delay;
+        private String platform;
+        private String vehicle;
 
-		public long getTime() {
-			return time;
-		}
+        public String getStation() {
+            return station;
+        }
 
-		public String getDelay() {
-			return delay;
-		}
+        public long getTime() {
+            return time;
+        }
 
-		public String getPlatform() {
-			return platform;
-		}
+        public String getDelay() {
+            return delay;
+        }
 
-		public String getVehicle() {
-			return vehicle.replace("BE.NMBS.", "");
-		}
+        public String getPlatform() {
+            return platform;
+        }
 
-		public String getStatus() {
-			if (delay.contentEquals("0"))
-				return "";
+        public String getVehicle() {
+            return vehicle.replace("BE.NMBS.", "");
+        }
 
-			return "+" + Integer.valueOf(delay) / 60 + "'";
-		}
-	}
+        public String getStatus() {
+            if (delay.contentEquals("0"))
+                return "";
+
+            return "+" + Integer.valueOf(delay) / 60 + "'";
+        }
+    }
 /*
 	public static Document getKml(GeoPoint src, GeoPoint dest) {
 		// connect to map web service
@@ -551,74 +577,74 @@ public class UtilsWeb {
 	}
 	*/
 
-	public static ArrayList<Message> requestPhpRead(String trainId, int start,
-			int span, Context context) {
+    public static ArrayList<Message> requestPhpRead(String trainId, int start,
+                                                    int span, Context context) {
 
-		if (trainId != null)
-			trainId = trainId.replaceAll("[^0-9]+", "");
+        if (trainId != null)
+            trainId = trainId.replaceAll("[^0-9]+", "");
 
-		String TAG = "requestPhpRead";
-		ArrayList<Message> listOfMessages = new ArrayList<Message>();
+        String TAG = "requestPhpRead";
+        ArrayList<Message> listOfMessages = new ArrayList<Message>();
 
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(
-				"http://christophe.frandroid.com/betrains/php/messages.php");
-		String txt = null;
-		try {
-			// Add your data
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("id",
-					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
-			nameValuePairs.add(new BasicNameValuePair("message_count", ""
-					+ span));
-			nameValuePairs.add(new BasicNameValuePair("message_index", ""
-					+ start));
-			nameValuePairs.add(new BasicNameValuePair("mode", "read"));
-			nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
-			if (trainId != null)
-				nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(
+                "http://christophe.frandroid.com/betrains/php/messages.php");
+        String txt = null;
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("id",
+                    "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
+            nameValuePairs.add(new BasicNameValuePair("message_count", ""
+                    + span));
+            nameValuePairs.add(new BasicNameValuePair("message_index", ""
+                    + start));
+            nameValuePairs.add(new BasicNameValuePair("mode", "read"));
+            nameValuePairs.add(new BasicNameValuePair("order", "DESC"));
+            if (trainId != null)
+                nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
 
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			HttpResponse response = httpclient.execute(httppost);
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpclient.execute(httppost);
 
-			BasicResponseHandler myHandler = new BasicResponseHandler();
+            BasicResponseHandler myHandler = new BasicResponseHandler();
 
-			txt = myHandler.handleResponse(response);
+            txt = myHandler.handleResponse(response);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// TODO: USE XML PARSER
-		if (txt != null && !txt.equals("")) {
-			String[] messages = txt.split("<message>");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // TODO: USE XML PARSER
+        if (txt != null && !txt.equals("")) {
+            String[] messages = txt.split("<message>");
 
-			int i = 1;
-			if (messages.length > 1) {
+            int i = 1;
+            if (messages.length > 1) {
 
-				while (i < messages.length) {
-					String[] params = messages[i].split("CDATA");
-					for (int j = 1; j < params.length; j++) {
-						params[j] = params[j].substring(1,
-								params[j].indexOf("]"));
+                while (i < messages.length) {
+                    String[] params = messages[i].split("CDATA");
+                    for (int j = 1; j < params.length; j++) {
+                        params[j] = params[j].substring(1,
+                                params[j].indexOf("]"));
 
-					}
-					Log.w(TAG, "messages: " + params[1] + " " + params[2] + " "
-							+ params[3] + " " + params[4]);
-					listOfMessages.add(new Message(params[1], params[2],
-							params[3], params[4]));
-					i++;
-				}
+                    }
+                    Log.w(TAG, "messages: " + params[1] + " " + params[2] + " "
+                            + params[3] + " " + params[4]);
+                    listOfMessages.add(new Message(params[1], params[2],
+                            params[3], params[4]));
+                    i++;
+                }
 
-			}
-			return listOfMessages;
+            }
+            return listOfMessages;
 
-		} else {
-			System.out.println("function in connection maker returns null !!");
-			listOfMessages.add(new Message(context
-					.getString(R.string.txt_no_message), context
-					.getString(R.string.txt_connection), "", ""));
-			return listOfMessages;
-		}
+        } else {
+            System.out.println("function in connection maker returns null !!");
+            listOfMessages.add(new Message(context
+                    .getString(R.string.txt_no_message), context
+                    .getString(R.string.txt_connection), "", ""));
+            return listOfMessages;
+        }
 
-	}
+    }
 }

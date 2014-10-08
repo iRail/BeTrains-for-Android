@@ -36,10 +36,15 @@
 
 
         <android.support.v4.view.PagerTitleStrip
+            style="@style/PagerTitleStrip"
+            android:padding="8dp"
+            android:background="@color/primarycolor"
             android:id="@+id/pagerTitleStrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top" />
+
+        <include layout="@layout/colorstrip" />
 
     </android.support.v4.view.ViewPager>
 

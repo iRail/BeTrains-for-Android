@@ -25,8 +25,12 @@ public class DownloadOtherTrafficTask extends AsyncTask<URL, Integer, Long> {
 		this.trafFrag = trafFrag2;
 		context = trafFrag2.getActivity();
 		myRssFeed = trafFrag2.getRssFeed();
-		layoutInflater = trafFrag2.getActivity().getLayoutInflater();
-		lang = trafFrag2.getLang();
+        try {
+            layoutInflater = trafFrag2.getActivity().getLayoutInflater();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        lang = trafFrag2.getLang();
 	}
 
 	protected Long doInBackground(URL... params) {

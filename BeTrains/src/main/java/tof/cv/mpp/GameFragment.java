@@ -162,14 +162,16 @@ public class GameFragment extends BaseGameFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case (0):
-                String uri = "geo:0,0?q=" + closest.locationY + "," + closest.locationX + " (" + closest.getStation() + ")";
-                startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        if (closest != null)
+            switch (item.getItemId()) {
+                case (0):
+                    String uri = "geo:0,0?q=" + closest.locationY + "," + closest.locationX + " (" + closest.getStation() + ")";
+                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -594,7 +596,7 @@ public class GameFragment extends BaseGameFragment implements
                 @Override
                 public void onClick(View arg0) {
 
-                    if (station.distance > 0.1) {
+                    if (station.distance > 0.5) {
                         crouton(getString(R.string.toofar) + " " + station.getDistance(), Style.ALERT);
                         return;
                     }

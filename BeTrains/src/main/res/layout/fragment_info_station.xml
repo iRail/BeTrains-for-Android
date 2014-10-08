@@ -1,66 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/nowCardStyle"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/Button_prev"
-            android:layout_width="wrap_content"
+
+
+        <ImageView
+            android:id="@+id/image_header"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gare" />
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/myleftarrow" >
-        </ImageButton>
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_gravity="bottom"
             android:gravity="center"
-            android:text="@string/txt_loading"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/darkblue" >
-        </TextView>
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/Button_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/myrightarrow" >
-        </ImageButton>
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/Button_prev"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/myleftarrow"></ImageButton>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dip"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:background="@color/primarycolor"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/txt_loading"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/white"></TextView>
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/Button_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/myrightarrow"></ImageButton>
+        </LinearLayout>
+
+
+
+
+
 
     <include layout="@layout/colorstrip" />
 
     <ListView
         android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:paddingTop="10dip" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@android:id/empty"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
 </LinearLayout>

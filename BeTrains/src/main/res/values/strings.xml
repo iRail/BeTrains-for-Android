@@ -38,7 +38,7 @@
     <string name="tipctitle">Click on the date and time fields in the upper part to change your desired trip time.
     </string>
     <string name="tipd">Main menu</string>
-    <string name="tipdtitle">Use the \'Home\' icon in the upper left part to go the the main menu.</string>
+    <string name="tipdtitle">Use the icon in the upper left corner to open the main menu.</string>
     <string name="app_name">BeTrains</string>
     <string name="btn_home_chat">Chat</string>
     <string name="txt_loading">Loading...</string>
@@ -155,7 +155,7 @@
     <string name="app_id">88757012213</string>
     <string name="game_wait">You need to wait before your next Check-in</string>
     <string name="game_cooling">Next Checkin:</string>
-    <string name="game_text">You need to be closer than 100m from a station to check-in. The more delay at the station, the more points you get</string>
+    <string name="game_text">You need to be closer than 500m from a station to check-in. The more delay at the station, the more points you get</string>
     <string name="tutoswipe">Slide your finger from the edge of the screen to get more features</string>
     <string name="toofar">You are too far:</string>
     <string name="no_gps">GPS is OFF. Click here to turn on.</string>

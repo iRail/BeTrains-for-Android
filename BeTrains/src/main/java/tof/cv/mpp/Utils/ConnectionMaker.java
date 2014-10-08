@@ -271,6 +271,7 @@ public class ConnectionMaker {
 
 	public class StationInfo {
 
+        private String id;
 		private String locationX;
 		private String locationY;
 
@@ -281,6 +282,10 @@ public class ConnectionMaker {
 		public String getLon() {
 			return locationY;
 		}
+
+        public String getId() {
+            return id;
+        }
 
 	}
 

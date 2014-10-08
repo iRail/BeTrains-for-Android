@@ -1,5 +1,7 @@
 package tof.cv.mpp.bo;
 
+import tof.cv.mpp.Utils.ConnectionMaker;
+
 public class Station {
 
 	private String delay;
@@ -8,8 +10,14 @@ public class Station {
 	private String platform;
 	//private String direction;
 	private String vehicle;
+    ConnectionMaker.StationInfo stationinfo;
 
-	public String getStation() {
+    public ConnectionMaker.StationInfo getStationInfo() {
+        return stationinfo;
+    }
+
+
+    public String getStation() {
 		return this.station;
 	}
 

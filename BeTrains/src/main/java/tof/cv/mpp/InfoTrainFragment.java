@@ -140,6 +140,7 @@ public class InfoTrainFragment extends ListFragment {
             public void run() {
                 currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity(),
                         timestamp);
+
                 if (getActivity() != null)
                     getActivity().runOnUiThread(displayResult);
             }
@@ -167,7 +168,13 @@ public class InfoTrainFragment extends ListFragment {
     };
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView parent, View view, int position, long id) {
+        UtilsWeb.VehicleStop stop = (UtilsWeb.VehicleStop) getListAdapter().getItem(position);
+        Intent i = new Intent(getActivity(), InfoStationActivity.class);
+        i.putExtra("Name", stop.getStation());
+        i.putExtra("ID", stop.getStationInfo().getId());
+        i.putExtra("timestamp", stop.getTime());
+        startActivity(i);
 
     }
 
@@ -376,6 +383,7 @@ public class InfoTrainFragment extends ListFragment {
                         (int) menuInfo.id);
                 Intent i = new Intent(getActivity(), InfoStationActivity.class);
                 i.putExtra("Name", stop.getStation());
+                i.putExtra("ID", stop.getStationInfo().getId());
                 i.putExtra("timestamp", stop.getTime());
                 startActivity(i);
 
@@ -385,6 +393,8 @@ public class InfoTrainFragment extends ListFragment {
         }
 
     }
+
+
 
     public void setLastMessageText(Spanned spanned) {
         mMessageText.setText(spanned);

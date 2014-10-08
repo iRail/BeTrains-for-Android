@@ -12,14 +12,21 @@ public class InfoStationActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_info_station);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setIcon(null);
 		
 		Bundle bundle = this.getIntent().getExtras();
 		long timestamp = bundle.getLong("timestamp")*1000;
 		String name = bundle.getString("Name");
-        getActionBar().setTitle(name+" infos:");
+        String id = null;
+        try {
+            id = bundle.getString("ID").replace("BE.NMBS.","");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        getActionBar().setTitle(null);
 		
-		InfoStationFragment fragment = (InfoStationFragment)getFragmentManager().findFragmentById(R.id.fragment);
-		fragment.displayInfo(name,timestamp);
+		InfoStationFragment fragment = (InfoStationFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
+		fragment.displayInfo(name,timestamp,id);
 	}
 	
 	@Override

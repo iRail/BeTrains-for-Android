@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="wrap_content">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="horizontal" android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/nickname"
-			android:text="Nickname" android:textColor="@color/darkblue"
-			android:textStyle="bold" />
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nickname"
+            android:textColor="@color/darkblue"
+            android:textStyle="bold" />
 
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:id="@+id/trainid"
-			android:text="IC_999" android:textColor="@color/darkblue"
-			android:textStyle="italic" android:layout_marginLeft="6dip" />
-	</LinearLayout>
+        <TextView
+            android:id="@+id/trainid"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dip"
+            android:text="IC_999"
+            android:textColor="@color/darkblue"
+            android:textStyle="italic" />
+    </LinearLayout>
 
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="fill_parent" android:text="BODY" 
-		android:id="@+id/messagebody"
-		android:textColor="@color/darkblue"
-		android:layout_marginBottom="2dip"/>
+    <TextView
+        android:id="@+id/messagebody"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="2dip"
+        android:text="BODY"
+        android:textColor="@color/darkblue" />
 
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:id="@+id/time"
-		android:text="" android:textColor="@color/darkblue"
-		android:textSize="11sp" />
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/darkblue"
+        android:textSize="11sp" />
 
 </LinearLayout>

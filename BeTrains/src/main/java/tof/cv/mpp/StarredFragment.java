@@ -79,6 +79,7 @@ public class StarredFragment extends ListFragment {
             case 1:
                 i = new Intent(getActivity(), InfoStationActivity.class);
                 i.putExtra("Name", item);
+                i.putExtra("ID", itemTwo);
                 startActivity(i);
                 break;
             case 2:
