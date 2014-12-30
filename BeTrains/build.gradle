@@ -1,8 +1,8 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "20"
 
     packagingOptions {
@@ -16,19 +16,18 @@ android {
     }
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 19
-        versionCode 6506
-        versionName "4.506"
+        targetSdkVersion 21
+        versionCode 6509
+        versionName "4.509"
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            shrinkResources true
         }
     }
     productFlavors {
         production {
-
         }
         fdroid {
 
@@ -42,13 +41,16 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:20.0.0'
+    compile "com.android.support:appcompat-v7:21.0.0"
     compile 'commons-httpclient:commons-httpclient:3.1'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.google.android.gms:play-services:4.4.+'
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.android.gms:play-services-games:6.5.+'
+    compile 'com.google.android.gms:play-services-plus:6.5.+'
     compile 'com.android.support:cardview-v7:21.+'
     compile 'com.squareup.picasso:picasso:2.1.1'
     compile 'com.etsy.android.grid:library:1.0.4'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.android.support:cardview-v7:+'
     compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android', module: 'support-v4'
