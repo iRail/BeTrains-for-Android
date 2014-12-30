@@ -43,4 +43,6 @@
     <dimen name="whats_on_item_padding">10dp</dimen>
     <dimen name="whats_on_button_right_padding">20dp</dimen>
 
+    <dimen name="nav_drawer_margin_offset">-8dp</dimen>
+
 </resources>

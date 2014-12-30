@@ -22,7 +22,8 @@
 
     <TextView
         android:id="@+id/delay"
-        style="@android:style/TextAppearance.Medium"
+        style="@style/TextElementMid"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -32,7 +33,8 @@
 
     <TextView
         android:id="@+id/station"
-        style="@android:style/TextAppearance.Large"
+        style="@style/TextElementBig"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

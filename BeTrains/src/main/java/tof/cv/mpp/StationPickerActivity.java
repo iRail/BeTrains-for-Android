@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -30,12 +32,14 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
 
-public class StationPickerActivity extends FragmentActivity implements
+public class StationPickerActivity extends ActionBarActivity implements
         ViewPager.OnPageChangeListener {
 
     MyAdapter mAdapter;
@@ -67,7 +71,9 @@ public class StationPickerActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_tab_picker);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mAdapter = new MyAdapter(getSupportFragmentManager());
 
@@ -75,6 +81,14 @@ public class StationPickerActivity extends FragmentActivity implements
         mPager.setAdapter(mAdapter);
         mPager.setOnPageChangeListener(this);
         mDbHelper = new DbAdapterConnection(this);
+
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.primarycolor);
     }
 
     @Override

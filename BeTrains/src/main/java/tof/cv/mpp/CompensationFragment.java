@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -76,12 +77,12 @@ public class CompensationFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         registerForContextMenu(getListView());
-        getActivity().getActionBar().setIcon(R.drawable.ab_sncb);
-        getActivity().getActionBar().setSubtitle(null);
+        // getActivity().getActionBar().setIcon(R.drawable.ab_sncb);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                 !isTablet);
 
         mTitleText = (TextView) getView().findViewById(R.id.title);

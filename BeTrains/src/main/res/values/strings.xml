@@ -159,5 +159,11 @@
     <string name="tutoswipe">Slide your finger from the edge of the screen to get more features</string>
     <string name="toofar">You are too far:</string>
     <string name="no_gps">GPS is OFF. Click here to turn on.</string>
+    <string name="photos">Pictures</string>
+    <string name="photo_explain">You can send us an email to betrainphotos@gmail.com with a picture of the station and be featured in the app!</string>
+    <string name="ok_picture">Send Email</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

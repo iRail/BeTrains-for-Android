@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    class="tof.cv.mpp.ChatFragment" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <!-- We use a Toolbar so that our drawer can be displayed
+ in front of the action bar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_height="wrap_content"
+        android:background="@color/primarycolor"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="tof.cv.mpp.ChatFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

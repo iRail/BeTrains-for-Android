@@ -11,6 +11,8 @@ import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import java.util.List;
 
 
@@ -42,6 +44,14 @@ public class MyPreferenceActivity extends PreferenceActivity implements
 			addPreferencesFromResource(R.xml.activity_planner_preferences);
 			addPreferencesFromResource(R.xml.activity_twitter_preferences);
 		}
+
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.primarycolor);
 
 	}
 

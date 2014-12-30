@@ -3,10 +3,14 @@ package tof.cv.mpp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class InfoTrainActivity extends FragmentActivity {
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+public class InfoTrainActivity extends ActionBarActivity {
     /**
      * Called when the activity is first created.
      */
@@ -15,7 +19,10 @@ public class InfoTrainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_info_train);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = this.getIntent().getExtras();
         long timestamp = bundle.getLong("timestamp") * 1000;
@@ -23,14 +30,21 @@ public class InfoTrainActivity extends FragmentActivity {
         Log.i("***", "bundle: " + bundle.getString("Name"));
         Log.i("***", "NAME: " + name);
         String fromTo = bundle.getString("fromto");
-        getActionBar().setTitle(name + " infos:");
+        getSupportActionBar().setTitle(name + " infos:");
 
-     InfoTrainFragment fragment = (InfoTrainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        InfoTrainFragment fragment = (InfoTrainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         String fileName = bundle.getString("FileName");
         if (fileName != null)
-            fragment.displayInfo(fileName,name);
+            fragment.displayInfo(fileName, name);
         else
             fragment.displayInfo(name, fromTo, timestamp);
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.primarycolor);
     }
 
     @Override

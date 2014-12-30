@@ -387,7 +387,7 @@ public class UtilsWeb {
                     + station.replace(" ", "%20") + dateTime
                     + "&format=JSON&fast=true" + "&lang=" + langue;
 
-        Log.e("CVE","Show station from: " + url);
+        //Log.e("CVE","Show station from: " + url);
 
         try {
             // Log.i(TAG, "Json Parser started..");

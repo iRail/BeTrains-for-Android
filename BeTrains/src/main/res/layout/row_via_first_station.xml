@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@android:drawable/list_selector_background"
     android:orientation="vertical"
+    android:layout_gravity="left"
     android:paddingBottom="6dip"
     android:paddingRight="6dip"
     android:paddingTop="6dip" >
@@ -14,11 +15,12 @@
         android:id="@+id/tv_station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:paddingLeft="4dip"
+        android:paddingLeft="16dip"
         android:text="Station"
         android:textColor="@color/darkblue"
         android:textSize="16dip"
+        style="@style/TextElementMid"
+        android:layout_gravity="left"
         android:textStyle="bold" />
 
     <LinearLayout

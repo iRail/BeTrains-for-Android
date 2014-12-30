@@ -2,24 +2,35 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingBottom="10dip"
-        android:paddingTop="10dip"
-        android:text="@string/txt_loading"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:background="@color/primarycolor"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/primarycolor"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:text="@string/txt_loading"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+
 
     <include layout="@layout/colorstrip" />
 
@@ -58,6 +69,6 @@
         android:background="@color/action_bar_tint"
         android:gravity="center"
         android:orientation="horizontal"
-        android:textColor="#FF000000"></TextView>
+        android:textColor="#FF000000"/>
 
 </LinearLayout>

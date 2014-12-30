@@ -1,71 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pre-dex-items>
+<items version="2" >
 
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\classes-3afc939761928c7fa5b542a48955abe9428cb15d.jar"
-        jar="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.google.android.gms\play-services\4.4.52\classes.jar"
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/6.5.87/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="3dfdf1db5ce5ea2999a5dcde8c8e650b02660059"/>
+        sha1="95482e7c792a7c0d5a9d5461e97726bd54fe9549">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-ae1cf4eed2cc4b32748e2247558c3aee25d99cff.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\classes-14af18405ffe5e16c8f3bc1ab3f17ba56e6d7ffb.jar"
-        jar="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.0-rc1\classes.jar"
+        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.1.1/ab19bfb23f641f189b6dca9a4d393f8dc291103a/picasso-2.1.1.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="25c58e61f70a3d78e5c5abcfc9db0555fc869b7d"/>
+        sha1="ab19bfb23f641f189b6dca9a4d393f8dc291103a">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/picasso-2.1.1-45d2b7d3013caeb34ca8a988b8175004d702ab86.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\classes-aae1fba7fbb0115256fb236376b46b06e3d3f17b.jar"
-        jar="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.etsy.android.grid\library\1.0.4\classes.jar"
+        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.2/397f4731a9f9b6eb1907e224911c77ea3aa27a8b/commons-codec-1.2.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="589fdaab008936a7b90e8332bbd49b4c010b8c0c"/>
+        sha1="397f4731a9f9b6eb1907e224911c77ea3aa27a8b">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/commons-codec-1.2-abc7ef9266ed80f304036af642adcdad991a3d4b.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\classes-32312b20558a4e1e01c4109b007d7143b66e84d9.jar"
-        jar="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/de.keyboardsurfer.android.widget/crouton/1.8.1/3f7f33cca0b0fcec104a135bb5737cdb811fb6ed/crouton-1.8.1.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+        sha1="3f7f33cca0b0fcec104a135bb5737cdb811fb6ed">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/crouton-1.8.1-700adca6bde524756d08cda545885944b55d8b7d.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\internal_impl-20.0.0-b9390bd5928967bcd9ceb911fe6de013fc45089e.jar"
-        jar="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/internal_impl-21.0.0-cd28191b6d3192a5a303a9cf07406dcfed252321.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\commons-httpclient-3.1-13c196c45d311a91b9d60dac87e6aceab228b25b.jar"
-        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\commons-httpclient\commons-httpclient\3.1\964cd74171f427720480efdec40a7c7f6e58426a\commons-httpclient-3.1.jar"
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="964cd74171f427720480efdec40a7c7f6e58426a"/>
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-0ef2d2d5b16624e84b5393bd7cb7680020303af3.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\support-annotations-20.0.0-79e42da7c2657068d681cf877be8b4cc06e3cb7a.jar"
-        jar="C:\Program Files (x86)\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/gson-2.3-26cfdbf0ebe72038e3db7b7a955563dc8c28c5c2.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\commons-codec-1.2-9722ae0658f60ebf4e4a8491a8b077924f4dbc25.jar"
-        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.2\397f4731a9f9b6eb1907e224911c77ea3aa27a8b\commons-codec-1.2.jar"
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.etsy.android.grid/library/1.0.4/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="397f4731a9f9b6eb1907e224911c77ea3aa27a8b"/>
+        sha1="589fdaab008936a7b90e8332bbd49b4c010b8c0c">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-085c30e8188a30bf73f0cf78d03eb807a1b0f89d.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\gson-2.2.4-6252d8a078672847bd435416026ad538364db0fd.jar"
-        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar"
+        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.readystatesoftware.systembartint/systembartint/1.0.3/de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287/systembartint-1.0.3.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
+        sha1="de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/systembartint-1.0.3-4a990a3e569581b6274293a15c9ac9b9455402c0.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\picasso-2.1.1-30fe7bff4ebf2f64d4c631a5eca73659aed5e0e0.jar"
-        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.1.1\ab19bfb23f641f189b6dca9a4d393f8dc291103a\picasso-2.1.1.jar"
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="ab19bfb23f641f189b6dca9a4d393f8dc291103a"/>
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-7084b9a1b86c908a9e3eb0702566b24961a215b3.jar" />
+    </item>
     <item
-        dex="C:\Users\201601\Google Drive\AndroidStudioProjects\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\fdroid\debug\crouton-1.8.1-4c36fde40bc39eb2766a0ac41cdf4211e0b99aa1.jar"
-        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\de.keyboardsurfer.android.widget\crouton\1.8.1\3f7f33cca0b0fcec104a135bb5737cdb811fb6ed\crouton-1.8.1.jar"
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.astuetz/pagerslidingtabstrip/1.0.1/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="3f7f33cca0b0fcec104a135bb5737cdb811fb6ed"/>
+        sha1="7912610ed96381c25c36d986eba422731b9641b6">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-8255651343012daf32b20cc5af20caff17bdbb7c.jar" />
+    </item>
+    <item
+        jar="/Users/versieuxchristophe/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/support-annotations-21.0.0-07f9976b9dbdc29cc9bb323c393fb75e4c07a5d2.jar" />
+    </item>
+    <item
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-e89e105defa57da91d0ef7d0d5027e9d8983c5d8.jar" />
+    </item>
+    <item
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="b0be2331107b99f72200fc94573faf9410082124">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-130cf291764ceec26c56ab495040a395ce1f128c.jar" />
+    </item>
+    <item
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="f265524e1c414567131fdcbb05d7dd3241e61bab">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-c366c645f9585e83624d5ff9d82461221d554d59.jar" />
+    </item>
+    <item
+        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/commons-httpclient/commons-httpclient/3.1/964cd74171f427720480efdec40a7c7f6e58426a/commons-httpclient-3.1.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="964cd74171f427720480efdec40a7c7f6e58426a">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/commons-httpclient-3.1-cee1b1138983e306884967c46d38af7f95d49109.jar" />
+    </item>
+    <item
+        jar="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="ce5b43052e5b22fae97c6ae33afcfcbaf5259125">
+        <dex dex="/Users/versieuxchristophe/Google Drive/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-227ee31e6d9417b8f4ad0a960aea4714531f70ea.jar" />
+    </item>
 
-</pre-dex-items>
+</items>

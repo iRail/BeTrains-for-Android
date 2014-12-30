@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -46,8 +47,8 @@ public class StarredFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         registerForContextMenu(getListView());
-        getActivity().getActionBar().setIcon(R.drawable.ab_starred);
-        getActivity().getActionBar().setSubtitle(null);
+        //getActivity().getActionBar().setIcon(R.drawable.ab_starred);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
     }
 
     public void onResume() {

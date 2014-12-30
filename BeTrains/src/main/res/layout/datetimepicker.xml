@@ -8,6 +8,7 @@
 
     <DatePicker
         android:id="@+id/DatePicker"
+        android:datePickerMode="spinner"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -15,6 +16,7 @@
 
     <TimePicker
         android:id="@+id/TimePicker"
+        android:timePickerMode="spinner"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

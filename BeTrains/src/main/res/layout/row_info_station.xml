@@ -32,7 +32,8 @@
 
         <TextView
             android:id="@+id/tv_station"
-            style="@android:style/TextAppearance.Large"
+            style="@style/TextElementBig"
+            android:textStyle="bold"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

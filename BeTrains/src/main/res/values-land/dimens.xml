@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010 Google Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+
+    <dimen name="multipane_half_padding">8dp</dimen>
+    <dimen name="slidingmenu_offset">60dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="widget_margin">0dp</dimen>
+
+    <integer name="num_cols">1</integer>
+
+    <dimen name="colorstrip_height">6dip</dimen>
+    <dimen name="title_height">45dip</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+    <dimen name="quickaction_shadow_horiz">0dip</dimen>
+    <dimen name="quickaction_shadow_vert">30dip</dimen>
+    <dimen name="quickaction_shadow_touch">20dip</dimen>
+    <dimen name="edit_photo_size">76dip</dimen>
+
+    <!-- The height of the ScrollingTabWidget -->
+    <dimen name="tab_height">40dip</dimen>
+    <dimen name="account_name_height">25dip</dimen>
+    <dimen name="contact_shortcut_frame_width">50dip</dimen>
+    <dimen name="contact_shortcut_frame_height">56dip</dimen>
+    <dimen name="whats_on_height">70dp</dimen>
+    <dimen name="whats_on_item_padding">10dp</dimen>
+    <dimen name="whats_on_button_right_padding">20dp</dimen>
+
+    <dimen name="nav_drawer_margin_offset">-16dp</dimen>
+
+</resources>

@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.etsy.android.grid.StaggeredGridView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -55,7 +56,6 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import tof.cv.mpp.Utils.BaseGameListFragment;
 import tof.cv.mpp.Utils.MyPagerAdapter;
-import tof.cv.mpp.Utils.PagerSlidingTabStrip;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.AchievementAdapter;

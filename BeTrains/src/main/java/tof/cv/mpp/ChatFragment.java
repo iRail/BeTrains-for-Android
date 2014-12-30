@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,16 +68,7 @@ public class ChatFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
-		boolean isTablet=this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 
-		getActivity().getActionBar().setDisplayHomeAsUpEnabled(
-				!isTablet);
-		
-		getActivity().getActionBar().setIcon(R.drawable.ab_chat);
-		getActivity().getActionBar().setSubtitle(null);
-		
 		setHasOptionsMenu(true);
 
 
@@ -98,6 +91,14 @@ public class ChatFragment extends ListFragment {
 		setBtnSendListener();
 		Log.i("", "Created " + trainId);
 		update();
+
+        boolean isTablet=this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
+
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
+                !isTablet);
+
+        //getActivity().getActionBar().setIcon(R.drawable.ab_chat);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
 
 	}
 

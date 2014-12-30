@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -85,7 +86,8 @@ public class PlannerFragment extends ListFragment {
     private static final int ACTIVITY_GETSTOPSTATION = 4;
 
     private void updateActionBar() {
-        getActivity().getActionBar().setSubtitle(
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(
                 Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
     }
 
@@ -135,12 +137,12 @@ public class PlannerFragment extends ListFragment {
         fillStations(pStart, pStop);
 
 
-        getActivity().getActionBar().setIcon(
-                R.drawable.ab_planner);
+       // getActivity().getSupportActionBar().setIcon(
+        //        R.drawable.ab_planner);
 
         updateActionBar();
 
-        if (PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("tuto", true) && ((WelcomeActivity) this.getActivity()).mDrawerLayout != null)
+        if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean(MenuFragment.PREF_USER_LEARNED_DRAWER, false) && ((WelcomeActivity) this.getActivity()).mDrawerLayout != null)
             this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);
 
         final LinearLayout layout = (LinearLayout) getView().findViewById(R.id.Ly_Pannel_Sup);
@@ -171,7 +173,7 @@ public class PlannerFragment extends ListFragment {
     }
 
     public void fillStations(String departure, String arrival) {
-        Log.e("", "fill " + departure + " - " + arrival + " - " + fromIntent);
+       // Log.e("", "fill " + departure + " - " + arrival + " - " + fromIntent);
         tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
         tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
 

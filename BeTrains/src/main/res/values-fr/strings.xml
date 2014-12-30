@@ -184,4 +184,10 @@
     <string name="tutoswipe">Glissez votre doigt depuis le bord gauche du téléphone pour faire apparaitre le menu.</string>
     <string name="toofar">Vous êtes trop loin:</string>
     <string name="no_gps">GPS is OFF. Click here to turn on.</string>
+    <string name="photos">Pictures</string>
+    <string name="photo_explain">Nous comptons sur vous pour nous envoyer vos plus belle photos et apporter votre touche personnelle à l\'application! Envoyez simplement un email à betrainsphotos@gmail.com avec votre plus belle création.</string>
+    <string name="ok_picture">Send Email</string>
+
+    <string name="navigation_drawer_open">Ouvrir le menu</string>
+    <string name="navigation_drawer_close">Fermer le menu</string>
 </resources>

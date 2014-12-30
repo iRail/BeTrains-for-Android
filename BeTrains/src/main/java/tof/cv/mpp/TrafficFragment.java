@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +46,8 @@ public class TrafficFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		getActivity().getActionBar().setIcon(R.drawable.ab_traffic);
-        getActivity().getActionBar().setSubtitle(null);
+//		getActivity().getActionBar().setIcon(R.drawable.ab_traffic);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
 	}
 
 	public String getLang() {

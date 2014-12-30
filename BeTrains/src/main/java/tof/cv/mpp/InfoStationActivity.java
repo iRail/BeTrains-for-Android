@@ -1,32 +1,49 @@
 package tof.cv.mpp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-public class InfoStationActivity extends FragmentActivity {
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+public class InfoStationActivity extends ActionBarActivity {
 	/** Called when the activity is first created. */
-	@Override
+    String id;
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_info_station);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setIcon(null);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(null);
 		
 		Bundle bundle = this.getIntent().getExtras();
 		long timestamp = bundle.getLong("timestamp")*1000;
 		String name = bundle.getString("Name");
-        String id = null;
+         id = null;
         try {
             id = bundle.getString("ID").replace("BE.NMBS.","");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getActionBar().setTitle(null);
 		
 		InfoStationFragment fragment = (InfoStationFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
 		fragment.displayInfo(name,timestamp,id);
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.primarycolor);
 	}
 	
 	@Override
@@ -44,5 +61,23 @@ public class InfoStationActivity extends FragmentActivity {
 		}
 	}
 
+    public void pic(View v){
+       AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setTitle(R.string.photos);
+        b.setMessage(R.string.photo_explain);
+        b.setPositiveButton(R.string.ok_picture,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"betrainsphotos@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android Photo "+id);
+                startActivity(Intent.createChooser(intent, "Mail"));
+
+            }
+        });
+        b.show();
+
+    }
 	
 }

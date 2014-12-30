@@ -3,11 +3,15 @@ package tof.cv.mpp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 
-public class ChatActivity extends FragmentActivity {
+public class ChatActivity extends ActionBarActivity {
     public final static String ID = "CgkI9Y3S0soCEAIQAw";
 
 
@@ -27,6 +31,15 @@ public class ChatActivity extends FragmentActivity {
                 .findFragmentById(R.id.fragment);
         if (trainId != null)
             fragment.trainId = getString(R.string.txt_train) + " " + trainId.replaceAll(getString(R.string.txt_train) + " ", "");
+
+        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.primarycolor);
     }
 
     @Override

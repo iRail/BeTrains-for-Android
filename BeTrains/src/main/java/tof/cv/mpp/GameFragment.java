@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -56,7 +58,6 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import tof.cv.mpp.Utils.BaseGameFragment;
 import tof.cv.mpp.Utils.MyPagerAdapter;
 import tof.cv.mpp.Utils.MyStaggeredGridView;
-import tof.cv.mpp.Utils.PagerSlidingTabStrip;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.AchievementAdapter;
@@ -101,8 +102,8 @@ public class GameFragment extends BaseGameFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.getActivity().getActionBar().setSubtitle(null);
-        this.getActivity().getActionBar().setIcon(R.drawable.ic_game);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        //this.getActivity().getActionBar().setIcon(R.drawable.ic_game);
 
         ViewPager pager = (ViewPager) getView().findViewById(R.id.pager);
         titles = this.getResources().getStringArray(R.array.titles);

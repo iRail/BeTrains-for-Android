@@ -28,6 +28,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -45,25 +46,25 @@ public class InfoStationFragment extends ListFragment {
     private TextView mTitleText;
     private long timestamp;
     private String stationString;
-    private ProgressDialog pd;
     private String id;
     private Target t = new Target() {
         public void onBitmapLoaded(Bitmap bitmapPic, Picasso.LoadedFrom from) {
-            ((ImageView) getView().findViewById(R.id.image_header)).setImageBitmap(bitmapPic);
-
-           // TextView tv = (TextView) getView().findViewById(R.id.title);
-           // Palette palette = Palette.generate(bitmapPic);
-
-           // getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(palette.getDarkMutedColor().getRgb()));
-
-            //tv.setTextColor(palette.getVibrantColor().getRgb());
-            //tv.setBackgroundColor(palette.getLightMutedColor().getRgb());
-
+            try {
+                ((ImageView) getView().findViewById(R.id.image_header)).setImageBitmap(bitmapPic);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
         public void onBitmapFailed(Drawable errorDrawable) {
-            Log.e("","FAIL: +"+id+"+");
+            getView().findViewById(R.id.Button_pic).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.image_header).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((InfoStationActivity) getActivity()).pic(null);
+                }
+            });
         }
 
         public void onPrepareLoad(Drawable placeHolderDrawable) {
@@ -99,8 +100,8 @@ public class InfoStationFragment extends ListFragment {
         nextButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
 
-                pd = ProgressDialog.show(getActivity(), "",
-                        getString(R.string.txt_patient), true);
+               // pd = ProgressDialog.show(getActivity(), "",
+               //         getString(R.string.txt_patient), true);
 
                 timestamp += (60 * 60 * 1000);
                 searchThread();
@@ -110,8 +111,8 @@ public class InfoStationFragment extends ListFragment {
         prevButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
 
-                pd = ProgressDialog.show(getActivity(), "",
-                        getString(R.string.txt_patient), true);
+               // pd = ProgressDialog.show(getActivity(), "",
+               //         getString(R.string.txt_patient), true);
 
                 timestamp -= (60 * 60 * 1000);
                 searchThread();
@@ -143,10 +144,7 @@ public class InfoStationFragment extends ListFragment {
 
         this.stationString = station;
 
-        String url= "http://wazabe.byethost8.com/" + id + ".jpg";
-        Picasso.with(this.getActivity()).load(url).error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
         this.id = id;
-        Log.e("CVC", url);
 
         searchThread();
     }
@@ -166,12 +164,12 @@ public class InfoStationFragment extends ListFragment {
 
     private Runnable displayResult = new Runnable() {
         public void run() {
-            if (pd != null)
-                pd.dismiss();
+           // if (pd != null)
+           //     pd.dismiss();
             if (currentStation != null)
                 if (currentStation.getStationDepartures() != null) {
 
-                    if (id == null)
+                    if (id != null)
                         Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
 
                     stationString = currentStation.getStation();
@@ -202,7 +200,8 @@ public class InfoStationFragment extends ListFragment {
     };
 
     public void setTitle(String txt) {
-        mTitleText.setText(stationString + " - " + txt);
+        getActivity().setTitle(stationString);
+        mTitleText.setText(txt);
     }
 
     @Override

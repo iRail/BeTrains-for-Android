@@ -11,6 +11,10 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +22,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-public class WelcomeActivity extends FragmentActivity {
+
+public class WelcomeActivity extends ActionBarActivity {
 
     private Fragment mContent;
     int value = -1;
@@ -45,6 +51,9 @@ public class WelcomeActivity extends FragmentActivity {
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
 
+
+        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         // check if the content frame contains the menu frame
@@ -65,28 +74,22 @@ public class WelcomeActivity extends FragmentActivity {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(close);
+                //getSupportActionBar().setTitle(close);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(open);
+                //getSupportActionBar().setTitle(open);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                if (PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).getBoolean("tuto", true))
-                    try {
-                        mContent.getView().findViewById(R.id.tuto).setVisibility(View.GONE);
-                        PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("tuto", false).commit();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
             }
         };
 
         if (mDrawerLayout != null){
             mDrawerLayout.setDrawerListener(mDrawerToggle);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
 
 
@@ -126,7 +129,7 @@ public class WelcomeActivity extends FragmentActivity {
             }
 
             try {//Wrong number in previous app, need to try/catch
-                close=getResources().getStringArray(R.array.menu)[pos];
+               getSupportActionBar().setTitle(getResources().getStringArray(R.array.menu)[pos - 1]);
             } catch (Resources.NotFoundException e) {
                 e.printStackTrace();
             }
@@ -135,13 +138,31 @@ public class WelcomeActivity extends FragmentActivity {
                     .replace(R.id.content_frame, mContent).commit();
 
         }
-
         mDrawerList = new MenuFragment();
         // set the Behind View Fragment
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.menu_frame, mDrawerList).commit();
 
+        mDrawerList.setUp(this,R.id.menu_frame,mDrawerLayout);
+        try {
+
+        } catch (Exception e) {
+            Log.e("CVE", "TODO: handle drawer");
+            e.printStackTrace();
+        }
+
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintResource(R.color.primarycolor);
+
+
     }
+
 
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
@@ -184,8 +205,9 @@ public class WelcomeActivity extends FragmentActivity {
         mContent = fragment;
 
         close = getResources().getStringArray(R.array.menu)[position];
+        getSupportActionBar().setTitle(close);
 
-        Fragment f = (Fragment) getSupportFragmentManager().findFragmentById(
+        Fragment f = getSupportFragmentManager().findFragmentById(
                 R.id.content_frame);
 
         if (f != null) { //TODO && !(String)fragment.getClass().equals(f.getClass())) {
@@ -214,7 +236,7 @@ public class WelcomeActivity extends FragmentActivity {
     public void onMailClick(View v) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, "christophe.versieux@gmail.com");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"christophe.versieux@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android");
         startActivity(Intent.createChooser(intent, "Mail"));
     }

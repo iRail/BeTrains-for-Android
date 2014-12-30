@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2010 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,21 +17,31 @@
 <!-- Top-level content view for the simple fragment sample. -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="0dip" 
-     android:background="#FFFFFFFF">
-<include layout="@layout/colorstrip" />
-    
+    android:padding="0dip"
+    android:background="#FFFFFFFF">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_height="wrap_content"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/primarycolor"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize" />
+
+    <include layout="@layout/colorstrip" />
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
 
         <android.support.v4.view.PagerTitleStrip

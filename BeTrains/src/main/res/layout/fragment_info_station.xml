@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
 
 
         <ImageView
@@ -16,44 +21,65 @@
             android:src="@drawable/gare" />
 
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_awesome_toolbar"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_width="match_parent"
+            android:minHeight="?attr/actionBarSize" />
+
+        <ImageButton
+            android:id="@+id/Button_pic"
+            android:src="@android:drawable/ic_menu_camera"
+            android:onClick="pic"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:visibility="gone"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
-            <ImageButton
-                android:id="@+id/Button_prev"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/myleftarrow"></ImageButton>
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dip"
-                android:padding="8dp"
-                android:layout_height="wrap_content"
-                android:background="@color/primarycolor"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/txt_loading"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white"></TextView>
-
-            <ImageButton
-                android:visibility="gone"
-                android:id="@+id/Button_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/myrightarrow"></ImageButton>
-        </LinearLayout>
+    </RelativeLayout>
 
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:background="@color/primarycolor"
+        android:orientation="horizontal">
 
 
+        <ImageButton
+            android:id="@+id/Button_prev"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@android:drawable/ic_media_previous" />
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:padding="8dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/txt_loading"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white" />
+
+
+        <ImageButton
+            android:id="@+id/Button_next"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_media_next" />
+    </LinearLayout>
 
 
     <include layout="@layout/colorstrip" />
