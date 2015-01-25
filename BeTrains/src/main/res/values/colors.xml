@@ -42,6 +42,17 @@
 
 	<color name="edit_divider">#ff666666</color>
 
+    <integer-array name="belgian_colors">
+        <item>@color/belgian_color_1</item>
+        <item>@color/belgian_color_2</item>
+        <item>@color/belgian_color_3</item>
+    </integer-array>
+
+
+    <color name="belgian_color_1">#FF000000</color>
+    <color name="belgian_color_2">#FFEEEE00</color>
+    <color name="belgian_color_3">#FFEE0000</color>
+
 
 
 

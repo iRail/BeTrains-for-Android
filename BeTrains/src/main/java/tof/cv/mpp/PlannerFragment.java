@@ -108,7 +108,6 @@ public class PlannerFragment extends ListFragment {
         editor = settings.edit();
         context = this.getActivity();
         mDate = Calendar.getInstance();
-        getActivity().setProgressBarIndeterminateVisibility(false);
         setHasOptionsMenu(true);
 
     }
@@ -118,7 +117,7 @@ public class PlannerFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
         tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
-
+        getView().findViewById(R.id.progress).setVisibility(View.GONE);
         setAllBtnListener();
         String pStart = settings.getString("pStart", "MONS");
         try {
@@ -168,7 +167,7 @@ public class PlannerFragment extends ListFragment {
     }
 
     public void doSearch() {
-        getActivity().setProgressBarIndeterminateVisibility(true);
+        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         mySearchThread(this.getActivity());
     }
 
@@ -206,7 +205,7 @@ public class PlannerFragment extends ListFragment {
 
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                a.setProgressBarIndeterminateVisibility(true);
+                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
                 mySearchThread(a);
 
             }
@@ -266,7 +265,7 @@ public class PlannerFragment extends ListFragment {
         Button btnAfter = (Button) getView().findViewById(R.id.mybuttonAfter);
         btnAfter.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                a.setProgressBarIndeterminateVisibility(true);
+                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
                 mDate.add(Calendar.HOUR, 1);
                 updateActionBar();
                 mySearchThread(a);
@@ -276,7 +275,7 @@ public class PlannerFragment extends ListFragment {
         Button btnBefore = (Button) getView().findViewById(R.id.mybuttonBefore);
         btnBefore.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                a.setProgressBarIndeterminateVisibility(true);
+                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
                 mDate.add(Calendar.HOUR, -1);
                 updateActionBar();
                 mySearchThread(a);
@@ -507,7 +506,7 @@ public class PlannerFragment extends ListFragment {
                             //
                             try {
                                 fillData();
-                                a.setProgressBarIndeterminateVisibility(false);
+                                getView().findViewById(R.id.progress).setVisibility(View.GONE);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

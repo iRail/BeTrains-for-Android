@@ -31,11 +31,12 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="spbStyle">@style/GNowProgressBar</item>
     </style>
 
 
     <style name="TextElementBig" parent="@android:style/TextAppearance.Holo.Large">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -45,7 +46,7 @@
     </style>
 
     <style name="TextElementMid" parent="@android:style/TextAppearance.Holo.Medium">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -56,7 +57,7 @@
 
     <style name="TextElement" parent="@android:style/TextAppearance.Holo">
         <item name="android:layout_gravity">center</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>

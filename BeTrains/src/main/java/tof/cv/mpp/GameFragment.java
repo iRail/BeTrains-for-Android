@@ -186,7 +186,11 @@ public class GameFragment extends BaseGameFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * DateUtils.SECOND_IN_MILLIS, 10, this);
+        try {//Some devices have no GPS
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * DateUtils.SECOND_IN_MILLIS, 10, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (init && !this.isSignedIn())
             this.beginUserInitiatedSignIn();

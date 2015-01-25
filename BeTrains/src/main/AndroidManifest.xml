@@ -108,7 +108,6 @@
             android:name="tof.cv.search.SearchProvider"
             android:authorities="tof.cv.search.SearchProvider"/>
 
-        <uses-library android:name="com.google.android.maps"/>
 
         <!-- The widget provider -->
         <receiver

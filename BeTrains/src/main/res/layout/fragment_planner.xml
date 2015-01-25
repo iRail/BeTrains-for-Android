@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+
     <LinearLayout
         android:id="@+id/tuto"
         android:layout_width="match_parent"
@@ -120,10 +121,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=">>"
+
                     android:textStyle="bold"></Button>
             </LinearLayout>
 
-            <include layout="@layout/colorstrip" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="6dp">
+
+                <include
+                    layout="@layout/colorstrip" />
+
+                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:indeterminate="true"
+
+                    android:id="@+id/progress" />
+            </RelativeLayout>
 
 
             <ListView

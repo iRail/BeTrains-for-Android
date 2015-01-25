@@ -135,8 +135,6 @@ public class MenuFragment extends ListFragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                Log.e("CVE", "WOOOOOT");
-
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
@@ -145,7 +143,11 @@ public class MenuFragment extends ListFragment {
                             .getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
-                a.findViewById(R.id.tuto).setVisibility(View.GONE);
+                try {
+                    a.findViewById(R.id.tuto).setVisibility(View.GONE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 a.invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }

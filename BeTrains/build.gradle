@@ -17,8 +17,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 6509
-        versionName "4.509"
+        versionCode 6510
+        versionName "4.510"
     }
     buildTypes {
         release {
@@ -55,4 +55,5 @@ dependencies {
     compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android', module: 'support-v4'
     }
+    compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
 }
