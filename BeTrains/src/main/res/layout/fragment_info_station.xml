@@ -80,9 +80,22 @@
             android:layout_height="48dp"
             android:src="@android:drawable/ic_media_next" />
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="6dp">
 
+        <include
+            layout="@layout/colorstrip" />
 
-    <include layout="@layout/colorstrip" />
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:indeterminate="true"
+
+            android:id="@+id/progress" />
+    </RelativeLayout>
+
 
     <ListView
         android:id="@android:id/list"

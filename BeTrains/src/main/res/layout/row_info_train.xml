@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/station"
-        style="@style/TextElementBig"
+        style="@style/TextElementMid"
         android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="match_parent"

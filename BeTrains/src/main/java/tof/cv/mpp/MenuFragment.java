@@ -51,8 +51,12 @@ public class MenuFragment extends ListFragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
-        if (mUserLearnedDrawer)
-            getActivity().findViewById(R.id.tuto).setVisibility(View.GONE);
+        try {
+            if (mUserLearnedDrawer)
+                getActivity().findViewById(R.id.tuto).setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (savedInstanceState != null) {
             mFromSavedInstanceState = true;

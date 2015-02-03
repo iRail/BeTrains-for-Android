@@ -23,109 +23,22 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/closest1Layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="@style/nowCardStyle"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-            <TextView
-                android:id="@+id/closest1Title"
-                style="@android:style/TextAppearance.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/closest1Desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:singleLine="true" />
-
-            <TextView
-                android:id="@+id/closestTime"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="*"
-                android:textColor="@android:color/darker_gray" />
-        </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-        <LinearLayout
-            android:id="@+id/closest2Layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="@style/nowCardStyle"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="18dp">
+            <include
+                android:id="@+id/closest1Layout"
+                layout="@layout/closest" />
 
-            <TextView
-                android:id="@+id/closest2Title"
-                style="@android:style/TextAppearance.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@android:color/darker_gray" />
+            <include
+                android:id="@+id/closest2Layout"
+                layout="@layout/closest" />
 
-            <TextView
-                android:id="@+id/closest2Desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:singleLine="true" />
-
-            <TextView
-                android:id="@+id/closestTime"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="*"
-                android:textColor="@android:color/darker_gray" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/closest3Layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="@style/nowCardStyle"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-            <TextView
-                android:id="@+id/closest3Title"
-                style="@android:style/TextAppearance.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/closest3Desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:singleLine="true" />
-
-            <TextView
-                android:id="@+id/closestTime"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="*"
-                android:textColor="@android:color/darker_gray" />
+            <include
+                android:id="@+id/closest3Layout"
+                layout="@layout/closest" />
         </LinearLayout>
     </LinearLayout>
 

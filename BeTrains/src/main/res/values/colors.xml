@@ -12,7 +12,7 @@
 		License.
 	-->
 <resources>
-    <color name="primarycolor">#37474e</color>
+    <color name="primarycolor">#FF37474e</color>
     <color name="primarycolortransparent">#6637474e</color>
     <color name="background_tab_pressed">#6633B5E5</color>
 	<color name="action_bar_tint">#FFbbbbbb</color>

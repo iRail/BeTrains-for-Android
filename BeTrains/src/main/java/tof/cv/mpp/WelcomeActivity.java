@@ -42,11 +42,6 @@ public class WelcomeActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
@@ -144,9 +139,9 @@ public class WelcomeActivity extends ActionBarActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.menu_frame, mDrawerList).commit();
 
-        mDrawerList.setUp(this,R.id.menu_frame,mDrawerLayout);
-        try {
 
+        try {
+            mDrawerList.setUp(this,R.id.menu_frame,mDrawerLayout);
         } catch (Exception e) {
             Log.e("CVE", "TODO: handle drawer");
             e.printStackTrace();

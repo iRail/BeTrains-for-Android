@@ -135,24 +135,24 @@ public class UtilsWeb {
                 + " for Android - "
                 + System.getProperty("http.agent"));
 
-       // Log.w("getClass().getSimpleName()", "URL TO CHECK " + url);
+       Log.e("CVE", "URL TO CHECK " + url);
 
         try {
             HttpResponse response = client.execute(request);
             final int statusCode = response.getStatusLine().getStatusCode();
 
             if (statusCode != HttpStatus.SC_OK) {
-               // Log.w("getClass().getSimpleName()", "Error " + statusCode
-               //         + " for URL " + url);
+                Log.e("CVE", "Error " + statusCode
+                        + " for URL " + url);
                 return null;
             }
 
             HttpEntity getResponseEntity = response.getEntity();
-            //Log.w("getClass().getSimpleName()", "Read the url:  " + url);
+            Log.e("CVE", "Read the url:  " + url);
             return getResponseEntity.getContent();
 
         } catch (IOException e) {
-            //Log.w("getClass().getSimpleName()", " Error for URL " + url, e);
+            Log.e("CVE", " Error for URL " + url, e);
         }
 
         return null;

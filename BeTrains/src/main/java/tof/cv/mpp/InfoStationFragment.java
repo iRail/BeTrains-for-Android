@@ -150,6 +150,7 @@ public class InfoStationFragment extends ListFragment {
     }
 
     private void searchThread() {
+        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         Runnable search = new Runnable() {
             public void run() {
                 currentStation = UtilsWeb.getAPIstation(id, stationString,
@@ -164,6 +165,7 @@ public class InfoStationFragment extends ListFragment {
 
     private Runnable displayResult = new Runnable() {
         public void run() {
+            getView().findViewById(R.id.progress).setVisibility(View.GONE);
            // if (pd != null)
            //     pd.dismiss();
             if (currentStation != null)

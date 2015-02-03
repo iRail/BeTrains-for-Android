@@ -200,7 +200,7 @@ public class GameFragment extends BaseGameFragment implements
                 Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
         if (!provider.contains(LocationManager.GPS_PROVIDER)) {
-            crouton = Crouton.makeText(getActivity(), R.string.no_gps, Style.ALERT).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
+            crouton = Crouton.makeText(getActivity(), R.string.no_gps, Style.ALERT,R.id.pager).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
             crouton.show();
         }
     }
@@ -346,6 +346,7 @@ public class GameFragment extends BaseGameFragment implements
     private String station3;
 
     public void setupClosest() {
+        Log.e("CVE","CLOSEST");
         try {
 
             for (StationList.Stationinfo aStation : list.station) {
@@ -359,25 +360,28 @@ public class GameFragment extends BaseGameFragment implements
             }
             Collections.sort(list.station);
             closest = list.station.get(0);
-            ((TextView) getView().findViewById(R.id.closest1Title)).setText(closest
+            View l = getView().findViewById(R.id.closest1Layout);
+            ((TextView) l.findViewById(R.id.closestTitle)).setText(closest
                     .getStation());
-            ((TextView) getView().findViewById(R.id.closest1Desc))
+            ((TextView) l.findViewById(R.id.closestDesc))
                     .setText(closest.getDistance());
             station1 = closest.getStation();
             setupLayout(closest, R.id.closest1Layout);
 
             StationList.Stationinfo stationinfo = list.station.get(1);
-            ((TextView) getView().findViewById(R.id.closest2Title)).setText(stationinfo
+            l = getView().findViewById(R.id.closest2Layout);
+            ((TextView) l.findViewById(R.id.closestTitle)).setText(stationinfo
                     .getStation());
-            ((TextView) getView().findViewById(R.id.closest2Desc))
+            ((TextView)l.findViewById(R.id.closestDesc))
                     .setText(stationinfo.getDistance());
             station2 = stationinfo.getStation();
             setupLayout(stationinfo, R.id.closest2Layout);
 
             stationinfo = list.station.get(2);
-            ((TextView) getView().findViewById(R.id.closest3Title)).setText(stationinfo
+            l = getView().findViewById(R.id.closest3Layout);
+            ((TextView) l.findViewById(R.id.closestTitle)).setText(stationinfo
                     .getStation());
-            ((TextView) getView().findViewById(R.id.closest3Desc))
+            ((TextView) l.findViewById(R.id.closestDesc))
                     .setText(stationinfo.getDistance());
             station3 = stationinfo.getStation();
             setupLayout(stationinfo, R.id.closest3Layout);
@@ -649,6 +653,6 @@ public class GameFragment extends BaseGameFragment implements
     }
 
     public void crouton(String text, Style style) {
-        Crouton.makeText(this.getActivity(), text, style).show();
+        Crouton.makeText(this.getActivity(), text, style,R.id.my_awesome_toolbar).show();
     }
 }

@@ -92,7 +92,7 @@ public class InfoTrainFragment extends ListFragment {
     }
 
     public void displayInfo(final String fileName, final String vehicle) {
-
+        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         this.timestamp = System.currentTimeMillis();
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
         if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
@@ -115,6 +115,7 @@ public class InfoTrainFragment extends ListFragment {
     }
 
     public void displayInfo(String vehicle, String fromTo, long timestamp) {
+        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         this.id = vehicle;
         this.fromTo = fromTo;
         if (timestamp != 0)
@@ -136,6 +137,7 @@ public class InfoTrainFragment extends ListFragment {
 
 
     private void myTrainSearchThread(final String vehicle, final long timestamp) {
+        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         Runnable trainSearch = new Runnable() {
             public void run() {
                 currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity(),
@@ -151,7 +153,7 @@ public class InfoTrainFragment extends ListFragment {
 
     private Runnable displayResult = new Runnable() {
         public void run() {
-
+            getView().findViewById(R.id.progress).setVisibility(View.GONE);
             if (currentVehicle != null
                     && currentVehicle.getVehicleStops() != null) {
                TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(

@@ -283,7 +283,7 @@ public class Utils {
 			try {
 				copy();
 			} catch (IOException ex) {
-				// do nothing
+				ex.printStackTrace();
 			}
 		}
 

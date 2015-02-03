@@ -31,7 +31,7 @@ public class TwitterFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		//UtilsWeb.loadTweets(getActivity(), getListView());
 
-		getActivity().getActionBar().setIcon(R.drawable.ab_twit);
+		//getActivity().getActionBar().setIcon(R.drawable.ab_twit);
         getActivity().getActionBar().setTitle("Twitter");
         getActivity().getActionBar().setSubtitle(null);
 	}
