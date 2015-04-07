@@ -2,17 +2,28 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-public class CompensationActivity extends FragmentActivity {
+
+public class CompensationActivity extends ActionBarActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compensation);
+		setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+
+		SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		// enable status bar tint
+		tintManager.setStatusBarTintEnabled(true);
+		// enable navigation bar tint
+		tintManager.setNavigationBarTintEnabled(true);
+		tintManager.setTintResource(R.color.primarycolor);
 	}
 	
 	@Override

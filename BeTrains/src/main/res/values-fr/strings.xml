@@ -59,9 +59,6 @@
     <string name="settings_activity">Premier écran</string>
     <string name="settings_activity_summary">Où démarrer l\'application?</string>
     <string name="txt_load_message">Chargement du dernier message en cours</string>
-    <string name="txt_infrabel">Les infos de cette page proviennent du site
-		Infrabel/Railtime. Les délais inférieurs à 5 minutes sont cachés et
-		peuvent être différents de la page précédente.</string>
     <string name="txt_no_message">Pas de message.</string>
     <string name="wid_empty">Pas de train sélectionné. Ouvrez BETrains et
 		choisissez-en un.</string>

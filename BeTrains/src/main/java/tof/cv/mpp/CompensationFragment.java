@@ -10,6 +10,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -135,10 +136,11 @@ public class CompensationFragment extends ListFragment {
 
                     switch (which) {
                         case 0:
+                            String[] all=getListAdapter().getItem(position).toString().split(";");
                             Intent i = new Intent(getActivity(), InfoTrainActivity.class);
                             String id = getListAdapter().getItem(position).toString().split(";")[3];
                             i.putExtra("FileName", getListAdapter().getItem(position).toString());
-                            i.putExtra("Name", getListAdapter().getItem(position).toString());
+                            i.putExtra("Name",all[all.length-1] );
                             startActivity(i);
                             break;
                         case 1:

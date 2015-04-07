@@ -17,12 +17,12 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 6513
-        versionName "4.513"
+        versionCode 6517
+        versionName "4.517"
     }
     buildTypes {
         release {
-            minifyEnabled true // new version
+            minifyEnabled false // new version
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             shrinkResources true
         }
@@ -59,4 +59,5 @@ dependencies {
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
+    compile 'com.koushikdutta.ion:ion:2.+'
 }

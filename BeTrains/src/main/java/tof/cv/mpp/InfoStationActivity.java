@@ -29,11 +29,9 @@ public class InfoStationActivity extends ActionBarActivity {
 		long timestamp = bundle.getLong("timestamp")*1000;
 		String name = bundle.getString("Name");
          id = null;
-        try {
+        if(bundle.getString("ID")!=null)
             id = bundle.getString("ID").replace("BE.NMBS.","");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 		
 		InfoStationFragment fragment = (InfoStationFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
 		fragment.displayInfo(name,timestamp,id);

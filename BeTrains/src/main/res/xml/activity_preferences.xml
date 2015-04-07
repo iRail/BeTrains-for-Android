@@ -8,7 +8,7 @@
             android:title="@string/settings_pseudo" />
 
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="preffirstM"
             android:summary="@string/settings_display_lm_desc"
             android:title="@string/settings_display_lm" />

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
-import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -96,12 +95,10 @@ public class InfoTrainFragment extends ListFragment {
         this.timestamp = System.currentTimeMillis();
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
         if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
-                .getBoolean("preffirstM", false)) {
+                .getBoolean("preffirstM", true)) {
             new DownloadLastMessageTask(this).execute(vehicle);
             setLastMessageText(getString(R.string.txt_load_message));
-        } else
-            mMessageText.setText(Html.fromHtml("<small>"
-                    + getText(R.string.txt_infrabel) + "</small>"));
+        }
 
         Runnable trainSearch = new Runnable() {
             public void run() {
@@ -124,12 +121,11 @@ public class InfoTrainFragment extends ListFragment {
             this.timestamp = System.currentTimeMillis();
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
         if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
-                .getBoolean("preffirstM", false)) {
-            new DownloadLastMessageTask(this).execute(vehicle);
+                .getBoolean("preffirstM", true)) {
             setLastMessageText(getString(R.string.txt_load_message));
-        } else
-            mMessageText.setText(Html.fromHtml("<small>"
-                    + getText(R.string.txt_infrabel) + "</small>"));
+            new DownloadLastMessageTask(this).execute(vehicle);
+
+        }
 
         myTrainSearchThread(vehicle, timestamp);
     }
@@ -404,6 +400,8 @@ public class InfoTrainFragment extends ListFragment {
 
     public void setLastMessageText(String text) {
         mMessageText.setText(text);
+        mMessageText.setVisibility(text.length()>1?View.VISIBLE:View.GONE);
+
     }
 
     public void addMessage(Message message) {

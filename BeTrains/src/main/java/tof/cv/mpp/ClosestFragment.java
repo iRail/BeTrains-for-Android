@@ -33,6 +33,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -42,6 +46,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -50,6 +55,7 @@ import tof.cv.mpp.Utils.DbAdapterLocation;
 import tof.cv.mpp.Utils.GPS;
 import tof.cv.mpp.adapter.StationLocationAdapter;
 import tof.cv.mpp.bo.StationLocation;
+import tof.cv.mpp.bo.StationLocationApi;
 
 public class ClosestFragment extends ListFragment {
     protected static final String TAG = "ClosestFragment";
@@ -86,9 +92,9 @@ public class ClosestFragment extends ListFragment {
 
         setHasOptionsMenu(true);
 
-       // getActivity().getActionBar().setIcon(
-       //         R.drawable.ab_closest);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        // getActivity().getActionBar().setIcon(
+        //         R.drawable.ab_closest);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
         m_ProgressDialog = new MyProgressDialog(getActivity());
         mDbHelper = new DbAdapterLocation(getActivity());
@@ -108,7 +114,7 @@ public class ClosestFragment extends ListFragment {
         btnUpdate.setOnClickListener(new OnClickListener() {
 
             public void onClick(View arg0) {
-                if (!threadLock){
+                if (!threadLock) {
                     notifyList(true);
                     btnUpdate.setVisibility(View.GONE);
                 }
@@ -148,6 +154,8 @@ public class ClosestFragment extends ListFragment {
                         Intent it = new Intent(getActivity(),
                                 InfoStationActivity.class);
                         it.putExtra("Name", clicked.getStation());
+                        it.putExtra("ID", clicked.getId());
+                        //Log.e("CVE", "CLICK " + clicked.getId());
                         startActivity(it);
 
                         break;
@@ -176,7 +184,7 @@ public class ClosestFragment extends ListFragment {
                                             + " (" + clicked.getStation()
                                             + ")"));
                         /*
-						 * Intent i = new Intent(getActivity(),
+                         * Intent i = new Intent(getActivity(),
 						 * MapStationActivity.class);
 						 * 
 						 * i.putExtra("Name", clicked.getStation());
@@ -208,6 +216,12 @@ public class ClosestFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
+                m_ProgressDialog = new MyProgressDialog(this.getActivity());
+                m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                m_ProgressDialog.setCancelable(false);
+                m_ProgressDialog.setTitle(getString(R.string.txt_patient));
+                m_ProgressDialog.setMessage(getString(R.string.txt_fill_closest));
+                m_ProgressDialog.show();
                 downloadStationListFromApi();
                 return true;
             default:
@@ -343,7 +357,7 @@ public class ClosestFragment extends ListFragment {
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Runnable fillDataRunnable = new Runnable() {
+                               /* Runnable fillDataRunnable = new Runnable() {
 
                                     public void run() {
                                         downloadStationListThread();
@@ -352,12 +366,29 @@ public class ClosestFragment extends ListFragment {
 
                                 thread = new Thread(null, fillDataRunnable,
                                         "MagentoBackground");
-                                thread.start();
+                                thread.start();*/
+                                mDbHelper.open();
+                                getActivity().runOnUiThread(lockOff);
+                                DownloadAndParseStationList();
+                                mDbHelper.open();
+                                final Cursor locationCursor = mDbHelper.fetchAllLocations();
+                                if (locationCursor.getCount() > 0) {
+                                    // TODO Refresh
+                                    mDbHelper.close();
+                                } else {
+                                    Activity a = getActivity();
+                                    if (a != null) {
+                                        a.runOnUiThread(hideProgressdialog);
+                                        a.runOnUiThread(noConnexion);
+                                    }
+                                }
+                                getActivity().runOnUiThread(lockOn);
+                                mDbHelper.close();
                                 try {
                                     m_ProgressDialog.hide();
                                     m_ProgressDialog = new MyProgressDialog(
                                             getActivity());
-                                    Looper.prepare();
+                                    // Looper.prepare();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -463,34 +494,48 @@ public class ClosestFragment extends ListFragment {
         double iLon = locationCursor.getInt(locationCursor
                 .getColumnIndex(DbAdapterLocation.KEY_STATION_LON));
 
+        String id = locationCursor.getString(locationCursor
+                .getColumnIndex(DbAdapterLocation.KEY_STATION_ID));
+
         double dDis = StationLocationAdapter.distance(lat, lon, iLat / 1E6,
                 iLon / 1E6);
 
-        stationList.add(new StationLocation(strName, iLat, iLon, dDis + ""));
+        stationList.add(new StationLocation(strName, iLat, iLon, dDis + "", id));
     }
 
     public void DownloadAndParseStationList() {
 
         try {
-            mDbHelper.open();
-            URL url = new URL("http://api.irail."
-                    // URL url = new URL("http://dev.api.irail."
-                    + PreferenceManager.getDefaultSharedPreferences(
-                    getActivity()).getString("countryPref", "be")
-                    + "/stations.php");
+            Ion.with(getActivity())
+                    .load("http://api.irail.be/stations.php?format=json")
+                    .as(new TypeToken<StationLocationApi>() {
+                    })
+                    .setCallback(new FutureCallback<StationLocationApi>() {
+                        @Override
+                        public void onCompleted(Exception e, StationLocationApi apiList) {
+                            mDbHelper.open();
 
-            Log.v(TAG, "Begin to parse " + url);
-            SAXParserFactory mySAXParserFactory = SAXParserFactory
-                    .newInstance();
-            SAXParser mySAXParser = mySAXParserFactory.newSAXParser();
-            XMLReader myXMLReader = mySAXParser.getXMLReader();
-            StationHandler myRSSHandler = new StationHandler();
-            myXMLReader.setContentHandler(myRSSHandler);
-            mDbHelper.deleteAllLocations();
-            InputSource myInputSource = new InputSource(url.openStream());
-            myXMLReader.parse(myInputSource);
+                            Log.e("CVE", "SIZE= " + apiList.station.size() + "");
 
-            Looper.prepare();
+                            if (apiList.station.size() > 0)
+                                mDbHelper.deleteAllLocations();
+
+                            for (final StationLocation anItem : apiList.station) {
+                                mDbHelper.createStationLocation(anItem.getStation(), anItem.getId(), (int) (anItem.getLat() * 1E6),
+                                        (int) (anItem.getLon() * 1E6), 0.0);
+                                /*getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        m_ProgressDialog.setMessage(anItem.getStation());
+                                        m_ProgressDialog.incrementProgressBy(1);
+                                    }
+                                });*/
+                            }
+                            m_ProgressDialog.hide();
+                            mDbHelper.close();
+                        }
+                    });
+
 
             getActivity().runOnUiThread(hideProgressdialog);
             Log.v(TAG, "Finish to parse");
@@ -508,74 +553,6 @@ public class ClosestFragment extends ListFragment {
         }
     }
 
-    private class StationHandler extends DefaultHandler {
-
-        int lat = 0;
-        int lon = 0;
-
-        @Override
-        public void startDocument() throws SAXException {
-
-        }
-
-        @Override
-        public void endDocument() throws SAXException {
-
-        }
-
-        @Override
-        public void startElement(String uri, String localName, String qName,
-                                 Attributes attributes) throws SAXException {
-            if (localName.equalsIgnoreCase("station")) {
-
-                lat = (int) (Float.valueOf(attributes.getValue(attributes
-                        .getIndex("locationY"))) * 1E6);
-                lon = (int) (Float.valueOf(attributes.getValue(attributes
-                        .getIndex("locationX"))) * 1E6);
-            } else {// state = stateUnknown;
-            }
-        }
-
-        @Override
-        public void endElement(String uri, String localName, String qName)
-                throws SAXException {
-            // state = stateUnknown;
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length)
-                throws SAXException {
-            strCharacters = new String(ch, start, length);
-            try {
-                // if (state == stateStation && !thread.isInterrupted()) {
-                if (!thread.isInterrupted()) {
-                    m_ProgressDialog.incrementProgressBy(1);
-                    try {
-                        getActivity()
-                                .runOnUiThread(changeProgressDialogMessage);
-                    } catch (Exception e) {
-                        Log.i("BeTrains", strCharacters);
-                        e.printStackTrace();
-                    }
-                    mDbHelper.createStationLocation(strCharacters, "0", lat,
-                            lon, 0.0);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    private Runnable changeProgressDialogMessage = new Runnable() {
-
-        public void run() {
-            m_ProgressDialog.setMessage(strCharacters);
-        }
-    };
-
     private Runnable noConnexion = new Runnable() {
 
         public void run() {
@@ -592,7 +569,6 @@ public class ClosestFragment extends ListFragment {
 
     public void notifyList(boolean manual) {
         threadLock = true;
-        Log.v(TAG, "notifyList");
         // m_ProgressDialog.hide();
         m_ProgressDialog = new MyProgressDialog(this.getActivity());
         m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -602,13 +578,13 @@ public class ClosestFragment extends ListFragment {
         m_ProgressDialog.show();
         // I only update automatically first time
         if (!isFirst || manual) {
-            Log.v(TAG, "GO!");
             isFirst = true;
             // Upate the list and notify Adapter
             Runnable notifyListRunnable = new Runnable() {
                 public void run() {
                     updateListToBestLocation();
                     myLocationAdapter.clear();
+                    //Log.e("CVE", "SIZE= " + stationList.size());
                     for (StationLocation object : stationList) {
                         myLocationAdapter.add(object);
                     }

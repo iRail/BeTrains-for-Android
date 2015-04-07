@@ -58,10 +58,6 @@
     <string name="txt_no_message">Geen bericht(en)</string>
     <string name="wid_empty">Geen trein geselecteerd, open de BETrains
 		applicatie en selecteer er een.</string>
-    <string name="txt_infrabel">Deze informatie is afkomstig van de
-		Infrabel/Railtime website. Vertragingen van minder dan vijf minuten
-		worden niet weergegeven en kunnen enigszins afwijken van de vorige
-		pagina.</string>
     <string name="wid_confirm">Toevoegen aan widget?</string>
     <string name="wid_added">%s toegevoegd aan widget</string>
     <string name="txt_messages">Berichten</string>

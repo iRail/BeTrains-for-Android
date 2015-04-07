@@ -26,8 +26,7 @@ public class DownloadLastMessageTask extends
 	protected void onPostExecute(Message result) {
 		System.out.println("onpost execute");
 		if (result == null)
-			infoTrainAct.setLastMessageText(infoTrainAct
-					.getString(R.string.txt_no_message));
+			infoTrainAct.setLastMessageText("");
 		else
 			infoTrainAct.setLastMessageText(Html.fromHtml(result.getauteur()
 					+ ": " + result.getbody() + "<br />" + "<small>"

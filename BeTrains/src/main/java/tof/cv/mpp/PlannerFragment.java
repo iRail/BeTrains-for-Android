@@ -123,14 +123,14 @@ public class PlannerFragment extends ListFragment {
         try {
             pStart = getActivity().getIntent().getExtras().getString("Departure", pStart);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         String pStop = settings.getString("pStop", "TOURNAI");
         try {
             pStop = getActivity().getIntent().getExtras().getString("Arrival", pStop);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         fillStations(pStart, pStop);
@@ -158,7 +158,7 @@ public class PlannerFragment extends ListFragment {
 
                     fab.setLayoutParams(params);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                   // e.printStackTrace();
                 }
                 //observer.removeGlobalOnLayoutListener(this);
             }
