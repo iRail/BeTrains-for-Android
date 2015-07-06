@@ -174,4 +174,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="menu_plan">Routeplanner</string>
+    <string name="menu_iss">Verkeershinder</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_star">Favorieten</string>
+    <string name="menu_comp">Compensaties</string>
+    <string name="menu_closest">Dichtste station</string>
+    <string name="menu_game">Game</string>
+    <string name="menu_extras">Extras</string>
+
 </resources>

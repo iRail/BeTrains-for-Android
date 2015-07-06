@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="menu">
+    <!--string-array name="menu">
         <item>Route Planner</item>
         <item>Traffic Issues</item>
         <item>Chat</item>
@@ -18,7 +18,7 @@
         <item>Starred</item>
         <item>Compensation</item>
         <item>Extras</item>
-    </string-array>
+    </string-array-->
     <string-array name="menu_pref">
         <item>Route Planner</item>
         <item>Traffic Issues</item>

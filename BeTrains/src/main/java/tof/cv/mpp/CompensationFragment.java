@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -79,11 +80,11 @@ public class CompensationFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         registerForContextMenu(getListView());
         // getActivity().getActionBar().setIcon(R.drawable.ab_sncb);
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                 !isTablet);
 
         mTitleText = (TextView) getView().findViewById(R.id.title);

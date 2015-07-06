@@ -7,12 +7,15 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,19 +28,17 @@ import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     private Fragment mContent;
-    int value = -1;
-    public DrawerLayout mDrawerLayout;
-    private MenuFragment mDrawerList;
-    int open;
+    public DrawerLayout drawerLayout = null;
+
     String close;
     /**
      * Called when the activity is first created.
      */
     SharedPreferences settings;
-    ActionBarDrawerToggle mDrawerToggle;
+    // ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,109 +49,106 @@ public class WelcomeActivity extends ActionBarActivity {
 
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // check if the content frame contains the menu frame
-        if (findViewById(R.id.menu_frame) == null) ;
-        //TODO
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        open = R.string.app_name;
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                open,  /* "open drawer" description */
-                open /* "close drawer" description */
-        ) {
+                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned",true).apply();
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                //getSupportActionBar().setTitle(close);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                //Checking if the item is in checked state or not, if not make it in checked state
+                //if(menuItem.isChecked()) menuItem.setChecked(false);
+                //else
+                menuItem.setChecked(true);
+
+                //Closing drawer on item click
+                drawerLayout.closeDrawers();
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_item_plan:
+                        mContent = new PlannerFragment();
+                        break;
+                    case R.id.navigation_item_iss:
+                        mContent = new TrafficFragment();
+                        break;
+                    case R.id.navigation_item_chat:
+                        mContent = new ChatFragment();
+                        break;
+                    case R.id.navigation_item_star:
+                        mContent = new StarredFragment();
+                        break;
+                    case R.id.navigation_item_closest:
+                        mContent = new ClosestFragment();
+                        break;
+                    case R.id.navigation_item_game:
+                        mContent = new GameFragment();
+                        break;
+                    case R.id.navigation_item_comp:
+                        mContent = new CompensationFragment();
+                        break;
+                    case R.id.navigation_item_extras:
+                        mContent = new ExtraFragment();
+                        break;
+                    default:
+                        mContent = new PlannerFragment();
+                        close = getString(R.string.btn_home_planner);
+                        break;
+
+                }
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, mContent).commit();
+
+                return true;
             }
+        });
 
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                //getSupportActionBar().setTitle(open);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-
-            }
-        };
-
-        if (mDrawerLayout != null){
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
-
-
-
-        // set the Above View Fragment
-        if (savedInstanceState != null)
-            mContent = getSupportFragmentManager().getFragment(
-                    savedInstanceState, "mContent");
-
-        int pos= Integer.valueOf(settings.getString(
+        int pos = Integer.valueOf(settings.getString(
                 getString(R.string.key_activity), "1"));
 
-        if (mContent == null) {
-            switch (pos) {
-                case 1:
-                    mContent = new PlannerFragment();
-                    break;
-                case 2:
-                    mContent = new TrafficFragment();
-                    break;
-                case 3:
-                    mContent = new ChatFragment();
-                    break;
-                case 4:
-                    mContent = new StarredFragment();
-                    break;
-                case 5:
-                    mContent = new ClosestFragment();
-                    break;
-                case 6:
-                    mContent = new GameFragment();
-                    break;
-                default:
-                    mContent = new PlannerFragment();
-                    close = getString(R.string.btn_home_planner);
-                    break;
-            }
-
-            try {//Wrong number in previous app, need to try/catch
-               getSupportActionBar().setTitle(getResources().getStringArray(R.array.menu)[pos - 1]);
-            } catch (Resources.NotFoundException e) {
-                e.printStackTrace();
-            }
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, mContent).commit();
-
+        switch (pos) {
+            case 1:
+                mContent = new PlannerFragment();
+                break;
+            case 2:
+                mContent = new TrafficFragment();
+                break;
+            case 3:
+                mContent = new ChatFragment();
+                break;
+            case 4:
+                mContent = new StarredFragment();
+                break;
+            case 5:
+                mContent = new ClosestFragment();
+                break;
+            case 6:
+                mContent = new GameFragment();
+                break;
+            default:
+                mContent = new PlannerFragment();
+                close = getString(R.string.btn_home_planner);
+                break;
         }
-        mDrawerList = new MenuFragment();
-        // set the Behind View Fragment
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.menu_frame, mDrawerList).commit();
-
-
-        try {
-            mDrawerList.setUp(this,R.id.menu_frame,mDrawerLayout);
-        } catch (Exception e) {
-            Log.e("CVE", "TODO: handle drawer");
-            e.printStackTrace();
-        }
-
+                .replace(R.id.content_frame, mContent).commit();
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
+        //tintManager.setStatusBarTintEnabled(true);
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintResource(R.color.primarycolor);
@@ -158,29 +156,12 @@ public class WelcomeActivity extends ActionBarActivity {
 
     }
 
-
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        if (mDrawerLayout != null) {
-            boolean drawerOpen = mDrawerLayout.isDrawerOpen(Gravity.LEFT);
-            for (int i = 0; i < menu.size(); i++)
-                menu.getItem(i).setVisible(!drawerOpen);
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (!this.getResources().getBoolean(R.bool.tablet_layout))
-                    mDrawerLayout.closeDrawers();
-                //TODO toggle();
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -194,31 +175,6 @@ public class WelcomeActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-    }
-
-    public void switchContent(final Fragment fragment, int position) {
-        mContent = fragment;
-
-        close = getResources().getStringArray(R.array.menu)[position];
-        getSupportActionBar().setTitle(close);
-
-        Fragment f = getSupportFragmentManager().findFragmentById(
-                R.id.content_frame);
-
-        if (f != null) { //TODO && !(String)fragment.getClass().equals(f.getClass())) {
-            mContent = fragment;
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
-
-            // Highlight the selected item, update the title, and close the drawer
-            mDrawerList.getListView().setItemChecked(position, true);
-
-
-        }
-        if (mDrawerLayout != null)
-            mDrawerLayout.closeDrawers();
     }
 
     public void onPlusClick(View v) {
@@ -247,28 +203,5 @@ public class WelcomeActivity extends ActionBarActivity {
         Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
         marketLaunch.setData(Uri.parse("http://sph1re.fr/"));
         startActivity(marketLaunch);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-
-        try {
-            mDrawerToggle.syncState();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        try {
-            mDrawerToggle.onConfigurationChanged(newConfig);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

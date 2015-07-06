@@ -9,7 +9,7 @@
         <item>Dichtste station</item>
         <item>Game</item>
     </string-array>
-    <string-array name="menu">
+    <!--string-array name="menu">
         <item>Routeplanner</item>
         <item>Verkeershinder</item>
         <item>Chat</item>
@@ -26,7 +26,7 @@
         <item>Favorieten</item>
         <item>Compensaties</item>
         <item>Extras</item>
-    </string-array>
+    </string-array-->
     <string-array name="planner_da_entries">
         <item>Vertrek</item>
         <item>Aankomst</item>

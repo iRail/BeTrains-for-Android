@@ -11,17 +11,14 @@
 
     <string name="compensateurl">http://www.belgianrail.be/en/customer-service/compensation-for-delays.aspx</string>
 
-
     <string name="txt_editdelay">Edit delay value</string>
     <string name="txt_edittext">Edit text value</string>
 
     <string name="btn_home_compensate">Compensation</string>
     <string name="html_compensate"><![CDATA[<html><h1>Compensation</h1>If you want to use the Compensation feature in the app, press the Menu Button in the Train Information screen.<br/><br/><img src=\'comptuto.png\' width="100\%%"  /><br /><br />We actually find it unfortunate that you have found your way to this page. Despite all our efforts, one of your domestic train journeys was still delayed. Do you know that in certain instances you can receive <strong>compensation</strong> for the inconvenience?<br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/compensation-request.aspx">Requesting compensation</a><br /><h2>Right to compensation. When? How much?</h2>We draw a distinction between an occasional long delay and recurrent delays.<br /><h3>Occasional long delay</h3><ul><li>Delay of <strong>at least 60 minutes</strong> reimbursed at <strong>100\%%</strong> of the value of a one-way journey.</li></ul><h3>Recurrent delays</h3>Multiple delays within a <strong>6 month period</strong>.<br /><br /><ul><li><strong>A minimum of 20 delays of at least 15 minutes</strong> reimbursed for each delay at <strong>25\%%</strong> of the value of a one-way journey.</li><li><strong>A minimum of 10 delays of at least 30 minutes</strong> reimbursed for each delay at <strong>50% </strong>of the value of a one-way journey.</li></ul><p><strong>Please note</strong>: Sometimes you are <a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/no-compensation.aspx">not entitled to compensation</a>.</p><h2>Requesting compensation</h2><p>Submit your request <strong>within 15 calendar days</strong></p><ul><li>After your journey with a delay of at least 60 minutes</li><li>After your period of 6 months starting from your first delay</li><li>After using the final line of your Pass, Card, Campus or Half-time Railcard which is sent together with your request</li></ul><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/compensation-request.aspx">Requesting compensation</a><br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/how-much-compensation.aspx">Calculate your own compensation</a><br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/what-compensation.aspx">How do we pay your compensation?</a><p></html>]]></string>
 
-    <string name="empty_view_text"
-        translatable="false">Click on the Widget Button in your train information</string>
-    <string name="refresh"
-        translatable="false">Refresh</string>
+    <string name="empty_view_text" translatable="false">Click on the Widget Button in your train information</string>
+    <string name="refresh" translatable="false">Refresh</string>
     <string name="kindhelp">With the kind help of</string>
     <string name="svTitle">StreetView not installed</string>
     <string name="txt_quai">Platform</string>
@@ -145,18 +142,12 @@
     <string name="pref_selectFreq_sum">1 hour</string>
     <string name="stationpicker">Pick a Station</string>
 
-    <string name="gamehelper_sign_in_failed"
-        translatable="false">Failed to sign in. Please check your network connection and try again.</string>
-    <string name="gamehelper_app_misconfigured"
-        translatable="false">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
-    <string name="gamehelper_license_failed"
-        translatable="false">License check failed.</string>
-    <string name="gamehelper_unknown_error"
-        translatable="false">Unknown error.</string>
-    <string name="app_id"
-        translatable="false">88757012213</string>
-    <string name="game_wait"
-        translatable="false">You need to wait before your next Check-in</string>
+    <string name="gamehelper_sign_in_failed" translatable="false">Failed to sign in. Please check your network connection and try again.</string>
+    <string name="gamehelper_app_misconfigured" translatable="false">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
+    <string name="gamehelper_license_failed" translatable="false">License check failed.</string>
+    <string name="gamehelper_unknown_error" translatable="false">Unknown error.</string>
+    <string name="app_id" translatable="false">88757012213</string>
+    <string name="game_wait" translatable="false">You need to wait before your next Check-in</string>
     <string name="game_cooling">Next Checkin:</string>
     <string name="game_text">You need to be closer than 500m from a station to check-in. The more delay at the station, the more points you get</string>
     <string name="tutoswipe">Slide your finger from the edge of the screen to get more features</string>
@@ -168,5 +159,14 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="menu_plan">Route Planner</string>
+    <string name="menu_iss">Traffic Issues</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_star">Starred</string>
+    <string name="menu_comp">Compensation</string>
+    <string name="menu_closest">Closest stations</string>
+    <string name="menu_game">Game</string>
+    <string name="menu_extras">Extras</string>
 
 </resources>

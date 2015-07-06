@@ -9,7 +9,7 @@
         <item>A proximité</item>
         <item>Le Jeu</item>
     </string-array>
-    <string-array name="menu">
+    <!--string-array name="menu">
         <item>Itinéraire</item>
         <item>Perturbations</item>
         <item>Chat</item>
@@ -26,7 +26,7 @@
         <item>Favoris</item>
         <item>Compensations</item>
         <item>Extras</item>
-    </string-array>
+    </string-array-->
     <string-array name="planner_da_entries">
         <item>Depart</item>
         <item>Arrivée</item>

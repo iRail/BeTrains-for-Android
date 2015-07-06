@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -102,7 +103,7 @@ public class GameFragment extends BaseGameFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
         //this.getActivity().getActionBar().setIcon(R.drawable.ic_game);
 
         ViewPager pager = (ViewPager) getView().findViewById(R.id.pager);
@@ -529,8 +530,7 @@ public class GameFragment extends BaseGameFragment implements
                         );
                         handler.postDelayed(this, 1000);
                     } else
-                        GameFragment.this.getActivity().getActionBar().setTitle(
-                                getResources().getStringArray(R.array.menu)[6]);
+                        GameFragment.this.getActivity().getActionBar().setTitle(getString(R.string.menu_game));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

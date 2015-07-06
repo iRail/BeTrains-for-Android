@@ -18,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -94,7 +95,7 @@ public class ClosestFragment extends ListFragment {
 
         // getActivity().getActionBar().setIcon(
         //         R.drawable.ab_closest);
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
         m_ProgressDialog = new MyProgressDialog(getActivity());
         mDbHelper = new DbAdapterLocation(getActivity());

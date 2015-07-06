@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -86,8 +87,8 @@ public class PlannerFragment extends ListFragment {
     private static final int ACTIVITY_GETSTOPSTATION = 4;
 
     private void updateActionBar() {
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(
                 Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
     }
 
@@ -141,7 +142,7 @@ public class PlannerFragment extends ListFragment {
 
         updateActionBar();
 
-        if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean(MenuFragment.PREF_USER_LEARNED_DRAWER, false) && ((WelcomeActivity) this.getActivity()).mDrawerLayout != null)
+        if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false) && ((WelcomeActivity) this.getActivity()).drawerLayout != null)
             this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);
 
         final LinearLayout layout = (LinearLayout) getView().findViewById(R.id.Ly_Pannel_Sup);

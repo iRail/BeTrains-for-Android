@@ -10,6 +10,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -94,11 +95,11 @@ public class ChatFragment extends ListFragment {
 
         boolean isTablet=this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                 !isTablet);
 
         //getActivity().getActionBar().setIcon(R.drawable.ab_chat);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
 
 	}
 
