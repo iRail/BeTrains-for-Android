@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
@@ -128,18 +128,17 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="6dp">
+                android:layout_height="6dp"
+                android:gravity="center">
 
-                <include
-                    layout="@layout/colorstrip" />
+                <include layout="@layout/colorstrip" />
 
                 <fr.castorflex.android.smoothprogressbar.SmoothProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/progress"
                     android:layout_width="match_parent"
                     android:layout_height="12dp"
-                    android:indeterminate="true"
 
-                    android:id="@+id/progress" />
+                    android:indeterminate="true" />
             </RelativeLayout>
 
 
@@ -153,17 +152,20 @@
                 android:scrollbars="none" />
         </LinearLayout>
 
-        <com.melnykov.fab.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="12dp"
-            android:padding="0dp"
-            fab:fab_colorNormal="#FFFF0000"
-            fab:fab_colorPressed="#FFAA0000"
-            fab:fab_colorRipple="#FFFF8888"
-            android:src="@drawable/ic_fab_search" />
+            app:backgroundTint="#FFFF0000"
+            android:src="@drawable/ic_fab_search"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:fabSize="mini"
+            app:layout_anchor="@android:id/list"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#FFFF8888" />
 
     </FrameLayout>
 

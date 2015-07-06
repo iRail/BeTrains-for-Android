@@ -61,6 +61,6 @@ dependencies {
         exclude group: 'com.google.android', module: 'support-v4'
     }
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
-    compile 'com.melnykov:floatingactionbutton:1.1.0'
+
     compile 'com.koushikdutta.ion:ion:2.+'
 }

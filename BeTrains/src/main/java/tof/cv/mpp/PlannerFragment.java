@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
@@ -228,7 +229,7 @@ public class PlannerFragment extends ListFragment {
             }
         });
 
-        ImageButton fab = (ImageButton) getView().findViewById(
+        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(
                 R.id.fab);
         fab.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
