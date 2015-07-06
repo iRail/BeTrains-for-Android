@@ -354,32 +354,7 @@ public class ChatFragment extends ListFragment {
 			clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
 					"UTF-8");
 			client.setParams(clientParams);
-			/*
-			 * HttpClient client = new DefaultHttpClient();
-			 * 
-			 * client.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET
-			 * , "UTF-8");
-			 * 
-			 * HttpPost httppost = new HttpPost(
-			 * "http://christophe.frcom/betrains/php/messages.php");
-			 * List<NameValuePair> nameValuePairs = new
-			 * ArrayList<NameValuePair>(2); nameValuePairs.add(new
-			 * BasicNameValuePair("code",
-			 * "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
-			 * nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
-			 * nameValuePairs.add(new BasicNameValuePair("user_message",
-			 * message)); nameValuePairs.add(new BasicNameValuePair("user_name",
-			 * pseudo)); nameValuePairs.add(new BasicNameValuePair("mode",
-			 * "write")); nameValuePairs.add(new BasicNameValuePair("order",
-			 * "DESC"));
-			 * 
-			 * httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			 * 
-			 * HttpResponse response = client.execute(httppost);
-			 * 
-			 * BasicResponseHandler myHandler = new BasicResponseHandler(); txt
-			 * = myHandler.handleResponse(response);
-			 */
+
 			PostMethod methode = new PostMethod(
 					"http://christophe.frandroid.com/betrains/php/messages.php");
 			// On ajoute les parametres du formulaire

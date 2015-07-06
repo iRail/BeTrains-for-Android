@@ -589,6 +589,7 @@ public class UtilsWeb {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(
                 "http://christophe.frandroid.com/betrains/php/messages.php");
+
         String txt = null;
         try {
             // Add your data
@@ -604,7 +605,7 @@ public class UtilsWeb {
             if (trainId != null)
                 nameValuePairs.add(new BasicNameValuePair("train_id", trainId));
 
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8"));
             HttpResponse response = httpclient.execute(httppost);
 
             BasicResponseHandler myHandler = new BasicResponseHandler();
