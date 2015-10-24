@@ -33,7 +33,7 @@ public class StationLocationAdapter extends ArrayAdapter<StationLocation> {
 			TextView tvDistance = (TextView) v.findViewById(R.id.tv_dis);
 			tvName.setText(station.getStation());
 			tvGps.setText(station.getLat()/1E6+" - "+station.getLon()/1E6);
-			int iDistance=(int)(Double.valueOf(station.getDistance())/100);
+			int iDistance=(int)(station.getAway()/100);
 			tvDistance.setText((double)iDistance/10+"km");
 
 		}

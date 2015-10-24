@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
@@ -34,6 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -134,7 +136,7 @@ public class ClosestFragment extends ListFragment {
 
         bestLocationFound = GPS.getLastLoc(this.getActivity());
         if (bestLocationFound != null)
-            updateListToBestLocation();
+            updateListToBestLocationNew(bestLocationFound);
 
     }
 
@@ -292,34 +294,84 @@ public class ClosestFragment extends ListFragment {
 
     }
 
+    private void updateListToBestLocationNew(final Location loc) {
+        startTime = System.currentTimeMillis();
+        final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        if (mPrefs.getString("stations", "").length() > 1) {
+            StationLocationApi cache = new Gson().fromJson(mPrefs.getString("stations", ""), StationLocationApi.class);
+            stationList = cache.station;
+
+            myLocationAdapter.clear();
+            int i = 0;
+            for (StationLocation object : stationList) {
+                float[] results = new float[1];
+
+                Location.distanceBetween(loc.getLatitude(), loc.getLongitude(),
+                        object.getLat(), object.getLon(),
+                        results);
+                object.setAway(results[0]);
+                stationList.set(i, object);
+                i++;
+            }
+
+            Collections.sort(stationList);
+
+            for (StationLocation object : stationList) {
+                myLocationAdapter.add(object);
+            }
+
+            myLocationAdapter.notifyDataSetChanged();
+            Log.e("CVE", "Time With JSON from cache: " + (System.currentTimeMillis() - startTime));
+        } else
+            Ion.with(getActivity())
+                    .load("http://api.irail.be/stations.php?format=json")
+                    .as(new TypeToken<StationLocationApi>() {
+                    })
+                    .setCallback(new FutureCallback<StationLocationApi>() {
+                        @Override
+                        public void onCompleted(Exception e, StationLocationApi apiList) {
+                            if (apiList != null && apiList.station != null) {
+                                SharedPreferences.Editor ed = mPrefs.edit();
+                                Gson gson = new Gson();
+                                ed.putString("stations", gson.toJson(apiList));
+                                ed.apply();
+
+                                stationList = apiList.station;
+
+                                myLocationAdapter.clear();
+                                int i = 0;
+                                for (StationLocation object : stationList) {
+                                    float[] results = new float[1];
+
+                                    Location.distanceBetween(loc.getLatitude(), loc.getLongitude(),
+                                            object.getLat(), object.getLon(),
+                                            results);
+                                    object.setAway(results[0]);
+                                    stationList.set(i,object);
+                                    i++;
+                                }
+
+                                Collections.sort(stationList);
+
+                                for (StationLocation object : stationList) {
+                                    myLocationAdapter.add(object);
+                                }
+
+                                myLocationAdapter.notifyDataSetChanged();
+                                Log.e("CVE", "Time With JSON from URL: " + (System.currentTimeMillis() - startTime));
+                            }
+
+                        }
+                    });
+
+
+        getActivity().runOnUiThread(hideProgressdialog);
+        Log.v(TAG, "Finish to parse");
+    }
+
     long startTime;
 
-    private void updateListToBestLocation() {
-        startTime = System.currentTimeMillis();
-        mDbHelper.open();
-        locationCursor = mDbHelper.fetchAllLocations();
-        Log.e("CVE", "Time to fetch: " + (System.currentTimeMillis() - startTime));
-
-        if (locationCursor.getCount() == 0) {
-            getActivity().runOnUiThread(hideProgressdialog);
-            downloadStationListFromApi();
-        } else {
-            m_ProgressDialog.setMax(locationCursor.getCount());
-            stationList.clear();
-
-            for (int i = 0; i < locationCursor.getCount(); i++) {
-
-                compareStationsListToMyLocation(locationCursor, i,
-                        bestLocationFound.getLatitude(),
-                        bestLocationFound.getLongitude());
-            }
-            mDbHelper.close();
-            Collections.sort(stationList);
-            if (!threadLock)
-                notifyList(false);
-            getActivity().runOnUiThread(hideProgressdialog);
-        }
-    }
 
     private Runnable lockOff = new Runnable() {
 
@@ -574,7 +626,7 @@ public class ClosestFragment extends ListFragment {
     };
 
     public void notifyList(boolean manual) {
-        threadLock = true;
+      /*  threadLock = true;
         // m_ProgressDialog.hide();
         m_ProgressDialog = new MyProgressDialog(this.getActivity());
         m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -597,12 +649,13 @@ public class ClosestFragment extends ListFragment {
                     myLocationAdapter.notifyDataSetChanged();
                     threadLock = false;
                     m_ProgressDialog.hide();
+                    Log.e("CVE", "Time With Database: " + (System.currentTimeMillis() - startTime));
                 }
             };
             getActivity().runOnUiThread(notifyListRunnable);
         }
         threadLock = false;
-        m_ProgressDialog.hide();
+        m_ProgressDialog.hide();*/
     }
 
 }
