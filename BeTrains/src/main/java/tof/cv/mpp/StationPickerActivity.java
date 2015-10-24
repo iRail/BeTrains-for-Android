@@ -2,10 +2,14 @@ package tof.cv.mpp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.PixelFormat;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -32,12 +36,21 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.bo.StationLocation;
+import tof.cv.mpp.bo.StationLocationApi;
 
 public class StationPickerActivity extends ActionBarActivity implements
         ViewPager.OnPageChangeListener {
@@ -168,6 +181,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         private TextView mDialogText;
         private boolean mShowing;
         private boolean mReady;
+        ArrayList<StationLocation> stationList;
 
         private final class RemoveWindow implements Runnable {
             public void run() {
@@ -226,7 +240,50 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
 
-            String[] list = ConnectionMaker.LIST_OF_STATIONS;
+            final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
+            if (mPrefs.getString("stations", "").length() > 1) {
+                StationLocationApi cache = new Gson().fromJson(mPrefs.getString("stations", ""), StationLocationApi.class);
+                stationList = cache.station;
+                refreshList();
+            } else
+                Ion.with(getActivity())
+                        .load("http://api.irail.be/stations.php?format=json")
+                        .as(new TypeToken<StationLocationApi>() {
+                        })
+                        .setCallback(new FutureCallback<StationLocationApi>() {
+                            @Override
+                            public void onCompleted(Exception e, StationLocationApi apiList) {
+                                if (e != null && e.getMessage() != null)
+                                    Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG);
+
+                                if (apiList != null && apiList.station != null) {
+                                    SharedPreferences.Editor ed = mPrefs.edit();
+                                    Gson gson = new Gson();
+                                    ed.putString("stations", gson.toJson(apiList));
+                                    ed.apply();
+
+                                    stationList = apiList.station;
+                                }
+                                refreshList();
+                            }
+                        });
+        }
+
+        private void refreshList() {
+            String[] list;
+            if (stationList == null){
+                list=ConnectionMaker.LIST_OF_STATIONS;
+            }else{
+                Collections.sort(stationList);
+                list = new String[stationList.size()];// = ConnectionMaker.LIST_OF_STATIONS;
+                int i = 0;
+                for (StationLocation aStation : stationList) {
+                    list[i] = aStation.getStation();
+                    i++;
+                }
+            }
 
             getListView().setFastScrollEnabled(true);
             registerForContextMenu(getListView());
@@ -270,6 +327,7 @@ public class StationPickerActivity extends ActionBarActivity implements
 
             this.setListAdapter(a);
         }
+
 
         @Override
         public void onListItemClick(ListView l, View v, int position, long id) {
