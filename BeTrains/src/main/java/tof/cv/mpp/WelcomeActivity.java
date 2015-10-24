@@ -57,63 +57,87 @@ public class WelcomeActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
 
-                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned",true).apply();
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
+                if(mContent instanceof PlannerFragment)
+                    findViewById(R.id.tuto).setVisibility(View.GONE);
+            }
 
-                //Checking if the item is in checked state or not, if not make it in checked state
-                //if(menuItem.isChecked()) menuItem.setChecked(false);
-                //else
-                menuItem.setChecked(true);
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
 
-                //Closing drawer on item click
-                drawerLayout.closeDrawers();
-
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_item_plan:
-                        mContent = new PlannerFragment();
-                        break;
-                    case R.id.navigation_item_iss:
-                        mContent = new TrafficFragment();
-                        break;
-                    case R.id.navigation_item_chat:
-                        mContent = new ChatFragment();
-                        break;
-                    case R.id.navigation_item_star:
-                        mContent = new StarredFragment();
-                        break;
-                    case R.id.navigation_item_closest:
-                        mContent = new ClosestFragment();
-                        break;
-                    case R.id.navigation_item_game:
-                        mContent = new GameFragment();
-                        break;
-                    case R.id.navigation_item_comp:
-                        mContent = new CompensationFragment();
-                        break;
-                    case R.id.navigation_item_extras:
-                        mContent = new ExtraFragment();
-                        break;
-                    default:
-                        mContent = new PlannerFragment();
-                        close = getString(R.string.btn_home_planner);
-                        break;
-
-                }
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mContent).commit();
-
-                return true;
+            @Override
+            public void onDrawerStateChanged(int newState) {
             }
         });
+
+
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        if (navigationView != null){
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+                // This method will trigger on item Click of navigation menu
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+
+
+                    //Checking if the item is in checked state or not, if not make it in checked state
+                    //if(menuItem.isChecked()) menuItem.setChecked(false);
+                    //else
+                    menuItem.setChecked(true);
+
+                    //Closing drawer on item click
+                    drawerLayout.closeDrawers();
+
+                    //Check to see which item was being clicked and perform appropriate action
+                    switch (menuItem.getItemId()) {
+                        case R.id.navigation_item_plan:
+                            mContent = new PlannerFragment();
+                            break;
+                        case R.id.navigation_item_iss:
+                            mContent = new TrafficFragment();
+                            break;
+                        case R.id.navigation_item_chat:
+                            mContent = new ChatFragment();
+                            break;
+                        case R.id.navigation_item_star:
+                            mContent = new StarredFragment();
+                            break;
+                        case R.id.navigation_item_closest:
+                            mContent = new ClosestFragment();
+                            break;
+                        case R.id.navigation_item_game:
+                            mContent = new GameFragment();
+                            break;
+                        case R.id.navigation_item_comp:
+                            mContent = new CompensationFragment();
+                            break;
+                        case R.id.navigation_item_extras:
+                            mContent = new ExtraFragment();
+                            break;
+                        default:
+                            mContent = new PlannerFragment();
+                            close = getString(R.string.btn_home_planner);
+                            break;
+
+                    }
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_frame, mContent).commit();
+
+                    return true;
+                }
+            });
+        }
+
 
         int pos = Integer.valueOf(settings.getString(
                 getString(R.string.key_activity), "1"));
