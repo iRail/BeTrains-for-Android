@@ -137,15 +137,7 @@ public class PlannerFragment extends ListFragment {
 
         fillStations(pStart, pStop);
 
-
-       // getActivity().getSupportActionBar().setIcon(
-        //        R.drawable.ab_planner);
-
         updateActionBar();
-
-
-        Log.e("CVE", "Learned: " + !PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false));
-        Log.e("CVE","Layout: "+((WelcomeActivity) this.getActivity()).drawerLayout);
 
         if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false) && ((WelcomeActivity) this.getActivity()).drawerLayout != null)
             this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);

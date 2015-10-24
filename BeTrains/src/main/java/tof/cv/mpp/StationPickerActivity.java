@@ -49,6 +49,7 @@ import tof.cv.mpp.Utils.ConnectionMaker;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.FilterTextWatcher;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.adapter.IndexAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import tof.cv.mpp.bo.StationLocationApi;
 
@@ -277,7 +278,7 @@ public class StationPickerActivity extends ActionBarActivity implements
                 list=ConnectionMaker.LIST_OF_STATIONS;
             }else{
                 Collections.sort(stationList);
-                list = new String[stationList.size()];// = ConnectionMaker.LIST_OF_STATIONS;
+                list = new String[stationList.size()];
                 int i = 0;
                 for (StationLocation aStation : stationList) {
                     list[i] = aStation.getStation();
@@ -288,7 +289,7 @@ public class StationPickerActivity extends ActionBarActivity implements
             getListView().setFastScrollEnabled(true);
             registerForContextMenu(getListView());
 
-            ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
+            ArrayAdapter<String> a = new IndexAdapter(getActivity(),
                     android.R.layout.simple_list_item_1, list);
 
             mWindowManager = (WindowManager) getActivity().getSystemService(
@@ -370,7 +371,8 @@ public class StationPickerActivity extends ActionBarActivity implements
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-            if (mReady && mDialogText != null) {
+/*
+            if (mReady && mDialogText != null && firstVisibleItem >0) {
                 try {
                     char firstLetter = view.getItemAtPosition(firstVisibleItem)
                             .toString().charAt(0);
@@ -388,7 +390,7 @@ public class StationPickerActivity extends ActionBarActivity implements
                 }
 
             }
-
+*/
         }
 
     }

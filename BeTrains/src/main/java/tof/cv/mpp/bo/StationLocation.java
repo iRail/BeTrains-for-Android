@@ -1,5 +1,7 @@
 package tof.cv.mpp.bo;
 
+import android.util.Log;
+
 public class StationLocation implements Comparable<Object> {
 
     private String name;
@@ -15,7 +17,6 @@ public class StationLocation implements Comparable<Object> {
         this.locationX = lon;
         this.id = id;
         this.distance = distance;
-
     }
 
     public String getStation() {
@@ -47,10 +48,14 @@ public class StationLocation implements Comparable<Object> {
     public int compareTo(Object toCompare) {
         StationLocation otherStation = (StationLocation) toCompare;
         // return  Double.compare(Double.valueOf(this.distance),Double.valueOf(otherStation.getDistance()));
-        if (this.getAway() >= 0 && otherStation.getAway() >= 0)
+        if (this.getAway() > 0 && otherStation.getAway() > 0){
             return this.getAway() > otherStation.getAway() ? 1 : -1;
-        else
+        }
+
+        else {
             return (this.getStation().compareTo(otherStation.getStation()));
+        }
+
 
     }
 

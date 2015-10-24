@@ -3,12 +3,14 @@
     style="@style/nowCardStyle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="top"
     android:orientation="vertical" >
 
     <EditText
         android:id="@+id/search_box"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+
         android:hint="type to filter"
         android:inputType="text"
         android:maxLines="1" />
