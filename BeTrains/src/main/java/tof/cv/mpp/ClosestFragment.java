@@ -292,9 +292,14 @@ public class ClosestFragment extends ListFragment {
 
     }
 
+    long startTime;
+
     private void updateListToBestLocation() {
+        startTime = System.currentTimeMillis();
         mDbHelper.open();
         locationCursor = mDbHelper.fetchAllLocations();
+        Log.e("CVE", "Time to fetch: " + (System.currentTimeMillis() - startTime));
+
         if (locationCursor.getCount() == 0) {
             getActivity().runOnUiThread(hideProgressdialog);
             downloadStationListFromApi();
