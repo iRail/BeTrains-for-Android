@@ -51,7 +51,11 @@ public class WelcomeActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
+        try {//Just in case setStatusBarColor not available
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 

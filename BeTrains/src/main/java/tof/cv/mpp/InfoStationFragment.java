@@ -58,13 +58,17 @@ public class InfoStationFragment extends ListFragment {
         }
 
         public void onBitmapFailed(Drawable errorDrawable) {
-            getView().findViewById(R.id.Button_pic).setVisibility(View.VISIBLE);
-            getView().findViewById(R.id.image_header).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((InfoStationActivity) getActivity()).pic(null);
-                }
-            });
+            try {//Strange bugs in console To investigate
+                getView().findViewById(R.id.Button_pic).setVisibility(View.VISIBLE);
+                getView().findViewById(R.id.image_header).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((InfoStationActivity) getActivity()).pic(null);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         public void onPrepareLoad(Drawable placeHolderDrawable) {
