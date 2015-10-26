@@ -27,18 +27,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
 
@@ -210,35 +215,61 @@ public class ChatFragment extends ListFragment {
 	}
 
 	public void update() {
-		final Runnable getMessageFromTrain = new Runnable() {
-			public void run() {
-				try {
-					listOfMessage = UtilsWeb.requestPhpRead(trainId, 0, total,
-							getActivity());
-					if (listOfMessage != null) {
-						Log.i(TAG, "count= " + listOfMessage.size());
-						if (listOfMessage.size() == 0) {
-							if (getActivity() != null)
-								getActivity().runOnUiThread(updateEmpty);
-						} else {
-							if (getActivity() != null)
-								getActivity().runOnUiThread(returnRes);
+		Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
+				.setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
+				.setBodyParameter("message_count", "" + total)
+				.setBodyParameter("message_index", "" + 0)
+				.setBodyParameter("mode", "read")
+				.setBodyParameter("order", "DESC")
+				.setBodyParameter("train_id", trainId)
+				.asString(Charset.forName("ISO-8859-1")).setCallback(new FutureCallback<String>() {
+			@Override
+			public void onCompleted(Exception e, String txt) {
+				// TODO: USE XML PARSER
+				if (txt != null && !txt.equals("")) {
+					String[] messages = txt.split("<message>");
+
+					int i = 1;
+					if (messages.length > 1) {
+						listOfMessage.clear();
+						while (i < messages.length) {
+							String[] params = messages[i].split("CDATA");
+							for (int j = 1; j < params.length; j++) {
+								params[j] = params[j].substring(1,
+										params[j].indexOf("]"));
+
+							}
+							Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
+									+ params[3] + " " + params[4]);
+							listOfMessage.add(new Message(params[1], params[2],
+									params[3], params[4]));
+							i++;
 						}
-						toEmpty = getString(R.string.txt_no_message);
-					} else {
-						toEmpty = getString(R.string.txt_connection);
-						getActivity().runOnUiThread(returnRes);
+
 					}
-				}catch (Exception e){
-					e.printStackTrace();
+
+				} else {
+					System.out.println("function in connection maker returns null !!");
+					listOfMessage.add(new Message(ChatFragment.this
+							.getString(R.string.txt_no_message), ChatFragment.this
+							.getString(R.string.txt_connection), "", ""));
 				}
-				
-
+				if (listOfMessage != null && listOfMessage.size()>0) {
+					Log.i(TAG, "count= " + listOfMessage.size());
+					if (listOfMessage.size() == 0) {
+						if (getActivity() != null)
+							getActivity().runOnUiThread(updateEmpty);
+					} else {
+						if (getActivity() != null)
+							getActivity().runOnUiThread(returnRes);
+					}
+					toEmpty = getString(R.string.txt_no_message);
+				} else {
+					toEmpty = getString(R.string.txt_connection);
+					getActivity().runOnUiThread(returnRes);
+				}
 			}
-		};
-
-		Thread thread = new Thread(null, getMessageFromTrain, "ChatThread");
-		thread.start();
+		});
 	}
 
 	private Runnable returnRes = new Runnable() {

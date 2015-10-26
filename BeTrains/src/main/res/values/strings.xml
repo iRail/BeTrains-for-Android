@@ -168,5 +168,9 @@
     <string name="menu_closest">Closest stations</string>
     <string name="menu_game">Game</string>
     <string name="menu_extras">Extras</string>
+    <string name="ok">OK</string>
+    <string name="report">Report to iRail</string>
+    <string name="irailissue">Problem with the server</string>
+    <string name="irailissueDetail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
 
 </resources>

@@ -163,5 +163,9 @@
     <string name="menu_closest">A proximité</string>
     <string name="menu_game">Le Jeu</string>
     <string name="menu_extras">Extras</string>
+    <string name="ok">OK</string>
+    <string name="report">Rapporter le bug</string>
+    <string name="irailissue">Problème avec le server</string>
+    <string name="irailissueDetail">Petit soucis avec le serveur, nous sommes désolés.\nSi le prolème persiste, vous pouvez nous envoyer un petit mail avec le rapport.</string>
 
 </resources>

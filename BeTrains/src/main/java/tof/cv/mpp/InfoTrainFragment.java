@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.ShareCompat;
+import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -24,14 +26,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.Utils.DownloadLastMessageTask;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
@@ -47,7 +53,7 @@ public class InfoTrainFragment extends ListFragment {
     private String fromTo;
     String id;
     private long timestamp;
-    private ArrayList<Message> mSaveMessageList = new ArrayList<Message>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +102,7 @@ public class InfoTrainFragment extends ListFragment {
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
         if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
                 .getBoolean("preffirstM", true)) {
-            new DownloadLastMessageTask(this).execute(vehicle);
-            setLastMessageText(getString(R.string.txt_load_message));
+            displayLastMessage(vehicle);
         }
 
         Runnable trainSearch = new Runnable() {
@@ -122,37 +127,145 @@ public class InfoTrainFragment extends ListFragment {
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
         if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
                 .getBoolean("preffirstM", true)) {
-            setLastMessageText(getString(R.string.txt_load_message));
-            new DownloadLastMessageTask(this).execute(vehicle);
+            displayLastMessage(vehicle);
 
         }
 
-        myTrainSearchThread(vehicle, timestamp);
+        myTrainSearch(vehicle);
     }
 
+    private void displayLastMessage(String vehicle) {
+        mMessageText.setVisibility(View.VISIBLE);
+        setLastMessageText(getString(R.string.txt_load_message));
+        Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
+                .setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
+                .setBodyParameter("message_count", "" + 1)
+                .setBodyParameter("message_index", "" + 0)
+                .setBodyParameter("mode", "read")
+                .setBodyParameter("order", "DESC")
+                .setBodyParameter("train_id", vehicle)
+                .asString(Charset.forName("ISO-8859-1")).setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String txt) {
+                // TODO: USE XML PARSER
+                ArrayList<Message> messageList = new ArrayList<>();
+                if (txt != null && !txt.equals("")) {
+                    String[] messages = txt.split("<message>");
 
+                    int i = 1;
+                    if (messages.length > 1) {
+                        while (i < messages.length) {
+                            String[] params = messages[i].split("CDATA");
+                            for (int j = 1; j < params.length; j++) {
+                                params[j] = params[j].substring(1,
+                                        params[j].indexOf("]"));
 
-    private void myTrainSearchThread(final String vehicle, final long timestamp) {
-        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-        Runnable trainSearch = new Runnable() {
-            public void run() {
-                currentVehicle = UtilsWeb.getAPIvehicle(vehicle, getActivity(),
-                        timestamp);
+                            }
+                            Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
+                                    + params[3] + " " + params[4]);
+                            messageList.add(new Message(params[1], params[2],
+                                    params[3], params[4]));
+                            i++;
+                        }
 
-                if (getActivity() != null)
-                    getActivity().runOnUiThread(displayResult);
+                    }
+
+                }
+                if (messageList != null && messageList.size() > 0) {
+                    Log.i(TAG, "count= " + messageList.size());
+                    Message result = messageList.get(0);
+                    setLastMessageText(Html.fromHtml(result.getauteur()
+                            + ": " + result.getbody() + "<br />" + "<small>"
+                            + result.gettime() + "</small>"));
+                } else
+                    mMessageText.setVisibility(View.GONE);
             }
-        };
-        Thread thread = new Thread(null, trainSearch, "MyThread");
-        thread.start();
+        });
     }
 
+
+    private void myTrainSearch(final String vehicle) {
+
+        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        String dateTime = "";
+        if (timestamp != 0) {
+            String formattedDate = tof.cv.mpp.Utils.Utils.formatDate(new Date(timestamp),
+                    "ddMMyy");
+            String formattedTime = tof.cv.mpp.Utils.Utils
+                    .formatDate(new Date(timestamp), "HHmm");
+            dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
+        }
+
+        final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
+                + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
+
+        Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Vehicle>() {
+        }).setCallback(new FutureCallback<UtilsWeb.Vehicle>() {
+            @Override
+            public void onCompleted(Exception e, UtilsWeb.Vehicle result) {
+                currentVehicle=result;
+                getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
+                if (currentVehicle != null
+                        && currentVehicle.getVehicleStops() != null) {
+                    TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
+                            getActivity(), R.layout.row_info_train, currentVehicle
+                            .getVehicleStops().getVehicleStop());
+                    setListAdapter(trainInfoAdapter);
+                    //timestamp=currentVehicle.getTimestamp();
+                    setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+                } else {
+                    if (e != null) {
+                        Toast.makeText(getActivity(), e.getLocalizedMessage(),
+                                Toast.LENGTH_LONG).show();
+                        getActivity().finish();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(R.string.irailissue);
+                        builder.setMessage(R.string.irailissueDetail);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                getActivity().finish();
+                            }
+                        });
+                        builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
+                                builder.setType("message/rfc822");
+                                builder.addEmailTo("iRail@list.iRail.be");
+                                builder.setSubject("Issue with iRail API");
+                                builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
+                                        "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
+                                        "I hope you can fix that soon.\nHave a nice day.");
+                                builder.setChooserTitle("Send Email");
+                                builder.startChooser();
+
+                                //getActivity().finish();
+                            }
+                        });
+                        builder.create().show();
+                    }
+
+
+                }
+            }
+        });
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 0) {
+            getActivity().finish();
+        }
+    }
     private Runnable displayResult = new Runnable() {
         public void run() {
             getView().findViewById(R.id.progress).setVisibility(View.GONE);
             if (currentVehicle != null
                     && currentVehicle.getVehicleStops() != null) {
-               TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
+                TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
                         getActivity(), R.layout.row_info_train, currentVehicle
                         .getVehicleStops().getVehicleStop());
                 setListAdapter(trainInfoAdapter);
@@ -186,9 +299,9 @@ public class InfoTrainFragment extends ListFragment {
                 .setIcon(R.drawable.ic_menu_star)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-       // menu.add(Menu.NONE, 2, Menu.NONE, "Map")
-       //         .setIcon(R.drawable.ic_menu_mapmode)
-       //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        // menu.add(Menu.NONE, 2, Menu.NONE, "Map")
+        //         .setIcon(R.drawable.ic_menu_mapmode)
+        //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         menu.add(Menu.NONE, 4, Menu.NONE, R.string.btn_home_compensate)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -325,13 +438,13 @@ public class InfoTrainFragment extends ListFragment {
                         for (UtilsWeb.VehicleStop oneStop : currentVehicle
                                 .getVehicleStops().getVehicleStop())
                             mDbHelper.createWidgetStop(oneStop.getStation(), ""
-                                    + oneStop.getTime(), oneStop.getDelay(),
+                                            + oneStop.getTime(), oneStop.getDelay(),
                                     oneStop.getStatus());
 
                         mDbHelper.close();
 
                         Intent intent = new Intent(
-                             TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
+                                TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
                         getActivity().sendBroadcast(intent);
 
                         intent = new Intent(TrainWidgetProvider.UPDATE_ACTION);
@@ -392,20 +505,13 @@ public class InfoTrainFragment extends ListFragment {
 
     }
 
-
-
     public void setLastMessageText(Spanned spanned) {
         mMessageText.setText(spanned);
     }
 
     public void setLastMessageText(String text) {
         mMessageText.setText(text);
-        mMessageText.setVisibility(text.length()>1?View.VISIBLE:View.GONE);
+        mMessageText.setVisibility(text.length() > 1 ? View.VISIBLE : View.GONE);
 
     }
-
-    public void addMessage(Message message) {
-        this.mSaveMessageList.add(message);
-    }
-
 }
