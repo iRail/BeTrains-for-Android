@@ -1,10 +1,12 @@
 <component name="libraryTable">
   <library name="crouton-1.8.5">
     <CLASSES>
+      <root url="jar://$PROJECT_DIR$/BeTrains/build/intermediates/exploded-aar/de.keyboardsurfer.android.widget/crouton/1.8.5/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/BeTrains/build/intermediates/exploded-aar/de.keyboardsurfer.android.widget/crouton/1.8.5/res" />
-      <root url="jar://$PROJECT_DIR$/BeTrains/build/intermediates/exploded-aar/de.keyboardsurfer.android.widget/crouton/1.8.5/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.keyboardsurfer.android.widget/crouton/1.8.5/368f18883b398d7ee334ca3e6c43cf182b2058e2/crouton-1.8.5-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

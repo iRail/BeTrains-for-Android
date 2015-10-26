@@ -2,9 +2,11 @@
   <library name="library-1.0.0">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/BeTrains/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/1.0.0/res" />
-      <root url="jar://$PROJECT_DIR$/BeTrains/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/1.0.0/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BeTrains/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/1.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.castorflex.smoothprogressbar/library/1.0.0/b66e11d85b11a0fd56f0bb7b803148c4f4802309/library-1.0.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
