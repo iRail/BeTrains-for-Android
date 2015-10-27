@@ -35,9 +35,9 @@ public class TrafficFragment extends ListFragment {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 
-		lang = this.getString(R.string.url_lang);
+		lang = this.getString(R.string.url_lang_2);
 		if (settings.getBoolean("prefnl", false)) {
-			lang = "nl";
+			lang = "n";
 		}
 
 		new DownloadTrafficTask(this).execute();
