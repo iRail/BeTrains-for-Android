@@ -53,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         try {//Just in case setStatusBarColor not available
             getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
-        } catch (Resources.NotFoundException e) {
+        } catch (Error e) {
             e.printStackTrace();
         }
 
