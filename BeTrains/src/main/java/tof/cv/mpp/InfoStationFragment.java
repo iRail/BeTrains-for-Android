@@ -176,7 +176,8 @@ public class InfoStationFragment extends ListFragment {
                 if (currentStation.getStationDepartures() != null) {
 
                     if (id != null)
-                        Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                        //Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                        Picasso.with(InfoStationFragment.this.getActivity()).load("http://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
 
                     stationString = currentStation.getStation();
 
