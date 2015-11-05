@@ -2,158 +2,158 @@
 <items version="2" >
 
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/de.keyboardsurfer.android.widget/crouton/1.8.5/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="b81c788c5f175f94ddaac2f65e5d1726371e0963">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-b2dd0a4b158be280de7349b128b61cf54749f3a9.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/support-annotations-22.2.1-c512c5936ca42ea30eed00cd60e3843cbcd7f8b7.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.2/397f4731a9f9b6eb1907e224911c77ea3aa27a8b/commons-codec-1.2.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="397f4731a9f9b6eb1907e224911c77ea3aa27a8b">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/commons-codec-1.2-abc7ef9266ed80f304036af642adcdad991a3d4b.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.etsy.android.grid/library/1.0.4/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="589fdaab008936a7b90e8332bbd49b4c010b8c0c">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-9a7fbd1ca232a3c2483696b30862c11f854361fc.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-6d2e946fd273080b23ebcb9a7dcf73ec2093a475.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/1.0.0/jars/classes.jar"
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.github.castorflex.smoothprogressbar\library\1.0.0\jars\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="698b40a43ecff2ebadc58b019ae236edd053fc67">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-3009beb25b7cd406b1c22cec470805d410045a60.jar" />
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-c3f02800e11813a239ac7af3ddc4acdcdb19cfe6.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/internal_impl-22.2.1-39c47e817157df17b00dcbf5db92fcca42fbb3ee.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.1.1/ab19bfb23f641f189b6dca9a4d393f8dc291103a/picasso-2.1.1.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="ab19bfb23f641f189b6dca9a4d393f8dc291103a">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/picasso-2.1.1-45d2b7d3013caeb34ca8a988b8175004d702ab86.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.astuetz/pagerslidingtabstrip/1.0.1/jars/classes.jar"
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.astuetz\pagerslidingtabstrip\1.0.1\jars\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="7912610ed96381c25c36d986eba422731b9641b6">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-abb4044c0e81a3dd6dfb5e8af6ba84a60d9a40ef.jar" />
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-4a4bd239c4053a4cfa22db394ae21501c0f01152.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.1.0/jars/classes.jar"
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-8f9c4be39afcf71f67eff69282d6d781647805c2.jar" />
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\internal_impl-22.2.1-12cda4197f441a1969977a1d970f6cbfce2f2ab2.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.koushikdutta.async/androidasync/2.1.6/e3d5f6ab2003e31f2cf5ea61b4731a21e9517935/androidasync-2.1.6.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="e3d5f6ab2003e31f2cf5ea61b4731a21e9517935">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/androidasync-2.1.6-daa00e596a07558c33b0ff0b554623883ccfb602.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/commons-httpclient/commons-httpclient/3.1/964cd74171f427720480efdec40a7c7f6e58426a/commons-httpclient-3.1.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="964cd74171f427720480efdec40a7c7f6e58426a">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/commons-httpclient-3.1-cee1b1138983e306884967c46d38af7f95d49109.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.1/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-56688eabcd5f1b5b039bf63f4674fb521faf0f0e.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-dec6478d48effa1b60a988417bcad744c22d2c60.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.koushikdutta.ion/ion/2.1.6/cd55ef3ba6d8b62838b658ba2507b019dffb3a08/ion-2.1.6.jar"
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.koushikdutta.ion\ion\2.1.6\cd55ef3ba6d8b62838b658ba2507b019dffb3a08\ion-2.1.6.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="cd55ef3ba6d8b62838b658ba2507b019dffb3a08">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/ion-2.1.6-e8d33b98ac398b80f5a370982f38f8f14579294f.jar" />
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\ion-2.1.6-96774c6235c76008ed740f80cfc2e9b21050dacf.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/jars/classes.jar"
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.koushikdutta.async\androidasync\2.1.6\e3d5f6ab2003e31f2cf5ea61b4731a21e9517935\androidasync-2.1.6.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-06c18b6881c87c65173109d608965ff41663ac5e.jar" />
+        sha1="e3d5f6ab2003e31f2cf5ea61b4731a21e9517935">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\androidasync-2.1.6-2af8faead8307b93ac8cf3909c27641c35ced68b.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-c0351d177cfa44d579303b12a459118bbbb1a21f.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-cd9281c53268f6e60e82215e597dbf9560e5ca49.jar" />
-    </item>
-    <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.readystatesoftware.systembartint/systembartint/1.0.3/de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287/systembartint-1.0.3.jar"
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.readystatesoftware.systembartint\systembartint\1.0.3\de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287\systembartint-1.0.3.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/systembartint-1.0.3-4a990a3e569581b6274293a15c9ac9b9455402c0.jar" />
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\systembartint-1.0.3-3afcddf81ef48afcef1bccf223f04f992ca615d1.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/design/22.2.1/jars/classes.jar"
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-910c6a9913ff917d209ab616a264915f26ddfa40.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="1821601ddbec5ff125653097812823388700af74">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-9db76b4204378fb4da49543afe53c46ee119a601.jar" />
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-5bfd73f3eb46c816c15863f8c74aa553b3c2c696.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.1.1\ab19bfb23f641f189b6dca9a4d393f8dc291103a\picasso-2.1.1.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/gson-2.3-26cfdbf0ebe72038e3db7b7a955563dc8c28c5c2.jar" />
+        sha1="ab19bfb23f641f189b6dca9a4d393f8dc291103a">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\picasso-2.1.1-30fe7bff4ebf2f64d4c631a5eca73659aed5e0e0.jar" />
     </item>
     <item
-        jar="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="/Users/versieuxchristophe/Documents/AndroidStudioProjects/BeTrains-for-Android/BeTrains/build/intermediates/pre-dexed/production/debug/classes-b41df417ccf7af4a7a59127608e01f35e8565611.jar" />
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-61840cd1c13170bbe7ab5bcdaee4e6614b3bc312.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-3455ce7501780089f1668ac73f4ea63c22f53361.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\gson-2.3-e737bc1e0639f6c4f03158c2831d8d10e39a23c7.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-5682da1857dd0b6542f1cc6921511913fe26f52e.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\de.keyboardsurfer.android.widget\crouton\1.8.5\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="b81c788c5f175f94ddaac2f65e5d1726371e0963">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-451336f47fa71586c3dc8a455f8c6e1aecedb18d.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-141e9d070ab8e166a561d2e07a84251e7c20fb44.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-116fd8932adb44c97d8f94302faa988d2f8acd06.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-f171b192e04dc4f133620f5fb3ebbf5a79deceb6.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\support-annotations-22.2.1-885c946bdc4dfd177ad7944ccf842898ef81cebc.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-4b448015cacce543da110fb1476ceb544df0833f.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.2\397f4731a9f9b6eb1907e224911c77ea3aa27a8b\commons-codec-1.2.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="397f4731a9f9b6eb1907e224911c77ea3aa27a8b">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\commons-codec-1.2-9722ae0658f60ebf4e4a8491a8b077924f4dbc25.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\.gradle\caches\modules-2\files-2.1\commons-httpclient\commons-httpclient\3.1\964cd74171f427720480efdec40a7c7f6e58426a\commons-httpclient-3.1.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="964cd74171f427720480efdec40a7c7f6e58426a">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\commons-httpclient-3.1-13c196c45d311a91b9d60dac87e6aceab228b25b.jar" />
+    </item>
+    <item
+        jar="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\exploded-aar\com.etsy.android.grid\library\1.0.4\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="589fdaab008936a7b90e8332bbd49b4c010b8c0c">
+        <dex dex="C:\Users\201601\Documents\Apps\BeTrains-for-Android\BeTrains\build\intermediates\pre-dexed\production\release\classes-0fe586b1a32ea3bb9db9d45e2d5e1bba6b0df5a7.jar" />
     </item>
 
 </items>
