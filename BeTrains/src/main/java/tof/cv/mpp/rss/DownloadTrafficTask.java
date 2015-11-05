@@ -44,7 +44,7 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 
 		}
 
-		new DownloadOtherTrafficTask(trafFrag).execute();
+		//new DownloadOtherTrafficTask(trafFrag).execute();
 	}
 
 	private void updateData() {
@@ -54,8 +54,7 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 			 * getting rss feed from the railtime.be website
 			 */
 			URL rssUrl = new URL(
-					"http://www.railtime.be/website/RSS/RssInfoBar_" + lang
-							+ ".xml");
+					"http://www.belgianrail.be/jp/sncb-nmbs-routeplanner/help.exe/" + lang +"n?tpl=rss_feed");
 
 			RSSDocument rssDoc = new RSSDocument(rssUrl);
 			myRssFeed = rssDoc.getRSSFeed();

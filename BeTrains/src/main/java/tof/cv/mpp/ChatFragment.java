@@ -226,12 +226,14 @@ public class ChatFragment extends ListFragment {
 			@Override
 			public void onCompleted(Exception e, String txt) {
 				// TODO: USE XML PARSER
+				listOfMessage.clear();
 				if (txt != null && !txt.equals("")) {
+					Log.e("CVE",txt);
 					String[] messages = txt.split("<message>");
 
 					int i = 1;
 					if (messages.length > 1) {
-						listOfMessage.clear();
+
 						while (i < messages.length) {
 							String[] params = messages[i].split("CDATA");
 							for (int j = 1; j < params.length; j++) {
@@ -249,24 +251,31 @@ public class ChatFragment extends ListFragment {
 					}
 
 				} else {
+					Log.e("CVE","NULL");
 					System.out.println("function in connection maker returns null !!");
 					listOfMessage.add(new Message(ChatFragment.this
 							.getString(R.string.txt_no_message), ChatFragment.this
 							.getString(R.string.txt_connection), "", ""));
 				}
-				if (listOfMessage != null && listOfMessage.size()>0) {
+
+				Log.e("CVE","START");
+
+				if (listOfMessage != null) {
 					Log.i(TAG, "count= " + listOfMessage.size());
 					if (listOfMessage.size() == 0) {
+						Log.e("CVE","EMPTY");
 						if (getActivity() != null)
 							getActivity().runOnUiThread(updateEmpty);
 					} else {
+						Log.e("CVE","OK");
 						if (getActivity() != null)
 							getActivity().runOnUiThread(returnRes);
 					}
 					toEmpty = getString(R.string.txt_no_message);
 				} else {
+					Log.e("CVE","CONN");
 					toEmpty = getString(R.string.txt_connection);
-					getActivity().runOnUiThread(returnRes);
+					getActivity().runOnUiThread(updateEmpty);
 				}
 			}
 		});
