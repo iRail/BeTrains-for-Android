@@ -251,16 +251,15 @@ public class StationPickerActivity extends ActionBarActivity implements
                 langue = "nl";
             final String finalLangue = langue;
 
-
             if (mPrefs.getString("stations", "").length() > 1) {
                 StationLocationApi cache = new Gson().fromJson(mPrefs.getString("stations", ""), StationLocationApi.class);
                 stationList = cache.station;
                 refreshList(finalLangue.contentEquals("en"));
                 long delta = System.currentTimeMillis() - mPrefs.getLong("stationsDate", 0);
                 Log.e("cve", "DELTA: " + delta);
-
+                Log.e("cve", "LANG: " + finalLangue+ " PREF: "+mPrefs.getString("stationsLan", ""));
                 //Force update
-                if (delta > 10 * DateUtils.DAY_IN_MILLIS || !langue.contentEquals(mPrefs.getString("stationsLan", ""))) {
+                if (delta > 10 * DateUtils.DAY_IN_MILLIS || !finalLangue.contentEquals(mPrefs.getString("stationsLan", ""))) {
                    Log.e("CVE","UPDATE");
                     Ion.with(getActivity())
                             .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue)
@@ -309,6 +308,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         }
 
         private void refreshList(boolean standart) {
+            Log.e("CVE",""+standart);
             ArrayList<String> list = new ArrayList<>();
             if (stationList == null) {
                 list =new ArrayList<>(Arrays.asList(ConnectionMaker.LIST_OF_STATIONS));
@@ -316,7 +316,7 @@ public class StationPickerActivity extends ActionBarActivity implements
                 Collections.sort(stationList);
                 list.clear();
                 for (StationLocation aStation : stationList) {
-                    list.add(aStation.getStation());
+                    list.add(standart?aStation.getStation():aStation.getName());
                 }
             }
 
