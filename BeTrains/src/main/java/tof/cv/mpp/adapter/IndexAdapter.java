@@ -132,7 +132,7 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
                 addAll((ArrayList<String>) results.values);
 
             } else {
-                Log.println(Log.INFO, "Results !!", "NONE");
+                //Log.println(Log.INFO, "Results !!", "NONE");
                 clear();
             }
 
@@ -152,18 +152,18 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
         @Override
         public int compare(String o1, String o2) {
             if (s.length() > 0 && o1.toUpperCase().startsWith(s) && !o2.toUpperCase().startsWith(s)) {
-                Log.e("CVE", "START o1 " + o1);
+               // Log.e("CVE", "START o1 " + o1);
                 return -1;
 
             }
 
 
             if (s.length() > 0 && o2.toUpperCase().startsWith(s) && !o1.toUpperCase().startsWith(s)) {
-                Log.e("CVE", "START o2 " + o2);
+               // Log.e("CVE", "START o2 " + o2);
                 return 1;
             }
 
-            Log.e("CVE", "COMPARE " + o2.compareTo(o2));
+            //Log.e("CVE", "COMPARE " + o2.compareTo(o2));
             return o1.compareTo(o2);
         }
     }
