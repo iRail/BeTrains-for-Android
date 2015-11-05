@@ -245,16 +245,25 @@ public class StationPickerActivity extends ActionBarActivity implements
 
             final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+            String langue = getString(R.string.url_lang);
+            // There is a setting to force dutch when Android is in English.
+            if (mPrefs.getBoolean("prefnl", false))
+                langue = "nl";
+            final String finalLangue = langue;
+
 
             if (mPrefs.getString("stations", "").length() > 1) {
                 StationLocationApi cache = new Gson().fromJson(mPrefs.getString("stations", ""), StationLocationApi.class);
                 stationList = cache.station;
-                refreshList();
+                refreshList(finalLangue.contentEquals("en"));
                 long delta = System.currentTimeMillis() - mPrefs.getLong("stationsDate", 0);
                 Log.e("cve", "DELTA: " + delta);
-                if (delta > 10 * DateUtils.DAY_IN_MILLIS)
+
+                //Force update
+                if (delta > 10 * DateUtils.DAY_IN_MILLIS || !langue.contentEquals(mPrefs.getString("stationsLan", ""))) {
+                   Log.e("CVE","UPDATE");
                     Ion.with(getActivity())
-                            .load("http://api.irail.be/stations.php?format=json")
+                            .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue)
                             .as(new TypeToken<StationLocationApi>() {
                             })
                             .setCallback(new FutureCallback<StationLocationApi>() {
@@ -265,38 +274,41 @@ public class StationPickerActivity extends ActionBarActivity implements
                                         Gson gson = new Gson();
                                         ed.putString("stations", gson.toJson(apiList));
                                         ed.putLong("stationsDate", System.currentTimeMillis());
+                                        ed.putString("stationsLan", finalLangue);
                                         ed.apply();
                                     }
                                 }
                             });
+                }
             } else
                 Ion.with(getActivity())
-                        .load("http://api.irail.be/stations.php?format=json")
-                        .as(new TypeToken<StationLocationApi>() {
-                        })
-                        .setCallback(new FutureCallback<StationLocationApi>() {
-                            @Override
-                            public void onCompleted(Exception e, StationLocationApi apiList) {
-                                if (e != null && e.getMessage() != null)
-                                    Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG);
+                        .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue)
+                                .as(new TypeToken<StationLocationApi>() {
+                                })
+                                .setCallback(new FutureCallback<StationLocationApi>() {
+                                    @Override
+                                    public void onCompleted(Exception e, StationLocationApi apiList) {
+                                        if (e != null && e.getMessage() != null)
+                                            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG);
 
-                                if (apiList != null && apiList.station != null) {
-                                    SharedPreferences.Editor ed = mPrefs.edit();
-                                    Gson gson = new Gson();
-                                    ed.putString("stations", gson.toJson(apiList));
-                                    ed.putLong("stationsDate", System.currentTimeMillis());
-                                    ed.apply();
+                                        if (apiList != null && apiList.station != null) {
+                                            SharedPreferences.Editor ed = mPrefs.edit();
+                                            Gson gson = new Gson();
+                                            ed.putString("stations", gson.toJson(apiList));
+                                            ed.putLong("stationsDate", System.currentTimeMillis());
+                                            ed.putString("stationsLan", finalLangue);
+                                            ed.apply();
 
-                                    stationList = apiList.station;
-                                }
-                                refreshList();
-                            }
-                        });
+                                            stationList = apiList.station;
+                                        }
+                                        refreshList(finalLangue.contentEquals("en"));
+                                    }
+                                });
 
 
         }
 
-        private void refreshList() {
+        private void refreshList(boolean standart) {
             ArrayList<String> list = new ArrayList<>();
             if (stationList == null) {
                 list =new ArrayList<>(Arrays.asList(ConnectionMaker.LIST_OF_STATIONS));

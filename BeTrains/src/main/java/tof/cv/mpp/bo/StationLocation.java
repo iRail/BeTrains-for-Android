@@ -12,12 +12,14 @@ public class StationLocation implements Comparable<Object> {
     private String distance;
     private double away = -1;
 
+    public String getName() {
+        return name;
+    }
 
     public String getStation() {
-        if (standardname != null){
+        if (standardname != null) {
             return standardname;
-        }
-        else{
+        } else {
             return name;
         }
 

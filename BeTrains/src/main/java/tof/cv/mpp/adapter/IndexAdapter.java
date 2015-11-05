@@ -80,14 +80,14 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
             FilterResults filterResults = new FilterResults();
             ArrayList<String> tempList = new ArrayList<>();
             int length = list.size();
-
+            int add = 0;
             filtered = false;
             for (int i = 0; i < length; i++) {
                 String obj = list.get(i);
                 if (obj.toLowerCase().contains(toFilter.toLowerCase())) {
-                    Log.e("CVE", obj);
-                    if (obj.toLowerCase().startsWith(toFilter.toLowerCase())) {
-                        tempList.add(0, obj);
+                    if (toFilter.length() > 0 && obj.toLowerCase().startsWith(toFilter.toLowerCase())) {
+                        tempList.add(add, obj);
+                        add++;
                         filtered = true;
                     } else
                         tempList.add(obj);
@@ -112,22 +112,17 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
 
                 for (int i = 0; i < items.size(); i++) {
                     String s = items.get(i).substring(0, 1).toUpperCase();
-                    if (items.get(i).toUpperCase().startsWith(constraint.toString().toUpperCase()))
+                    if (constraint.length() > 0 && items.get(i).toUpperCase().startsWith(constraint.toString().toUpperCase()))
                         s = constraint.toString().toUpperCase();
-
                     if (!alphaIndexer.containsKey(s)) {
                         alphaIndexer.put(s, i);
-                        Log.e("CVE", i + ": " + s);
                     }
-
                 }
 
                 Set<String> sectionLetters = alphaIndexer.keySet();
 
                 ArrayList<String> sectionList = new ArrayList<>(sectionLetters);
                 Collections.sort(sectionList, new CustomComparator(constraint.toString()));
-
-                Log.e("CVE", ": " + sectionLetters.toString());
 
                 sections = new String[sectionList.size()];
                 for (int i = 0; i < sectionList.size(); i++)
@@ -156,13 +151,19 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
 
         @Override
         public int compare(String o1, String o2) {
-            if (o1.toUpperCase().startsWith(s) && !o2.toUpperCase().startsWith(s))
+            if (s.length() > 0 && o1.toUpperCase().startsWith(s) && !o2.toUpperCase().startsWith(s)) {
+                Log.e("CVE", "START o1 " + o1);
                 return -1;
 
-            if (o2.toUpperCase().startsWith(s) && !o1.toUpperCase().startsWith(s))
-                return 1;
+            }
 
-            Log.e("CVE", o1 + "" + o2 + " =>" + o1.compareTo(o2));
+
+            if (s.length() > 0 && o2.toUpperCase().startsWith(s) && !o1.toUpperCase().startsWith(s)) {
+                Log.e("CVE", "START o2 " + o2);
+                return 1;
+            }
+
+            Log.e("CVE", "COMPARE " + o2.compareTo(o2));
             return o1.compareTo(o2);
         }
     }
