@@ -538,7 +538,7 @@ public class ClosestFragment extends ListFragment {
 
         locationManager = null;
     }
-
+/*
     public void compareStationsListToMyLocation(Cursor locationCursor, int i,
                                                 double lat, double lon) {
         locationCursor.moveToPosition(i);
@@ -559,7 +559,7 @@ public class ClosestFragment extends ListFragment {
                 iLon / 1E6);
 
         stationList.add(new StationLocation(strName, iLat, iLon, dDis + "", id));
-    }
+    }*/
 
     public void DownloadAndParseStationList() {
 

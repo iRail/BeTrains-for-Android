@@ -18,6 +18,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -43,6 +44,7 @@ import com.koushikdutta.ion.Ion;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import tof.cv.mpp.Utils.ConnectionMaker;
@@ -248,6 +250,25 @@ public class StationPickerActivity extends ActionBarActivity implements
                 StationLocationApi cache = new Gson().fromJson(mPrefs.getString("stations", ""), StationLocationApi.class);
                 stationList = cache.station;
                 refreshList();
+                long delta = System.currentTimeMillis() - mPrefs.getLong("stationsDate", 0);
+                Log.e("cve", "DELTA: " + delta);
+                if (delta > 10 * DateUtils.DAY_IN_MILLIS)
+                    Ion.with(getActivity())
+                            .load("http://api.irail.be/stations.php?format=json")
+                            .as(new TypeToken<StationLocationApi>() {
+                            })
+                            .setCallback(new FutureCallback<StationLocationApi>() {
+                                @Override
+                                public void onCompleted(Exception e, StationLocationApi apiList) {
+                                    if (apiList != null && apiList.station != null) {
+                                        SharedPreferences.Editor ed = mPrefs.edit();
+                                        Gson gson = new Gson();
+                                        ed.putString("stations", gson.toJson(apiList));
+                                        ed.putLong("stationsDate", System.currentTimeMillis());
+                                        ed.apply();
+                                    }
+                                }
+                            });
             } else
                 Ion.with(getActivity())
                         .load("http://api.irail.be/stations.php?format=json")
@@ -263,6 +284,7 @@ public class StationPickerActivity extends ActionBarActivity implements
                                     SharedPreferences.Editor ed = mPrefs.edit();
                                     Gson gson = new Gson();
                                     ed.putString("stations", gson.toJson(apiList));
+                                    ed.putLong("stationsDate", System.currentTimeMillis());
                                     ed.apply();
 
                                     stationList = apiList.station;
@@ -270,26 +292,26 @@ public class StationPickerActivity extends ActionBarActivity implements
                                 refreshList();
                             }
                         });
+
+
         }
 
         private void refreshList() {
-            String[] list;
-            if (stationList == null){
-                list=ConnectionMaker.LIST_OF_STATIONS;
-            }else{
+            ArrayList<String> list = new ArrayList<>();
+            if (stationList == null) {
+                list =new ArrayList<>(Arrays.asList(ConnectionMaker.LIST_OF_STATIONS));
+            } else {
                 Collections.sort(stationList);
-                list = new String[stationList.size()];
-                int i = 0;
+                list.clear();
                 for (StationLocation aStation : stationList) {
-                    list[i] = aStation.getStation();
-                    i++;
+                    list.add(aStation.getStation());
                 }
             }
 
             getListView().setFastScrollEnabled(true);
             registerForContextMenu(getListView());
 
-            ArrayAdapter<String> a = new IndexAdapter(getActivity(),
+            IndexAdapter a = new IndexAdapter(getActivity(),
                     android.R.layout.simple_list_item_1, list);
 
             mWindowManager = (WindowManager) getActivity().getSystemService(

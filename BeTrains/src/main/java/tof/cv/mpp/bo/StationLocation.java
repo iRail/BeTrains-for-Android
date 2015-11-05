@@ -5,22 +5,22 @@ import android.util.Log;
 public class StationLocation implements Comparable<Object> {
 
     private String name;
+    private String standardname;
     private String id;
     private double locationY;
     private double locationX;
     private String distance;
     private double away = -1;
 
-    public StationLocation(String station, double lat, double lon, String distance, String id) {
-        this.name = station;
-        this.locationY = lat;
-        this.locationX = lon;
-        this.id = id;
-        this.distance = distance;
-    }
 
     public String getStation() {
-        return name;
+        if (standardname != null){
+            return standardname;
+        }
+        else{
+            return name;
+        }
+
     }
 
     public String getDistance() {
@@ -48,11 +48,9 @@ public class StationLocation implements Comparable<Object> {
     public int compareTo(Object toCompare) {
         StationLocation otherStation = (StationLocation) toCompare;
         // return  Double.compare(Double.valueOf(this.distance),Double.valueOf(otherStation.getDistance()));
-        if (this.getAway() > 0 && otherStation.getAway() > 0){
+        if (this.getAway() > 0 && otherStation.getAway() > 0) {
             return this.getAway() > otherStation.getAway() ? 1 : -1;
-        }
-
-        else {
+        } else {
             return (this.getStation().compareTo(otherStation.getStation()));
         }
 
