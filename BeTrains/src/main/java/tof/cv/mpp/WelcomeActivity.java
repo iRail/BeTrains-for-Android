@@ -232,4 +232,10 @@ public class WelcomeActivity extends AppCompatActivity {
         marketLaunch.setData(Uri.parse("http://sph1re.fr/"));
         startActivity(marketLaunch);
     }
+
+    public void onCookClick(View v) {
+        Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
+        marketLaunch.setData(Uri.parse("http://cookicons.co/"));
+        startActivity(marketLaunch);
+    }
 }
