@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -200,10 +201,10 @@ public class InfoTrainFragment extends ListFragment {
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
 
         Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Vehicle>() {
-        }).setCallback(new FutureCallback<UtilsWeb.Vehicle>() {
+        }).withResponse().setCallback(new FutureCallback<Response<UtilsWeb.Vehicle>>() {
             @Override
-            public void onCompleted(Exception e, UtilsWeb.Vehicle result) {
-                currentVehicle=result;
+            public void onCompleted(Exception e, Response<UtilsWeb.Vehicle> result) {
+                currentVehicle = result.getResult();
                 getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
                 if (currentVehicle != null
@@ -220,31 +221,34 @@ public class InfoTrainFragment extends ListFragment {
                                 Toast.LENGTH_LONG).show();
                         getActivity().finish();
                     } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(R.string.irailissue);
-                        builder.setMessage(R.string.irailissueDetail);
-                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                getActivity().finish();
-                            }
-                        });
-                        builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        if (result.getHeaders().code() == 502) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle(R.string.irailissue);
+                            builder.setMessage(R.string.irailissueDetail);
+                            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    getActivity().finish();
+                                }
+                            });
+                            builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                                ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
-                                builder.setType("message/rfc822");
-                                builder.addEmailTo("iRail@list.iRail.be");
-                                builder.setSubject("Issue with iRail API");
-                                builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
-                                        "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
-                                        "I hope you can fix that soon.\nHave a nice day.");
-                                builder.setChooserTitle("Send Email");
-                                builder.startChooser();
+                                    ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
+                                    builder.setType("message/rfc822");
+                                    builder.addEmailTo("iRail@list.iRail.be");
+                                    builder.setSubject("Issue with iRail API");
+                                    builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
+                                            "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
+                                            "I hope you can fix that soon.\nHave a nice day.");
+                                    builder.setChooserTitle("Send Email");
+                                    builder.startChooser();
 
-                                //getActivity().finish();
-                            }
-                        });
-                        builder.create().show();
+                                    //getActivity().finish();
+                                }
+                            });
+                            builder.create().show();
+                        }
+
                     }
 
 
