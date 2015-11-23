@@ -348,7 +348,7 @@ public class ClosestFragment extends ListFragment {
                                             object.getLat(), object.getLon(),
                                             results);
                                     object.setAway(results[0]);
-                                    stationList.set(i,object);
+                                    stationList.set(i, object);
                                     i++;
                                 }
 
@@ -396,8 +396,14 @@ public class ClosestFragment extends ListFragment {
 
         public void onBackPressed() {
             super.onBackPressed();
-            getActivity().runOnUiThread(hideProgressdialog);
-            thread.interrupt();
+            try {//Lazy catching - bug report from Play Store
+                if (thread != null)
+                    thread.interrupt();
+                getActivity().runOnUiThread(hideProgressdialog);
+                thread.interrupt();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return;
         }
     }
