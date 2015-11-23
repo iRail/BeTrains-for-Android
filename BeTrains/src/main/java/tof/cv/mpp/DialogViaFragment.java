@@ -268,8 +268,7 @@ public class DialogViaFragment extends DialogFragment {
 		Intent i = new Intent(getActivity(), InfoStationActivity.class);
 		i.putExtra("Name", station);
         i.putExtra("ID", id);
-		i.putExtra("Hour", Utils.getHourFromDate(time, false));
-		i.putExtra("Minute", Utils.getMinutsFromDate(time, false));
+		i.putExtra("timestamp", Long.valueOf(time));
 		getActivity().startActivity(i);
 	}
 
