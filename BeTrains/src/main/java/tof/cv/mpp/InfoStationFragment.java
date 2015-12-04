@@ -1,14 +1,10 @@
 package tof.cv.mpp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -24,11 +20,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Callback;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -37,7 +34,6 @@ import java.util.Date;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.StationInfoAdapter;
-import tof.cv.mpp.view.NotifyingScrollView;
 
 
 public class InfoStationFragment extends ListFragment {
@@ -155,56 +151,75 @@ public class InfoStationFragment extends ListFragment {
 
     private void searchThread() {
         getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-        Runnable search = new Runnable() {
-            public void run() {
-                currentStation = UtilsWeb.getAPIstation(id, stationString,
-                        timestamp, getActivity());
-                if (getActivity() != null)
-                    getActivity().runOnUiThread(displayResult);
+
+        String langue = getString(R.string.url_lang);
+        if (PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean(
+                "prefnl", false))
+            langue = "nl";
+        String dateTime = "";
+        if (timestamp != 0) {
+            String formattedDate = tof.cv.mpp.Utils.Utils.formatDate(new Date(timestamp),
+                    "ddMMyy");
+            String formattedTime = tof.cv.mpp.Utils.Utils
+                    .formatDate(new Date(timestamp), "HHmm");
+            dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
+        }
+
+        String url = "";
+        if (id != null && id.length() > 0)
+            url = "http://api.irail.be/liveboard.php/?id="
+                    + id + dateTime
+                    + "&format=JSON&fast=true" + "&lang=" + langue;
+        else
+            url = "http://api.irail.be/liveboard.php/?station="
+                    + stationString.replace(" ", "%20") + dateTime
+                    + "&format=JSON&fast=true" + "&lang=" + langue;
+
+        Log.e("CVE","Show station from: " + url);
+
+        Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Station>(){}).setCallback(new FutureCallback<UtilsWeb.Station>() {
+            @Override
+            public void onCompleted(Exception e, UtilsWeb.Station result) {
+                currentStation = result;
+                getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                // if (pd != null)
+                //     pd.dismiss();
+                if (currentStation != null)
+                    if (currentStation.getStationDepartures() != null) {
+
+                        if (id != null)
+                            //Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                            Picasso.with(InfoStationFragment.this.getActivity()).load("http://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+
+                        stationString = currentStation.getStation();
+
+                        StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
+                                getActivity(), R.layout.row_info_station,
+                                currentStation.getStationDepartures()
+                                        .getStationDeparture()
+                        );
+                        setListAdapter(StationInfoAdapter);
+                        setTitle(Utils.formatDate(new Date(timestamp),
+                                "dd MMM HH:mm"));
+                    } else {
+
+                        Toast.makeText(getActivity(), R.string.txt_no_result,
+                                Toast.LENGTH_LONG).show();
+                        setTitle(Utils.formatDate(new Date(timestamp),
+                                "dd MMM HH:mm"));
+
+                    }
+                else {
+
+                    Toast.makeText(getActivity(), R.string.txt_connection,
+                            Toast.LENGTH_LONG).show();
+                    getActivity().finish();
+                }
             }
-        };
-        Thread thread = new Thread(null, search, "stationSearch");
-        thread.start();
+        });
+
     }
 
-    private Runnable displayResult = new Runnable() {
-        public void run() {
-            getView().findViewById(R.id.progress).setVisibility(View.GONE);
-           // if (pd != null)
-           //     pd.dismiss();
-            if (currentStation != null)
-                if (currentStation.getStationDepartures() != null) {
-
-                    if (id != null)
-                        //Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
-                        Picasso.with(InfoStationFragment.this.getActivity()).load("http://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
-
-                    stationString = currentStation.getStation();
-
-                    StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
-                            getActivity(), R.layout.row_info_station,
-                            currentStation.getStationDepartures()
-                                    .getStationDeparture()
-                    );
-                    setListAdapter(StationInfoAdapter);
-                    setTitle(Utils.formatDate(new Date(timestamp),
-                            "dd MMM HH:mm"));
-                } else {
-
-                    Toast.makeText(getActivity(), R.string.txt_no_result,
-                            Toast.LENGTH_LONG).show();
-                    setTitle(Utils.formatDate(new Date(timestamp),
-                            "dd MMM HH:mm"));
-
-                }
-            else {
-
-                Toast.makeText(getActivity(), R.string.txt_connection,
-                        Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-        }
-    };
 
     public void setTitle(String txt) {
         getActivity().setTitle(stationString);

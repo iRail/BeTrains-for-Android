@@ -44,6 +44,9 @@ import com.google.android.gms.games.leaderboard.LeaderboardScoreBuffer;
 import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.android.gms.games.leaderboard.Leaderboards;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -540,105 +543,77 @@ public class GameFragment extends BaseGameFragment implements
 
     }
 
-    public void setupLayout(StationList.Stationinfo station, int id) {
-        new DisplayPointsTask(station, ((LinearLayout) getView().findViewById(id)))
-                .execute();
+    public void setupLayout(final StationList.Stationinfo station, int id) {
+        /*new DisplayPointsTask(station,)
+                .execute();*/
 
-    }
+        final LinearLayout ll =  ((LinearLayout) getView().findViewById(id));
 
-    private class DisplayPointsTask extends AsyncTask<Void, Void, UtilsWeb.StationDepartures> {
-        private StationList.Stationinfo station;
-        private LinearLayout ll;
+        String url = "http://api.irail.be/liveboard.php/?station="
+                + station.getStation().replace(" ", "%20") + "&format=JSON&fast=true";
+        Ion.with(getActivity()).load(url).as(new TypeToken<UtilsWeb.Station>(){}).setCallback(new FutureCallback<UtilsWeb.Station>() {
+            @Override
+            public void onCompleted(Exception e, UtilsWeb.Station result) {
+               UtilsWeb.StationDepartures stationDepartures = result.getStationDepartures();
+                int delay = 0;
+                int num = 1;
+                if (stationDepartures != null)
+                    try {
+                        for (UtilsWeb.StationDeparture aDeparture : stationDepartures.getStationDeparture()) {
+                            if (!aDeparture.getDelay().contentEquals("0")) {
+                                delay += Integer.valueOf(aDeparture.getDelay());
+                                num += 1;
+                            }
 
-        public DisplayPointsTask(StationList.Stationinfo station, LinearLayout ll) {
-            if (station != null)
-                this.station = station;
-            else
-                this.station = null;
-            this.ll = ll;
-        }
-
-        @Override
-        protected UtilsWeb.StationDepartures doInBackground(Void... arg0) {
-            String url = "http://api.irail.be/liveboard.php/?station="
-                    + station.getStation().replace(" ", "%20") + "&format=JSON&fast=true";
-            // System.out.println("Show station from: " + url);
-            int i = 0;
-            try {
-                // Log.i(TAG, "Json Parser started..");
-                Gson gson = new Gson();
-                Reader r = new InputStreamReader(UtilsWeb.getJSONData(url,
-                        GameFragment.this.getActivity()));
-                UtilsWeb.Station station = gson.fromJson(r, UtilsWeb.Station.class);
-                return station.getStationDepartures();
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return null;
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(UtilsWeb.StationDepartures stationDepartures) {
-            int delay = 0;
-            int num = 1;
-            if (stationDepartures != null)
-                try {
-                    for (UtilsWeb.StationDeparture aDeparture : stationDepartures.getStationDeparture()) {
-                        if (!aDeparture.getDelay().contentEquals("0")) {
-                            delay += Integer.valueOf(aDeparture.getDelay());
-                            num += 1;
                         }
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                final int total = num;
+                final int i = delay < 60 ? 1 : delay / 60;
+
+                TextView tv = (TextView) ll.findViewById(R.id.closestTime);
+                tv.setText("Score: " + num);
+                ll.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+
+                        if (station.distance > 0.5) {
+                            crouton(getString(R.string.toofar) + " " + station.getDistance(), Style.ALERT);
+                            return;
+                        }
+                        if ((System.currentTimeMillis() > PreferenceManager
+                                .getDefaultSharedPreferences(GameFragment.this.getActivity())
+                                .getLong("next", 0))) {
+                            SharedPreferences.Editor e = PreferenceManager
+                                    .getDefaultSharedPreferences(
+                                            GameFragment.this.getActivity()).edit();
+                            Games.Achievements.unlock(getApiClient(), CHECKIN);
+                            if (i >= 50)
+                                Games.Achievements.unlock(getApiClient(), CHECKHUGEDELAY);
+                            else if (i >= 20)
+                                Games.Achievements.unlock(getApiClient(), CHECKDELAY);
+
+                            newScore += total;
+                            e.putLong(
+                                    "next",
+                                    (System.currentTimeMillis() + 10 * DateUtils.MINUTE_IN_MILLIS));
+                            e.commit();
+                            Games.Leaderboards.submitScore(getApiClient(), LEADER, newScore);
+                            refreshScores();
+                            startCountDownThread();
+
+                        } else
+                            croutonWarn(R.string.game_wait);
 
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            final int total = num;
-            final int i = delay < 60 ? 1 : delay / 60;
+                });
+            }
+        });
 
-            TextView tv = (TextView) ll.findViewById(R.id.closestTime);
-            tv.setText("Score: " + num);
-            ll.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-
-                    if (station.distance > 0.5) {
-                        crouton(getString(R.string.toofar) + " " + station.getDistance(), Style.ALERT);
-                        return;
-                    }
-                    if ((System.currentTimeMillis() > PreferenceManager
-                            .getDefaultSharedPreferences(GameFragment.this.getActivity())
-                            .getLong("next", 0))) {
-                        SharedPreferences.Editor e = PreferenceManager
-                                .getDefaultSharedPreferences(
-                                        GameFragment.this.getActivity()).edit();
-                        Games.Achievements.unlock(getApiClient(), CHECKIN);
-                        if (i >= 50)
-                            Games.Achievements.unlock(getApiClient(), CHECKHUGEDELAY);
-                        else if (i >= 20)
-                            Games.Achievements.unlock(getApiClient(), CHECKDELAY);
-
-                        newScore += total;
-                        e.putLong(
-                                "next",
-                                (System.currentTimeMillis() + 10 * DateUtils.MINUTE_IN_MILLIS));
-                        e.commit();
-                        Games.Leaderboards.submitScore(getApiClient(), LEADER, newScore);
-                        refreshScores();
-                        startCountDownThread();
-
-                    } else
-                        croutonWarn(R.string.game_wait);
-
-                }
-            });
-
-
-        }
     }
+
 
     private void croutonWarn(int i) {
         croutonWarn(getString(i));

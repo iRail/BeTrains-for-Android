@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -33,7 +34,7 @@ import com.koushikdutta.ion.Response;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -199,7 +200,7 @@ public class InfoTrainFragment extends ListFragment {
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
-Log.e("CVE",url);
+        Log.e("CVE", url);
         Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<UtilsWeb.Vehicle>>() {
             @Override
@@ -257,6 +258,7 @@ Log.e("CVE",url);
         });
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -264,6 +266,7 @@ Log.e("CVE",url);
             getActivity().finish();
         }
     }
+
     private Runnable displayResult = new Runnable() {
         public void run() {
             getView().findViewById(R.id.progress).setVisibility(View.GONE);
@@ -370,46 +373,44 @@ Log.e("CVE",url);
                 maxDelay = Integer.valueOf(aStop.getDelay());
         }
 
-        FileOutputStream f;
+        final FileOutputStream f;
         Context context = getActivity();
-        File myFile = new File(getActivity().getDir("COMPENSATION", Context.MODE_PRIVATE), "" + System.currentTimeMillis() + ";" + (maxDelay / 60) + ";;" + id);
+        final File myFile = new File(getActivity().getDir("COMPENSATION", Context.MODE_PRIVATE), "" + System.currentTimeMillis() + ";" + (maxDelay / 60) + ";;" + id);
         Log.i("", "" + myFile.exists());
         if (myFile.exists())
             myFile.delete();
 
-        try {
-            f = new FileOutputStream(myFile);
-
-            String langue = context.getString(R.string.url_lang);
-            if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                    "prefnl", false))
-                langue = "nl";
-            String dateTime = "";
-            if (timestamp != 0) {
-                String formattedDate = Utils.formatDate(new Date(timestamp),
-                        "ddMMyy");
-                String formattedTime = Utils
-                        .formatDate(new Date(timestamp), "HHmm");
-                dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
-            }
-
-            String url = "http://api.irail.be/vehicle.php/?id=" + id
-                    + "&lang=" + langue + dateTime + "&format=JSON&fast=true";
-
-            InputStream in = UtilsWeb.retrieveStream(url, getActivity());
-
-            byte[] buffer = new byte[1024];
-            int len1 = 0;
-            while ((len1 = in.read(buffer)) > 0) {
-                f.write(buffer, 0, len1);
-            }
-            f.close();
-            Intent i = new Intent(getActivity(), CompensationActivity.class);
-            startActivity(i);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        String langue = context.getString(R.string.url_lang);
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                "prefnl", false))
+            langue = "nl";
+        String dateTime = "";
+        if (timestamp != 0) {
+            String formattedDate = Utils.formatDate(new Date(timestamp),
+                    "ddMMyy");
+            String formattedTime = Utils
+                    .formatDate(new Date(timestamp), "HHmm");
+            dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
         }
+
+        final String url = "http://api.irail.be/vehicle.php/?id=" + id
+                + "&lang=" + langue + dateTime + "&format=JSON&fast=true";
+
+        Ion.with(this).load(url).asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+                try {
+                    FileOutputStream f = new FileOutputStream(myFile);
+                    f.write(new Gson().toJson(currentVehicle).getBytes());
+                    f.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                Intent i = new Intent(getActivity(), CompensationActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     public void widget() {

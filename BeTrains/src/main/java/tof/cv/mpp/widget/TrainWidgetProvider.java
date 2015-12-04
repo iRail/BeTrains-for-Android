@@ -164,7 +164,7 @@ public class TrainWidgetProvider extends AppWidgetProvider {
 								.getColumnIndex(DbAdapterConnection.KEY_STOP_LATE));
 
 						if (action.equals(REFRESH_ACTION)) {
-
+/*
 							UtilsWeb.Vehicle v = UtilsWeb.getAPIvehicle(tid,
 									ctx, 0);
 
@@ -180,7 +180,7 @@ public class TrainWidgetProvider extends AppWidgetProvider {
 											"" + stop.getTime(),
 											stop.getDelay(), stop.getStatus());
 								}
-							}
+							}*/
 						}
 
 					}

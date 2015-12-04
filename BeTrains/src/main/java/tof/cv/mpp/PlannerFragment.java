@@ -33,12 +33,17 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
+import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.ConnectionAdapter;
@@ -88,8 +93,8 @@ public class PlannerFragment extends ListFragment {
     private static final int ACTIVITY_GETSTOPSTATION = 4;
 
     private void updateActionBar() {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(
                 Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
     }
 
@@ -156,7 +161,7 @@ public class PlannerFragment extends ListFragment {
 
                     fab.setLayoutParams(params);
                 } catch (Exception e) {
-                   // e.printStackTrace();
+                    // e.printStackTrace();
                 }
                 //observer.removeGlobalOnLayoutListener(this);
             }
@@ -170,7 +175,7 @@ public class PlannerFragment extends ListFragment {
     }
 
     public void fillStations(String departure, String arrival) {
-       // Log.e("", "fill " + departure + " - " + arrival + " - " + fromIntent);
+        // Log.e("", "fill " + departure + " - " + arrival + " - " + fromIntent);
         tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
         tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
 
@@ -492,33 +497,10 @@ public class PlannerFragment extends ListFragment {
     }
 
     private void mySearchThread(final Activity a) {
-        Runnable trainSearch = new Runnable() {
-            public void run() {
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                int score = sp.getInt("searchGame", 0) + 1;
-                sp.edit().putInt("searchGame", score).commit();
-                makeApiRequest();
-                if (a != null)
-                    a.runOnUiThread(new Runnable() {
-                        public void run() {
-                            //
-                            try {
-                                fillData();
-                                getView().findViewById(R.id.progress).setVisibility(View.GONE);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
 
-            }
-        };
-
-        Thread thread = new Thread(null, trainSearch, "MyThread");
-        thread.start();
-    }
-
-    public void makeApiRequest() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int score = sp.getInt("searchGame", 0) + 1;
+        sp.edit().putInt("searchGame", score).commit();
 
         String myStart;
         String myArrival;
@@ -535,26 +517,59 @@ public class PlannerFragment extends ListFragment {
                 .contentEquals("2"))
             dA = "arrive";
 
-        allConnections = UtilsWeb.getAPIConnections(
-                "" + (mDate.get(Calendar.YEAR) - 2000),
-                "" + (mDate.get(Calendar.MONTH) + 1),
-                "" + mDate.get(Calendar.DAY_OF_MONTH),
-                Utils.formatDate(mDate.getTime(), "HH"),
-                Utils.formatDate(mDate.getTime(), "mm"), langue, myStart,
-                myArrival, dA, getActivity());
+        String year = "" + (mDate.get(Calendar.YEAR) - 2000);
+        String month = "" + (mDate.get(Calendar.MONTH) + 1);
+        String day = "" + mDate.get(Calendar.DAY_OF_MONTH);
+        String hour = Utils.formatDate(mDate.getTime(), "HH");
+        String minutes = Utils.formatDate(mDate.getTime(), "mm");
 
-        if (allConnections == null) {
-            //Log.e(TAG, "API failure!!!");
-            if (getActivity() != null)
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(getActivity(), R.string.txt_error,
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
 
-        }
+        if (day.length() == 1)
+            day = "0" + day;
+
+        if (month.length() == 1)
+            month = "0" + month;
+        if (month.contentEquals("13"))
+            month = "01";
+
+        String url = "http://api.irail.be/connections.php?to="
+                // String url = "http://dev.api.irail.be/connections.php?to="
+                + myArrival + "&from=" + myStart + "&date=" + day + month
+                + year + "&time=" + hour + minutes + "&timeSel="
+                + dA + "&lang=" + langue
+                + "&typeOfTransport=train&format=json&fast=true";
+        url = url.replace(" ", "%20");
+        Log.v(TAG, url);
+
+        Ion.with(this).load(url).as(new TypeToken<Connections>() {
+        }).setCallback(new FutureCallback<Connections>() {
+            @Override
+            public void onCompleted(Exception e, Connections result) {
+                allConnections = result;
+                if (allConnections == null) {
+                    //Log.e(TAG, "API failure!!!");
+                    if (getActivity() != null)
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getActivity(), R.string.txt_error,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                }
+
+                try {
+                    fillData();
+                    getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+
     }
+
 
     public void onResume() {
         super.onResume();

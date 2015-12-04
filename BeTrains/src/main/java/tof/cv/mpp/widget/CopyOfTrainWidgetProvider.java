@@ -168,9 +168,8 @@ public class CopyOfTrainWidgetProvider extends AppWidgetProvider {
 								.getColumnIndex(DbAdapterConnection.KEY_STOP_LATE));
 
 						if (action.equals(REFRESH_ACTION)) {
-
-							UtilsWeb.Vehicle v = UtilsWeb.getAPIvehicle(tid,
-									ctx, 0);
+/*
+							UtilsWeb.Vehicle v =  UtilsWeb.getAPIvehicle(tid,ctx, 0);
 
 							if (v.getVehicleStops().getVehicleStop().size() > 1) {
 								mDbHelper.deleteAllWidgetStops();
@@ -184,7 +183,7 @@ public class CopyOfTrainWidgetProvider extends AppWidgetProvider {
 											"" + stop.getTime(),
 											stop.getDelay(), stop.getStatus());
 								}
-							}
+							}*/
 						}
 
 					}

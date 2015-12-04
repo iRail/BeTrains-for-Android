@@ -1,46 +1,21 @@
 package tof.cv.mpp.Utils;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-import tof.cv.mpp.R;
-import tof.cv.mpp.bo.Connections;
-import tof.cv.mpp.bo.Message;
-
-//import com.google.android.maps.GeoPoint;
 
 public class UtilsWeb {
-
+/*
     public static InputStream getJSONData(String url, Context context) {
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
@@ -157,63 +132,8 @@ public class UtilsWeb {
 
         return null;
 
-    }
-/*
-    public static void loadTweets(final Activity a, final ListView l) {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					String url = "http://search.twitter.com/search.json?q=BETRAINS";
-					SharedPreferences mDefaultPrefs = PreferenceManager
-							.getDefaultSharedPreferences(a);
-					;
-					if (mDefaultPrefs.getBoolean("mNMBS", a.getResources()
-							.getBoolean(R.bool.nmbs)))
-						url += "%20OR%20NMBS";
+    }*/
 
-					if (mDefaultPrefs.getBoolean("mSNCB", a.getResources()
-							.getBoolean(R.bool.sncb)))
-						url += "%20OR%20SNCB";
-
-					if (mDefaultPrefs.getBoolean("miRail", true))
-						url += "%20OR%20irail";
-
-					if (mDefaultPrefs.getBoolean("mNavetteurs", a
-							.getResources().getBoolean(R.bool.navetteurs)))
-						url += "%20OR%20navetteurs";
-
-					url += "&rpp=50";
-
-					InputStream is = tof.cv.mpp.Utils.Utils.DownloadJsonFromUrlAndCacheToSd(url,
-                            "/Android/data/BeTrains/Twitter", null, a);
-					Gson gson = new Gson();
-					final Reader reader = new InputStreamReader(is);
-					final Tweets tweets = gson.fromJson(reader, Tweets.class);
-
-					a.runOnUiThread(new Thread(new Runnable() {
-						public void run() {
-
-							l.setAdapter(new TweetItemAdapter(a,
-									R.layout.row_tweet, tweets.results));
-						}
-					}));
-				} catch (Exception e) {
-					e.printStackTrace();
-					a.runOnUiThread(new Thread(new Runnable() {
-						public void run() {
-							TextView tv = (TextView) a.findViewById(R.id.fail);
-							tv.setVisibility(View.VISIBLE);
-
-						}
-					}));
-
-				}
-
-			}
-		}).start();
-
-	}
-	*/
 
     public class Vehicle {
 
@@ -314,7 +234,7 @@ public class UtilsWeb {
 
         return null;
     }
-
+/*
     public static Vehicle getAPIvehicle(String vehicle, final Context context,
                                         long timestamp) {
 
@@ -338,16 +258,6 @@ public class UtilsWeb {
         try {
             Gson gson = new Gson();
             Reader r = new InputStreamReader(getJSONData(url, context));
-           /* StringBuilder sb=new StringBuilder();
-            BufferedReader br = new BufferedReader(r);
-            String read = br.readLine();
-
-            while(read != null) {
-                //System.out.println(read);
-                sb.append(read);
-                Log.i("VEHIC", read);
-                read =br.readLine();
-            }*/
             return gson.fromJson(r, Vehicle.class);
 
         } catch (Exception ex) {
@@ -356,11 +266,12 @@ public class UtilsWeb {
         }
 
     }
-
+*/
     static String convertStreamToString(java.io.InputStream is) {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
+    /*
     public static Station getAPIstation(String id, String station, long timestamp,
                                         final Context context) {
         // TODO
@@ -400,7 +311,7 @@ public class UtilsWeb {
             return null;
         }
 
-    }
+    }*/
 
     public class Station {
 

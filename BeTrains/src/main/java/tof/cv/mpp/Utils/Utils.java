@@ -228,7 +228,7 @@ public class Utils {
 			return null;
 		}
 	}
-
+/*
 	public static InputStream DownloadJsonFromUrlAndCacheToSd(String url,
 			String dirName, String fileName, Context context) {
 
@@ -269,7 +269,7 @@ public class Utils {
 		}
 		return sourcetoReturn;
 	}
-
+*/
 	public class CopyInputStream {
 		private InputStream _is;
 		private ByteArrayOutputStream _copy = new ByteArrayOutputStream();
