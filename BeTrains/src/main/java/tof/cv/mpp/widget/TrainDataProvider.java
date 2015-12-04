@@ -31,7 +31,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.Utils.UtilsWeb.VehicleStop;
+import tof.cv.mpp.bo.Vehicle;
 
 public class TrainDataProvider extends  ContentProvider {
     public  static  final  Uri CONTENT_URI =
@@ -43,7 +43,7 @@ public class TrainDataProvider extends  ContentProvider {
      * Database, SharedPreferences) so that the data can persist if the process is ever killed.
      * For simplicity, in this sample the data will only be stored in memory.
      */
-    public static  final  ArrayList<VehicleStop> sData = new  ArrayList<VehicleStop>();
+    public static  final ArrayList<Vehicle.VehicleStop> sData = new  ArrayList<>();
 
     @Override
     public  boolean  onCreate() {
@@ -66,7 +66,7 @@ public class TrainDataProvider extends  ContentProvider {
         final  MatrixCursor c = new  MatrixCursor(
                 new  String[]{ DbAdapterConnection.KEY_STOP_STATUS, DbAdapterConnection.KEY_STOP_NAME, DbAdapterConnection.KEY_STOP_TIME });
         for  (int  i = 0; i < sData.size(); ++i) {
-            final VehicleStop data = sData.get(i);
+            final Vehicle.VehicleStop data = sData.get(i);
             //c.addRow(new  Object[]{ new  Integer(i), data.city, new  Integer(data.degrees) });
         }
         return  c;
@@ -100,7 +100,7 @@ public class TrainDataProvider extends  ContentProvider {
         final  MatrixCursor c = new  MatrixCursor(
                 new  String[]{ DbAdapterConnection.KEY_STOP_STATUS, DbAdapterConnection.KEY_STOP_NAME, DbAdapterConnection.KEY_STOP_TIME });
         assert(0 <= index && index < sData.size());
-        final VehicleStop data = sData.get(index);
+        final Vehicle.VehicleStop data = sData.get(index);
         //data.getVehicleStop().get(0) = values.getAsInteger(Columns.TEMPERATURE);
 
         // Notify any listeners that the data backing the content provider has changed, and return

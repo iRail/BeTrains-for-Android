@@ -39,13 +39,13 @@ import java.util.ArrayList;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.WelcomeActivity;
+import tof.cv.mpp.bo.Vehicle;
 
 public class TrainAppWidgetProvider extends AppWidgetProvider {
 
 	public static final String TRAIN_WIDGET_UPDATE = "BETRAIN_WIDGET_UPDATE";
-	private ArrayList<UtilsWeb.VehicleStops> listOfTrainStops = new ArrayList<UtilsWeb.VehicleStops>();
+	private ArrayList<Vehicle.VehicleStops> listOfTrainStops = new ArrayList<Vehicle.VehicleStops>();
 	private DbAdapterConnection mDbHelper;
 
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
@@ -287,11 +287,11 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	public void setListOfTrainStops(ArrayList<UtilsWeb.VehicleStops> listOfTrainStops) {
+	public void setListOfTrainStops(ArrayList<Vehicle.VehicleStops> listOfTrainStops) {
 		this.listOfTrainStops = listOfTrainStops;
 	}
 
-	public ArrayList<UtilsWeb.VehicleStops> getListOfTrainStops() {
+	public ArrayList<Vehicle.VehicleStops> getListOfTrainStops() {
 		return listOfTrainStops;
 	}
 

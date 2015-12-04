@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
+import tof.cv.mpp.bo.Vehicle;
 
-public class TrainInfoAdapter extends ArrayAdapter<UtilsWeb.VehicleStop> {
+public class TrainInfoAdapter extends ArrayAdapter<Vehicle.VehicleStop> {
 
 	public TrainInfoAdapter(Context context, int textViewResourceId,
-			ArrayList<UtilsWeb.VehicleStop> items) {
+			ArrayList<Vehicle.VehicleStop> items) {
 		super(context, textViewResourceId, items);
 	}
 
@@ -30,7 +30,7 @@ public class TrainInfoAdapter extends ArrayAdapter<UtilsWeb.VehicleStop> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.row_info_train, null);
 		}
-		UtilsWeb.VehicleStop o = getItem(position);
+		Vehicle.VehicleStop o = getItem(position);
 		if (o != null) {
 			TextView time = (TextView) v.findViewById(R.id.time);
 			TextView delay = (TextView) v.findViewById(R.id.delay);

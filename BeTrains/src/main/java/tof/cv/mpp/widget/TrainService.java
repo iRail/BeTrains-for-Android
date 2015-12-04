@@ -5,7 +5,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import tof.cv.mpp.Utils.UtilsWeb;
+import tof.cv.mpp.bo.Vehicle;
 
 public class TrainService {
 
@@ -15,7 +15,7 @@ public class TrainService {
 	private String departure;
 	private String message;
 	private String arrival;
-	private ArrayList<UtilsWeb.VehicleStops> myList= new ArrayList<UtilsWeb.VehicleStops>();
+	private ArrayList<Vehicle.VehicleStops> myList= new ArrayList<>();
 
 	
 	private TrainService(Context context) {
@@ -70,11 +70,11 @@ public class TrainService {
 		this.myList.clear();
 	}
 	
-	public ArrayList<UtilsWeb.VehicleStops> getAllStops() {
+	public ArrayList<Vehicle.VehicleStops> getAllStops() {
 		return myList;
 	}
 	
-	public void setAllSTOPS(ArrayList<UtilsWeb.VehicleStops> pStop) {
+	public void setAllSTOPS(ArrayList<Vehicle.VehicleStops> pStop) {
 		this.myList=pStop;
 	}
 	

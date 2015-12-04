@@ -9,9 +9,9 @@ public class Via {
 	private Station departure;
 	private String station;
 	private String vehicle;
-    ConnectionMaker.StationInfo stationinfo;
+    private Station.StationInfo stationinfo;
 
-    public ConnectionMaker.StationInfo getStationInfo() {
+    public Station.StationInfo getStationInfo() {
         return stationinfo;
     }
 

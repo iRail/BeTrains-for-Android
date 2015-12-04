@@ -9,13 +9,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -63,9 +61,9 @@ import tof.cv.mpp.Utils.BaseGameFragment;
 import tof.cv.mpp.Utils.MyPagerAdapter;
 import tof.cv.mpp.Utils.MyStaggeredGridView;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.AchievementAdapter;
 import tof.cv.mpp.adapter.HighScoreAdapter;
+import tof.cv.mpp.bo.Station;
 
 
 /**
@@ -551,15 +549,15 @@ public class GameFragment extends BaseGameFragment implements
 
         String url = "http://api.irail.be/liveboard.php/?station="
                 + station.getStation().replace(" ", "%20") + "&format=JSON&fast=true";
-        Ion.with(getActivity()).load(url).as(new TypeToken<UtilsWeb.Station>(){}).setCallback(new FutureCallback<UtilsWeb.Station>() {
+        Ion.with(getActivity()).load(url).as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
             @Override
-            public void onCompleted(Exception e, UtilsWeb.Station result) {
-               UtilsWeb.StationDepartures stationDepartures = result.getStationDepartures();
+            public void onCompleted(Exception e, Station result) {
+               Station.StationDepartures stationDepartures = result.getStationDepartures();
                 int delay = 0;
                 int num = 1;
                 if (stationDepartures != null)
                     try {
-                        for (UtilsWeb.StationDeparture aDeparture : stationDepartures.getStationDeparture()) {
+                        for (Station.StationDeparture aDeparture : stationDepartures.getStationDeparture()) {
                             if (!aDeparture.getDelay().contentEquals("0")) {
                                 delay += Integer.valueOf(aDeparture.getDelay());
                                 num += 1;

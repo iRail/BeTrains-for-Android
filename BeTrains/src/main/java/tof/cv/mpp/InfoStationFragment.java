@@ -32,13 +32,13 @@ import com.squareup.picasso.Target;
 import java.util.Date;
 
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.StationInfoAdapter;
+import tof.cv.mpp.bo.Station;
 
 
 public class InfoStationFragment extends ListFragment {
     protected static final String TAG = "InfoStationFragment";
-    private UtilsWeb.Station currentStation;
+    private Station currentStation;
     private TextView mTitleText;
     private long timestamp;
     private String stationString;
@@ -126,7 +126,7 @@ public class InfoStationFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView parent, View view, int position, long id) {
-        UtilsWeb.StationDeparture stop = (UtilsWeb.StationDeparture) getListAdapter()
+        Station.StationDeparture stop = (Station.StationDeparture) getListAdapter()
                 .getItem(position);
         Intent i = new Intent(getActivity(), InfoTrainActivity.class);
         i.putExtra("Name", stop.getVehicle());
@@ -177,9 +177,9 @@ public class InfoStationFragment extends ListFragment {
 
         Log.e("CVE","Show station from: " + url);
 
-        Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Station>(){}).setCallback(new FutureCallback<UtilsWeb.Station>() {
+        Ion.with(this).load(url).as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
             @Override
-            public void onCompleted(Exception e, UtilsWeb.Station result) {
+            public void onCompleted(Exception e, Station result) {
                 currentStation = result;
                 getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 // if (pd != null)
@@ -189,7 +189,7 @@ public class InfoStationFragment extends ListFragment {
 
                         if (id != null)
                             //Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
-                            Picasso.with(InfoStationFragment.this.getActivity()).load("http://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                            Picasso.with(InfoStationFragment.this.getActivity()).load("http://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
 
                         stationString = currentStation.getStation();
 
@@ -242,7 +242,7 @@ public class InfoStationFragment extends ListFragment {
         switch (item.getItemId()) {
             case 0:
                 if (currentStation != null) {
-                    Utils.addAsStarred(currentStation.getStation(), currentStation.getStationStationinfo().getId(), 1,
+                    Utils.addAsStarred(currentStation.getStation(), currentStation.getStationinfo().getId(), 1,
                             getActivity());
                     startActivity(new Intent(getActivity(), StarredActivity.class));
                 }
@@ -269,7 +269,7 @@ public class InfoStationFragment extends ListFragment {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-        UtilsWeb.StationDeparture clicked = (UtilsWeb.StationDeparture) getListAdapter().getItem(
+        Station.StationDeparture clicked = (Station.StationDeparture) getListAdapter().getItem(
                 (int) info.id);
 
         menu.add(0, 0, 0, clicked.getVehicle());
@@ -281,7 +281,7 @@ public class InfoStationFragment extends ListFragment {
             case 0:
                 AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
                         .getMenuInfo();
-                UtilsWeb.StationDeparture stop = (UtilsWeb.StationDeparture) getListAdapter()
+                Station.StationDeparture stop = (Station.StationDeparture) getListAdapter()
                         .getItem((int) menuInfo.id);
                 Intent i = new Intent(getActivity(), InfoTrainActivity.class);
                 i.putExtra("Name", stop.getVehicle());

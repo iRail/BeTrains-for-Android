@@ -14,7 +14,6 @@ import org.w3c.dom.Document;
 
 import java.util.List;
 
-import tof.cv.mpp.Utils.UtilsWeb;
 import map.FixedMyLocationOverlay;
 import map.ItemizedOverlayStation;
 import map.MyOverLay;

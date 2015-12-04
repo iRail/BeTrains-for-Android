@@ -40,14 +40,11 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.widget.RemoteViews;
 
-import java.util.Date;
 import java.util.Random;
 
 import tof.cv.mpp.InfoTrainActivity;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.WelcomeActivity;
 
 /**

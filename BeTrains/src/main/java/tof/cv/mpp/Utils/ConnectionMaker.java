@@ -7,6 +7,8 @@ import android.text.Html;
 
 import java.util.List;
 
+import tof.cv.mpp.bo.Station;
+
 /*
  * 
  * THIS IS GARBAGE AND WILL BE CLEANED/DELETED SOON!!!!!!
@@ -167,83 +169,15 @@ public class ConnectionMaker {
 			"ZEEBRUGGE STRAND", "ZELE", "ZELLIK", "ZICHEM", "ZINGEM", "ZINNIK",
 			"ZOLDER", "ZOTTEGEM", "ZWANKENDAMME", "ZWIJNDRECHT" };
 
-	/*
-	 * public static void fillDate(Activity context, String pYear, String
-	 * pMonth, String pDay) { final TextView textYear = (TextView)
-	 * context.findViewById(R.id.tv_year); final TextView textMonth = (TextView)
-	 * context .findViewById(R.id.tv_month); final TextView textDay = (TextView)
-	 * context.findViewById(R.id.tv_day); textYear.setText(fillZero(pYear));
-	 * textMonth.setText(fillZero(pMonth)); textDay.setText(fillZero(pDay)); }
-	 * 
-	 * public static void fillTime(Activity context, String pHour, String
-	 * pMinute) { final TextView textHour = (TextView)
-	 * context.findViewById(R.id.tv_hour); final TextView textMinute =
-	 * (TextView) context .findViewById(R.id.tv_minut);
-	 * textHour.setText(fillZero(pHour)); textMinute.setText(fillZero(pMinute));
-	 * }
-	 */
 
-	public static void createAlertDialog(String title, String body,
-			Context context) {
 
-		AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
-		alt_bld.setMessage(body)
-				.setCancelable(false)
-				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								// Action for 'Yes' Button
-							}
-						});
-		AlertDialog alert = alt_bld.create();
-		alert.setTitle(title);
-		alert.show();
-	}
 
-	public static void createAlertDialogAndFinish(String title, String body,
-			final Context context) {
-
-		AlertDialog.Builder alt_bld = new AlertDialog.Builder(context);
-		alt_bld.setMessage(body)
-				.setCancelable(false)
-				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								// Action for 'Yes' Button
-								((Activity) context).finish();
-							}
-						});
-		AlertDialog alert = alt_bld.create();
-		alert.setTitle(title);
-		alert.show();
-	}
-
-	public static void addAsStarred(String item, String item2, int type,
-			Context context) {
-		DbAdapterConnection mDbHelper = new DbAdapterConnection(context);
-		mDbHelper.open();
-		mDbHelper.createFav(item, item2, type);
-		mDbHelper.close();
-
-	}
-	public static String capitalize(String inputWord) {
-		String firstLetter = inputWord.substring(0, 1); // Get first letter
-		String remainder = inputWord.substring(1); // Get remainder of word.
-		return firstLetter.toUpperCase() + remainder.toLowerCase();
-
-	}
-
-	public static String correctHTML(String bla)
-
-	{
-		return Html.fromHtml(bla).toString();
-	}
 
 	public class Liveboard {
 
 		private Departures departures;
 		private String station;
-		private StationInfo stationinfo;
+		private Station.StationInfo stationinfo;
 
 		public Departures getDepartures() {
 			return departures;
@@ -253,7 +187,7 @@ public class ConnectionMaker {
 			return station;
 		}
 
-		public StationInfo getStationInfo() {
+		public Station.StationInfo getStationInfo() {
 			return stationinfo;
 		}
 
@@ -266,26 +200,6 @@ public class ConnectionMaker {
 		public List<Departure> getDepartures() {
 			return departure;
 		}
-
-	}
-
-	public class StationInfo {
-
-        private String id;
-		private String locationX;
-		private String locationY;
-
-		public String getLat() {
-			return locationX;
-		}
-
-		public String getLon() {
-			return locationY;
-		}
-
-        public String getId() {
-            return id;
-        }
 
 	}
 

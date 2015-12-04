@@ -11,12 +11,14 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import tof.cv.mpp.bo.Connections;
+import tof.cv.mpp.bo.Vehicle;
 
 public class Utils {
 
@@ -100,50 +103,6 @@ public class Utils {
     }
 
 
-    public static String getHourFromDate(long dateFromAPI, boolean isDuration) {
-		Date date;
-		DateFormat dateFormat = new SimpleDateFormat("HH");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
-		try {
-			if (isDuration) {
-				date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
-			} else {
-
-				date = new Date((Long.valueOf(dateFromAPI)) * 1000);
-				Log.i("", "getHourFromDate: " + date.toString());
-			}
-			return dateFormat.format(date);
-		} catch (Exception e) {
-			return "" + dateFromAPI;
-		}
-
-	}
-
-	public static String getHourFromDate(String dateFromAPI, boolean isDuration) {
-
-		return getHourFromDate(Long.valueOf(dateFromAPI), isDuration);
-
-	}
-
-	public static String getMinutsFromDate(String dateFromAPI,
-			boolean isDuration) {
-		Date date;
-		DateFormat dateFormat = new SimpleDateFormat("mm");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Brussels"));
-		try {
-			if (isDuration) {
-				date = new Date((Long.valueOf(dateFromAPI) - 3600) * 1000);
-			} else {
-
-				date = new Date((Long.valueOf(dateFromAPI)) * 1000);
-				Log.i("", "getMinutsFromDate: " + date.toString());
-			}
-			return dateFormat.format(date);
-		} catch (Exception e) {
-			return dateFromAPI;
-		}
-
-	}
 
 	public static String getTimeFromDate(String dateFromAPI) {
 		Date date;
@@ -228,86 +187,6 @@ public class Utils {
 			return null;
 		}
 	}
-/*
-	public static InputStream DownloadJsonFromUrlAndCacheToSd(String url,
-			String dirName, String fileName, Context context) {
-
-		InputStream source = UtilsWeb.retrieveStream(url, context);
-
-		if (fileName == null)
-			return source;
-
-		// Petite entourloupe pour éviter des soucis de InputSTream qui se ferme
-		// apres la premiere utilisation.
-		Utils test = new Utils();
-		CopyInputStream cis = test.new CopyInputStream(source);
-		InputStream sourcetoReturn = cis.getCopy();
-		InputStream sourceCopy = cis.getCopy();
-
-		File memory = Environment.getExternalStorageDirectory();
-		File dir = new File(memory.getAbsolutePath() + dirName);
-		dir.mkdirs();
-		File file = new File(dir, fileName);
-
-		// Write to SDCard
-		try {
-			FileOutputStream f = new FileOutputStream(file);
-			byte[] buffer = new byte[32768];
-			int read;
-			try {
-				while ((read = sourceCopy.read(buffer, 0, buffer.length)) > 0) {
-					f.write(buffer, 0, read);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			f.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return sourcetoReturn;
-	}
-*/
-	public class CopyInputStream {
-		private InputStream _is;
-		private ByteArrayOutputStream _copy = new ByteArrayOutputStream();
-
-		/**
-    	 * 
-    	 */
-		public CopyInputStream(InputStream is) {
-			_is = is;
-
-			try {
-				copy();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		private int copy() throws IOException {
-			int read = 0;
-			int chunk = 0;
-			byte[] data = new byte[256];
-
-			while (-1 != (chunk = _is.read(data))) {
-				read += data.length;
-				_copy.write(data, 0, chunk);
-			}
-
-			return read;
-		}
-
-		public InputStream getCopy() {
-			return (InputStream) new ByteArrayInputStream(_copy.toByteArray());
-		}
-	}
-	
-	public void sendErrorMessage(){
-		
-	}
 
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
@@ -359,5 +238,39 @@ public class Utils {
 		mDbHelper.createFav(item, item2, type);
 		mDbHelper.close();
 
+	}
+
+	public static Vehicle getMemoryvehicle(String fileName, Context context) {
+
+		try {
+			File f = context.getDir("COMPENSATION", Context.MODE_PRIVATE);
+			File file = new File(f, fileName);
+			Gson gson = new Gson();
+			return gson.fromJson(getFromFile(file), Vehicle.class);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public static BufferedReader getFromFile(File file) {
+		try {
+			Log.i("", file.getCanonicalPath());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		StringBuilder text = new StringBuilder();
+
+		try {
+			return new BufferedReader(new FileReader(file));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

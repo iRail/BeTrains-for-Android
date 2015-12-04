@@ -8,16 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+
 import java.util.ArrayList;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb.StationDeparture;
+import tof.cv.mpp.bo.Station;
 
-public class StationInfoAdapter extends ArrayAdapter<StationDeparture> {
+public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
 
 	public StationInfoAdapter(Context context, int textViewResourceId,
-			ArrayList<StationDeparture> items) {
+			ArrayList<Station.StationDeparture> items) {
 		super(context, textViewResourceId, items);		
 	}
 
@@ -29,7 +30,7 @@ public class StationInfoAdapter extends ArrayAdapter<StationDeparture> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.row_info_station, null);
 		}
-		StationDeparture trainstop = getItem(position);
+		Station.StationDeparture trainstop = getItem(position);
 		if (trainstop != null) {
 			TextView platform = (TextView) v.findViewById(R.id.tv_platform);
 			TextView time = (TextView) v.findViewById(R.id.tv_time);

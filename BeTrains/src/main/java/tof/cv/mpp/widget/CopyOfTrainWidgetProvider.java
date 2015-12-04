@@ -41,18 +41,12 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import java.util.Date;
 import java.util.Random;
 
 import tof.cv.mpp.InfoTrainActivity;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.WelcomeActivity;
-import tof.cv.mpp.widget.TrainAppWidgetProvider;
-import tof.cv.mpp.widget.TrainDataProvider;
-import tof.cv.mpp.widget.TrainWidgetService;
 
 /**
  * Our data observer just notifies an update for all weather widgets when it

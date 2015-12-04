@@ -41,15 +41,15 @@ import java.util.Date;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.Utils.UtilsWeb;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.bo.Message;
+import tof.cv.mpp.bo.Vehicle;
 import tof.cv.mpp.widget.TrainAppWidgetProvider;
 import tof.cv.mpp.widget.TrainWidgetProvider;
 
 public class InfoTrainFragment extends ListFragment {
     protected static final String TAG = "ChatFragment";
-    private UtilsWeb.Vehicle currentVehicle;
+    private Vehicle currentVehicle;
     private TextView mTitleText;
     private TextView mMessageText;
     private String fromTo;
@@ -109,7 +109,7 @@ public class InfoTrainFragment extends ListFragment {
 
         Runnable trainSearch = new Runnable() {
             public void run() {
-                currentVehicle = UtilsWeb.getMemoryvehicle(fileName, InfoTrainFragment.this.getActivity());
+                currentVehicle = Utils.getMemoryvehicle(fileName, InfoTrainFragment.this.getActivity());
                 if (getActivity() != null)
                     getActivity().runOnUiThread(displayResult);
             }
@@ -201,10 +201,10 @@ public class InfoTrainFragment extends ListFragment {
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
         Log.e("CVE", url);
-        Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Vehicle>() {
-        }).withResponse().setCallback(new FutureCallback<Response<UtilsWeb.Vehicle>>() {
+        Ion.with(this).load(url).as(new TypeToken<Vehicle>() {
+        }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
             @Override
-            public void onCompleted(Exception e, Response<UtilsWeb.Vehicle> result) {
+            public void onCompleted(Exception e, Response<Vehicle> result) {
                 currentVehicle = result.getResult();
                 getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
@@ -287,7 +287,7 @@ public class InfoTrainFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView parent, View view, int position, long id) {
-        UtilsWeb.VehicleStop stop = (UtilsWeb.VehicleStop) getListAdapter().getItem(position);
+        Vehicle.VehicleStop stop = (Vehicle.VehicleStop) getListAdapter().getItem(position);
         Intent i = new Intent(getActivity(), InfoStationActivity.class);
         i.putExtra("Name", stop.getStation());
         i.putExtra("ID", stop.getStationInfo().getId());
@@ -368,7 +368,7 @@ public class InfoTrainFragment extends ListFragment {
     public void saveToSd() {
 
         int maxDelay = 0;
-        for (UtilsWeb.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
+        for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
             if (Integer.valueOf(aStop.getDelay()) > maxDelay)
                 maxDelay = Integer.valueOf(aStop.getDelay());
         }
@@ -440,7 +440,7 @@ public class InfoTrainFragment extends ListFragment {
                                 .replace("BE.NMBS.", ""), "1", Utils
                                 .formatDateWidget(new Date()), fromTo);
 
-                        for (UtilsWeb.VehicleStop oneStop : currentVehicle
+                        for (Vehicle.VehicleStop oneStop : currentVehicle
                                 .getVehicleStops().getVehicleStop())
                             mDbHelper.createWidgetStop(oneStop.getStation(), ""
                                             + oneStop.getTime(), oneStop.getDelay(),
@@ -483,7 +483,7 @@ public class InfoTrainFragment extends ListFragment {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-        UtilsWeb.VehicleStop clicked = (UtilsWeb.VehicleStop) getListAdapter().getItem(
+        Vehicle.VehicleStop clicked = (Vehicle.VehicleStop) getListAdapter().getItem(
                 (int) info.id);
 
         menu.add(0, 0, 0, clicked.getStation());
@@ -495,7 +495,7 @@ public class InfoTrainFragment extends ListFragment {
             case 0:
                 AdapterView.AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
                         .getMenuInfo();
-                UtilsWeb.VehicleStop stop = (UtilsWeb.VehicleStop) getListAdapter().getItem(
+                Vehicle.VehicleStop stop = (Vehicle.VehicleStop) getListAdapter().getItem(
                         (int) menuInfo.id);
                 Intent i = new Intent(getActivity(), InfoStationActivity.class);
                 i.putExtra("Name", stop.getStation());
