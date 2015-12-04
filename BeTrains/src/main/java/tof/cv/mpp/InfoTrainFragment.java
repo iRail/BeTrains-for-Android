@@ -199,7 +199,7 @@ public class InfoTrainFragment extends ListFragment {
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
-
+Log.e("CVE",url);
         Ion.with(this).load(url).as(new TypeToken<UtilsWeb.Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<UtilsWeb.Vehicle>>() {
             @Override

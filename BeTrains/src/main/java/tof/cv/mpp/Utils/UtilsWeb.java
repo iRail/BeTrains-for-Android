@@ -333,7 +333,7 @@ public class UtilsWeb {
 
         String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + langue + dateTime + "&format=JSON";//&fast=true";
-        System.out.println("Affiche les infos train depuis la page: " + url);
+       Log.e("","Affiche les infos train depuis la page: " + url);
 
         try {
             Gson gson = new Gson();
@@ -387,7 +387,7 @@ public class UtilsWeb {
                     + station.replace(" ", "%20") + dateTime
                     + "&format=JSON&fast=true" + "&lang=" + langue;
 
-        //Log.e("CVE","Show station from: " + url);
+        Log.e("CVE","Show station from: " + url);
 
         try {
             // Log.i(TAG, "Json Parser started..");

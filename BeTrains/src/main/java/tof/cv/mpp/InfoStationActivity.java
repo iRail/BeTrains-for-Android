@@ -1,6 +1,8 @@
 package tof.cv.mpp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +44,16 @@ public class InfoStationActivity extends ActionBarActivity {
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintResource(R.color.primarycolor);
-	}
+
+
+        Application app = getApplication();
+        app.registerOnProvideAssistDataListener(new Application.OnProvideAssistDataListener() {
+            @Override
+            public void onProvideAssistData(Activity activity, Bundle bundle) {
+                bundle.putString(Intent.EXTRA_ASSIST_CONTEXT, "BeTrains");
+            }
+        });
+    }
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
