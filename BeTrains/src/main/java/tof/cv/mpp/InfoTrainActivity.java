@@ -26,7 +26,7 @@ public class InfoTrainActivity extends ActionBarActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         long timestamp = bundle.getLong("timestamp") * 1000;
-        String name = bundle.getString("Name").replaceAll("[^0-9]+", "");
+        String name = bundle.getString("Name");//.replaceAll("[^0-9]+", "");
         Log.i("***", "bundle: " + bundle.getString("Name"));
         Log.i("***", "NAME: " + name);
         String fromTo = bundle.getString("fromto");

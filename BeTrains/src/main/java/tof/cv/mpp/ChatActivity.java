@@ -30,7 +30,7 @@ public class ChatActivity extends ActionBarActivity {
         ChatFragment fragment = (ChatFragment) this.getSupportFragmentManager()
                 .findFragmentById(R.id.fragment);
         if (trainId != null)
-            fragment.trainId = getString(R.string.txt_train) + " " + trainId.replaceAll(getString(R.string.txt_train) + " ", "");
+            fragment.trainId = trainId.replaceAll(getString(R.string.txt_train) + " ", "");
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
 

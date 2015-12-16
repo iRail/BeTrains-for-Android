@@ -175,9 +175,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 .replace(R.id.content_frame, mContent).commit();
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
         //tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintResource(R.color.primarycolor);
 

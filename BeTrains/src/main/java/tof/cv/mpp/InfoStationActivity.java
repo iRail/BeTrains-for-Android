@@ -53,16 +53,16 @@ public class InfoStationActivity extends AppCompatActivity {
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintResource(R.color.primarycolor);
 
-
+/*
         Application app = getApplication();
         app.registerOnProvideAssistDataListener(new Application.OnProvideAssistDataListener() {
             @Override
             public void onProvideAssistData(Activity activity, Bundle bundle) {
                 bundle.putString(Intent.EXTRA_ASSIST_CONTEXT, "BeTrains");
             }
-        });
+        });*/
     }
-
+/*
     @Override
     public void onProvideAssistData(Bundle data) {
 
@@ -86,7 +86,7 @@ public class InfoStationActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
