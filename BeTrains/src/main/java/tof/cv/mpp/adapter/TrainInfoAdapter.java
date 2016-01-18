@@ -37,11 +37,13 @@ public class TrainInfoAdapter extends ArrayAdapter<Vehicle.VehicleStop> {
             TextView station = (TextView) v.findViewById(R.id.station);
 
             station.setText(Html.fromHtml(o.getStation()));
-            time.setText(Utils.formatDate(o.getTime(), false, false));
 
             if (o.isCancelled())
                 time.setText(Html.fromHtml("<font color=\"red\">XXXX</font>"));
-            else if (o.getDelay().contentEquals("0"))
+            else
+                time.setText(Utils.formatDate(o.getTime(), false, false));
+
+            if (o.getDelay().contentEquals("0"))
                 delay.setText("");
             else
                 try {
