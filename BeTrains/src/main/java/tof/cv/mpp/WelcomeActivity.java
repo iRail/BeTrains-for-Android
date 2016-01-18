@@ -146,6 +146,9 @@ public class WelcomeActivity extends AppCompatActivity {
         int pos = Integer.valueOf(settings.getString(
                 getString(R.string.key_activity), "1"));
 
+        if (getIntent().hasExtra("Departure") && getIntent().hasExtra("Arrival"))
+                pos=1;
+
         switch (pos) {
             case 1:
                 mContent = new PlannerFragment();
