@@ -1,5 +1,7 @@
 package tof.cv.mpp.bo;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 
@@ -13,6 +15,7 @@ public class Station {
     private StationInfo stationinfo;
 	private String version;
 	private StationDepartures departures;
+	private String canceled="";
 	private long timestamp;
 
 	public String getVersion() {
@@ -21,6 +24,10 @@ public class Station {
 
 	public String getStation() {
 		return station;
+	}
+
+	public boolean isCancelled(){
+		return "1".contentEquals(canceled);
 	}
 
 	public StationDepartures getStationDepartures() {

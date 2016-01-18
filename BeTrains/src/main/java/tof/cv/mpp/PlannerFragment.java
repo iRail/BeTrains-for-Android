@@ -30,6 +30,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -326,12 +327,6 @@ public class PlannerFragment extends ListFragment {
         }
     }
 
-    public String getHeader(Connection c) {
-        return c.getDeparture().getStation() + " - "
-                + c.getArrival().getStation();
-
-    }
-
     private void fillData() {
 
         if (allConnections != null && allConnections.connection != null) {
@@ -341,10 +336,10 @@ public class PlannerFragment extends ListFragment {
             );
             setListAdapter(connAdapter);
             registerForContextMenu(getListView());
+            PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
 
         } else {
-            allConnections = Utils.getCachedConnections();
-
+            allConnections = Utils.getCachedConnections(PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("cached", ""));
             if (allConnections != null) {
                 connAdapter = new ConnectionAdapter(this.getActivity()
                         .getBaseContext(), R.layout.row_planner,
@@ -568,7 +563,6 @@ public class PlannerFragment extends ListFragment {
 
     public void onResume() {
         super.onResume();
-
         try {
             fillData();
         } catch (Exception e) {

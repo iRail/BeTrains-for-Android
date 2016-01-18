@@ -36,8 +36,6 @@ import tof.cv.mpp.bo.Vehicle;
 
 public class Utils {
 
-	final static String FILENAMECONN = "connections.txt";
-	final static String DIRPATH = "/Android/data/BeTrains";
     public static Location getLastLoc(Context context) {
 
         Location bestResult = null;
@@ -171,17 +169,9 @@ public class Utils {
 
 	}
 
-	public static Connections getCachedConnections() {
+	public static Connections getCachedConnections(String c) {
 		try {
-			File memory = Environment.getExternalStorageDirectory();
-			File dir = new File(memory.getAbsolutePath() + DIRPATH);
-			dir.mkdirs();
-			File file = new File(dir, Utils.FILENAMECONN);
-			InputStream is = new BufferedInputStream(new FileInputStream(file));
-			Gson gson = new Gson();
-			final Reader reader = new InputStreamReader(is);
-			return gson.fromJson(reader, Connections.class);
-
+			return  new Gson().fromJson(c, Connections.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -180,49 +180,8 @@ public class StationPickerActivity extends ActionBarActivity implements
 
     public static class StationListFragment extends ListFragment implements
             OnScrollListener {
-        private char mPrevLetter = '\'';
-        private TextView mDialogText;
-        private boolean mShowing;
-        private boolean mReady;
+
         ArrayList<StationLocation> stationList;
-
-        private final class RemoveWindow implements Runnable {
-            public void run() {
-                removeWindow();
-            }
-        }
-
-        private void removeWindow() {
-            if (mShowing) {
-                mShowing = false;
-                mDialogText.setVisibility(View.INVISIBLE);
-            }
-        }
-
-        private RemoveWindow mRemoveWindow = new RemoveWindow();
-        Handler mHandler = new Handler();
-        private WindowManager mWindowManager;
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            mReady = true;
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-            removeWindow();
-            mReady = false;
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            if (mWindowManager != null)
-                mWindowManager.removeView(mDialogText);
-            mReady = false;
-        }
 
         /**
          * When creating, retrieve this instance's number from its arguments.
@@ -313,12 +272,14 @@ public class StationPickerActivity extends ActionBarActivity implements
             if (stationList == null) {
                 list =new ArrayList<>(Arrays.asList(ConnectionMaker.LIST_OF_STATIONS));
             } else {
-                Collections.sort(stationList);
+
                 list.clear();
                 for (StationLocation aStation : stationList) {
                     list.add(standart?aStation.getStation():aStation.getName());
                 }
             }
+
+            Collections.sort(list);
 
             getListView().setFastScrollEnabled(true);
             registerForContextMenu(getListView());
@@ -326,29 +287,6 @@ public class StationPickerActivity extends ActionBarActivity implements
             IndexAdapter a = new IndexAdapter(getActivity(),
                     android.R.layout.simple_list_item_1, list);
 
-            mWindowManager = (WindowManager) getActivity().getSystemService(
-                    Context.WINDOW_SERVICE);
-
-            LayoutInflater inflate = (LayoutInflater) getActivity()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mDialogText = (TextView) inflate.inflate(R.layout.list_position,
-                    null);
-            mDialogText.setVisibility(View.INVISIBLE);
-
-            mHandler.post(new Runnable() {
-
-                public void run() {
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-                            LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT,
-                            WindowManager.LayoutParams.TYPE_APPLICATION,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                            PixelFormat.TRANSLUCENT
-                    );
-                    mWindowManager.addView(mDialogText, lp);
-                }
-            });
 
             EditText filterText = (EditText) getActivity().findViewById(
                     R.id.search_box);

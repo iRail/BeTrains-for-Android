@@ -79,11 +79,11 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 						+ "</b>"));
 			}
 			if (departtime != null) {
-				departtime.setText(Utils.formatDate(conn.getDeparture()
+				departtime.setText(conn.getDeparture().isCancelled()?Html.fromHtml("<font color=\"red\">XXXX</font>"):Utils.formatDate(conn.getDeparture()
 						.getTime(), false, false));
 			}
 			if (arrivaltime != null) {
-				arrivaltime.setText(Utils.formatDate(conn.getArrival()
+				arrivaltime.setText(conn.getArrival().isCancelled()?Html.fromHtml("<font color=\"red\">XXXX</font>"):Utils.formatDate(conn.getArrival()
 						.getTime(), false, false));
 			}
 
