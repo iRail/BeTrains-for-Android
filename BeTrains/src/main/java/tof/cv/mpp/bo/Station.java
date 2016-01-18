@@ -95,6 +95,11 @@ public class Station {
 		private String delay;
 		private String platform;
 		private String vehicle;
+		private String canceled="";
+
+		public boolean isCancelled(){
+			return "1".contentEquals(canceled);
+		}
 
 		public String getStation() {
 			return station;
