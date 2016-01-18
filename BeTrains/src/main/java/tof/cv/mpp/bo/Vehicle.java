@@ -44,8 +44,12 @@ public class Vehicle {
         private String station;
         private long time;
         private String delay;
+        private String canceled;
         Station.StationInfo stationinfo;
 
+        public boolean isCancelled(){
+            return "1".contentEquals(canceled);
+        }
 
         public Station.StationInfo getStationInfo() {
             return stationinfo;
