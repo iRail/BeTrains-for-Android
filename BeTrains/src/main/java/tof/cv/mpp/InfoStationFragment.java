@@ -177,7 +177,7 @@ public class InfoStationFragment extends ListFragment {
 
         Log.e("CVE","Show station from: " + url);
 
-        Ion.with(this).load(url).as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
             @Override
             public void onCompleted(Exception e, Station result) {
                 currentStation = result;

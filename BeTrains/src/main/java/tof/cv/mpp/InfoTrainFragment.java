@@ -201,7 +201,7 @@ public class InfoTrainFragment extends ListFragment {
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
         Log.e("CVE", url);
-        Ion.with(this).load(url).as(new TypeToken<Vehicle>() {
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
             @Override
             public void onCompleted(Exception e, Response<Vehicle> result) {
