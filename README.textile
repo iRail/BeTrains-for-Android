@@ -16,7 +16,8 @@ h2. Open Source:
 
 h3. BeTrains is using these libraries:
 
-h4. Android Open Source licence - Support Library - Google Play Services - Picasso
+h4. Android Open Source licence - Support Library - Google Play Services
+
 	/*
 	 * Copyright (C) 2011 The Android Open Source Project
 	 *
