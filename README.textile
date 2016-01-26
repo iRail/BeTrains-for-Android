@@ -6,6 +6,8 @@ This application is an alternative to the official SNCB/NMBS and Railtime (offic
 
 !https://github.com/iRail/BeTrains-for-Android/raw/master/screen.png(Screenshot)!
 
+[My website!](http://wazabe.github.io/)
+
 h2. How to install ?
 
 h3. Let Gradle and Android studio do the magic.
