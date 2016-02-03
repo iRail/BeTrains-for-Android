@@ -112,7 +112,6 @@ public class PlannerFragment extends ListFragment {
         context = this.getActivity();
         mDate = Calendar.getInstance();
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -140,7 +139,7 @@ public class PlannerFragment extends ListFragment {
 
         updateActionBar();
 
-        if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false) && ((WelcomeActivity) this.getActivity()).drawerLayout != null)
+        if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false) && ((WelcomeActivity) this.getActivity()).drawerLayout != null && !getResources().getBoolean(R.bool.tablet_layout))
             this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);
 
         final LinearLayout layout = (LinearLayout) getView().findViewById(R.id.Ly_Pannel_Sup);
@@ -165,7 +164,7 @@ public class PlannerFragment extends ListFragment {
 
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
-
+        doSearch();
     }
 
     public void doSearch() {

@@ -58,8 +58,12 @@ public class StationLocation implements Comparable<Object> {
 
 
     }
-
     public double getAway() {
         return away;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

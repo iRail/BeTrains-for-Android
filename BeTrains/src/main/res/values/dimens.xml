@@ -45,4 +45,7 @@
 
     <dimen name="nav_drawer_margin_offset">-8dp</dimen>
 
+    <dimen name="drawer_size">300dp</dimen>
+    <dimen name="drawer_content_padding">0dp</dimen>
+
 </resources>

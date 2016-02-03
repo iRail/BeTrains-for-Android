@@ -1,6 +1,5 @@
 package tof.cv.mpp.bo;
 
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -63,7 +62,7 @@ public class Station {
 	}
 
 	public class StationInfo {
-		private String id;
+		public String id;
 		private double locationX;
 		private double locationY;
 

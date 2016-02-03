@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,6 +23,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -47,10 +49,8 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
 
-
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+
         try {//Just in case setStatusBarColor not available
             getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
         } catch (Error e) {
@@ -61,45 +61,42 @@ public class WelcomeActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-            }
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
-                if(mContent instanceof PlannerFragment)
-                    findViewById(R.id.tuto).setVisibility(View.GONE);
-            }
+        if (drawerLayout!=null) {
+            drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+                }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-            }
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
+                    if (mContent instanceof PlannerFragment)
+                        findViewById(R.id.tuto).setVisibility(View.GONE);
+                }
 
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                }
 
+                @Override
+                public void onDrawerStateChanged(int newState) {
+                }
+            });
+        }
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        if (navigationView != null){
+        if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
                 // This method will trigger on item Click of navigation menu
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-
-
-                    //Checking if the item is in checked state or not, if not make it in checked state
-                    //if(menuItem.isChecked()) menuItem.setChecked(false);
-                    //else
                     menuItem.setChecked(true);
 
-                    //Closing drawer on item click
-                    drawerLayout.closeDrawers();
+                    if (drawerLayout!=null)
+                        drawerLayout.closeDrawers();
 
                     //Check to see which item was being clicked and perform appropriate action
                     switch (menuItem.getItemId()) {
@@ -147,7 +144,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 getString(R.string.key_activity), "1"));
 
         if (getIntent().hasExtra("Departure") && getIntent().hasExtra("Arrival"))
-                pos=1;
+            pos = 1;
 
         switch (pos) {
             case 1:
