@@ -164,7 +164,6 @@ public class PlannerFragment extends ListFragment {
 
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
-        doSearch();
     }
 
     public void doSearch() {
