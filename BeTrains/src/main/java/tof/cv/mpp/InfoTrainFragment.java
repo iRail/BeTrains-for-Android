@@ -279,9 +279,9 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
                     myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
 
-                    myMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    //myMap.addMarker(new MarkerOptions()
+                    //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
+                    //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
 
 
