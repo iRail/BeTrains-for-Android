@@ -202,7 +202,10 @@
         <item name="android:textColor">@color/darkblue</item>
     </style>
 
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
-    </style>
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView"></style>
+
+    <style name="Theme.MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

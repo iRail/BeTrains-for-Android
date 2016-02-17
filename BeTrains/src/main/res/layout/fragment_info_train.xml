@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:map="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_awesome_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primarycolor"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,23 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             map:cameraZoom="13"
-            map:mapType="normal"
+            map:mapType="satellite"
             map:liteMode="true"/>
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/primarycolortranspa"
-            android:gravity="center"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip"
-            android:text="@string/txt_loading"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-
 
     </RelativeLayout>
 

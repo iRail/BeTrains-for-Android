@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
 import android.text.Html;
@@ -26,6 +28,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -47,20 +62,20 @@ import tof.cv.mpp.bo.Vehicle;
 import tof.cv.mpp.widget.TrainAppWidgetProvider;
 import tof.cv.mpp.widget.TrainWidgetProvider;
 
-public class InfoTrainFragment extends ListFragment {
+public class InfoTrainFragment extends ListFragment implements OnMapReadyCallback {
     protected static final String TAG = "ChatFragment";
     private Vehicle currentVehicle;
-    private TextView mTitleText;
     private TextView mMessageText;
     private String fromTo;
     String id;
     private long timestamp;
+    GoogleMap myMap;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_info_train, null);
+        return inflater.inflate(R.layout.fragment_info_train, container, false);
     }
 
     /**
@@ -76,8 +91,11 @@ public class InfoTrainFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mTitleText = (TextView) getActivity().findViewById(R.id.title);
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         mMessageText.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -94,11 +112,10 @@ public class InfoTrainFragment extends ListFragment {
             }
         });
 
-        Log.i("'", "" + mMessageText);
-        registerForContextMenu(getListView());
+       registerForContextMenu(getListView());
     }
 
-    public void displayInfo(final String fileName, final String vehicle) {
+    public void displayInfoFromMemory(final String fileName, final String vehicle) {
         getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         this.timestamp = System.currentTimeMillis();
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
@@ -107,15 +124,20 @@ public class InfoTrainFragment extends ListFragment {
             displayLastMessage(vehicle);
         }
 
-        Runnable trainSearch = new Runnable() {
-            public void run() {
-                currentVehicle = Utils.getMemoryvehicle(fileName, InfoTrainFragment.this.getActivity());
-                if (getActivity() != null)
-                    getActivity().runOnUiThread(displayResult);
-            }
-        };
-        Thread thread = new Thread(null, trainSearch, "MyThread");
-        thread.start();
+        currentVehicle = Utils.getMemoryvehicle(fileName, InfoTrainFragment.this.getActivity());
+        getView().findViewById(R.id.progress).setVisibility(View.GONE);
+        if (currentVehicle != null
+                && currentVehicle.getVehicleStops() != null) {
+            TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
+                    getActivity(), R.layout.row_info_train, currentVehicle
+                    .getVehicleStops().getVehicleStop());
+            setListAdapter(trainInfoAdapter);
+            getActivity().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+        } else {
+            Toast.makeText(getActivity(), R.string.txt_connection,
+                    Toast.LENGTH_LONG).show();
+            getActivity().finish();
+        }
     }
 
     public void displayInfo(String vehicle, String fromTo, long timestamp) {
@@ -201,21 +223,68 @@ public class InfoTrainFragment extends ListFragment {
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
         Log.e("CVE", url);
-        Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Vehicle>() {
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
             @Override
             public void onCompleted(Exception e, Response<Vehicle> result) {
-                currentVehicle = result.getResult();
-                getView().findViewById(R.id.progress).setVisibility(View.GONE);
-                getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
+
+                if (result != null) {
+                    currentVehicle = result.getResult();
+                    getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                    getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
+                }
+
                 if (currentVehicle != null
                         && currentVehicle.getVehicleStops() != null) {
                     TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
                             getActivity(), R.layout.row_info_train, currentVehicle
                             .getVehicleStops().getVehicleStop());
                     setListAdapter(trainInfoAdapter);
-                    //timestamp=currentVehicle.getTimestamp();
-                    setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+
+
+                    getActivity().setTitle( currentVehicle.getVehicleInfo().name +Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+                    PolylineOptions rectOptions = new PolylineOptions();
+
+                    double minLat = 90;
+                    double maxLat = 0;
+                    double minLon = 180;
+                    double maxLon = 0;
+                    double delta = 0.05;
+
+                    for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()){
+
+                        myMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
+                                .anchor(0.5f,0.5f)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
+
+                        rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
+                        if (maxLat < aStop.getStationInfo().getLocationY())
+                                maxLat = aStop.getStationInfo().getLocationY();
+
+                        if (minLat > aStop.getStationInfo().getLocationY())
+                            minLat = aStop.getStationInfo().getLocationY();
+
+                        if (maxLon < aStop.getStationInfo().getLocationX())
+                            maxLon = aStop.getStationInfo().getLocationX();
+
+                        if (minLon > aStop.getStationInfo().getLocationX())
+                            minLon = aStop.getStationInfo().getLocationX();
+                    }
+
+                    myMap.addPolyline(rectOptions.color(Color.BLUE));
+
+                    LatLngBounds bounds = new LatLngBounds(
+                            new LatLng(minLat-delta, minLon-delta), new LatLng(maxLat+delta, maxLon+delta));
+
+                    myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
+
+                    myMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+
+
                 } else {
                     if (e != null) {
                         Toast.makeText(getActivity(), e.getLocalizedMessage(),
@@ -262,28 +331,11 @@ public class InfoTrainFragment extends ListFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == 0) {
-            getActivity().finish();
-        }
+       // if (requestCode == 0) {
+       //     getActivity().finish();
+        //}
     }
 
-    private Runnable displayResult = new Runnable() {
-        public void run() {
-            getView().findViewById(R.id.progress).setVisibility(View.GONE);
-            if (currentVehicle != null
-                    && currentVehicle.getVehicleStops() != null) {
-                TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
-                        getActivity(), R.layout.row_info_train, currentVehicle
-                        .getVehicleStops().getVehicleStop());
-                setListAdapter(trainInfoAdapter);
-                setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
-            } else {
-                Toast.makeText(getActivity(), R.string.txt_connection,
-                        Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-        }
-    };
 
     @Override
     public void onListItemClick(ListView parent, View view, int position, long id) {
@@ -473,10 +525,6 @@ public class InfoTrainFragment extends ListFragment {
 
     }
 
-    public void setTitle(String txt) {
-        mTitleText.setText(txt);
-    }
-
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -518,5 +566,10 @@ public class InfoTrainFragment extends ListFragment {
         mMessageText.setText(text);
         mMessageText.setVisibility(text.length() > 1 ? View.VISIBLE : View.GONE);
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        myMap=googleMap;
     }
 }

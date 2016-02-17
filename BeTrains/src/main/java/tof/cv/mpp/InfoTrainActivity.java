@@ -2,15 +2,14 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-public class InfoTrainActivity extends ActionBarActivity {
+public class InfoTrainActivity extends AppCompatActivity {
     /**
      * Called when the activity is first created.
      */
@@ -19,7 +18,6 @@ public class InfoTrainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_info_train);
-
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,16 +33,10 @@ public class InfoTrainActivity extends ActionBarActivity {
         InfoTrainFragment fragment = (InfoTrainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         String fileName = bundle.getString("FileName");
         if (fileName != null)
-            fragment.displayInfo(fileName, name);
+            fragment.displayInfoFromMemory(fileName, name);
         else
             fragment.displayInfo(name, fromTo, timestamp);
 
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintResource(R.color.primarycolor);
     }
 
     @Override

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright 2010 Google Inc. Licensed under the Apache License, Version 
 	2.0 (the "License"); you may not use this file except in compliance with 
 	the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
@@ -14,8 +13,8 @@
         <item name="android:windowBackground">@color/mybg</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="spbStyle">@style/GNowProgressBar</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="colorPrimary">@color/primarycolor</item>

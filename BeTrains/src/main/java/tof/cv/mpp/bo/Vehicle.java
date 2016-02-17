@@ -13,6 +13,11 @@ public class Vehicle {
     private String version;
     private String vehicle;
     private long timestamp;
+    private Vehicleinfo vehicleinfo;
+
+    public Vehicleinfo getVehicleInfo() {
+        return vehicleinfo;
+    }
 
     public VehicleStops getVehicleStops() {
         return stops;
