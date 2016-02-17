@@ -32,6 +32,9 @@
             android:value="@integer/google_play_services_version" />
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/app_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/api_key_prod"/>
 
         <activity
             android:name=".WelcomeActivity"

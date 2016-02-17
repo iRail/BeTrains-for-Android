@@ -43,8 +43,6 @@
     <string name="txt_no_issue">Geen verkeershinder</string>
     <string name="txt_duration">Duur :</string>
     <string name="txt_search">Zoek</string>
-    <string name="api_key_prod">0K7Fau7cA-pYcbx1Ya_FeGZtHNa2af8KsUiryOg</string>
-    <string name="api_key_debug">0K7Fau7cA-pYqOftHPiE2Z-kL15R-uk8aH2036g</string>
     <string name="add_widget">Voeg toe aan widget</string>
     <string name="url_lang">nl</string>
     <string name="url_lang_2">n</string>
