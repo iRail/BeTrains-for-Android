@@ -9,13 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -40,7 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * Called when the activity is first created.
      */
     SharedPreferences settings;
-    // ActionBarDrawerToggle mDrawerToggle;
+    ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,35 @@ public class WelcomeActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        if (drawerLayout!=null) {
+        if (drawerLayout != null) {
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            mDrawerToggle = new ActionBarDrawerToggle(
+                    this,
+                    drawerLayout,
+                    (Toolbar) findViewById(R.id.my_awesome_toolbar),
+                    R.string.app_name, R.string.app_name) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    // code here will execute once the drawer is opened
+
+                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    // Code here will execute once drawer is closed
+                    invalidateOptionsMenu();
+                }
+
+                ;
+            };
+
+            mDrawerToggle.syncState();
+
             drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
                 @Override
                 public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -95,7 +123,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
                     menuItem.setChecked(true);
 
-                    if (drawerLayout!=null)
+                    if (drawerLayout != null)
                         drawerLayout.closeDrawers();
 
                     //Check to see which item was being clicked and perform appropriate action

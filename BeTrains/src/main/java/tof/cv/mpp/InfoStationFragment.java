@@ -175,7 +175,7 @@ public class InfoStationFragment extends ListFragment {
                     + stationString.replace(" ", "%20") + dateTime
                     + "&format=JSON&fast=true" + "&lang=" + langue;
 
-        Log.e("CVE","Show station from: " + url);
+        //Log.e("CVE","Show station from: " + url);
 
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
             @Override
