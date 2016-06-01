@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Station;
 
 public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
@@ -37,6 +39,13 @@ public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
             TextView delay = (TextView) v.findViewById(R.id.tv_delay);
             TextView station = (TextView) v.findViewById(R.id.tv_station);
             TextView train = (TextView) v.findViewById(R.id.tv_train);
+            ImageView alert = (ImageView) v.findViewById(R.id.alert);
+
+            if (trainstop.getAlerts() != null && trainstop.getAlerts().getNumber() > 0) {
+                alert.setVisibility(View.VISIBLE);
+            } else {
+                alert.setVisibility(View.GONE);
+            }
 
             station.setText(Html.fromHtml(trainstop.getStation().replace(" [NMBS/SNCB]", "")));
 

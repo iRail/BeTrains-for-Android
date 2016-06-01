@@ -96,6 +96,12 @@ public class Station {
 		private String vehicle;
 		private String canceled="";
 
+		public Alerts getAlerts() {
+			return alerts;
+		}
+
+		private Alerts alerts;
+
 		public boolean isCancelled(){
 			return "1".contentEquals(canceled);
 		}

@@ -4,61 +4,69 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:clickable="false"
+    android:gravity="center"
     android:orientation="horizontal"
-    android:padding="16dip" >
+    android:padding="16dip">
 
-        <TextView
-            android:id="@+id/tv_time"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/blackbg"
-            android:gravity="center"
-            android:padding="6dp"
-            android:text="XX:XX"
-            android:textColor="@color/darkyellow"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_time"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/blackbg"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="XX:XX"
+        android:textColor="@color/darkyellow"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_delay"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="6dip"
-            android:text="delay"
-            android:textColor="#FF0000" />
+    <ImageView
+        android:id="@+id/alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_alert"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_delay"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="6dip"
+        android:text="delay"
+        android:textColor="#FF0000" />
 
 
-        <TextView
-            android:id="@+id/tv_station"
-            style="@style/TextElementMid"
-            android:textStyle="bold"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Station"
-            android:textColor="@color/darkblue" />
+    <TextView
+        android:id="@+id/tv_station"
+        style="@style/TextElementMid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Station"
+        android:textColor="@color/darkblue"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_train"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|right"
-            android:text="IC XXXX"
-            android:textColor="@color/darkblue"
-            android:textSize="16dip" />
+    <TextView
+        android:id="@+id/tv_train"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|right"
+        android:text="IC XXXX"
+        android:textColor="@color/darkblue"
+        android:textSize="16dip" />
 
-        <TextView
-            android:id="@+id/tv_platform"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:text="X"
-            android:textColor="@color/lightblue"
-            android:textSize="16dip"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_platform"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:text="X"
+        android:textColor="@color/lightblue"
+        android:textSize="16dip"
+        android:textStyle="bold" />
 
 </LinearLayout>
