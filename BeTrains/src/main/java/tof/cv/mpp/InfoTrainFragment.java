@@ -172,37 +172,41 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
             @Override
             public void onCompleted(Exception e, String txt) {
                 // TODO: USE XML PARSER
-                ArrayList<Message> messageList = new ArrayList<>();
-                if (txt != null && !txt.equals("")) {
-                    String[] messages = txt.split("<message>");
+                try {
+                    ArrayList<Message> messageList = new ArrayList<>();
+                    if (txt != null && !txt.equals("")) {
+                        String[] messages = txt.split("<message>");
 
-                    int i = 1;
-                    if (messages.length > 1) {
-                        while (i < messages.length) {
-                            String[] params = messages[i].split("CDATA");
-                            for (int j = 1; j < params.length; j++) {
-                                params[j] = params[j].substring(1,
-                                        params[j].indexOf("]"));
+                        int i = 1;
+                        if (messages.length > 1) {
+                            while (i < messages.length) {
+                                String[] params = messages[i].split("CDATA");
+                                for (int j = 1; j < params.length; j++) {
+                                    params[j] = params[j].substring(1,
+                                            params[j].indexOf("]"));
 
+                                }
+                                Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
+                                        + params[3] + " " + params[4]);
+                                messageList.add(new Message(params[1], params[2],
+                                        params[3], params[4]));
+                                i++;
                             }
-                            Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
-                                    + params[3] + " " + params[4]);
-                            messageList.add(new Message(params[1], params[2],
-                                    params[3], params[4]));
-                            i++;
+
                         }
 
                     }
-
+                    if (messageList != null && messageList.size() > 0) {
+                        Log.i(TAG, "count= " + messageList.size());
+                        Message result = messageList.get(0);
+                        setLastMessageText(Html.fromHtml(result.getauteur()
+                                + ": " + result.getbody() + "<br />" + "<small>"
+                                + result.gettime() + "</small>"));
+                    } else
+                        mMessageText.setVisibility(View.GONE);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
-                if (messageList != null && messageList.size() > 0) {
-                    Log.i(TAG, "count= " + messageList.size());
-                    Message result = messageList.get(0);
-                    setLastMessageText(Html.fromHtml(result.getauteur()
-                            + ": " + result.getbody() + "<br />" + "<small>"
-                            + result.gettime() + "</small>"));
-                } else
-                    mMessageText.setVisibility(View.GONE);
             }
         });
     }
