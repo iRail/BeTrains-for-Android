@@ -528,22 +528,25 @@ public class PlannerFragment extends ListFragment {
                 + myArrival + "&from=" + myStart + "&date=" + day + month
                 + year + "&time=" + hour + minutes + "&timeSel="
                 + dA + "&lang=" + langue
-                + "&typeOfTransport=train&format=json&fast=true";
+                + "&typeOfTransport=train&format=json&fast=true&alerts=true";
         url = url.replace(" ", "%20");
         Log.v(TAG, url);
 
-        Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Connections>() {
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
         }).setCallback(new FutureCallback<Connections>() {
             @Override
             public void onCompleted(Exception e, Connections result) {
+                if (e != null)
+                    e.printStackTrace();
                 allConnections = result;
                 if (allConnections == null) {
                     //Log.e(TAG, "API failure!!!");
                     if (getActivity() != null)
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(getActivity(), R.string.txt_error,
-                                        Toast.LENGTH_LONG).show();
+
+                                    Toast.makeText(getActivity(), R.string.txt_error,
+                                            Toast.LENGTH_LONG).show();
                             }
                         });
 

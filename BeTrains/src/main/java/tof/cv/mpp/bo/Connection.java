@@ -8,6 +8,7 @@ public class Connection {
 	private Station departure;
 	private Station arrival;
 	private Vias vias;
+	private Alerts alerts;
 	
 	public Station getArrival() {
 		return this.arrival;
@@ -20,6 +21,9 @@ public class Connection {
 	}
 	public Vias getVias() {
 		return this.vias;
+	}
+	public Alerts getAlerts() {
+		return this.alerts;
 	}
 
 

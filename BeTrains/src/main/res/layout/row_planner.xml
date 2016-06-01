@@ -4,21 +4,21 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="16dp" >
+    android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/timeline"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/departtime"
             style="@style/TextElementBig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="00:00"/>
+            android:text="00:00"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/delayD"
@@ -31,15 +31,29 @@
             android:textColor="@color/red"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/duration"
-            style="@style/TextElementMid"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="@string/txt_duration"
-            android:textStyle="normal" />
+            android:layout_weight="1">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="8dp"
+                android:id="@+id/alert"
+                android:visibility="gone"
+                android:src="@drawable/ic_alert"/>
+
+            <TextView
+                android:id="@+id/duration"
+                style="@style/TextElementMid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_duration"
+                android:textStyle="normal" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/arrivaltime"
@@ -65,7 +79,7 @@
         android:id="@+id/secondline"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/departure"
@@ -73,8 +87,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
             android:ellipsize="end"
+            android:gravity="left"
             android:singleLine="true"
             android:text="DEPARTURE" />
 
@@ -94,9 +108,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-             android:gravity="right"
+            android:gravity="right"
             android:singleLine="true"
             android:text="DEPARTURE" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/alertText"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="testtt"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/holo_red_dark"/>
 
 </LinearLayout>
