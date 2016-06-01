@@ -169,13 +169,13 @@ public class InfoStationFragment extends ListFragment {
         if (id != null && id.length() > 0)
             url = "http://api.irail.be/liveboard.php/?id="
                     + id + dateTime
-                    + "&format=JSON&fast=true" + "&lang=" + langue;
+                    + "&format=JSON&fast=true" + "&lang=" + langue+"&alerts=true";
         else
             url = "http://api.irail.be/liveboard.php/?station="
                     + stationString.replace(" ", "%20") + dateTime
-                    + "&format=JSON&fast=true" + "&lang=" + langue;
+                    + "&format=JSON&fast=true" + "&lang=" + langue+"&alerts=true";
 
-        //Log.e("CVE","Show station from: " + url);
+        Log.e("CVE","Show station from: " + url);
 
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
             @Override
@@ -193,12 +193,12 @@ public class InfoStationFragment extends ListFragment {
 
                         stationString = currentStation.getStation();
 
-                        StationInfoAdapter StationInfoAdapter = new StationInfoAdapter(
+                        StationInfoAdapter stationInfoAdapter = new StationInfoAdapter(
                                 getActivity(), R.layout.row_info_station,
                                 currentStation.getStationDepartures()
                                         .getStationDeparture()
                         );
-                        setListAdapter(StationInfoAdapter);
+                        setListAdapter(stationInfoAdapter);
                         setTitle(Utils.formatDate(new Date(timestamp),
                                 "dd MMM HH:mm"));
                     } else {
