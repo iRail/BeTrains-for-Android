@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
@@ -57,6 +58,7 @@ import java.util.Date;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
+import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Message;
 import tof.cv.mpp.bo.Vehicle;
 import tof.cv.mpp.widget.TrainAppWidgetProvider;
@@ -112,7 +114,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
             }
         });
 
-       registerForContextMenu(getListView());
+        registerForContextMenu(getListView());
     }
 
     public void displayInfoFromMemory(final String fileName, final String vehicle) {
@@ -225,7 +227,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
         }
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
-                + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON";//&fast=true";
+                + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON&alerts=true";
         Log.e("CVE", url);
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
@@ -240,186 +242,216 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
                 if (currentVehicle != null
                         && currentVehicle.getVehicleStops() != null) {
-                    TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
-                            getActivity(), R.layout.row_info_train, currentVehicle
-                            .getVehicleStops().getVehicleStop());
-                    setListAdapter(trainInfoAdapter);
+                    if (currentVehicle.getAlerts() != null && currentVehicle.getAlerts().getNumber() > 0) {
+                        String text = "";
+                        String html = "";
+                        if (currentVehicle.getAlerts().getAlertlist() != null)
+                            for (Alert anAlert : currentVehicle.getAlerts().getAlertlist()){
+                                text += anAlert.getHeader() + " / ";
+                                html += ("<h3>" +  anAlert.getHeader() + "</h3>");
+                                html += (anAlert.getDescription() );
+                            }
 
 
-                    getActivity().setTitle( currentVehicle.getVehicleInfo().name +Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
-                    PolylineOptions rectOptions = new PolylineOptions();
+                        if (text.endsWith(" / "))
+                            text = text.substring(0, text.length() - 3);
 
-                    double minLat = 90;
-                    double maxLat = 0;
-                    double minLon = 180;
-                    double maxLon = 0;
-                    double delta = 0.05;
 
-                    for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()){
+                        final String finalHtml = html;
+                        Snackbar.make(getView().findViewById(R.id.root), text, Snackbar.LENGTH_INDEFINITE)
+                                .setAction("OK", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        new AlertDialog.Builder(getActivity())
+                                                .setTitle(currentVehicle.getVehicleInfo().name)
+                                                .setMessage(Html.fromHtml(finalHtml))
+                                                .show();
+                                    }
+                                }).show();
+                    }
 
-                        myMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
-                                .anchor(0.5f,0.5f)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
 
-                        rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
-                        if (maxLat < aStop.getStationInfo().getLocationY())
+                        TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
+                                getActivity(), R.layout.row_info_train, currentVehicle
+                                .getVehicleStops().getVehicleStop());
+                        setListAdapter(trainInfoAdapter);
+
+
+                        getActivity().setTitle(currentVehicle.getVehicleInfo().name + Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+                        PolylineOptions rectOptions = new PolylineOptions();
+
+                        double minLat = 90;
+                        double maxLat = 0;
+                        double minLon = 180;
+                        double maxLon = 0;
+                        double delta = 0.05;
+
+                        for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
+
+                            myMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
+                                    .anchor(0.5f, 0.5f)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
+
+                            rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
+                            if (maxLat < aStop.getStationInfo().getLocationY())
                                 maxLat = aStop.getStationInfo().getLocationY();
 
-                        if (minLat > aStop.getStationInfo().getLocationY())
-                            minLat = aStop.getStationInfo().getLocationY();
+                            if (minLat > aStop.getStationInfo().getLocationY())
+                                minLat = aStop.getStationInfo().getLocationY();
 
-                        if (maxLon < aStop.getStationInfo().getLocationX())
-                            maxLon = aStop.getStationInfo().getLocationX();
+                            if (maxLon < aStop.getStationInfo().getLocationX())
+                                maxLon = aStop.getStationInfo().getLocationX();
 
-                        if (minLon > aStop.getStationInfo().getLocationX())
-                            minLon = aStop.getStationInfo().getLocationX();
-                    }
-
-                    myMap.addPolyline(rectOptions.color(Color.BLUE));
-
-                    LatLngBounds bounds = new LatLngBounds(
-                            new LatLng(minLat-delta, minLon-delta), new LatLng(maxLat+delta, maxLon+delta));
-
-                    myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
-
-                    //myMap.addMarker(new MarkerOptions()
-                    //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
-                    //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
-
-
-                } else {
-                    if (e != null) {
-                        Toast.makeText(getActivity(), e.getLocalizedMessage(),
-                                Toast.LENGTH_LONG).show();
-                        getActivity().finish();
-                    } else {
-                        if (result.getHeaders().code() == 502) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle(R.string.irailissue);
-                            builder.setMessage(R.string.irailissueDetail);
-                            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    getActivity().finish();
-                                }
-                            });
-                            builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
-                                    ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
-                                    builder.setType("message/rfc822");
-                                    builder.addEmailTo("iRail@list.iRail.be");
-                                    builder.setSubject("Issue with iRail API");
-                                    builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
-                                            "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
-                                            "I hope you can fix that soon.\nHave a nice day.");
-                                    builder.setChooserTitle("Send Email");
-                                    builder.startChooser();
-
-                                    //getActivity().finish();
-                                }
-                            });
-                            builder.create().show();
+                            if (minLon > aStop.getStationInfo().getLocationX())
+                                minLon = aStop.getStationInfo().getLocationX();
                         }
 
+                        myMap.addPolyline(rectOptions.color(Color.BLUE));
+
+                        LatLngBounds bounds = new LatLngBounds(
+                                new LatLng(minLat - delta, minLon - delta), new LatLng(maxLat + delta, maxLon + delta));
+
+                        myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
+
+                        //myMap.addMarker(new MarkerOptions()
+                        //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
+                        //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+
+                    } else {
+                        if (e != null) {
+                            Toast.makeText(getActivity(), e.getLocalizedMessage(),
+                                    Toast.LENGTH_LONG).show();
+                            getActivity().finish();
+                        } else {
+                            if (result.getHeaders().code() == 502) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle(R.string.irailissue);
+                                builder.setMessage(R.string.irailissueDetail);
+                                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        getActivity().finish();
+                                    }
+                                });
+                                builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
+                                        builder.setType("message/rfc822");
+                                        builder.addEmailTo("iRail@list.iRail.be");
+                                        builder.setSubject("Issue with iRail API");
+                                        builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
+                                                "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
+                                                "I hope you can fix that soon.\nHave a nice day.");
+                                        builder.setChooserTitle("Send Email");
+                                        builder.startChooser();
+
+                                        //getActivity().finish();
+                                    }
+                                });
+                                builder.create().show();
+                            }
+
+                        }
+
+
                     }
-
-
                 }
             }
-        });
 
-    }
+            );
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-       // if (requestCode == 0) {
-       //     getActivity().finish();
-        //}
-    }
+        }
+
+        @Override
+        public void onActivityResult ( int requestCode, int resultCode, Intent data){
+            // Check which request we're responding to
+            // if (requestCode == 0) {
+            //     getActivity().finish();
+            //}
+        }
 
 
-    @Override
-    public void onListItemClick(ListView parent, View view, int position, long id) {
-        Vehicle.VehicleStop stop = (Vehicle.VehicleStop) getListAdapter().getItem(position);
-        Intent i = new Intent(getActivity(), InfoStationActivity.class);
-        i.putExtra("Name", stop.getStation());
-        i.putExtra("ID", stop.getStationInfo().getId());
-        i.putExtra("timestamp", stop.getTime());
-        startActivity(i);
+        @Override
+        public void onListItemClick (ListView parent, View view,int position, long id){
+            Vehicle.VehicleStop stop = (Vehicle.VehicleStop) getListAdapter().getItem(position);
+            Intent i = new Intent(getActivity(), InfoStationActivity.class);
+            i.putExtra("Name", stop.getStation());
+            i.putExtra("ID", stop.getStationInfo().getId());
+            i.putExtra("timestamp", stop.getTime());
+            startActivity(i);
 
-    }
+        }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, 0, Menu.NONE, "Add to Widget")
-                .setIcon(R.drawable.ic_menu_save)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        @Override
+        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
+            menu.add(Menu.NONE, 0, Menu.NONE, "Add to Widget")
+                    .setIcon(R.drawable.ic_menu_save)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-        menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
-                .setIcon(R.drawable.ic_menu_star)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
+                    .setIcon(R.drawable.ic_menu_star)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        // menu.add(Menu.NONE, 2, Menu.NONE, "Map")
-        //         .setIcon(R.drawable.ic_menu_mapmode)
-        //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            // menu.add(Menu.NONE, 2, Menu.NONE, "Map")
+            //         .setIcon(R.drawable.ic_menu_mapmode)
+            //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, 4, Menu.NONE, R.string.btn_home_compensate)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.add(Menu.NONE, 4, Menu.NONE, R.string.btn_home_compensate)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, 3, Menu.NONE, "Chat")
-                .setIcon(R.drawable.ic_menu_start_conversation)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-    }
+            menu.add(Menu.NONE, 3, Menu.NONE, "Chat")
+                    .setIcon(R.drawable.ic_menu_start_conversation)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 0:
-                widget();
-                return true;
-            case 1:
-                if (currentVehicle != null) {
-                    Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
-                    startActivity(new Intent(getActivity(), StarredActivity.class));
-                }
-                return true;
-            case 2:
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            switch (item.getItemId()) {
+                case 0:
+                    widget();
+                    return true;
+                case 1:
+                    if (currentVehicle != null) {
+                        Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
+                        startActivity(new Intent(getActivity(), StarredActivity.class));
+                    }
+                    return true;
+                case 2:
               /*  if (currentVehicle != null) {
                     Intent i = new Intent(getActivity(), MapVehicleActivity.class);
                     i.putExtra("Name", currentVehicle.getId());
                     startActivity(i);
                 }*/
-                return true;
-            case 3:
-                if (currentVehicle != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(DbAdapterConnection.KEY_NAME,
-                            currentVehicle.getId());
-                    Intent mIntent = new Intent(getActivity(), ChatActivity.class);
-                    mIntent.putExtras(bundle);
-                    startActivityForResult(mIntent, 0);
                     return true;
-                }
+                case 3:
+                    if (currentVehicle != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(DbAdapterConnection.KEY_NAME,
+                                currentVehicle.getId());
+                        Intent mIntent = new Intent(getActivity(), ChatActivity.class);
+                        mIntent.putExtras(bundle);
+                        startActivityForResult(mIntent, 0);
+                        return true;
+                    }
 
-            case 4:
-                if (currentVehicle != null) {
-                    new Thread(new Runnable() {
-                        public void run() {
-                            saveToSd();
-                        }
-                    }).start();
-                }
+                case 4:
+                    if (currentVehicle != null) {
+                        new Thread(new Runnable() {
+                            public void run() {
+                                saveToSd();
+                            }
+                        }).start();
+                    }
 
-                return true;
+                    return true;
 
 
-            default:
-                return super.onOptionsItemSelected(item);
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
-    }
 
     public void saveToSd() {
 
@@ -574,6 +606,6 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        myMap=googleMap;
+        myMap = googleMap;
     }
 }

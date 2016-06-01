@@ -15,6 +15,12 @@ public class Vehicle {
     private long timestamp;
     private Vehicleinfo vehicleinfo;
 
+    public Alerts getAlerts() {
+        return alerts;
+    }
+
+    private Alerts alerts;
+
     public Vehicleinfo getVehicleInfo() {
         return vehicleinfo;
     }
