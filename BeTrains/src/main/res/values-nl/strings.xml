@@ -74,7 +74,7 @@
     <string name="txt_station">Station</string>
     <string name="txt_confirm_map">Start Google Maps ?</string>
     <string name="txt_confirm_nav">Start Google Nav ?</string>
-    <string name="txt_add_fav">Add to fav.</string>
+    <string name="txt_add_fav">Toevoegen aan favorieten</string>
     <string name="txt_train">Trein</string>
     <string name="txt_trip">Trip</string>
     <string name="fav_no_fav_body">Je kan je favoriete treinen, stations en
@@ -184,5 +184,7 @@
     <string name="report">Report to iRail</string>
     <string name="irailissue">Problem with the server</string>
     <string name="irailissueDetail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="action_date_time">Datum en tijd wijzigen</string>
 
 </resources>

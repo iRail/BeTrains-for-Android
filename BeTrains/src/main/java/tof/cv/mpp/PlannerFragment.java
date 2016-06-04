@@ -287,15 +287,15 @@ public class PlannerFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        menu.add(Menu.NONE, MENU_DT, Menu.NONE, "Date/Time")
+        menu.add(Menu.NONE, MENU_DT, Menu.NONE, R.string.action_date_time)
                 .setIcon(R.drawable.ic_menu_time)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, "Add to Fav.")
+        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.txt_add_fav)
                 .setIcon(R.drawable.ic_menu_star)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, MENU_PREF, Menu.NONE, "Settings")
+        menu.add(Menu.NONE, MENU_PREF, Menu.NONE, R.string.action_settings)
                 .setIcon(R.drawable.ic_menu_preferences)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
     }
