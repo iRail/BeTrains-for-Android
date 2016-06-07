@@ -88,10 +88,18 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
                         .setText((conn.getDeparture().getPlatform()
                                 .contentEquals("") ? "" : getContext().getString(R.string.txt_quai) + " " + conn
                                 .getDeparture().getPlatform()));
+
+                if(conn.getDeparture().getPlatforminfo()!=null && conn.getDeparture().getPlatforminfo().normal ==0)
+                    departure
+                            .setText("! "+departure.getText()+" !");
             }
             if (arrival != null) {
                 arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
                         : getContext().getString(R.string.txt_quai) + " " + conn.getArrival().getPlatform()));
+
+                if(conn.getArrival().getPlatforminfo()!=null && conn.getArrival().getPlatforminfo().normal ==0)
+                    arrival
+                            .setText("! "+arrival.getText()+" !");
             }
 
             if (triptime != null) {

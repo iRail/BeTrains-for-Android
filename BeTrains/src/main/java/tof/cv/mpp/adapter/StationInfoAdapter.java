@@ -62,7 +62,15 @@ public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
                 delay.setText(trainstop.getDelay());
             }
 
-            platform.setText(trainstop.getPlatform());
+            if (trainstop.getPlatforminfo() != null) {
+                platform.setText(trainstop.getPlatforminfo().name);
+
+                if (trainstop.getPlatforminfo() != null && trainstop.getPlatforminfo().normal == 0)
+                    platform
+                            .setText("! " + platform.getText() + " !");
+            } else
+                platform.setText("");
+
             train.setText(Utils.getTrainId(trainstop.getVehicle()));
 
         }

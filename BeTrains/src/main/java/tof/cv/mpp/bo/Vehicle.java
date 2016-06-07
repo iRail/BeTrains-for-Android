@@ -4,6 +4,8 @@ import android.text.Html;
 
 import java.util.ArrayList;
 
+import tof.cv.mpp.GameFragment;
+
 /**
  * Created by 201601 on 04-Dec-15.
  */
@@ -57,6 +59,13 @@ public class Vehicle {
         private String delay;
         private String canceled;
         Station.StationInfo stationinfo;
+
+        PlatformInfo platforminfo;
+        public PlatformInfo getPlatforminfo() {
+            return platforminfo;
+        }
+
+
 
         public boolean isCancelled(){
             return "1".contentEquals(canceled);

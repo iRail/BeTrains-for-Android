@@ -43,8 +43,7 @@
 
 
     <TextView
-        android:id="@+id/arret1"
-        android:visibility="gone"
+        android:id="@+id/platform"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"

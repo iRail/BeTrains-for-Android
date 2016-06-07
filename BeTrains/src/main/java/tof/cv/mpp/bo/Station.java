@@ -10,12 +10,18 @@ public class Station {
 	private String station;
 	private String time;
 	private String platform;
+	private PlatformInfo platforminfo;
 	private String vehicle;
-    private StationInfo stationinfo;
+
+	public PlatformInfo getPlatforminfo() {
+		return platforminfo;
+	}
+
+	private StationInfo stationinfo;
 	private String version;
 	private StationDepartures departures;
 	private String canceled="";
-	private long timestamp;
+
 
 	public String getVersion() {
 		return version;
@@ -31,10 +37,6 @@ public class Station {
 
 	public StationDepartures getStationDepartures() {
 		return departures;
-	}
-
-	public long getTimeStamp() {
-		return this.timestamp;
 	}
 
     public StationInfo getStationInfo() {
@@ -95,6 +97,12 @@ public class Station {
 		private String platform;
 		private String vehicle;
 		private String canceled="";
+		PlatformInfo platforminfo;
+
+		public PlatformInfo getPlatforminfo() {
+			return platforminfo;
+		}
+
 
 		public Alerts getAlerts() {
 			return alerts;
