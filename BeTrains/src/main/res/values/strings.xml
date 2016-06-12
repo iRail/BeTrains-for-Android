@@ -172,4 +172,7 @@
     <string name="irailissue">Problem with the server</string>
     <string name="irailissueDetail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
 
+    <string name="plan_action_settings">Settings</string>
+    <string name="plan_action_date_time">Change date and time</string>
+    <string name="plan_action_add_to_favorites">Add to favorites</string>
 </resources>
