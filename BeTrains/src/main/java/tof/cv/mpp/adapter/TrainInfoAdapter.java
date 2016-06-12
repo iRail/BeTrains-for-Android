@@ -35,8 +35,20 @@ public class TrainInfoAdapter extends ArrayAdapter<Vehicle.VehicleStop> {
             TextView time = (TextView) v.findViewById(R.id.time);
             TextView delay = (TextView) v.findViewById(R.id.delay);
             TextView station = (TextView) v.findViewById(R.id.station);
+            TextView platform = (TextView) v.findViewById(R.id.platform);
+
 
             station.setText(Html.fromHtml(o.getStation()));
+
+            if (o.getPlatforminfo() != null) {
+                platform.setText(o.getPlatforminfo().name);
+
+                if (o.getPlatforminfo() != null && o.getPlatforminfo().normal == 0)
+                    platform
+                            .setText("! " + platform.getText() + " !");
+            } else
+                platform.setText("");
+
 
             if (o.isCancelled())
                 time.setText(Html.fromHtml("<font color=\"red\">XXXX</font>"));

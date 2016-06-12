@@ -63,26 +63,6 @@ public class DialogViaFragment extends DialogFragment {
         LinearLayout ll = new LinearLayout(DialogViaFragment.this.getActivity());
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        if (currentConnection.getAlerts() != null && currentConnection.getAlerts().getNumber() > 0 && currentConnection.getAlerts().getAlertlist() != null) {
-
-            TextView tv = new TextView(DialogViaFragment.this.getActivity());
-            tv.setTextColor(getResources().getColor(R.color.red));
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            tv.setLayoutParams(layoutParams);
-            tv.setGravity(Gravity.CENTER);
-
-            String text = "";
-
-            for (Alert anAlert : currentConnection.getAlerts().getAlertlist())
-                text += anAlert.getDescription() + "\n";
-
-            if (text.endsWith(" / "))
-                text = text.substring(0, text.length() - 2);
-
-            tv.setText(Html.fromHtml(text));
-            ll.addView(tv);
-        }
-
 
         if (currentConnection != null) {
             // Setup the dialog
@@ -123,12 +103,22 @@ public class DialogViaFragment extends DialogFragment {
 
                     View stationRow = inflater.inflate(
                             R.layout.row_via_station, null, false);
-                    ((TextView) stationRow
-                            .findViewById(R.id.tv_arrival_platform))
-                            .setText(aVia.getArrival().getPlatform());
-                    ((TextView) stationRow
-                            .findViewById(R.id.tv_departure_platform))
-                            .setText(aVia.getDeparture().getPlatform());
+                   TextView tvArrival = ((TextView) stationRow
+                            .findViewById(R.id.tv_arrival_platform));
+                    tvArrival.setText(aVia.getArrival().getPlatform());
+
+                    if(aVia.getArrival().getPlatforminfo()!=null && aVia.getArrival().getPlatforminfo().normal ==0)
+                        tvArrival
+                                .setText("!"+tvArrival.getText()+"!");
+
+                    TextView tvDeparture = ((TextView) stationRow
+                            .findViewById(R.id.tv_departure_platform));
+                    tvDeparture.setText(aVia.getDeparture().getPlatform());
+
+                    if(aVia.getDeparture().getPlatforminfo()!=null && aVia.getDeparture().getPlatforminfo().normal ==0)
+                        tvDeparture
+                                .setText("!"+tvDeparture.getText()+"!");
+
                     ((TextView) stationRow.findViewById(R.id.tv_arrival_time))
                             .setText(Utils.formatDate(aVia.getArrival()
                                     .getTime(), false, false));
@@ -185,6 +175,26 @@ public class DialogViaFragment extends DialogFragment {
             setStationListener(arrivalRow, currentConnection.getArrival());
             ll.addView(arrivalRow);
 
+            if (currentConnection.getAlerts() != null && currentConnection.getAlerts().getNumber() > 0 && currentConnection.getAlerts().getAlertlist() != null) {
+
+                TextView tv = new TextView(DialogViaFragment.this.getActivity());
+                tv.setTextColor(getResources().getColor(R.color.red));
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                tv.setLayoutParams(layoutParams);
+                tv.setGravity(Gravity.CENTER);
+
+                String text = "";
+
+                for (Alert anAlert : currentConnection.getAlerts().getAlertlist())
+                    text += anAlert.getDescription() + "\n";
+
+                if (text.endsWith(" / "))
+                    text = text.substring(0, text.length() - 2);
+
+                tv.setText(Html.fromHtml(text));
+                ll.addView(tv);
+            }
+
             scroll.addView(ll);
 
             return scroll;
@@ -205,6 +215,10 @@ public class DialogViaFragment extends DialogFragment {
 		 */
         TextView tvPlatform = (TextView) row.findViewById(R.id.tv_platform);
         tvPlatform.setText(station.getPlatform());
+
+        if(station.getPlatforminfo()!=null && station.getPlatforminfo().normal ==0)
+            tvPlatform
+                    .setText("!"+tvPlatform.getText()+"!");
 
         TextView tvTime = (TextView) row.findViewById(R.id.tv_time);
         tvTime.setText(Utils.formatDate(station.getTime(), false, false));

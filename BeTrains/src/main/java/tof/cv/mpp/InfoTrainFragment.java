@@ -258,7 +258,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
 
                         final String finalHtml = html;
-                        Snackbar.make(getView().findViewById(R.id.root), text, Snackbar.LENGTH_INDEFINITE)
+                        Snackbar.make(getView().findViewById(R.id.root), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
                                 .setAction("OK", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -286,6 +286,8 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
                         double maxLon = 0;
                         double delta = 0.05;
 
+
+                    try {
                         for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
 
                             myMap.addMarker(new MarkerOptions()
@@ -317,9 +319,13 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
                         //myMap.addMarker(new MarkerOptions()
                         //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
                         //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    } catch (Exception e1) {
+                        //map crashing, probably custom ROM
+                        e1.printStackTrace();
+                    }
 
 
-                    } else {
+                } else {
                         if (e != null) {
                             Toast.makeText(getActivity(), e.getLocalizedMessage(),
                                     Toast.LENGTH_LONG).show();
