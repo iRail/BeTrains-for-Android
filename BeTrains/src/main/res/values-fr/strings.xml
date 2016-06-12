@@ -80,7 +80,7 @@
     <string name="txt_station">Gare</string>
     <string name="txt_confirm_map">Lancer Google Maps?</string>
     <string name="txt_confirm_nav">Lancer Google Nav?</string>
-    <string name="txt_add_fav">Favori</string>
+    <string name="txt_add_fav">Ajouter aux favoris</string>
     <string name="txt_train">Train</string>
     <string name="txt_trip">Itinéraire</string>
     <string name="fav_no_fav_body">Vous pouvez rajouter ici vos trajets, trains et
@@ -165,5 +165,7 @@
     <string name="report">Rapporter le bug</string>
     <string name="irailissue">Problème avec le server</string>
     <string name="irailissueDetail">Petit soucis avec le serveur, nous sommes désolés.\nSi le prolème persiste, vous pouvez nous envoyer un petit mail avec le rapport.</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="action_date_time">Changer la date et l\'heure</string>
 
 </resources>

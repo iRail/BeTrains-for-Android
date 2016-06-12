@@ -77,7 +77,7 @@
     <string name="txt_station">Station</string>
     <string name="txt_confirm_map">Launch Google Maps?</string>
     <string name="txt_confirm_nav">Launch Google Nav?</string>
-    <string name="txt_add_fav">Add to fav.</string>
+    <string name="txt_add_fav">Add to favorites</string>
     <string name="txt_train">Train</string>
     <string name="txt_trip">Trip</string>
     <string name="fav_no_fav_body">You can add your favorite stations, trains and
