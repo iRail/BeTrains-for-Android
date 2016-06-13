@@ -184,5 +184,8 @@
     <string name="report">Report to iRail</string>
     <string name="irailissue">Problem with the server</string>
     <string name="irailissueDetail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
+    <string name="plan_action_add_to_favorites">Toevoegen aan favorieten</string>
+    <string name="plan_action_date_time">Datum en tijd wijzigen</string>
+    <string name="plan_action_settings">Instellingen</string>
 
 </resources>

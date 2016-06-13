@@ -165,5 +165,8 @@
     <string name="report">Rapporter le bug</string>
     <string name="irailissue">Problème avec le server</string>
     <string name="irailissueDetail">Petit soucis avec le serveur, nous sommes désolés.\nSi le prolème persiste, vous pouvez nous envoyer un petit mail avec le rapport.</string>
+    <string name="plan_action_add_to_favorites">Ajouter aux favoris</string>
+    <string name="plan_action_date_time">Changer la date et l\'heure</string>
+    <string name="plan_action_settings">Paramètres</string>
 
 </resources>
