@@ -37,20 +37,24 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
     }
 
     protected void onPostExecute(Long result) {
-        Log.e("CVE", "" + myRssFeed);
-        if (myRssFeed != null) {
-            if (myRssFeed.getList() != null && myRssFeed.getList().size() > 0) {
-                TrafficAdapter adapter = new TrafficAdapter(context,
-                        R.layout.row_rss, myRssFeed.getList(), layoutInflater,
-                        myRssFeed);
-                trafFrag.setListAdapter(adapter);
-                trafFrag.setRssFeed(myRssFeed);
+        try {
+            Log.e("CVE", "" + myRssFeed);
+            if (myRssFeed != null) {
+                if (myRssFeed.getList() != null && myRssFeed.getList().size() > 0) {
+                    TrafficAdapter adapter = new TrafficAdapter(context,
+                            R.layout.row_rss, myRssFeed.getList(), layoutInflater,
+                            myRssFeed);
+                    trafFrag.setListAdapter(adapter);
+                    trafFrag.setRssFeed(myRssFeed);
+                } else
+                    ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.txt_no_issue);
+
+
             } else
-                ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.txt_no_issue);
-
-
-        } else
-            ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.txt_connection);
+                ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.txt_connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //new DownloadOtherTrafficTask(trafFrag).execute();
     }

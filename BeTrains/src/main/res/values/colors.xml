@@ -55,5 +55,7 @@
     <color name="belgian_color_2">#FFEEEE00</color>
     <color name="belgian_color_3">#FFEE0000</color>
 
+    <color name="transpa">#00EE0000</color>
+
 
 </resources>

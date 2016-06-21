@@ -50,7 +50,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="8dp">
 
-                <TextView
+                <Button
 
                     android:id="@+id/tv_start"
                     style="@android:style/TextAppearance.Large"
@@ -60,6 +60,7 @@
                     android:ellipsize="marquee"
                     android:gravity="center"
                     android:maxLines="2"
+                    android:background="@drawable/selectorbutton"
                     android:padding="16dp"
                     android:text="City START"
                     android:textColor="@android:color/white" />
@@ -68,14 +69,15 @@
                     android:id="@+id/mybuttonInvert"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/selectorbutton"
                     android:text=">&lt;"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"></Button>
 
-                <TextView
+                <Button
                     android:id="@+id/tv_stop"
                     style="@android:style/TextAppearance.Large"
+                    android:background="@drawable/selectorbutton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
