@@ -392,11 +392,11 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
         @Override
         public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
-            menu.add(Menu.NONE, 0, Menu.NONE, "Add to Widget")
+            menu.add(Menu.NONE, 0, Menu.NONE, R.string.add_widget)
                     .setIcon(R.drawable.ic_menu_save)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-            menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
+            menu.add(Menu.NONE, 1, Menu.NONE, R.string.txt_add_fav)
                     .setIcon(R.drawable.ic_menu_star)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
@@ -407,7 +407,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
             menu.add(Menu.NONE, 4, Menu.NONE, R.string.btn_home_compensate)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-            menu.add(Menu.NONE, 3, Menu.NONE, "Chat")
+            menu.add(Menu.NONE, 3, Menu.NONE, R.string.menu_chat)
                     .setIcon(R.drawable.ic_menu_start_conversation)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
