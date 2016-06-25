@@ -228,7 +228,7 @@ public class InfoStationFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, 0, Menu.NONE, "Fav")
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.txt_add_fav)
                 .setIcon(R.drawable.ic_menu_star)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
