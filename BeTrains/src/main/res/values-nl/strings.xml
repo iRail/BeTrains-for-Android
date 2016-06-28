@@ -188,5 +188,6 @@
     <string name="plan_action_add_to_favorites">Toevoegen aan favorieten</string>
     <string name="plan_action_date_time">Datum en tijd wijzigen</string>
     <string name="plan_action_settings">Instellingen</string>
+    <string name="tuto_notif">Exemple: Préviens moi de l\'horaire du train IC942 dès que j\'arrive à Bruxelles Midi</string>
 
 </resources>

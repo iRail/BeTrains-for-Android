@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:gravity="center"
+        android:text="@string/tuto_notif"/>
+
+<android.support.v7.widget.RecyclerView
     android:id="@+id/list"
     android:name="tof.cv.mpp.NotifFragment"
     android:layout_width="match_parent"
@@ -11,3 +23,6 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="tof.cv.mpp.NotifFragment"
     tools:listitem="@layout/fragment_notif" />
+
+</LinearLayout>
+

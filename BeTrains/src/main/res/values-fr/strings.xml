@@ -169,5 +169,6 @@
     <string name="plan_action_add_to_favorites">Ajouter aux favoris</string>
     <string name="plan_action_date_time">Changer la date et l\'heure</string>
     <string name="plan_action_settings">Paramètres</string>
+    <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the IC 942 timetable</string>
 
 </resources>
