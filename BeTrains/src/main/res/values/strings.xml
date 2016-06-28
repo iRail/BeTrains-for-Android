@@ -160,6 +160,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="menu_plan">Route Planner</string>
+    <string name="menu_notif">Notifications</string>
     <string name="menu_iss">Traffic Issues</string>
     <string name="menu_chat">Chat</string>
     <string name="menu_star">Starred</string>

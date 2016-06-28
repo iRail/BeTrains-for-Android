@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_nav_plan"
             android:title="@string/menu_plan"/>
         <item
+            android:id="@+id/navigation_item_notif"
+            android:icon="@drawable/ic_nav_notif"
+            android:title="@string/menu_notif"/>
+        <item
             android:id="@+id/navigation_item_iss"
             android:icon="@drawable/ic_nav_iss"
             android:title="@string/menu_iss"/>
