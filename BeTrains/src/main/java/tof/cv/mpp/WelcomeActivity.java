@@ -29,8 +29,10 @@ import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import tof.cv.mpp.dummy.DummyContent;
 
-public class WelcomeActivity extends AppCompatActivity {
+
+public class WelcomeActivity extends AppCompatActivity implements NotifFragment.OnListFragmentInteractionListener {
 
     private Fragment mContent;
     public DrawerLayout drawerLayout = null;
@@ -130,6 +132,9 @@ public class WelcomeActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.navigation_item_plan:
                             mContent = new PlannerFragment();
+                            break;
+                        case R.id.navigation_item_notif:
+                            mContent = new NotifFragment();
                             break;
                         case R.id.navigation_item_iss:
                             mContent = new TrafficFragment();
@@ -263,5 +268,10 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
         marketLaunch.setData(Uri.parse("http://cookicons.co/"));
         startActivity(marketLaunch);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }
