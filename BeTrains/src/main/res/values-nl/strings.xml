@@ -181,7 +181,7 @@
     <string name="menu_closest">Dichtste station</string>
     <string name="menu_game">Game</string>
     <string name="menu_extras">Extras</string>
-    <string name="ok">OK</string>
+    <string name="ok">Ok</string>
     <string name="report">Report to iRail</string>
     <string name="irailissue">Problem with the server</string>
     <string name="irailissueDetail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
@@ -190,5 +190,9 @@
     <string name="plan_action_settings">Instellingen</string>
     <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the train IC 942 schedule</string>
     <string name="notifstation">Station where you will be notified</string>
+    <string name="cancel">Annuleren</string>
+    <string name="chat_err_change_username">Klik op de knop \'veranderen\' om een gebruikersnaam te kiezen</string>
+    <string name="chat_err_empty_message">Gelieve iets te schrijven</string>
+    <string name="chat_err_max_messages">Slechts één bericht per sessie toegestaan</string>
 
 </resources>

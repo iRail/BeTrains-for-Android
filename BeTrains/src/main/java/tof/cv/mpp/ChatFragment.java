@@ -109,7 +109,7 @@ public class ChatFragment extends ListFragment {
 			public void onClick(View v) {
 				if (posted) {
 					Toast.makeText(getActivity(),
-                            "Only one message per session.", Toast.LENGTH_LONG)
+                            R.string.chat_err_max_messages, Toast.LENGTH_LONG)
 							.show();
 				} else {
 					String pseudo = PreferenceManager
@@ -118,11 +118,11 @@ public class ChatFragment extends ListFragment {
 					if (pseudo.contentEquals("Anonymous"))
 						Toast.makeText(
 								getActivity(),
-								"Click on 'change' button to choose a User Name",
+								R.string.chat_err_change_username,
 								Toast.LENGTH_LONG).show();
 					else if (messageTxtField.getText().toString()
 							.contentEquals(""))
-						Toast.makeText(getActivity(), "Please write something",
+						Toast.makeText(getActivity(), R.string.chat_err_empty_message,
 								Toast.LENGTH_LONG).show();
 					else {
 						postMessage(pseudo);
@@ -461,7 +461,7 @@ public class ChatFragment extends ListFragment {
 			input.setInputType(InputType.TYPE_CLASS_NUMBER);
 			alert.setView(input);
 
-			alert.setPositiveButton("Ok",
+			alert.setPositiveButton(R.string.ok,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
@@ -478,7 +478,7 @@ public class ChatFragment extends ListFragment {
 						}
 					});
 
-			alert.setNegativeButton("Cancel",
+			alert.setNegativeButton(R.string.cancel,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int whichButton) {

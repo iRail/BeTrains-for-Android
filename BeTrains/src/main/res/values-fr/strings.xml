@@ -162,7 +162,7 @@
     <string name="menu_closest">A proximité</string>
     <string name="menu_game">Le Jeu</string>
     <string name="menu_extras">Extras</string>
-    <string name="ok">OK</string>
+    <string name="ok">Ok</string>
     <string name="report">Rapporter le bug</string>
     <string name="irailissue">Problème avec le server</string>
     <string name="irailissueDetail">Petit soucis avec le serveur, nous sommes désolés.\nSi le prolème persiste, vous pouvez nous envoyer un petit mail avec le rapport.</string>
@@ -172,5 +172,9 @@
     <string name="tuto_notif">Exemple: Préviens moi de l\'horaire du train IC942 dès que j\'arrive à Bruxelles Midi</string>
     <string name="notifstation">Station where you will be notified</string>
 
+    <string name="cancel">Annuler</string>
+    <string name="chat_err_change_username">Cliquez sur le bouton \'changer\' pour choisir un nom d\'utilisateur</string>
+    <string name="chat_err_empty_message">S\'il vous plaît écrire quelque chose</string>
+    <string name="chat_err_max_messages">Autorisé un seul message par session</string>
 
 </resources>
