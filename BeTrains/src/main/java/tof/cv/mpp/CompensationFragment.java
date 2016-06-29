@@ -151,7 +151,7 @@ public class CompensationFragment extends ListFragment {
                             input.setInputType(InputType.TYPE_CLASS_NUMBER);
                             alert.setView(input);
                             input.setText(getListAdapter().getItem(position).toString().split(";")[1]);
-                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
 
                                     File directory = getActivity().getDir("COMPENSATION", Context.MODE_PRIVATE);
@@ -167,7 +167,7 @@ public class CompensationFragment extends ListFragment {
                                 }
                             });
 
-                            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     // Canceled.
                                 }
@@ -182,7 +182,7 @@ public class CompensationFragment extends ListFragment {
                             final EditText input2 = new EditText(getActivity());
                             alert2.setView(input2);
                             input2.setText(getListAdapter().getItem(position).toString().split(";")[2]);
-                            alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            alert2.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
 
                                     File directory = getActivity().getDir("COMPENSATION", Context.MODE_PRIVATE);
@@ -200,7 +200,7 @@ public class CompensationFragment extends ListFragment {
                                 }
                             });
 
-                            alert2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            alert2.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     // Canceled.
                                 }
