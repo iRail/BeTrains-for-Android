@@ -183,4 +183,8 @@
     <string name="chat_err_change_username">Click on \'change\' button to choose a username</string>
     <string name="chat_err_empty_message">Please write something</string>
 
+    <string name="closest_err_navigation_not_found">Google Navigation not found</string>
+    <string name="closest_err_maps_not_found">Google Maps not found</string>
+
+    <string name="closest_action_reload">Reload</string>
 </resources>

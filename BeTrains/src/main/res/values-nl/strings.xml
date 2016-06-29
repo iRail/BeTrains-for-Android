@@ -194,5 +194,8 @@
     <string name="chat_err_change_username">Klik op de knop \'veranderen\' om een gebruikersnaam te kiezen</string>
     <string name="chat_err_empty_message">Gelieve iets te schrijven</string>
     <string name="chat_err_max_messages">Slechts één bericht per sessie toegestaan</string>
+    <string name="closest_action_reload">Herladen</string>
+    <string name="closest_err_maps_not_found">Google Maps niet gevonden</string>
+    <string name="closest_err_navigation_not_found">Google Navigation niet gevonden</string>
 
 </resources>

@@ -171,7 +171,7 @@ public class ClosestFragment extends ListFragment {
                             startActivity(intent);
                         } catch (ActivityNotFoundException e) {
                             (Toast.makeText(getActivity(),
-                                    "Google Navigation not found",
+                                    R.string.closest_err_navigation_not_found,
                                     Toast.LENGTH_LONG)).show();
                         }
                         break;
@@ -197,7 +197,7 @@ public class ClosestFragment extends ListFragment {
 						 */
                             startActivity(i);
                         } catch (ActivityNotFoundException e) {
-                            (Toast.makeText(getActivity(), "Google Maps not found",
+                            (Toast.makeText(getActivity(), R.string.closest_err_maps_not_found,
                                     Toast.LENGTH_LONG)).show();
                         }
                         break;
@@ -210,7 +210,7 @@ public class ClosestFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, 0, Menu.NONE, "Reload")
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.closest_action_reload)
                 .setIcon(R.drawable.ic_menu_refresh)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
