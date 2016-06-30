@@ -179,7 +179,7 @@
     <string name="menu_star">Favorieten</string>
     <string name="menu_comp">Compensaties</string>
     <string name="menu_closest">Dichtste station</string>
-    <string name="menu_game">Game</string>
+    <string name="menu_game">Spel</string>
     <string name="menu_extras">Extras</string>
     <string name="ok">Ok</string>
     <string name="report">Report to iRail</string>
@@ -197,5 +197,7 @@
     <string name="closest_action_reload">Herladen</string>
     <string name="closest_err_maps_not_found">Google Maps niet gevonden</string>
     <string name="closest_err_navigation_not_found">Google Navigation niet gevonden</string>
+    <string name="game_action_map">Kaart</string>
+    <string name="score">Score</string>
 
 </resources>

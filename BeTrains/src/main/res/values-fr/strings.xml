@@ -179,5 +179,7 @@
     <string name="closest_action_reload">Recharger</string>
     <string name="closest_err_maps_not_found">Google Maps pas trouvé</string>
     <string name="closest_err_navigation_not_found">Google Navigation pas trouvé</string>
+    <string name="game_action_map">Carte</string>
+    <string name="score">Score</string>
 
 </resources>

@@ -187,4 +187,7 @@
     <string name="closest_err_maps_not_found">Google Maps not found</string>
 
     <string name="closest_action_reload">Reload</string>
+
+    <string name="game_action_map">Map</string>
+    <string name="score">Score</string>
 </resources>

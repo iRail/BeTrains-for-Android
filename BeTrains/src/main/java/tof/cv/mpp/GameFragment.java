@@ -157,7 +157,7 @@ public class GameFragment extends BaseGameFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        menu.add(Menu.NONE, 0, Menu.NONE, "Map")
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.game_action_map)
                 .setIcon(android.R.drawable.ic_menu_myplaces)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
@@ -571,7 +571,7 @@ public class GameFragment extends BaseGameFragment implements
                 final int i = delay < 60 ? 1 : delay / 60;
 
                 TextView tv = (TextView) ll.findViewById(R.id.closestTime);
-                tv.setText("Score: " + num);
+                tv.setText(getString(R.string.score) + num);
                 ll.setOnClickListener(new View.OnClickListener() {
 
                     @Override
