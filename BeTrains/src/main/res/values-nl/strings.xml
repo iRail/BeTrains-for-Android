@@ -188,6 +188,7 @@
     <string name="plan_action_add_to_favorites">Toevoegen aan favorieten</string>
     <string name="plan_action_date_time">Datum en tijd wijzigen</string>
     <string name="plan_action_settings">Instellingen</string>
-    <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the IC 942 timetable</string>
+    <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the train IC 942 schedule</string>
+    <string name="notifstation">Station where you will be notified</string>
 
 </resources>

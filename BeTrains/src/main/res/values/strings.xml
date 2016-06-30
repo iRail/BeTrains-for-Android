@@ -176,5 +176,7 @@
     <string name="plan_action_settings">Settings</string>
     <string name="plan_action_date_time">Change date and time</string>
     <string name="plan_action_add_to_favorites">Add to favorites</string>
-    <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the IC 942 timetable</string>
+    <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the train IC 942 schedule</string>
+    <string name="notifstation">Station where you will be notified</string>
+    <string name="cancel">Cancel</string>
 </resources>

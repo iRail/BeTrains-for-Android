@@ -94,6 +94,8 @@
             android:label="@string/btn_home_settings"
             android:theme="@style/Theme.MyABTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <service android:name=".GeofenceTransitionsIntentService"/>
         <!--
         activity
             android:name=".PlannerActivity"
