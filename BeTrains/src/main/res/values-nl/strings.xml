@@ -83,7 +83,7 @@
 		door op steer te klikken in de treinslijst of triplijst.</string>
     <string name="fav_no_fav_title">Geen "starred" items</string>
     <string name="settings_planner_da_summary">...</string>
-    <string name="txt_remove">Delete</string>
+    <string name="txt_remove">Verwijderen</string>
     <string name="search_wrong_string">Kies een station uit de lijst, of typ een trein in
 		bv: "984" die staat voor IC 984</string>
     <string name="search_hint">Trein / Station</string>
@@ -199,5 +199,9 @@
     <string name="closest_err_navigation_not_found">Google Navigation niet gevonden</string>
     <string name="game_action_map">Kaart</string>
     <string name="score">Score</string>
+    <string name="station_add_to_favorites">Toevoegen aan favorieten</string>
+    <string name="station_add_to_favorites_eu">Toevoegen aan favorieten (EU)</string>
+    <string name="station_picker_title_belgium">België</string>
+    <string name="station_picker_title_favorite">Favorieten</string>
 
 </resources>

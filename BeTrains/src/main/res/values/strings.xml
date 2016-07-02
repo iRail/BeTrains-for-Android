@@ -190,4 +190,9 @@
 
     <string name="game_action_map">Map</string>
     <string name="score">Score</string>
+
+    <string name="station_add_to_favorites">Add to favorites</string>
+    <string name="station_add_to_favorites_eu">Add to favorites (EU)</string>
+    <string name="station_picker_title_belgium">Belgium</string>
+    <string name="station_picker_title_favorite">Favorites</string>
 </resources>

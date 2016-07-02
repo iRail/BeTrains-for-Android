@@ -67,8 +67,7 @@ public class StationPickerActivity extends ActionBarActivity implements
 
     private static DbAdapterConnection mDbHelper;
 
-    protected static final String[] TITLES = new String[]{"BELGIUM",
-            "FAVOURITE"};
+    protected static String[] TITLES;
 
     // , "EUROPE"
     @Override
@@ -87,6 +86,10 @@ public class StationPickerActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_tab_picker);
+
+        TITLES =  new String[]{
+                getString(R.string.station_picker_title_belgium),
+                getString(R.string.station_picker_title_favorite)};
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -123,7 +126,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             // super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, ADD_EUROPE_ID, 0, "Favorite (Eu)");
+            menu.add(0, ADD_EUROPE_ID, 0, R.string.station_add_to_favorites_eu);
         }
 
         @Override
@@ -314,7 +317,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, ADD_ID, 0, "Favorite");
+            menu.add(0, ADD_ID, 0, R.string.station_add_to_favorites);
 
         }
 
@@ -442,7 +445,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, REMOVE_ID, 0, "Remove");
+            menu.add(0, REMOVE_ID, 0, R.string.txt_remove);
         }
 
         @Override
