@@ -52,7 +52,7 @@ public class TwitterFragment extends ListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, 0, Menu.NONE, R.string.txt_filter)
+		menu.add(Menu.NONE, 0, Menu.NONE, R.string.chat_action_filter)
 				.setIcon(R.drawable.ic_menu_preferences)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}

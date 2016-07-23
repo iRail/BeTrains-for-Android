@@ -1,24 +1,15 @@
 package tof.cv.mpp;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
-import android.app.assist.AssistContent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class InfoStationActivity extends AppCompatActivity {
     /**
@@ -105,9 +96,9 @@ public class InfoStationActivity extends AppCompatActivity {
 
     public void pic(View v) {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle(R.string.photos);
-        b.setMessage(R.string.photo_explain);
-        b.setPositiveButton(R.string.ok_picture, new DialogInterface.OnClickListener() {
+        b.setTitle(R.string.info_station_submit_picture_title);
+        b.setMessage(R.string.info_station_submit_picture_text);
+        b.setPositiveButton(R.string.info_station_submit_picture_send, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(Intent.ACTION_SEND);

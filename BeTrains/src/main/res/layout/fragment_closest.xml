@@ -24,7 +24,7 @@
             android:gravity="center"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
-            android:text="@string/txt_wait_gps"
+            android:text="@string/closest_wait_gps"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/txt_change"
+            android:text="@string/closest_update"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -50,7 +50,7 @@
         android:gravity="top|left"
         android:paddingLeft="6dip"
         android:paddingRight="6dip"
-        android:text="@string/txt_loading"
+        android:text="@string/loading"
         android:textColor="@color/darkblue" />
 
     <LinearLayout
@@ -74,7 +74,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Click here to open GPS settings" />
+            android:text="@string/closest_open_gps" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,17 +1,12 @@
 package tof.cv.mpp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.PixelFormat;
-import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
@@ -26,16 +21,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -126,7 +118,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             // super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, ADD_EUROPE_ID, 0, R.string.station_add_to_favorites_eu);
+            menu.add(0, ADD_EUROPE_ID, 0, R.string.action_add_to_favorites);
         }
 
         @Override
@@ -317,7 +309,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, ADD_ID, 0, R.string.station_add_to_favorites);
+            menu.add(0, ADD_ID, 0, R.string.action_add_to_favorites);
 
         }
 
@@ -445,7 +437,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, REMOVE_ID, 0, R.string.txt_remove);
+            menu.add(0, REMOVE_ID, 0, R.string.remove);
         }
 
         @Override

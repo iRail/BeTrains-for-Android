@@ -109,7 +109,7 @@ public class ChatFragment extends ListFragment {
 			public void onClick(View v) {
 				if (posted) {
 					Toast.makeText(getActivity(),
-                            R.string.chat_err_max_messages, Toast.LENGTH_LONG)
+                            R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
 							.show();
 				} else {
 					String pseudo = PreferenceManager
@@ -118,11 +118,11 @@ public class ChatFragment extends ListFragment {
 					if (pseudo.contentEquals("Anonymous"))
 						Toast.makeText(
 								getActivity(),
-								R.string.chat_err_change_username,
+								R.string.chat_send_err_username,
 								Toast.LENGTH_LONG).show();
 					else if (messageTxtField.getText().toString()
 							.contentEquals(""))
-						Toast.makeText(getActivity(), R.string.chat_err_empty_message,
+						Toast.makeText(getActivity(), R.string.chat_send_err_empty,
 								Toast.LENGTH_LONG).show();
 					else {
 						postMessage(pseudo);
@@ -144,7 +144,7 @@ public class ChatFragment extends ListFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
 						progressDialog = ProgressDialog.show(getActivity(), "",
-								getString(R.string.txt_patient), true);
+								getString(R.string.patient), true);
 					}
 				});
 
@@ -250,8 +250,8 @@ public class ChatFragment extends ListFragment {
 					Log.e("CVE","NULL");
 					System.out.println("function in connection maker returns null !!");
 					listOfMessage.add(new Message(ChatFragment.this
-							.getString(R.string.txt_no_message), ChatFragment.this
-							.getString(R.string.txt_connection), "", ""));
+							.getString(R.string.chat_no_message), ChatFragment.this
+							.getString(R.string.check_connection), "", ""));
 				}
 
 				Log.e("CVE","START");
@@ -267,10 +267,10 @@ public class ChatFragment extends ListFragment {
 						if (getActivity() != null)
 							getActivity().runOnUiThread(returnRes);
 					}
-					toEmpty = getString(R.string.txt_no_message);
+					toEmpty = getString(R.string.chat_no_message);
 				} else {
 					Log.e("CVE","CONN");
-					toEmpty = getString(R.string.txt_connection);
+					toEmpty = getString(R.string.check_connection);
 					getActivity().runOnUiThread(updateEmpty);
 				}
 			}
@@ -324,7 +324,7 @@ public class ChatFragment extends ListFragment {
 		AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
 		if (trainId == null) {
 			ad.setTitle(getResources().getString(
-					R.string.confirm_message_train,
+					R.string.chat_open_train_messages,
 					listOfMessage.get(position).gettrain_id()));
 			ad.setPositiveButton(android.R.string.ok,
 					new DialogInterface.OnClickListener() {
@@ -351,7 +351,7 @@ public class ChatFragment extends ListFragment {
 		}
 
 		else {
-			ad.setTitle(getResources().getString(R.string.confirm_info_train,
+			ad.setTitle(getResources().getString(R.string.chat_open_train_info,
 					listOfMessage.get(position).gettrain_id()));
 			ad.setPositiveButton(android.R.string.ok,
 					new DialogInterface.OnClickListener() {
@@ -453,8 +453,8 @@ public class ChatFragment extends ListFragment {
 		case MENU_FILTER:
 			AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-			alert.setTitle(R.string.txt_filter);
-			alert.setMessage(R.string.txt_filter_message);
+			alert.setTitle(R.string.chat_action_filter);
+			alert.setMessage(R.string.chat_filter_message);
 
 			// Set an EditText view to get user input
 			final EditText input = new EditText(getActivity());

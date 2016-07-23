@@ -2,7 +2,6 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -30,7 +29,7 @@ public class ChatActivity extends ActionBarActivity {
         ChatFragment fragment = (ChatFragment) this.getSupportFragmentManager()
                 .findFragmentById(R.id.fragment);
         if (trainId != null)
-            fragment.trainId = trainId.replaceAll(getString(R.string.txt_train) + " ", "");
+            fragment.trainId = trainId.replaceAll(getString(R.string.train) + " ", "");
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
 

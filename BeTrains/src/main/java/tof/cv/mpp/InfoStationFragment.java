@@ -203,7 +203,7 @@ public class InfoStationFragment extends ListFragment {
                                 "dd MMM HH:mm"));
                     } else {
 
-                        Toast.makeText(getActivity(), R.string.txt_no_result,
+                        Toast.makeText(getActivity(), R.string.search_no_result,
                                 Toast.LENGTH_LONG).show();
                         setTitle(Utils.formatDate(new Date(timestamp),
                                 "dd MMM HH:mm"));
@@ -211,7 +211,7 @@ public class InfoStationFragment extends ListFragment {
                     }
                 else {
 
-                    Toast.makeText(getActivity(), R.string.txt_connection,
+                    Toast.makeText(getActivity(), R.string.check_connection,
                             Toast.LENGTH_LONG).show();
                     getActivity().finish();
                 }
@@ -228,7 +228,7 @@ public class InfoStationFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, 0, Menu.NONE, R.string.txt_add_fav)
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_add_to_favorites)
                 .setIcon(R.drawable.ic_menu_star)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 

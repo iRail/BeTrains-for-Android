@@ -12,7 +12,7 @@
         android:layout_height="fill_parent"
         android:textColor="@color/darkblue"
         android:gravity="center"
-        android:text="@string/txt_loading" />
+        android:text="@string/loading" />
 
     <ListView
         android:id="@android:id/list"

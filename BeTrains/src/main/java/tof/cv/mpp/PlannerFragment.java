@@ -287,15 +287,15 @@ public class PlannerFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        menu.add(Menu.NONE, MENU_DT, Menu.NONE, R.string.plan_action_date_time)
+        menu.add(Menu.NONE, MENU_DT, Menu.NONE, R.string.action_change_datetime)
                 .setIcon(R.drawable.ic_menu_time)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.plan_action_add_to_favorites)
+        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.action_add_to_favorites)
                 .setIcon(R.drawable.ic_menu_star)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, MENU_PREF, Menu.NONE, R.string.plan_action_settings)
+        menu.add(Menu.NONE, MENU_PREF, Menu.NONE, R.string.action_settings)
                 .setIcon(R.drawable.ic_menu_preferences)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
     }
@@ -361,23 +361,23 @@ public class PlannerFragment extends ListFragment {
 
         // fill the map with data
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("tip", getString(R.string.tipa));
-        map.put("title", getString(R.string.tipatitle));
+        map.put("tip", getString(R.string.intro_tip_a_title));
+        map.put("title", getString(R.string.intro_tip_a));
         list.add(map);
 
         map = new HashMap<String, String>();
-        map.put("tip", getString(R.string.tipb));
-        map.put("title", getString(R.string.tipbtitle));
+        map.put("tip", getString(R.string.intro_tip_b_title));
+        map.put("title", getString(R.string.intro_tip_b));
         list.add(map);
 
         map = new HashMap<String, String>();
-        map.put("tip", getString(R.string.tipc));
-        map.put("title", getString(R.string.tipctitle));
+        map.put("tip", getString(R.string.intro_tip_c_title));
+        map.put("title", getString(R.string.intro_tip_c));
         list.add(map);
 
         map = new HashMap<String, String>();
-        map.put("tip", getString(R.string.tipd));
-        map.put("title", getString(R.string.tipdtitle));
+        map.put("tip", getString(R.string.intro_tip_d_title));
+        map.put("title", getString(R.string.intro_tip_d));
         list.add(map);
 
         // Use a SimpleAdapter to display tips

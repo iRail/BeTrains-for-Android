@@ -202,7 +202,7 @@ public class GameFragment extends BaseGameFragment implements
                 Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
         if (!provider.contains(LocationManager.GPS_PROVIDER)) {
-            crouton = Crouton.makeText(getActivity(), R.string.no_gps, Style.ALERT,R.id.pager).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
+            crouton = Crouton.makeText(getActivity(), R.string.game_err_gps, Style.ALERT,R.id.pager).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
             crouton.show();
         }
     }
@@ -531,7 +531,7 @@ public class GameFragment extends BaseGameFragment implements
                         );
                         handler.postDelayed(this, 1000);
                     } else
-                        GameFragment.this.getActivity().getActionBar().setTitle(getString(R.string.menu_game));
+                        GameFragment.this.getActivity().getActionBar().setTitle(getString(R.string.nav_drawer_game));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -571,14 +571,14 @@ public class GameFragment extends BaseGameFragment implements
                 final int i = delay < 60 ? 1 : delay / 60;
 
                 TextView tv = (TextView) ll.findViewById(R.id.closestTime);
-                tv.setText(getString(R.string.score) + num);
+                tv.setText(getString(R.string.game_station_score) + num);
                 ll.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View arg0) {
 
                         if (station.distance > 0.5) {
-                            crouton(getString(R.string.toofar) + " " + station.getDistance(), Style.ALERT);
+                            crouton(getString(R.string.game_too_far) + " " + station.getDistance(), Style.ALERT);
                             return;
                         }
                         if ((System.currentTimeMillis() > PreferenceManager

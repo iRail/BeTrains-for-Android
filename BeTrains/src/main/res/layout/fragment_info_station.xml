@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/txt_loading"
+            android:text="@string/loading"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
 

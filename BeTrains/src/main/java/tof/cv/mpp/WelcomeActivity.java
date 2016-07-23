@@ -2,30 +2,18 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -159,7 +147,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             break;
                         default:
                             mContent = new PlannerFragment();
-                            close = getString(R.string.btn_home_planner);
+                            close = getString(R.string.activity_label_planner);
                             break;
 
                     }
@@ -200,7 +188,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 break;
             default:
                 mContent = new PlannerFragment();
-                close = getString(R.string.btn_home_planner);
+                close = getString(R.string.activity_label_planner);
                 break;
         }
 

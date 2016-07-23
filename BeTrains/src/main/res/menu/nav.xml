@@ -5,39 +5,39 @@
         <item
             android:id="@+id/navigation_item_plan"
             android:icon="@drawable/ic_nav_plan"
-            android:title="@string/menu_plan"/>
+            android:title="@string/nav_drawer_planner"/>
         <item
             android:id="@+id/navigation_item_notif"
             android:icon="@drawable/ic_nav_notif"
-            android:title="@string/menu_notif"/>
+            android:title="@string/nav_drawer_notifications"/>
         <item
             android:id="@+id/navigation_item_iss"
             android:icon="@drawable/ic_nav_iss"
-            android:title="@string/menu_iss"/>
+            android:title="@string/nav_drawer_issues"/>
         <item
             android:id="@+id/navigation_item_chat"
             android:icon="@drawable/ic_nav_chat"
-            android:title="@string/menu_chat"/>
+            android:title="@string/nav_drawer_chat"/>
         <item
             android:id="@+id/navigation_item_star"
             android:icon="@drawable/ic_nav_star"
-            android:title="@string/menu_star"/>
+            android:title="@string/nav_drawer_starred"/>
         <item
             android:id="@+id/navigation_item_comp"
             android:icon="@drawable/ic_nav_comp"
-            android:title="@string/menu_comp"/>
+            android:title="@string/nav_drawer_compensation"/>
         <item
             android:id="@+id/navigation_item_closest"
             android:icon="@drawable/ic_nav_closest"
-            android:title="@string/menu_closest"/>
+            android:title="@string/nav_drawer_closest"/>
         <item
             android:id="@+id/navigation_item_game"
             android:icon="@drawable/ic_nav_game"
-            android:title="@string/menu_game"/>
+            android:title="@string/nav_drawer_game"/>
         <item
             android:id="@+id/navigation_item_extras"
             android:icon="@drawable/ic_nav_extras"
-            android:title="@string/menu_extras"/>
+            android:title="@string/nav_drawer_extras"/>
     </group>
 
 </menu>

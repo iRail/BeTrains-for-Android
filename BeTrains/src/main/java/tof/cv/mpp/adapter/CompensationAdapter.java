@@ -44,9 +44,9 @@ public class CompensationAdapter extends AbstractAdapter<String> {
             if (!o[2].contentEquals(""))
                 detail.setText(o[2]);
             else
-                detail.setText(getContext().getString(R.string.emptydetail));
+                detail.setText(getContext().getString(R.string.compensation_empty_detail));
 
-            title.setText(getContext().getString(R.string.txt_train)+" "+o[3]);
+            title.setText(getContext().getString(R.string.train)+" "+o[3]);
 
 
         }

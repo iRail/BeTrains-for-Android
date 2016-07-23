@@ -11,7 +11,7 @@
     <header
         android:fragment="tof.cv.mpp.MyPreferenceActivity$Prefs2Fragment"
         android:summary=""
-        android:title="@string/btn_home_planner" >
+        android:title="@string/activity_label_planner" >
         <extra
             android:name="resource"
             android:value="activity_planner_preferences" />

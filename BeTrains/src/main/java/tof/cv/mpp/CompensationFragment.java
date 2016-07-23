@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,7 +63,7 @@ public class CompensationFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case (0):
-                String url = getString(R.string.compensateurl);
+                String url = getString(R.string.compensation_url);
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
@@ -108,14 +106,14 @@ public class CompensationFragment extends ListFragment {
 
         if (f.length == 0) {
             WebView mywebview = (WebView) getView().findViewById(android.R.id.empty);
-            String data = this.getActivity().getString(R.string.html_compensate);
+            String data = this.getActivity().getString(R.string.compensation_html);
             mywebview.loadDataWithBaseURL("file:///android_asset/", data, "text/html", "UTF-8", null);
             mTitleText.setVisibility(View.GONE);
         } else {
             mTitleText.setVisibility(View.VISIBLE);
             try {
                 long elapsed = System.currentTimeMillis() - Long.valueOf(f[0].split(";")[0]);
-                mTitleText.setText(getResources().getQuantityString(R.plurals.txt_days, (int) (elapsed / DateUtils.DAY_IN_MILLIS), (int) (elapsed / DateUtils.DAY_IN_MILLIS)));
+                mTitleText.setText(getResources().getQuantityString(R.plurals.compensation_days, (int) (elapsed / DateUtils.DAY_IN_MILLIS), (int) (elapsed / DateUtils.DAY_IN_MILLIS)));
                 //mTitleText.setText("Retards depuis le: "+Utils.formatDate(new Date(Long.valueOf(f[0].split(";")[0])-4*DateUtils.DAY_IN_MILLIS),"d MMMMM"));
 
             } catch (Exception e) {
@@ -130,7 +128,7 @@ public class CompensationFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        String[] items = {getString(R.string.detail), getString(R.string.txt_editdelay), getString(R.string.txt_edittext), getString(R.string.txt_remove)};
+        String[] items = {getString(R.string.compensation_show_info), getString(R.string.compensation_edit_delay), getString(R.string.compensation_edit_text), getString(R.string.remove)};
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 try {
