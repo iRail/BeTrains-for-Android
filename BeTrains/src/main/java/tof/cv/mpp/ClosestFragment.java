@@ -14,11 +14,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
@@ -40,19 +38,8 @@ import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import tof.cv.mpp.Utils.DbAdapterLocation;
 import tof.cv.mpp.Utils.GPS;
@@ -141,8 +128,8 @@ public class ClosestFragment extends ListFragment {
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-        final CharSequence[] items = {"Info", getString(R.string.txt_nav),
-                getString(R.string.txt_map)};
+        final CharSequence[] items = {getString(R.string.info), getString(R.string.closest_navigate),
+                getString(R.string.closest_map)};
         final StationLocation clicked = (StationLocation) l
                 .getItemAtPosition(position);
         AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -171,7 +158,7 @@ public class ClosestFragment extends ListFragment {
                             startActivity(intent);
                         } catch (ActivityNotFoundException e) {
                             (Toast.makeText(getActivity(),
-                                    "Google Navigation not found",
+                                    R.string.closest_navigate_err,
                                     Toast.LENGTH_LONG)).show();
                         }
                         break;
@@ -197,7 +184,7 @@ public class ClosestFragment extends ListFragment {
 						 */
                             startActivity(i);
                         } catch (ActivityNotFoundException e) {
-                            (Toast.makeText(getActivity(), "Google Maps not found",
+                            (Toast.makeText(getActivity(), R.string.closest_map_err,
                                     Toast.LENGTH_LONG)).show();
                         }
                         break;
@@ -210,7 +197,7 @@ public class ClosestFragment extends ListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, 0, Menu.NONE, "Reload")
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.refresh)
                 .setIcon(R.drawable.ic_menu_refresh)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
@@ -222,8 +209,8 @@ public class ClosestFragment extends ListFragment {
                 m_ProgressDialog = new MyProgressDialog(this.getActivity());
                 m_ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 m_ProgressDialog.setCancelable(false);
-                m_ProgressDialog.setTitle(getString(R.string.txt_patient));
-                m_ProgressDialog.setMessage(getString(R.string.txt_fill_closest));
+                m_ProgressDialog.setTitle(getString(R.string.patient));
+                m_ProgressDialog.setMessage(getString(R.string.closest_looking));
                 m_ProgressDialog.show();
                 downloadStationListFromApi();
                 return true;
@@ -245,7 +232,7 @@ public class ClosestFragment extends ListFragment {
                 bestLocationFound = loc;
                 btnUpdate.setVisibility(View.VISIBLE);
                 btnUpdate.setText(getActivity().getString(
-                        R.string.update_gps_btn, loc.getAccuracy()));
+                        R.string.closest_update_gps, loc.getAccuracy()));
 
                 if (!threadLock)
                     notifyList(false);
@@ -277,7 +264,7 @@ public class ClosestFragment extends ListFragment {
                 bestLocationFound = loc;
                 btnUpdate.setVisibility(View.VISIBLE);
                 btnUpdate.setText(getActivity().getString(
-                        R.string.update_gps_btn, loc.getAccuracy()));
+                        R.string.closest_update_gps, loc.getAccuracy()));
                 if (!threadLock)
                     notifyList(false);
             }
@@ -416,8 +403,8 @@ public class ClosestFragment extends ListFragment {
 
     protected void downloadStationListFromApi() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.txt_patient))
-                .setMessage(getString(R.string.txt_first_dl))
+        builder.setTitle(getString(R.string.patient))
+                .setMessage(getString(R.string.closest_first_download))
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -458,9 +445,9 @@ public class ClosestFragment extends ListFragment {
                                 }
                                 m_ProgressDialog.setCancelable(false);
                                 m_ProgressDialog
-                                        .setTitle(getString(R.string.txt_patient));
+                                        .setTitle(getString(R.string.patient));
                                 m_ProgressDialog
-                                        .setMessage(getString(R.string.txt_dl_stations));
+                                        .setMessage(getString(R.string.closest_downloading));
                                 m_ProgressDialog.setMax(660);
                                 m_ProgressDialog.show();
                             }
@@ -510,7 +497,7 @@ public class ClosestFragment extends ListFragment {
                     + ": <b>"
                     + (locationManager.isProviderEnabled(aProvider) ? "ON"
                     : "OFF") + "</b>");
-        txt += "<br><br>" + getString(R.string.txt_location);
+        txt += "<br><br>" + getString(R.string.closest_tuto_gps);
         tvEmpty.setText(Html.fromHtml(txt));
 
         try {
@@ -621,7 +608,7 @@ public class ClosestFragment extends ListFragment {
 
         public void run() {
             getActivity().runOnUiThread(hideProgressdialog);
-            tvEmpty.setText(R.string.txt_connection);
+            tvEmpty.setText(R.string.check_connection);
             if (locationManager != null) {
                 locationManager.removeUpdates(locationGpsListener);
                 locationManager.removeUpdates(locationNetworkListener);

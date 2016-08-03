@@ -1,17 +1,12 @@
 package tof.cv.mpp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.PixelFormat;
-import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
@@ -26,16 +21,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -67,8 +59,7 @@ public class StationPickerActivity extends ActionBarActivity implements
 
     private static DbAdapterConnection mDbHelper;
 
-    protected static final String[] TITLES = new String[]{"BELGIUM",
-            "FAVOURITE"};
+    protected static String[] TITLES;
 
     // , "EUROPE"
     @Override
@@ -87,6 +78,10 @@ public class StationPickerActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_tab_picker);
+
+        TITLES =  new String[]{
+                getString(R.string.station_picker_title_belgium),
+                getString(R.string.station_picker_title_favorite)};
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -123,7 +118,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             // super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, ADD_EUROPE_ID, 0, "Favorite (Eu)");
+            menu.add(0, ADD_EUROPE_ID, 0, R.string.action_add_to_favorites);
         }
 
         @Override
@@ -314,7 +309,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, ADD_ID, 0, "Favorite");
+            menu.add(0, ADD_ID, 0, R.string.action_add_to_favorites);
 
         }
 
@@ -442,7 +437,7 @@ public class StationPickerActivity extends ActionBarActivity implements
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
             super.onCreateContextMenu(menu, v, menuInfo);
-            menu.add(0, REMOVE_ID, 0, "Remove");
+            menu.add(0, REMOVE_ID, 0, R.string.remove);
         }
 
         @Override

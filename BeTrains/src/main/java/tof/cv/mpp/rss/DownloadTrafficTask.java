@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
 
     private RSSFeed myRssFeed;
@@ -47,11 +45,11 @@ public class DownloadTrafficTask extends AsyncTask<URL, Integer, Long> {
                     trafFrag.setListAdapter(adapter);
                     trafFrag.setRssFeed(myRssFeed);
                 } else
-                    ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.txt_no_issue);
+                    ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.issues_empty);
 
 
             } else
-                ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.txt_connection);
+                ((TextView) trafFrag.getView().findViewById(android.R.id.empty)).setText(R.string.check_connection);
         } catch (Exception e) {
             e.printStackTrace();
         }

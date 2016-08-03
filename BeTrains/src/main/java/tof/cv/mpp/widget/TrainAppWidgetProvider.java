@@ -123,7 +123,7 @@ public class TrainAppWidgetProvider extends AppWidgetProvider {
 					//TODO: fix it!
 					;//UtilsWeb.getAPIvehicle(" vehicle", context, 0);
 				else
-					Toast.makeText(context, R.string.wid_empty,
+					Toast.makeText(context, R.string.widget_empty,
 							Toast.LENGTH_LONG).show();
 				int[] ids = AppWidgetManager.getInstance(context)
 						.getAppWidgetIds(

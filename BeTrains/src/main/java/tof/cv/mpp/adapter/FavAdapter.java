@@ -34,17 +34,17 @@ public class FavAdapter extends CursorAdapter {
 		int type = cursor.getInt(typeColumn);
 		switch (type) {
 		case 1:
-			typeTv.setText(context.getString(R.string.txt_station));
+			typeTv.setText(context.getString(R.string.station));
 			imageView.setImageResource(R.drawable.ic_fav_station);
 			nameTv.setText(cursor.getString(nameColumn));
 			break;
 		case 2:
-			typeTv.setText(context.getString(R.string.txt_train));
+			typeTv.setText(context.getString(R.string.train));
 			imageView.setImageResource(R.drawable.ic_fav_train);
 			nameTv.setText(cursor.getString(nameColumn));
 			break;
 		case 3:
-			typeTv.setText(context.getString(R.string.txt_trip));
+			typeTv.setText(context.getString(R.string.trip));
 			imageView.setImageResource(R.drawable.ic_fav_map);
 			nameTv.setText(cursor.getString(nameColumn)+" - "+cursor.getString(nameTwoColumn));
 			break;

@@ -1,135 +1,71 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="detail">Info</string>
-    <string name="emptydetail">No user info. Click to add.</string>
-
-    <plurals name="txt_days">
-        <item quantity="zero">%d day</item>
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
-    </plurals>
-
-    <string name="compensateurl">http://www.belgianrail.be/en/customer-service/compensation-for-delays.aspx</string>
-
-    <string name="txt_editdelay">Edit delay value</string>
-    <string name="txt_edittext">Edit text value</string>
-
-    <string name="btn_home_compensate">Compensation</string>
-    <string name="html_compensate"><![CDATA[<html><h1>Compensation</h1>If you want to use the Compensation feature in the app, press the Menu Button in the Train Information screen.<br/><br/><img src=\'comptuto.png\' width="100\%%"  /><br /><br />We actually find it unfortunate that you have found your way to this page. Despite all our efforts, one of your domestic train journeys was still delayed. Do you know that in certain instances you can receive <strong>compensation</strong> for the inconvenience?<br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/compensation-request.aspx">Requesting compensation</a><br /><h2>Right to compensation. When? How much?</h2>We draw a distinction between an occasional long delay and recurrent delays.<br /><h3>Occasional long delay</h3><ul><li>Delay of <strong>at least 60 minutes</strong> reimbursed at <strong>100\%%</strong> of the value of a one-way journey.</li></ul><h3>Recurrent delays</h3>Multiple delays within a <strong>6 month period</strong>.<br /><br /><ul><li><strong>A minimum of 20 delays of at least 15 minutes</strong> reimbursed for each delay at <strong>25\%%</strong> of the value of a one-way journey.</li><li><strong>A minimum of 10 delays of at least 30 minutes</strong> reimbursed for each delay at <strong>50% </strong>of the value of a one-way journey.</li></ul><p><strong>Please note</strong>: Sometimes you are <a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/no-compensation.aspx">not entitled to compensation</a>.</p><h2>Requesting compensation</h2><p>Submit your request <strong>within 15 calendar days</strong></p><ul><li>After your journey with a delay of at least 60 minutes</li><li>After your period of 6 months starting from your first delay</li><li>After using the final line of your Pass, Card, Campus or Half-time Railcard which is sent together with your request</li></ul><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/compensation-request.aspx">Requesting compensation</a><br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/how-much-compensation.aspx">Calculate your own compensation</a><br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/what-compensation.aspx">How do we pay your compensation?</a><p></html>]]></string>
-
-    <string name="empty_view_text" translatable="false">Click on the Widget Button in your train information</string>
-    <string name="refresh" translatable="false">Refresh</string>
-    <string name="kindhelp">With the kind help of</string>
-    <string name="svTitle">StreetView not installed</string>
-    <string name="txt_quai">Platform</string>
-    <string name="svMessage">Please install Google StreetView</string>
-    <string name="noMarket">Sorry, cannot detect Android Market</string>
-    <string name="btn_home_settings">Preferences</string>
-    <string name="btn_home_planner">Planner</string>
-    <string name="btn_home_traffic">Traffic issues</string>
-    <string name="btn_home_starred">Starred</string>
-    <string name="tipa">Getting started</string>
-    <string name="tipatitle">If you want to start immediately, click on the search button</string>
-    <string name="tipb">Change stations</string>
-    <string name="tipbtitle">If you want to look for an other trip, click on a station name and pick up an other one.
-    </string>
-    <string name="tipc">Change date/Time</string>
-    <string name="tipctitle">Click on the date and time fields in the upper part to change your desired trip time.
-    </string>
-    <string name="tipd">Main menu</string>
-    <string name="tipdtitle">Use the icon in the upper left corner to open the main menu.</string>
-    <string name="app_name">BeTrains</string>
-    <string name="btn_home_chat">Chat</string>
-    <string name="txt_loading">Loading...</string>
-    <string name="txt_patient">Please be patient...</string>
-    <string name="txt_traffic_issues">Traffic Issues</string>
-    <string name="txt_no_issue">No traffic issue</string>
-    <string name="txt_duration">Dur:</string>
-    <string name="txt_search">Search</string>
     <string name="api_key_prod" translatable="false">AIzaSyDsP9vbtGSaQjnKpiBpW44MQrLUS28JEcM</string>
-    <string name="add_widget">Add to Widget</string>
+    <string name="key_planner_da" translatable="false">Plannerdapref</string>
+    <string name="key_activity" translatable="false">Activitypref</string>
     <string name="url_lang">en</string>
     <string name="url_lang_2">e</string>
-    <string name="url_lang_for_him">f</string>
-    <string name="txt_connection">Please check your Internet connection.</string>
-    <string name="txt_def_title">Default Title</string>
-    <string name="txt_type_subway">Subway</string>
-    <string name="txt_type_walk">Walk</string>
-    <string name="txt_your_train">Your Train</string>
-    <string name="txt_load_message">Loading last Message</string>
-    <string name="txt_no_message">No message.</string>
-    <string name="wid_empty">Open your train information and click \'Add to widget\'".</string>
-    <string name="wid_confirm">Add to Widget?</string>
-    <string name="wid_added">%s added to widget</string>
-    <string name="txt_messages">Messages</string>
-    <string name="txt_more_messages">More messages</string>
-    <string name="txt_change">Change</string>
-    <string name="settings_display_lm_desc">Under train information</string>
-    <string name="settings_display_lm">Display Last Message</string>
-    <string name="settings_pseudo">Nickname</string>
-    <string name="settings_fullscreen">Fullscreen</string>
-    <string name="settings_restart">You\'ll need to restart BETrains</string>
-    <string name="settings_force_dutch">Force Dutch/Nederlands</string>
-    <string name="settings_english">Only for english users</string>
-    <string name="txt_filter_message">Please enter a train Number</string>
-    <string name="txt_filter">Filter</string>
-    <string name="txt_numberoftrains">Trains :</string>
-    <string name="txt_station">Station</string>
-    <string name="txt_confirm_map">Launch Google Maps?</string>
-    <string name="txt_confirm_nav">Launch Google Nav?</string>
-    <string name="txt_add_fav">Add to fav.</string>
-    <string name="txt_train">Train</string>
-    <string name="txt_trip">Trip</string>
-    <string name="fav_no_fav_body">You can add your favorite stations, trains and
-        trips here.\n\n* Add a favorite station by long-pressing it in the
-        station list\n\n* Or, you can click on the top Bar icon in the Train, Station or Planner view.
-    </string>
-    <string name="fav_no_fav_title">No starred items</string>
-    <string name="txt_remove">Delete</string>
-    <string name="search_wrong_string">Please pick a station in the list or write a train
-        number: ex: "984" for IC 984
-    </string>
-    <string name="search_hint">Train nb. / Station</string>
-    <string name="changelog_title">ChangeLog</string>
-    <string name="confirm_message_train">Open train %s messages?</string>
-    <string name="confirm_info_train">Open train %s infos?</string>
-    <string name="txt_server_down">Server down</string>
-    <string name="txt_map">Map</string>
-    <string name="txt_nav">Navigation</string>
-    <string name="txt_invert_da">Departure/Arrival</string>
-    <string name="txt_date">Date</string>
-    <string name="txt_time">Time</string>
+    <string name="app_id" translatable="false">88757012213</string>
+
+    <!-- General -->
+    <string name="app_name">BeTrains</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Delete</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="refresh">Refresh</string>
+    <string name="search">Search</string>
+    <string name="patient">Please be patient&#8230;</string>
+    <string name="info">Info</string>
+    <string name="station">Station</string>
+    <string name="train">Train</string>
+    <string name="trip">Trip</string>
+    <string name="platform">Platform</string>
+    <string name="check_connection">Please check your Internet connection.</string>
+    <string name="irail_issue">Problem with the server</string>
+    <string name="irail_issue_detail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
+    <string name="report">Report to iRail</string>
+
+    <!-- Manifest Activity Labels -->
+    <string name="activity_label_starred">Starred</string>
+    <string name="activity_label_chat">Chat</string>
+    <string name="activity_label_compensation">Compensation</string>
+    <string name="activity_label_settings">Preferences</string>
+    <string name="activity_label_planner">Planner</string>
+
+    <!-- Intro -->
+    <string name="intro_swipe">Swipe from the edge of the screen to access more features.</string>
+    <string name="intro_tip_a_title">Getting started</string>
+    <string name="intro_tip_a">To start immediately, click on the search button.</string>
+    <string name="intro_tip_b_title">Change stations</string>
+    <string name="intro_tip_b">To change the stations, click on a station name and pick an other one.</string>
+    <string name="intro_tip_c_title">Change date/time</string>
+    <string name="intro_tip_c">To change the date or time, click on the date and time field in the upper part.</string>
+    <string name="intro_tip_d_title">Main menu</string>
+    <string name="intro_tip_d">To open the main menu, click on the icon in the upper left corner.</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_planner">Route Planner</string>
+    <string name="nav_drawer_notifications">Notifications</string>
+    <string name="nav_drawer_issues">Traffic Issues</string>
+    <string name="nav_drawer_chat">Chat</string>
+    <string name="nav_drawer_starred">Starred</string>
+    <string name="nav_drawer_compensation">Compensation</string>
+    <string name="nav_drawer_closest">Closest stations</string>
+    <string name="nav_drawer_game">Game</string>
+    <string name="nav_drawer_extras">Extras</string>
+
+    <!-- Settings -->
+    <string name="settings_general_force_dutch">Force Dutch/Nederlands</string>
+    <string name="settings_general_force_dutch_subtext">Only for english users</string>
+    <string name="settings_general_first_screen">First Screen</string>
+    <string name="settings_general_first_screen_summary">Where to start the application?</string>
     <string name="settings_planner_da">Arrival/Departure time</string>
-    <string name="settings_planner_da_summary">...</string>
-    <string name="settings_activity">First Screen</string>
-    <string name="settings_activity_summary">Where to start the application?</string>
-    <string name="settings_train_only_summary">Will not show buses and subway</string>
-    <string name="key_planner_da">Plannerdapref</string>
-    <string name="key_activity">Activitypref</string>
-    <string name="settings_train_only">Train Only</string>
-    <string name="txt_no_driving">No Info on this train</string>
-    <string name="txt_no_result">Sorry, no result.</string>
-    <string name="txt_error">Something went wrong. Please check your connection
-        again. Maybe our server is down...
-    </string>
-    <string name="txt_create_connections">Please update your search to see your trip
-        informations.
-    </string>
-    <string name="btn_closest_stations">Closest Stations</string>
-    <string name="txt_first_dl">The station list download will start. This is a
-        slow process,
-        but next time you will use it, everything will be faster.
-    </string>
-    <string name="txt_accuracy">Accuracy: %sm.</string>
-    <string name="txt_wait_gps">Waiting for GPS fix.</string>
-    <string name="update_gps_btn">Update:\n%sm</string>
-    <string name="txt_info_station">Info station</string>
-    <string name="txt_dl_stations">Downloading stations list</string>
-    <string name="txt_fill_closest">Looking for closest station</string>
-    <string name="txt_sort">Sorting list...</string>
-    <string name="txt_location">If you cannot get GPS position, please enable it by
-        clicking here.
-    </string>
+    <string name="settings_planner_da_summary">&#8230;</string>
+    <string name="settings_chat_title">Messages</string>
+    <string name="settings_chat_pseudo">Nickname</string>
+    <string name="settings_chat_last_message">Display Last Message</string>
+    <string name="settings_chat_last_message_summary">Under train information</string>
     <string name="pref_selectTrain">Your train</string>
     <string name="pref_stations">Stations to check</string>
     <string name="pref_weekdays">Days to check</string>
@@ -139,44 +75,102 @@
     <string name="pref_selectStartHour_sum">Help your battery by avoiding updates during the night</string>
     <string name="pref_selectEndHour_sum">Help your battery by avoiding updates during the night</string>
     <string name="pref_selectFreq_sum">1 hour</string>
-    <string name="stationpicker">Pick a Station</string>
 
-    <string name="gamehelper_sign_in_failed" translatable="false">Failed to sign in. Please check your network connection and try again.</string>
-    <string name="gamehelper_app_misconfigured" translatable="false">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
-    <string name="gamehelper_license_failed" translatable="false">License check failed.</string>
-    <string name="gamehelper_unknown_error" translatable="false">Unknown error.</string>
-    <string name="app_id" translatable="false">88757012213</string>
-    <string name="game_wait" translatable="false">You need to wait before your next Check-in</string>
-    <string name="game_cooling">Next Checkin:</string>
+    <!-- Search Provider -->
+    <string name="search_hint">Train nb. / Station</string>
+    <string name="search_no_result">Sorry, no result.</string>
+    <string name="txt_error">Something went wrong. Please check your connection again. Maybe our server is down&#8230;</string>
+
+    <!-- Menu Actions -->
+    <string name="action_settings">Settings</string>
+    <string name="action_change_datetime">Change date and time</string>
+    <string name="action_add_to_favorites">Add to favorites</string>
+
+    <!-- Route Planner -->
+    <string name="route_planner_duration">Duration:</string>
+    <string name="route_planner_num_trains">Trains:</string>
+
+    <!-- Station info -->
+    <string name="station_picker_title_belgium">Belgium</string>
+    <string name="station_picker_title_favorite">Favorites</string>
+
+    <!-- Train info -->
+    <string name="train_add_to_widget">Add to Widget</string>
+    <string name="train_loading_last_msg">Loading last Message</string>
+
+    <!-- Notifications -->
+    <string name="notif_tutorial">Example: Notify me when I arrive at Brussels South about the train IC 942 schedule</string>
+    <string name="notif_station">Station where you will be notified</string>
+
+    <!-- Traffic issues -->
+    <string name="issues_empty">No traffic issues</string>
+
+    <!-- Chat -->
+    <string name="chat_no_message">No messages</string>
+    <string name="chat_load_messages">Load more messages</string>
+    <string name="chat_action_filter">Filter</string>
+    <string name="chat_settings">Change</string>
+    <string name="chat_filter_message">Please enter a train Number</string>
+    <string name="chat_send">Send</string>
+    <string name="chat_send_err_max_messages">Only one message per session allowed</string>
+    <string name="chat_send_err_username">Click on \'Change\' button to choose a username</string>
+    <string name="chat_send_err_empty">Please write something</string>
+    <string name="chat_open_train_messages">Open train %s messages?</string>
+    <string name="chat_open_train_info">Open train %s information?</string>
+
+    <!-- Favorites -->
+    <string name="favorites_empty">You can add your favorite stations, trains and
+        trips here.\n\n* Add a favorite station by long-pressing it in the
+        station list\n\n* Or, you can click on the top Bar icon in the Train, Station or Planner view.
+    </string>
+
+    <!-- Compensation -->
+    <string name="compensation_url">http://www.belgianrail.be/en/customer-service/compensation-for-delays.aspx</string>
+    <string name="compensation_html"><![CDATA[<html><h1>Compensation</h1>If you want to use the Compensation feature in the app, press the Menu Button in the Train Information screen.<br/><br/><img src=\'comptuto.png\' width="100\%%"  /><br /><br />We actually find it unfortunate that you have found your way to this page. Despite all our efforts, one of your domestic train journeys was still delayed. Do you know that in certain instances you can receive <strong>compensation</strong> for the inconvenience?<br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/compensation-request.aspx">Requesting compensation</a><br /><h2>Right to compensation. When? How much?</h2>We draw a distinction between an occasional long delay and recurrent delays.<br /><h3>Occasional long delay</h3><ul><li>Delay of <strong>at least 60 minutes</strong> reimbursed at <strong>100\%%</strong> of the value of a one-way journey.</li></ul><h3>Recurrent delays</h3>Multiple delays within a <strong>6 month period</strong>.<br /><br /><ul><li><strong>A minimum of 20 delays of at least 15 minutes</strong> reimbursed for each delay at <strong>25\%%</strong> of the value of a one-way journey.</li><li><strong>A minimum of 10 delays of at least 30 minutes</strong> reimbursed for each delay at <strong>50% </strong>of the value of a one-way journey.</li></ul><p><strong>Please note</strong>: Sometimes you are <a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/no-compensation.aspx">not entitled to compensation</a>.</p><h2>Requesting compensation</h2><p>Submit your request <strong>within 15 calendar days</strong></p><ul><li>After your journey with a delay of at least 60 minutes</li><li>After your period of 6 months starting from your first delay</li><li>After using the final line of your Pass, Card, Campus or Half-time Railcard which is sent together with your request</li></ul><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/compensation-request.aspx">Requesting compensation</a><br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/how-much-compensation.aspx">Calculate your own compensation</a><br /><br /><a href="http://www.belgianrail.be/en/customer-service/compensation-for-delays/what-compensation.aspx">How do we pay your compensation?</a><p></html>]]></string>
+    <string name="compensation_empty_detail">No user info. Click to add.</string>
+    <string name="compensation_show_info">Info</string>
+    <string name="compensation_edit_delay">Edit delay value</string>
+    <string name="compensation_edit_text">Edit text value</string>
+    <plurals name="compensation_days">
+        <item quantity="zero">%d day</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
+    <!-- Closest station -->
+    <string name="closest_wait_gps">Waiting for GPS position</string>
+    <string name="closest_tuto_gps">Please enable GPS to get a position.</string>
+    <string name="closest_open_gps">Open GPS settings</string>
+    <string name="closest_first_download">The station list download will start. This might take a wile if it is the first time.</string>
+    <string name="closest_downloading">Downloading stations list</string>
+    <string name="closest_looking">Looking for closest station</string>
+    <string name="closest_navigate">Navigate to station</string>
+    <string name="closest_navigate_err">Google Navigation not found</string>
+    <string name="closest_map">Show station on map</string>
+    <string name="closest_map_err">Google Maps not found</string>
+    <string name="closest_update">Change</string>
+    <string name="closest_update_gps">Update:\n%sm</string>
+
+    <!-- Game -->
+    <string name="game_action_map">Map</string>
     <string name="game_text">You need to be closer than 500m from a station to check-in. The more delay at the station, the more points you get</string>
-    <string name="tutoswipe">Slide your finger from the edge of the screen to get more features</string>
-    <string name="toofar">You are too far:</string>
-    <string name="no_gps">GPS is OFF. Click here to turn on.</string>
-    <string name="photos">Pictures</string>
-    <string name="photo_explain">You can send us an email to betrainsphotos@gmail.com with a picture of the station and be featured in the app!</string>
-    <string name="ok_picture">Send Email</string>
+    <string name="game_too_far">You are too far:</string>
+    <string name="game_station_score">Score</string>
+    <string name="game_wait">You need to wait before your next Check-in</string>
+    <string name="game_cooling">Next Check-in:</string>
+    <string name="game_err_sign_in_failed">Failed to sign in. Please check your network connection and try again.</string>
+    <string name="game_err_app_misconfig">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
+    <string name="game_err_licence">License check failed.</string>
+    <string name="game_err_gps">GPS is OFF. Click here to enable.</string>
+    <string name="game_err_unknown">Unknown error.</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- Station pictures -->
+    <string name="info_station_submit_picture_title">Submit picture</string>
+    <string name="info_station_submit_picture_text">You can send us an email to betrainsphotos@gmail.com with a picture of the station and be featured in the app!</string>
+    <string name="info_station_submit_picture_send">Send Email</string>
 
-    <string name="menu_plan">Route Planner</string>
-    <string name="menu_notif">Notifications</string>
-    <string name="menu_iss">Traffic Issues</string>
-    <string name="menu_chat">Chat</string>
-    <string name="menu_star">Starred</string>
-    <string name="menu_comp">Compensation</string>
-    <string name="menu_closest">Closest stations</string>
-    <string name="menu_game">Game</string>
-    <string name="menu_extras">Extras</string>
-    <string name="ok">OK</string>
-    <string name="report">Report to iRail</string>
-    <string name="irailissue">Problem with the server</string>
-    <string name="irailissueDetail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
-
-    <string name="plan_action_settings">Settings</string>
-    <string name="plan_action_date_time">Change date and time</string>
-    <string name="plan_action_add_to_favorites">Add to favorites</string>
-    <string name="tuto_notif">Example: Notify me when I arrive at Brussels South about the train IC 942 schedule</string>
-    <string name="notifstation">Station where you will be notified</string>
-    <string name="cancel">Cancel</string>
+    <!-- Widget -->
+    <string name="widget_empty">Open your train information and click \'Add to widget\'".</string>
+    <string name="widget_confirm">Add to Widget?</string>
+    <string name="widget_added">%s added to widget</string>
 </resources>

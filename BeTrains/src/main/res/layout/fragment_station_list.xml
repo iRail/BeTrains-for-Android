@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/fav_no_fav_body"/>
+            android:text="@string/favorites_empty"/>
 
     </FrameLayout>
 

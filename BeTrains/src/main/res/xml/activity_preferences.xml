@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="@string/txt_messages" >
+    <PreferenceCategory android:title="@string/settings_chat_title" >
         <EditTextPreference
             android:defaultValue="Anonymous"
             android:key="prefPseudo"
             android:summary=""
-            android:title="@string/settings_pseudo" />
+            android:title="@string/settings_chat_pseudo" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="preffirstM"
-            android:summary="@string/settings_display_lm_desc"
-            android:title="@string/settings_display_lm" />
+            android:summary="@string/settings_chat_last_message_summary"
+            android:title="@string/settings_chat_last_message" />
     </PreferenceCategory>
 
 </PreferenceScreen>

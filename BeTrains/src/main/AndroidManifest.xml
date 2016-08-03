@@ -62,7 +62,7 @@
         <activity
             android:name=".StarredActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/btn_home_starred"
+            android:label="@string/activity_label_starred"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".InfoStationActivity"
@@ -77,12 +77,12 @@
         <activity
             android:name=".ChatActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/btn_home_chat"
+            android:label="@string/activity_label_chat"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".CompensationActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/btn_home_compensate"
+            android:label="@string/activity_label_compensation"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".StationPickerActivity"
@@ -91,7 +91,7 @@
         <activity
             android:name=".MyPreferenceActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/btn_home_settings"
+            android:label="@string/activity_label_settings"
             android:theme="@style/Theme.MyABTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 

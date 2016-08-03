@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/tutoswipe"
+            android:text="@string/intro_swipe"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="3dip"
                     android:layout_weight="1"
-                    android:text="@string/txt_search"
+                    android:text="@string/search"
                     android:textStyle="bold"></Button>
 
                 <Button

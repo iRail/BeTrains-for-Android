@@ -30,7 +30,7 @@
             android:id="@+id/settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_change" />
+            android:text="@string/chat_settings" />
     </LinearLayout>
 
     <include layout="@layout/colorstrip" />
@@ -58,7 +58,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:text="@string/txt_loading" />
+        android:text="@string/loading" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/send_layout"
@@ -77,7 +77,7 @@
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="send" />
+            android:text="@string/chat_send" />
     </LinearLayout>
 
     <Button
@@ -85,6 +85,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/txt_more_messages" />
+        android:text="@string/chat_load_messages" />
 
 </LinearLayout>

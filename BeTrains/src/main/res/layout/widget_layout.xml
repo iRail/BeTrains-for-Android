@@ -75,7 +75,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="#000"
-                android:text="@string/wid_empty"
+                android:text="@string/widget_empty"
                 android:textSize="20sp" />
         <ListView
                 android:id="@+id/weather_list"

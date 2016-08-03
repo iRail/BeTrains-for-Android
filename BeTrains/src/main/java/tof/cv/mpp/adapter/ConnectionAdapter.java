@@ -2,7 +2,6 @@ package tof.cv.mpp.adapter;
 
 import android.content.Context;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +85,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 
                 departure
                         .setText((conn.getDeparture().getPlatform()
-                                .contentEquals("") ? "" : getContext().getString(R.string.txt_quai) + " " + conn
+                                .contentEquals("") ? "" : getContext().getString(R.string.platform) + " " + conn
                                 .getDeparture().getPlatform()));
 
                 if(conn.getDeparture().getPlatforminfo()!=null && conn.getDeparture().getPlatforminfo().normal ==0)
@@ -95,7 +94,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
             }
             if (arrival != null) {
                 arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
-                        : getContext().getString(R.string.txt_quai) + " " + conn.getArrival().getPlatform()));
+                        : getContext().getString(R.string.platform) + " " + conn.getArrival().getPlatform()));
 
                 if(conn.getArrival().getPlatforminfo()!=null && conn.getArrival().getPlatforminfo().normal ==0)
                     arrival
@@ -103,8 +102,8 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
             }
 
             if (triptime != null) {
-                triptime.setText(Html.fromHtml(getContext().getString(
-                        R.string.txt_duration)
+                triptime.setText(Html.fromHtml(
+                        getContext().getString(R.string.route_planner_duration)
                         + " <b>"
                         + Utils.formatDate(conn.getDuration(), true, false)
                         + "</b>"));
@@ -121,8 +120,11 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
             if (numberoftrains != null) { //
                 // Log.i("BETRAINS", "number" + conn.getVias()));
                 if (conn.getVias() != null)
-                    numberoftrains.setText(Html.fromHtml("Trains: <b>"
-                            + (conn.getVias().getNumberOfVias() + 1) + "</b>"));
+                    numberoftrains.setText(Html.fromHtml(
+                            getContext().getString(R.string.route_planner_num_trains)
+                            + " <b>"
+                            + (conn.getVias().getNumberOfVias() + 1)
+                            + "</b>"));
                 else
                     numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn
                             .getDeparture().getVehicle())));

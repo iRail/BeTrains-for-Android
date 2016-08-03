@@ -133,7 +133,7 @@ public class NotifFragment extends Fragment implements
         );
         autoCompleteTextView.setAdapter(namesAdapter);
 
-        db.setTitle(R.string.notifstation);
+        db.setTitle(R.string.notif_station);
         db.setView(autoCompleteTextView);
         db.setNegativeButton(R.string.cancel, null);
         final AlertDialog alert = db.show();

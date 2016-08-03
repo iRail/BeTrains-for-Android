@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
 import android.text.Html;
@@ -31,16 +30,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -136,7 +131,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
             setListAdapter(trainInfoAdapter);
             getActivity().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
         } else {
-            Toast.makeText(getActivity(), R.string.txt_connection,
+            Toast.makeText(getActivity(), R.string.check_connection,
                     Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
@@ -162,7 +157,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
     private void displayLastMessage(String vehicle) {
         mMessageText.setVisibility(View.VISIBLE);
-        setLastMessageText(getString(R.string.txt_load_message));
+        setLastMessageText(getString(R.string.train_loading_last_msg));
         Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
                 .setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
                 .setBodyParameter("message_count", "" + 1)
@@ -333,8 +328,8 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
                         } else {
                             if (result.getHeaders().code() == 502) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setTitle(R.string.irailissue);
-                                builder.setMessage(R.string.irailissueDetail);
+                                builder.setTitle(R.string.irail_issue);
+                                builder.setMessage(R.string.irail_issue_detail);
                                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         getActivity().finish();
@@ -392,11 +387,11 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
         @Override
         public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
-            menu.add(Menu.NONE, 0, Menu.NONE, "Add to Widget")
+            menu.add(Menu.NONE, 0, Menu.NONE, R.string.train_add_to_widget)
                     .setIcon(R.drawable.ic_menu_save)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-            menu.add(Menu.NONE, 1, Menu.NONE, "Fav")
+            menu.add(Menu.NONE, 1, Menu.NONE, R.string.action_add_to_favorites)
                     .setIcon(R.drawable.ic_menu_star)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
@@ -404,10 +399,10 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
             //         .setIcon(R.drawable.ic_menu_mapmode)
             //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-            menu.add(Menu.NONE, 4, Menu.NONE, R.string.btn_home_compensate)
+            menu.add(Menu.NONE, 4, Menu.NONE, R.string.activity_label_compensation)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-            menu.add(Menu.NONE, 3, Menu.NONE, "Chat")
+            menu.add(Menu.NONE, 3, Menu.NONE, R.string.nav_drawer_chat)
                     .setIcon(R.drawable.ic_menu_start_conversation)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
@@ -511,7 +506,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
         AlertDialog.Builder ad;
         ad = new AlertDialog.Builder(getActivity());
-        ad.setTitle(R.string.wid_confirm);
+        ad.setTitle(R.string.widget_confirm);
         ad.setPositiveButton(android.R.string.ok,
                 new android.content.DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
@@ -550,7 +545,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
                         getActivity().sendBroadcast(intent);
 
                         Toast.makeText(getActivity(),
-                                getString(R.string.wid_added, ""),
+                                getString(R.string.widget_added, ""),
                                 Toast.LENGTH_SHORT).show();
 
                     }

@@ -21,7 +21,7 @@
         android:gravity="center"
         android:layout_weight="1"
         android:padding="5dip"
-        android:text="@string/fav_no_fav_body"
+        android:text="@string/favorites_empty"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/darkblue" />
 
