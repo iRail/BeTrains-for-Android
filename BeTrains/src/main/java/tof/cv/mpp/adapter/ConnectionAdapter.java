@@ -15,6 +15,7 @@ import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Connection;
+import tof.cv.mpp.bo.Occupancy;
 
 public class ConnectionAdapter extends AbstractAdapter<Connection> {
 
@@ -41,6 +42,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
             TextView triptime = (TextView) v.findViewById(R.id.duration);
             TextView departtime = (TextView) v.findViewById(R.id.departtime);
             TextView arrivaltime = (TextView) v.findViewById(R.id.arrivaltime);
+            TextView occupancy = (TextView) v.findViewById(R.id.occupancy);
             TextView numberoftrains = (TextView) v
                     .findViewById(R.id.numberoftrains);
             ImageView alert = (ImageView) v.findViewById(R.id.alert);
@@ -88,25 +90,25 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
                                 .contentEquals("") ? "" : getContext().getString(R.string.platform) + " " + conn
                                 .getDeparture().getPlatform()));
 
-                if(conn.getDeparture().getPlatforminfo()!=null && conn.getDeparture().getPlatforminfo().normal ==0)
+                if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
                     departure
-                            .setText("! "+departure.getText()+" !");
+                            .setText("! " + departure.getText() + " !");
             }
             if (arrival != null) {
                 arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
                         : getContext().getString(R.string.platform) + " " + conn.getArrival().getPlatform()));
 
-                if(conn.getArrival().getPlatforminfo()!=null && conn.getArrival().getPlatforminfo().normal ==0)
+                if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
                     arrival
-                            .setText("! "+arrival.getText()+" !");
+                            .setText("! " + arrival.getText() + " !");
             }
 
             if (triptime != null) {
                 triptime.setText(Html.fromHtml(
                         getContext().getString(R.string.route_planner_duration)
-                        + " <b>"
-                        + Utils.formatDate(conn.getDuration(), true, false)
-                        + "</b>"));
+                                + " <b>"
+                                + Utils.formatDate(conn.getDuration(), true, false)
+                                + "</b>"));
             }
             if (departtime != null) {
                 departtime.setText(conn.getDeparture().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getDeparture()
@@ -122,28 +124,21 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
                 if (conn.getVias() != null)
                     numberoftrains.setText(Html.fromHtml(
                             getContext().getString(R.string.route_planner_num_trains)
-                            + " <b>"
-                            + (conn.getVias().getNumberOfVias() + 1)
-                            + "</b>"));
+                                    + " <b>"
+                                    + (conn.getVias().getNumberOfVias() + 1)
+                                    + "</b>"));
                 else
                     numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn
                             .getDeparture().getVehicle())));
             }
 
-            int color1 = 0xffffffff;
-            int color2 = 0xfff5f5f5;
-
-
-            color1 = 0xfff;
-            color2 = 0xfff5f5f5;
-            if (position % 2 == 0) {
-                //v.setBackgroundColor(color1);
-
-            } else {
-                //v.setBackgroundColor(color2);
-
+            if (conn.getOccupancy() != null){
+                if(! conn.getOccupancy().getName().contentEquals(Occupancy.UNKNOWN)){
+                    occupancy.setVisibility(View.VISIBLE);
+                    occupancy.setText(conn.getOccupancy().getName());
+                }else
+                    occupancy.setVisibility(View.GONE);
             }
-
         }
         return v;
     }

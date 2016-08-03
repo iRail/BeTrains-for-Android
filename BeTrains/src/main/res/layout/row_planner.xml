@@ -100,7 +100,6 @@
             android:layout_weight="1"
             android:text="Train" />
 
-
         <TextView
             android:id="@+id/arrival"
             style="@style/TextElement"
@@ -121,5 +120,14 @@
         android:gravity="center"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/occupancy"
+        style="@style/TextElement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Occupancy" />
 
 </LinearLayout>

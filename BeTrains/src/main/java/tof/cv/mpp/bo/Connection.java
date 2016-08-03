@@ -9,6 +9,12 @@ public class Connection {
 	private Station arrival;
 	private Vias vias;
 	private Alerts alerts;
+
+	public Occupancy getOccupancy() {
+		return occupancy;
+	}
+
+	private Occupancy occupancy;
 	
 	public Station getArrival() {
 		return this.arrival;
