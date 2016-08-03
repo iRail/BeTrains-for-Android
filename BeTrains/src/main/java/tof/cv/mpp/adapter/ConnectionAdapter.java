@@ -138,16 +138,16 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
 
                 switch (conn.getOccupancy().getName()) {
                     case Occupancy.UNKNOWN:
-                        occupancy.setImageResource(R.drawable.unknown);
+                        occupancy.setImageResource(R.drawable.ic_occupancy_unknown);
                         break;
                     case Occupancy.HIGH:
-                        occupancy.setImageResource(R.drawable.ic_high);
+                        occupancy.setImageResource(R.drawable.ic_occupancy_high);
                         break;
                     case Occupancy.MEDIUM:
-                        occupancy.setImageResource(R.drawable.ic_medium);
+                        occupancy.setImageResource(R.drawable.ic_occupancy_medium);
                         break;
                     case Occupancy.LOW:
-                        occupancy.setImageResource(R.drawable.ic_low);
+                        occupancy.setImageResource(R.drawable.ic_occupancy_low);
                         break;
                     default:
                         occupancy.setVisibility(View.GONE);
