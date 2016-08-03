@@ -122,11 +122,11 @@
         android:visibility="gone" />
 
 
-    <TextView
+    <ImageView
         android:id="@+id/occupancy"
         style="@style/TextElement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:gravity="center"
         android:text="Occupancy" />
 

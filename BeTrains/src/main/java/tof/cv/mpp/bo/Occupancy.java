@@ -6,6 +6,9 @@ package tof.cv.mpp.bo;
 public class Occupancy {
 
     public static final String UNKNOWN="unknown";
+    public static final String LOW= "low";
+    public static final String MEDIUM= "medium";
+    public static final String HIGH= "high";
 
     public String getName() {
         return name;

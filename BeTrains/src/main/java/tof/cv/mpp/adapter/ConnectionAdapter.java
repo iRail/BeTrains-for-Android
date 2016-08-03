@@ -42,7 +42,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
             TextView triptime = (TextView) v.findViewById(R.id.duration);
             TextView departtime = (TextView) v.findViewById(R.id.departtime);
             TextView arrivaltime = (TextView) v.findViewById(R.id.arrivaltime);
-            TextView occupancy = (TextView) v.findViewById(R.id.occupancy);
+            ImageView occupancy = (ImageView) v.findViewById(R.id.occupancy);
             TextView numberoftrains = (TextView) v
                     .findViewById(R.id.numberoftrains);
             ImageView alert = (ImageView) v.findViewById(R.id.alert);
@@ -132,13 +132,30 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
                             .getDeparture().getVehicle())));
             }
 
-            if (conn.getOccupancy() != null){
-                if(! conn.getOccupancy().getName().contentEquals(Occupancy.UNKNOWN)){
-                    occupancy.setVisibility(View.VISIBLE);
-                    occupancy.setText(conn.getOccupancy().getName());
-                }else
-                    occupancy.setVisibility(View.GONE);
+
+            if (conn.getOccupancy() != null) {
+                occupancy.setVisibility(View.VISIBLE);
+
+                switch (conn.getOccupancy().getName()) {
+                    case Occupancy.UNKNOWN:
+                        occupancy.setImageResource(R.drawable.unknown);
+                        break;
+                    case Occupancy.HIGH:
+                        occupancy.setImageResource(R.drawable.ic_high);
+                        break;
+                    case Occupancy.MEDIUM:
+                        occupancy.setImageResource(R.drawable.ic_medium);
+                        break;
+                    case Occupancy.LOW:
+                        occupancy.setImageResource(R.drawable.ic_low);
+                        break;
+                    default:
+                        occupancy.setVisibility(View.GONE);
+                }
             }
+            else
+                occupancy.setVisibility(View.GONE);
+
         }
         return v;
     }
