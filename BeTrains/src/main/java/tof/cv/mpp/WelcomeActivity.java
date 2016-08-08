@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -49,6 +51,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
+        navigationView.getMenu().clear();
+
+        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
+            navigationView.inflateMenu(R.menu.nav);
+        else
+            navigationView.inflateMenu(R.menu.nav_nogps);
 
         if (drawerLayout != null) {
 
@@ -114,14 +123,13 @@ public class WelcomeActivity extends AppCompatActivity {
                     if (drawerLayout != null)
                         drawerLayout.closeDrawers();
 
-                    //Check to see which item was being clicked and perform appropriate action
                     switch (menuItem.getItemId()) {
                         case R.id.navigation_item_plan:
                             mContent = new PlannerFragment();
                             break;
-                        case R.id.navigation_item_notif:
+                        /*case R.id.navigation_item_notif:
                             mContent = new NotifFragment();
-                            break;
+                            break;*/
                         case R.id.navigation_item_iss:
                             mContent = new TrafficFragment();
                             break;
@@ -147,7 +155,6 @@ public class WelcomeActivity extends AppCompatActivity {
                             mContent = new PlannerFragment();
                             close = getString(R.string.activity_label_planner);
                             break;
-
                     }
 
                     getSupportFragmentManager().beginTransaction()
@@ -158,7 +165,7 @@ public class WelcomeActivity extends AppCompatActivity {
             });
         }
 
-
+// Set the default screen at startup from Preferences
         int pos = Integer.valueOf(settings.getString(
                 getString(R.string.key_activity), "1"));
 
