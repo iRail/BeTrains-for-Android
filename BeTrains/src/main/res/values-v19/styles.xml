@@ -25,7 +25,6 @@
 
 
     <style name="Theme.MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
-=
         <item name="android:windowBackground">@color/mybg</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>

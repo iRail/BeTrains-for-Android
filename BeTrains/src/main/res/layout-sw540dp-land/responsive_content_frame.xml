@@ -6,6 +6,8 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"
+        app:itemTextColor="@color/state_list"
+        app:itemIconTint="@color/state_list"
         android:layout_width="@dimen/drawer_size"
         android:layout_height="match_parent"
         android:layout_gravity="start"
