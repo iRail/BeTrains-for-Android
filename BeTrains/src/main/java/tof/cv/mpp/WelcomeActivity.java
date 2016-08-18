@@ -49,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         navigationView.getMenu().clear();
@@ -159,7 +159,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content_frame, mContent).commit();
-
+                    navigationView.clearFocus();
+                    navigationView.requestFocus();
                     return true;
                 }
             });

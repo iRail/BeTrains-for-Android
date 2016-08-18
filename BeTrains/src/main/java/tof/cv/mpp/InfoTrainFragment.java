@@ -8,8 +8,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -59,7 +62,7 @@ import tof.cv.mpp.bo.Vehicle;
 import tof.cv.mpp.widget.TrainAppWidgetProvider;
 import tof.cv.mpp.widget.TrainWidgetProvider;
 
-public class InfoTrainFragment extends ListFragment implements OnMapReadyCallback {
+public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     protected static final String TAG = "ChatFragment";
     private Vehicle currentVehicle;
     private TextView mMessageText;
@@ -67,6 +70,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
     String id;
     private long timestamp;
     GoogleMap myMap;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -108,8 +112,10 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
                 }
             }
         });
+        recyclerView = (RecyclerView) getView().findViewById(android.R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        registerForContextMenu(getListView());
+        registerForContextMenu(recyclerView);
     }
 
     public void displayInfoFromMemory(final String fileName, final String vehicle) {
@@ -125,10 +131,12 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
         getView().findViewById(R.id.progress).setVisibility(View.GONE);
         if (currentVehicle != null
                 && currentVehicle.getVehicleStops() != null) {
-            TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
-                    getActivity(), R.layout.row_info_train, currentVehicle
-                    .getVehicleStops().getVehicleStop());
-            setListAdapter(trainInfoAdapter);
+            TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
+                    .getVehicleStops().getVehicleStop(),getActivity());
+
+
+
+            recyclerView.setAdapter(trainInfoAdapter);
             getActivity().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
         } else {
             Toast.makeText(getActivity(), R.string.check_connection,
@@ -266,10 +274,9 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
                     }
 
 
-                        TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(
-                                getActivity(), R.layout.row_info_train, currentVehicle
-                                .getVehicleStops().getVehicleStop());
-                        setListAdapter(trainInfoAdapter);
+                        TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter( currentVehicle
+                                .getVehicleStops().getVehicleStop(),getActivity());
+                        recyclerView.setAdapter(trainInfoAdapter);
 
 
                         getActivity().setTitle(currentVehicle.getVehicleInfo().name + Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
@@ -371,18 +378,6 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
             // if (requestCode == 0) {
             //     getActivity().finish();
             //}
-        }
-
-
-        @Override
-        public void onListItemClick (ListView parent, View view,int position, long id){
-            Vehicle.VehicleStop stop = (Vehicle.VehicleStop) getListAdapter().getItem(position);
-            Intent i = new Intent(getActivity(), InfoStationActivity.class);
-            i.putExtra("Name", stop.getStation());
-            i.putExtra("ID", stop.getStationInfo().getId());
-            i.putExtra("timestamp", stop.getTime());
-            startActivity(i);
-
         }
 
         @Override
@@ -562,38 +557,7 @@ public class InfoTrainFragment extends ListFragment implements OnMapReadyCallbac
 
     }
 
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-
-        Vehicle.VehicleStop clicked = (Vehicle.VehicleStop) getListAdapter().getItem(
-                (int) info.id);
-
-        menu.add(0, 0, 0, clicked.getStation());
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        switch (item.getItemId()) {
-            case 0:
-                AdapterView.AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item
-                        .getMenuInfo();
-                Vehicle.VehicleStop stop = (Vehicle.VehicleStop) getListAdapter().getItem(
-                        (int) menuInfo.id);
-                Intent i = new Intent(getActivity(), InfoStationActivity.class);
-                i.putExtra("Name", stop.getStation());
-                i.putExtra("ID", stop.getStationInfo().getId());
-                i.putExtra("timestamp", stop.getTime());
-                startActivity(i);
-
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-
-    }
 
     public void setLastMessageText(Spanned spanned) {
         mMessageText.setText(spanned);

@@ -18,8 +18,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 6545
-        versionName "4.545"
+        versionCode 6546
+        versionName "4.546"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -27,13 +27,6 @@ android {
             minifyEnabled false // new version
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             shrinkResources true
-        }
-    }
-    productFlavors {
-        production {
-        }
-        fdroid {
-
         }
     }
 

@@ -1,6 +1,8 @@
 package tof.cv.mpp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,62 +12,90 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import tof.cv.mpp.InfoStationActivity;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Vehicle;
 
-public class TrainInfoAdapter extends ArrayAdapter<Vehicle.VehicleStop> {
+public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.InfotrainHolder> {
 
-    public TrainInfoAdapter(Context context, int textViewResourceId,
-                            ArrayList<Vehicle.VehicleStop> items) {
-        super(context, textViewResourceId, items);
+    ArrayList<Vehicle.VehicleStop> list;
+
+    public TrainInfoAdapter(ArrayList<Vehicle.VehicleStop> list, Context context) {
+        this.list = list;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public TrainInfoAdapter.InfotrainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_info_train, parent, false);
+        TrainInfoAdapter.InfotrainHolder viewHolder = new TrainInfoAdapter.InfotrainHolder(v);
+        return viewHolder;
+    }
 
-        View v = convertView;
-        if (v == null) {
-            LayoutInflater vi = (LayoutInflater) super.getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.row_info_train, null);
-        }
-        Vehicle.VehicleStop o = getItem(position);
+    @Override
+    public void onBindViewHolder(InfotrainHolder holder, int position) {
+        Vehicle.VehicleStop o = list.get(position);
         if (o != null) {
-            TextView time = (TextView) v.findViewById(R.id.time);
-            TextView delay = (TextView) v.findViewById(R.id.delay);
-            TextView station = (TextView) v.findViewById(R.id.station);
-            TextView platform = (TextView) v.findViewById(R.id.platform);
-
-
-            station.setText(Html.fromHtml(o.getStation()));
+            holder.item = o;
+            holder.station.setText(Html.fromHtml(o.getStation()));
 
             if (o.getPlatforminfo() != null) {
-                platform.setText(o.getPlatforminfo().name);
+                holder.platform.setText(o.getPlatforminfo().name);
 
                 if (o.getPlatforminfo() != null && o.getPlatforminfo().normal == 0)
-                    platform
-                            .setText("! " + platform.getText() + " !");
+                    holder.platform
+                            .setText("! " + holder.platform.getText() + " !");
             } else
-                platform.setText("");
+                holder.platform.setText("");
 
 
             if (o.isCancelled())
-                time.setText(Html.fromHtml("<font color=\"red\">XXXX</font>"));
+                holder.time.setText(Html.fromHtml("<font color=\"red\">XXXX</font>"));
             else
-                time.setText(Utils.formatDate(o.getTime(), false, false));
+                holder.time.setText(Utils.formatDate(o.getTime(), false, false));
 
             if (o.getDelay().contentEquals("0"))
-                delay.setText("");
+                holder.delay.setText("");
             else
                 try {
-                    delay.setText("+"
+                    holder.delay.setText("+"
                             + (Integer.valueOf(o.getDelay()) / 60)
                             + "'");
                 } catch (Exception e) {
-                    delay.setText(o.getDelay());
+                    holder.delay.setText(o.getDelay());
                 }
         }
-        return v;
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public static class InfotrainHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView time;
+        TextView delay;
+        TextView station;
+        TextView platform;
+        Vehicle.VehicleStop item;
+
+        public InfotrainHolder(View v) {
+            super(v);
+v.setOnClickListener(this);
+            time = (TextView) v.findViewById(R.id.time);
+            delay = (TextView) v.findViewById(R.id.delay);
+            station = (TextView) v.findViewById(R.id.station);
+            platform = (TextView) v.findViewById(R.id.platform);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(view.getContext(), InfoStationActivity.class);
+            i.putExtra("Name", item.getStation());
+            i.putExtra("ID", item.getStationInfo().getId());
+            i.putExtra("timestamp", item.getTime());
+            view.getContext().startActivity(i);
+        }
     }
 }
