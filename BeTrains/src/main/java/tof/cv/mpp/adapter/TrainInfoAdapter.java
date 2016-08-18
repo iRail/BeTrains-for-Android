@@ -82,7 +82,7 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.Info
 
         public InfotrainHolder(View v) {
             super(v);
-v.setOnClickListener(this);
+            v.setOnClickListener(this);
             time = (TextView) v.findViewById(R.id.time);
             delay = (TextView) v.findViewById(R.id.delay);
             station = (TextView) v.findViewById(R.id.station);

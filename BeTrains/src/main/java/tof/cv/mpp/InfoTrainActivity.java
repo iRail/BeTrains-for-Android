@@ -18,9 +18,7 @@ public class InfoTrainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_info_train);
-
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = this.getIntent().getExtras();
         long timestamp = bundle.getLong("timestamp") * 1000;
@@ -28,14 +26,13 @@ public class InfoTrainActivity extends AppCompatActivity {
         Log.i("***", "bundle: " + bundle.getString("Name"));
         Log.i("***", "NAME: " + name);
         String fromTo = bundle.getString("fromto");
-        getSupportActionBar().setTitle(name + " infos:");
 
         InfoTrainFragment fragment = (InfoTrainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         String fileName = bundle.getString("FileName");
-        if (fileName != null)
-            fragment.displayInfoFromMemory(fileName, name);
-        else
-            fragment.displayInfo(name, fromTo, timestamp);
+        //if (fileName != null)
+        //    fragment.displayInfoFromMemory(fileName, name);
+        //else
+        fragment.displayInfo(name, fromTo, timestamp);
 
     }
 

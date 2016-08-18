@@ -11,8 +11,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -94,6 +97,9 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         super.onActivityCreated(savedInstanceState);
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -132,12 +138,11 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         if (currentVehicle != null
                 && currentVehicle.getVehicleStops() != null) {
             TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
-                    .getVehicleStops().getVehicleStop(),getActivity());
-
+                    .getVehicleStops().getVehicleStop(), getActivity());
 
 
             recyclerView.setAdapter(trainInfoAdapter);
-            getActivity().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Utils.formatDate(new Date(timestamp), "HH:mm"));
         } else {
             Toast.makeText(getActivity(), R.string.check_connection,
                     Toast.LENGTH_LONG).show();
@@ -147,6 +152,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
     public void displayInfo(String vehicle, String fromTo, long timestamp) {
         getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+
         this.id = vehicle;
         this.fromTo = fromTo;
         if (timestamp != 0)
@@ -234,220 +240,219 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         Log.e("CVE", url);
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
-            @Override
-            public void onCompleted(Exception e, Response<Vehicle> result) {
+                                          @Override
+                                          public void onCompleted(Exception e, Response<Vehicle> result) {
 
-                if (result != null) {
-                    currentVehicle = result.getResult();
-                    getView().findViewById(R.id.progress).setVisibility(View.GONE);
-                    getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
+                                              if (result != null) {
+                                                  currentVehicle = result.getResult();
+                                                  getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                                                  getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
+                                              }
+
+                                              if (currentVehicle != null
+                                                      && currentVehicle.getVehicleStops() != null) {
+                                                  if (currentVehicle.getAlerts() != null && currentVehicle.getAlerts().getNumber() > 0) {
+                                                      String text = "";
+                                                      String html = "";
+                                                      if (currentVehicle.getAlerts().getAlertlist() != null)
+                                                          for (Alert anAlert : currentVehicle.getAlerts().getAlertlist()) {
+                                                              text += anAlert.getHeader() + " / ";
+                                                              html += ("<h3>" + anAlert.getHeader() + "</h3>");
+                                                              html += (anAlert.getDescription());
+                                                          }
+
+
+                                                      if (text.endsWith(" / "))
+                                                          text = text.substring(0, text.length() - 3);
+
+
+                                                      final String finalHtml = html;
+                                                      Snackbar.make(getView().findViewById(R.id.root), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
+                                                              .setAction("OK", new View.OnClickListener() {
+                                                                  @Override
+                                                                  public void onClick(View v) {
+                                                                      new AlertDialog.Builder(getActivity())
+                                                                              .setTitle(currentVehicle.getVehicleInfo().name)
+                                                                              .setMessage(Html.fromHtml(finalHtml))
+                                                                              .show();
+                                                                  }
+                                                              }).show();
+                                                  }
+
+
+                                                  TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
+                                                          .getVehicleStops().getVehicleStop(), getActivity());
+                                                  recyclerView.setAdapter(trainInfoAdapter);
+
+                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentVehicle.getVehicleInfo().name + " - " + Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+                                                  PolylineOptions rectOptions = new PolylineOptions();
+
+                                                  double minLat = 90;
+                                                  double maxLat = 0;
+                                                  double minLon = 180;
+                                                  double maxLon = 0;
+                                                  double delta = 0.05;
+
+
+                                                  try {
+                                                      for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
+
+                                                          myMap.addMarker(new MarkerOptions()
+                                                                  .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
+                                                                  .anchor(0.5f, 0.5f)
+                                                                  .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
+
+                                                          rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
+                                                          if (maxLat < aStop.getStationInfo().getLocationY())
+                                                              maxLat = aStop.getStationInfo().getLocationY();
+
+                                                          if (minLat > aStop.getStationInfo().getLocationY())
+                                                              minLat = aStop.getStationInfo().getLocationY();
+
+                                                          if (maxLon < aStop.getStationInfo().getLocationX())
+                                                              maxLon = aStop.getStationInfo().getLocationX();
+
+                                                          if (minLon > aStop.getStationInfo().getLocationX())
+                                                              minLon = aStop.getStationInfo().getLocationX();
+                                                      }
+
+                                                      myMap.addPolyline(rectOptions.color(Color.BLUE));
+
+                                                      LatLngBounds bounds = new LatLngBounds(
+                                                              new LatLng(minLat - delta, minLon - delta), new LatLng(maxLat + delta, maxLon + delta));
+
+                                                      myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
+
+                                                      //myMap.addMarker(new MarkerOptions()
+                                                      //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
+                                                      //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                                                  } catch (Exception e1) {
+                                                      //map crashing, probably custom ROM
+                                                      e1.printStackTrace();
+                                                  }
+
+
+                                              } else {
+                                                  if (e != null) {
+                                                      Toast.makeText(getActivity(), e.getLocalizedMessage(),
+                                                              Toast.LENGTH_LONG).show();
+                                                      getActivity().finish();
+                                                  } else {
+                                                      if (result.getHeaders().code() == 502) {
+                                                          AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                          builder.setTitle(R.string.irail_issue);
+                                                          builder.setMessage(R.string.irail_issue_detail);
+                                                          builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                              public void onClick(DialogInterface dialog, int id) {
+                                                                  getActivity().finish();
+                                                              }
+                                                          });
+                                                          builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
+                                                              public void onClick(DialogInterface dialog, int id) {
+
+                                                                  ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
+                                                                  builder.setType("message/rfc822");
+                                                                  builder.addEmailTo("iRail@list.iRail.be");
+                                                                  builder.setSubject("Issue with iRail API");
+                                                                  builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
+                                                                          "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
+                                                                          "I hope you can fix that soon.\nHave a nice day.");
+                                                                  builder.setChooserTitle("Send Email");
+                                                                  builder.startChooser();
+
+                                                                  //getActivity().finish();
+                                                              }
+                                                          });
+                                                          builder.create().show();
+                                                      }
+
+                                                  }
+
+
+                                              }
+                                          }
+                                      }
+
+        );
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        // if (requestCode == 0) {
+        //     getActivity().finish();
+        //}
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.train_add_to_widget)
+                .setIcon(R.drawable.ic_menu_save)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        menu.add(Menu.NONE, 1, Menu.NONE, R.string.action_add_to_favorites)
+                .setIcon(R.drawable.ic_menu_star)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
+        // menu.add(Menu.NONE, 2, Menu.NONE, "Map")
+        //         .setIcon(R.drawable.ic_menu_mapmode)
+        //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
+        menu.add(Menu.NONE, 4, Menu.NONE, R.string.activity_label_compensation)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
+        menu.add(Menu.NONE, 3, Menu.NONE, R.string.nav_drawer_chat)
+                .setIcon(R.drawable.ic_menu_start_conversation)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 0:
+                widget();
+                return true;
+            case 1:
+                if (currentVehicle != null) {
+                    Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
+                    startActivity(new Intent(getActivity(), StarredActivity.class));
                 }
-
-                if (currentVehicle != null
-                        && currentVehicle.getVehicleStops() != null) {
-                    if (currentVehicle.getAlerts() != null && currentVehicle.getAlerts().getNumber() > 0) {
-                        String text = "";
-                        String html = "";
-                        if (currentVehicle.getAlerts().getAlertlist() != null)
-                            for (Alert anAlert : currentVehicle.getAlerts().getAlertlist()){
-                                text += anAlert.getHeader() + " / ";
-                                html += ("<h3>" +  anAlert.getHeader() + "</h3>");
-                                html += (anAlert.getDescription() );
-                            }
-
-
-                        if (text.endsWith(" / "))
-                            text = text.substring(0, text.length() - 3);
-
-
-                        final String finalHtml = html;
-                        Snackbar.make(getView().findViewById(R.id.root), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
-                                .setAction("OK", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        new AlertDialog.Builder(getActivity())
-                                                .setTitle(currentVehicle.getVehicleInfo().name)
-                                                .setMessage(Html.fromHtml(finalHtml))
-                                                .show();
-                                    }
-                                }).show();
-                    }
-
-
-                        TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter( currentVehicle
-                                .getVehicleStops().getVehicleStop(),getActivity());
-                        recyclerView.setAdapter(trainInfoAdapter);
-
-
-                        getActivity().setTitle(currentVehicle.getVehicleInfo().name + Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
-                        PolylineOptions rectOptions = new PolylineOptions();
-
-                        double minLat = 90;
-                        double maxLat = 0;
-                        double minLon = 180;
-                        double maxLon = 0;
-                        double delta = 0.05;
-
-
-                    try {
-                        for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
-
-                            myMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
-
-                            rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
-                            if (maxLat < aStop.getStationInfo().getLocationY())
-                                maxLat = aStop.getStationInfo().getLocationY();
-
-                            if (minLat > aStop.getStationInfo().getLocationY())
-                                minLat = aStop.getStationInfo().getLocationY();
-
-                            if (maxLon < aStop.getStationInfo().getLocationX())
-                                maxLon = aStop.getStationInfo().getLocationX();
-
-                            if (minLon > aStop.getStationInfo().getLocationX())
-                                minLon = aStop.getStationInfo().getLocationX();
-                        }
-
-                        myMap.addPolyline(rectOptions.color(Color.BLUE));
-
-                        LatLngBounds bounds = new LatLngBounds(
-                                new LatLng(minLat - delta, minLon - delta), new LatLng(maxLat + delta, maxLon + delta));
-
-                        myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
-
-                        //myMap.addMarker(new MarkerOptions()
-                        //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
-                        //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    } catch (Exception e1) {
-                        //map crashing, probably custom ROM
-                        e1.printStackTrace();
-                    }
-
-
-                } else {
-                        if (e != null) {
-                            Toast.makeText(getActivity(), e.getLocalizedMessage(),
-                                    Toast.LENGTH_LONG).show();
-                            getActivity().finish();
-                        } else {
-                            if (result.getHeaders().code() == 502) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setTitle(R.string.irail_issue);
-                                builder.setMessage(R.string.irail_issue_detail);
-                                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        getActivity().finish();
-                                    }
-                                });
-                                builder.setNegativeButton(R.string.report, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                        ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(getActivity());
-                                        builder.setType("message/rfc822");
-                                        builder.addEmailTo("iRail@list.iRail.be");
-                                        builder.setSubject("Issue with iRail API");
-                                        builder.setText("Hello, I am currently using the Android application BeTrains, and I get an error while using the iRail API.\n\n" +
-                                                "I get this message: 'Could not get data. Please report this problem to iRail@list.iRail.be' while trying to query :\n" + url + "\n\n" +
-                                                "I hope you can fix that soon.\nHave a nice day.");
-                                        builder.setChooserTitle("Send Email");
-                                        builder.startChooser();
-
-                                        //getActivity().finish();
-                                    }
-                                });
-                                builder.create().show();
-                            }
-
-                        }
-
-
-                    }
-                }
-            }
-
-            );
-
-        }
-
-        @Override
-        public void onActivityResult ( int requestCode, int resultCode, Intent data){
-            // Check which request we're responding to
-            // if (requestCode == 0) {
-            //     getActivity().finish();
-            //}
-        }
-
-        @Override
-        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
-            menu.add(Menu.NONE, 0, Menu.NONE, R.string.train_add_to_widget)
-                    .setIcon(R.drawable.ic_menu_save)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
-            menu.add(Menu.NONE, 1, Menu.NONE, R.string.action_add_to_favorites)
-                    .setIcon(R.drawable.ic_menu_star)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
-            // menu.add(Menu.NONE, 2, Menu.NONE, "Map")
-            //         .setIcon(R.drawable.ic_menu_mapmode)
-            //         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
-            menu.add(Menu.NONE, 4, Menu.NONE, R.string.activity_label_compensation)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
-            menu.add(Menu.NONE, 3, Menu.NONE, R.string.nav_drawer_chat)
-                    .setIcon(R.drawable.ic_menu_start_conversation)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            switch (item.getItemId()) {
-                case 0:
-                    widget();
-                    return true;
-                case 1:
-                    if (currentVehicle != null) {
-                        Utils.addAsStarred(currentVehicle.getId(), "", 2, getActivity());
-                        startActivity(new Intent(getActivity(), StarredActivity.class));
-                    }
-                    return true;
-                case 2:
+                return true;
+            case 2:
               /*  if (currentVehicle != null) {
                     Intent i = new Intent(getActivity(), MapVehicleActivity.class);
                     i.putExtra("Name", currentVehicle.getId());
                     startActivity(i);
                 }*/
+                return true;
+            case 3:
+                if (currentVehicle != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(DbAdapterConnection.KEY_NAME,
+                            currentVehicle.getId());
+                    Intent mIntent = new Intent(getActivity(), ChatActivity.class);
+                    mIntent.putExtras(bundle);
+                    startActivityForResult(mIntent, 0);
                     return true;
-                case 3:
-                    if (currentVehicle != null) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(DbAdapterConnection.KEY_NAME,
-                                currentVehicle.getId());
-                        Intent mIntent = new Intent(getActivity(), ChatActivity.class);
-                        mIntent.putExtras(bundle);
-                        startActivityForResult(mIntent, 0);
-                        return true;
-                    }
+                }
 
-                case 4:
-                    if (currentVehicle != null) {
-                        new Thread(new Runnable() {
-                            public void run() {
-                                saveToSd();
-                            }
-                        }).start();
-                    }
+            case 4:
+                if (currentVehicle != null) {
+                    new Thread(new Runnable() {
+                        public void run() {
+                            saveToSd();
+                        }
+                    }).start();
+                }
 
-                    return true;
+                return true;
 
 
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
     public void saveToSd() {
 
@@ -558,7 +563,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
     public void setLastMessageText(Spanned spanned) {
         mMessageText.setText(spanned);
     }
@@ -572,5 +576,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         myMap = googleMap;
+        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+        myMap.getUiSettings().setScrollGesturesEnabled(false);
     }
 }
