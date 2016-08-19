@@ -267,7 +267,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
 
                                                       final String finalHtml = html;
-                                                      Snackbar.make(getView().findViewById(R.id.root), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
+                                                      Snackbar.make(getView(), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
                                                               .setAction("OK", new View.OnClickListener() {
                                                                   @Override
                                                                   public void onClick(View v) {
@@ -284,7 +284,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                           .getVehicleStops().getVehicleStop(), getActivity());
                                                   recyclerView.setAdapter(trainInfoAdapter);
 
-                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentVehicle.getVehicleInfo().name + " - " + Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentVehicle.getVehicleInfo().name + " - " + Utils.formatDate(new Date(timestamp), "HH:mm"));
                                                   PolylineOptions rectOptions = new PolylineOptions();
 
                                                   double minLat = 90;
@@ -389,7 +389,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add(Menu.NONE, 0, Menu.NONE, R.string.train_add_to_widget)
                 .setIcon(R.drawable.ic_menu_save)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         menu.add(Menu.NONE, 1, Menu.NONE, R.string.action_add_to_favorites)
                 .setIcon(R.drawable.ic_menu_star)
