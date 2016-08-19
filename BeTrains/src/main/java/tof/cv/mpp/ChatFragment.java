@@ -44,452 +44,454 @@ import tof.cv.mpp.adapter.MessageAdapter;
 import tof.cv.mpp.bo.Message;
 
 public class ChatFragment extends ListFragment {
-	/** Called when the activity is first created. */
-	private TextView mTitleText;
-	private Button btnSettings;
-	private Button btnSend;
-	private Button btnMore;
-	private EditText messageTxtField;
-	private final String TAG = "MessagesTrain.java";
-	private int total = 15;
-	private boolean posted = false;
-	private ArrayList<Message> listOfMessage = new ArrayList<Message>();
-	private ProgressDialog progressDialog;
-	String trainId;
-	private String toTast;
-	private String toEmpty;
+    /**
+     * Called when the activity is first created.
+     */
+    private TextView mTitleText;
+    private Button btnSettings;
+    private Button btnSend;
+    private Button btnMore;
+    private EditText messageTxtField;
+    private final String TAG = "MessagesTrain.java";
+    private int total = 15;
+    private boolean posted = false;
+    private ArrayList<Message> listOfMessage = new ArrayList<Message>();
+    private ProgressDialog progressDialog;
+    String trainId;
+    private String toTast;
+    private String toEmpty;
 
-	private static final int MENU_FILTER = 0;
+    private static final int MENU_FILTER = 0;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_chat, null);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_chat, null);
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
 
 
-	}
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-		mTitleText = (TextView) getView().findViewById(R.id.pseudo);
-		// mBodyText = (TextView) findViewById(R.id.messagesblock);
-		btnSettings = (Button) getView().findViewById(R.id.settings);
-		btnSend = (Button) getView().findViewById(R.id.send);
-		btnMore = (Button) getView().findViewById(R.id.more);
-		messageTxtField = (EditText) getView().findViewById(
-				R.id.yourmessage);
+        mTitleText = (TextView) getView().findViewById(R.id.pseudo);
+        // mBodyText = (TextView) findViewById(R.id.messagesblock);
+        btnSettings = (Button) getView().findViewById(R.id.settings);
+        btnSend = (Button) getView().findViewById(R.id.send);
+        btnMore = (Button) getView().findViewById(R.id.more);
+        messageTxtField = (EditText) getView().findViewById(
+                R.id.yourmessage);
 
-		setBtnSettingsListener();
-		setBtnMoreListener();
-		setBtnSendListener();
-		Log.i("", "Created " + trainId);
-		update();
+        setBtnSettingsListener();
+        setBtnMoreListener();
+        setBtnSendListener();
+        Log.i("", "Created " + trainId);
+        update();
 
-        boolean isTablet=this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
+        boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                 !isTablet);
 
         //getActivity().getActionBar().setIcon(R.drawable.ab_chat);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
-	}
+    }
 
-	private void setBtnSendListener() {
-		btnSend.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				if (posted) {
-					Toast.makeText(getActivity(),
+    private void setBtnSendListener() {
+        btnSend.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                if (posted) {
+                    Toast.makeText(getActivity(),
                             R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
-							.show();
-				} else {
-					String pseudo = PreferenceManager
-							.getDefaultSharedPreferences(getActivity())
-							.getString("prefPseudo", "Anonymous");
-					if (pseudo.contentEquals("Anonymous"))
-						Toast.makeText(
-								getActivity(),
-								R.string.chat_send_err_username,
-								Toast.LENGTH_LONG).show();
-					else if (messageTxtField.getText().toString()
-							.contentEquals(""))
-						Toast.makeText(getActivity(), R.string.chat_send_err_empty,
-								Toast.LENGTH_LONG).show();
-					else {
-						postMessage(pseudo);
-					}
-				}
+                            .show();
+                } else {
+                    String pseudo = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity())
+                            .getString("prefPseudo", "Anonymous");
+                    if (pseudo.contentEquals("Anonymous"))
+                        Toast.makeText(
+                                getActivity(),
+                                R.string.chat_send_err_username,
+                                Toast.LENGTH_LONG).show();
+                    else if (messageTxtField.getText().toString()
+                            .contentEquals(""))
+                        Toast.makeText(getActivity(), R.string.chat_send_err_empty,
+                                Toast.LENGTH_LONG).show();
+                    else {
+                        postMessage(pseudo);
+                    }
+                }
 
-			}
+            }
 
-		});
+        });
 
-	}
+    }
 
-	private void postMessage(final String pseudo) {
+    private void postMessage(final String pseudo) {
 
-		Runnable trainSearch = new Runnable() {
+        Runnable trainSearch = new Runnable() {
 
-			public void run() {
+            public void run() {
 
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						progressDialog = ProgressDialog.show(getActivity(), "",
-								getString(R.string.patient), true);
-					}
-				});
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        progressDialog = ProgressDialog.show(getActivity(), "",
+                                getString(R.string.patient), true);
+                    }
+                });
 
-				if (requestPhpSend(pseudo,
-						messageTxtField.getText().toString(), trainId)) {
+                if (requestPhpSend(pseudo,
+                        messageTxtField.getText().toString(), trainId)) {
 
-					toTast = getString(android.R.string.ok);
-					getActivity().runOnUiThread(displayToast);
+                    toTast = getString(android.R.string.ok);
+                    getActivity().runOnUiThread(displayToast);
                     try {
-                      PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("chatUnlock",true).commit();
+                        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("chatUnlock", true).commit();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     posted = true;
-				}
+                } else
+                    toTast = "Problem";
+                getActivity().runOnUiThread(displayToast);
+                getActivity().runOnUiThread(dismissPd);
+            }
+        };
 
-				else
-					toTast = "Problem";
-				getActivity().runOnUiThread(displayToast);
-				getActivity().runOnUiThread(dismissPd);
-			}
-		};
+        Thread thread = new Thread(null, trainSearch, "MyThread");
+        thread.start();
 
-		Thread thread = new Thread(null, trainSearch, "MyThread");
-		thread.start();
+    }
 
-	}
+    private Runnable dismissPd = new Runnable() {
+        public void run() {
+            progressDialog.dismiss();
+        }
+    };
+    private Runnable displayToast = new Runnable() {
+        public void run() {
+            Toast.makeText(getActivity(), toTast, Toast.LENGTH_LONG).show();
+        }
+    };
 
-	private Runnable dismissPd = new Runnable() {
-		public void run() {
-			progressDialog.dismiss();
-		}
-	};
-	private Runnable displayToast = new Runnable() {
-		public void run() {
-			Toast.makeText(getActivity(), toTast, Toast.LENGTH_LONG).show();
-		}
-	};
+    private void setBtnMoreListener() {
+        btnMore.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                total += 5;
+                update();
+            }
+        });
 
-	private void setBtnMoreListener() {
-		btnMore.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				total += 5;
-				update();
-			}
-		});
+    }
 
-	}
+    private void setBtnSettingsListener() {
+        btnSettings.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= 11)
+                    startActivity(new Intent(getActivity(),
+                            MyPreferenceActivity.class).putExtra(
+                            PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                            Prefs1Fragment.class.getName()));
+                else {
+                    startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
+                }
+            }
+        });
 
-	private void setBtnSettingsListener() {
-		btnSettings.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				if (Build.VERSION.SDK_INT>=11)
-					startActivity(new Intent(getActivity(),
-							MyPreferenceActivity.class).putExtra(
-							PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-							Prefs1Fragment.class.getName()));
-				else{
-					startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
-				}
-			}
-		});
+    }
 
-	}
+    public void update() {
+        Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
+                .setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
+                .setBodyParameter("message_count", "" + total)
+                .setBodyParameter("message_index", "" + 0)
+                .setBodyParameter("mode", "read")
+                .setBodyParameter("order", "DESC")
+                .setBodyParameter("train_id", trainId)
+                .asString(Charset.forName("ISO-8859-1")).setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String txt) {
+                // TODO: USE XML PARSER
+                listOfMessage.clear();
+                if (txt != null && !txt.equals("")) {
+                    Log.e("CVE", txt);
+                    String[] messages = txt.split("<message>");
 
-	public void update() {
-		Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
-				.setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
-				.setBodyParameter("message_count", "" + total)
-				.setBodyParameter("message_index", "" + 0)
-				.setBodyParameter("mode", "read")
-				.setBodyParameter("order", "DESC")
-				.setBodyParameter("train_id", trainId)
-				.asString(Charset.forName("ISO-8859-1")).setCallback(new FutureCallback<String>() {
-			@Override
-			public void onCompleted(Exception e, String txt) {
-				// TODO: USE XML PARSER
-				listOfMessage.clear();
-				if (txt != null && !txt.equals("")) {
-					Log.e("CVE",txt);
-					String[] messages = txt.split("<message>");
+                    int i = 1;
+                    if (messages.length > 1) {
 
-					int i = 1;
-					if (messages.length > 1) {
+                        while (i < messages.length) {
+                            String[] params = messages[i].split("CDATA");
+                            for (int j = 1; j < params.length; j++) {
+                                params[j] = params[j].substring(1,
+                                        params[j].indexOf("]"));
 
-						while (i < messages.length) {
-							String[] params = messages[i].split("CDATA");
-							for (int j = 1; j < params.length; j++) {
-								params[j] = params[j].substring(1,
-										params[j].indexOf("]"));
+                            }
+                            Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
+                                    + params[3] + " " + params[4]);
+                            listOfMessage.add(new Message(params[1], params[2],
+                                    params[3], params[4]));
+                            i++;
+                        }
 
-							}
-							Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
-									+ params[3] + " " + params[4]);
-							listOfMessage.add(new Message(params[1], params[2],
-									params[3], params[4]));
-							i++;
-						}
+                    }
 
-					}
+                } else {
+                    Log.e("CVE", "NULL");
+                    System.out.println("function in connection maker returns null !!");
+                    listOfMessage.add(new Message(ChatFragment.this
+                            .getString(R.string.chat_no_message), ChatFragment.this
+                            .getString(R.string.check_connection), "", ""));
+                }
 
-				} else {
-					Log.e("CVE","NULL");
-					System.out.println("function in connection maker returns null !!");
-					listOfMessage.add(new Message(ChatFragment.this
-							.getString(R.string.chat_no_message), ChatFragment.this
-							.getString(R.string.check_connection), "", ""));
-				}
+                Log.e("CVE", "START");
 
-				Log.e("CVE","START");
+                if (listOfMessage != null) {
+                    Log.i(TAG, "count= " + listOfMessage.size());
+                    if (listOfMessage.size() == 0) {
+                        Log.e("CVE", "EMPTY");
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(updateEmpty);
+                    } else {
+                        Log.e("CVE", "OK");
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(returnRes);
+                    }
+                    toEmpty = getString(R.string.chat_no_message);
+                } else {
+                    Log.e("CVE", "CONN");
+                    toEmpty = getString(R.string.check_connection);
+                    getActivity().runOnUiThread(updateEmpty);
+                }
 
-				if (listOfMessage != null) {
-					Log.i(TAG, "count= " + listOfMessage.size());
-					if (listOfMessage.size() == 0) {
-						Log.e("CVE","EMPTY");
-						if (getActivity() != null)
-							getActivity().runOnUiThread(updateEmpty);
-					} else {
-						Log.e("CVE","OK");
-						if (getActivity() != null)
-							getActivity().runOnUiThread(returnRes);
-					}
-					toEmpty = getString(R.string.chat_no_message);
-				} else {
-					Log.e("CVE","CONN");
-					toEmpty = getString(R.string.check_connection);
-					getActivity().runOnUiThread(updateEmpty);
-				}
-			}
-		});
-	}
+                if (listOfMessage != null && listOfMessage.size() > 0)
+                    if (getActivity() instanceof InfoTrainActivity)
+                        ((InfoTrainActivity) getActivity()).setChatBadge(listOfMessage.size());
+            }
+        });
+    }
 
-	private Runnable returnRes = new Runnable() {
+    private Runnable returnRes = new Runnable() {
 
-		public void run() {
-			MessageAdapter adapter = new MessageAdapter(getActivity(),
-					R.layout.row_message, listOfMessage);
-			setListAdapter(adapter);
-		}
+        public void run() {
+            MessageAdapter adapter = new MessageAdapter(getActivity(),
+                    R.layout.row_message, listOfMessage);
+            setListAdapter(adapter);
+        }
 
-	};
-	private Runnable updateEmpty = new Runnable() {
+    };
+    private Runnable updateEmpty = new Runnable() {
 
-		public void run() {
-			TextView messagesEmpty = (TextView) getView().findViewById(
-					android.R.id.empty);
-			messagesEmpty.setText(toEmpty);
-		}
+        public void run() {
+            TextView messagesEmpty = (TextView) getView().findViewById(
+                    android.R.id.empty);
+            messagesEmpty.setText(toEmpty);
+        }
 
-	};
+    };
 
-	public void onResume() {
-		super.onResume();
-		Log.i("BETRAINS", "train ID= " + trainId);
-		if (trainId != null)
-			mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
-					getActivity()).getString("prefPseudo", "Anonymous")
-					+ " - " + trainId);
-		else
-			mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
-					getActivity()).getString("prefPseudo", "Anonymous"));
+    public void onResume() {
+        super.onResume();
+        Log.i("BETRAINS", "train ID= " + trainId);
+        if (trainId != null)
+            mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
+                    getActivity()).getString("prefPseudo", "Anonymous")
+                    + " - " + trainId);
+        else
+            mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
+                    getActivity()).getString("prefPseudo", "Anonymous"));
 
-		LinearLayout mSendLayout = (LinearLayout) getView().findViewById(
-				R.id.send_layout);
+        LinearLayout mSendLayout = (LinearLayout) getView().findViewById(
+                R.id.send_layout);
 
-		if (trainId == null) {
-			mSendLayout.setVisibility(View.GONE);
-		}
+        if (trainId == null) {
+            mSendLayout.setVisibility(View.GONE);
+        }
 
         update();
-	}
+    }
 
-	@Override
-	public void onListItemClick(ListView l, final View v, final int position,
-			long id) {
-		super.onListItemClick(l, v, position, id);
-		AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-		if (trainId == null) {
-			ad.setTitle(getResources().getString(
-					R.string.chat_open_train_messages,
-					listOfMessage.get(position).gettrain_id()));
-			ad.setPositiveButton(android.R.string.ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int arg1) {
+    @Override
+    public void onListItemClick(ListView l, final View v, final int position,
+                                long id) {
+        super.onListItemClick(l, v, position, id);
+        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+        if (trainId == null) {
+            ad.setTitle(getResources().getString(
+                    R.string.chat_open_train_messages,
+                    listOfMessage.get(position).gettrain_id()));
+            ad.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
 
-							Bundle bundle = new Bundle();
-							bundle.putString(DbAdapterConnection.KEY_NAME,
-									listOfMessage.get(position).gettrain_id());
-							Intent mIntent = new Intent(v.getContext(),
-									ChatActivity.class);
-							mIntent.putExtras(bundle);
-							startActivityForResult(mIntent, 0);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(DbAdapterConnection.KEY_NAME,
+                                    listOfMessage.get(position).gettrain_id());
+                            Intent mIntent = new Intent(v.getContext(),
+                                    ChatActivity.class);
+                            mIntent.putExtras(bundle);
+                            startActivityForResult(mIntent, 0);
 
-						}
-					});
+                        }
+                    });
 
-			ad.setNegativeButton(android.R.string.no,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int arg1) {
+            ad.setNegativeButton(android.R.string.no,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
 
-						}
-					});
-			ad.show();
-		}
+                        }
+                    });
+            ad.show();
+        } else {
+            ad.setTitle(getResources().getString(R.string.chat_open_train_info,
+                    listOfMessage.get(position).gettrain_id()));
+            ad.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
 
-		else {
-			ad.setTitle(getResources().getString(R.string.chat_open_train_info,
-					listOfMessage.get(position).gettrain_id()));
-			ad.setPositiveButton(android.R.string.ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int arg1) {
+                            Intent i = new Intent(getActivity(),
+                                    InfoTrainActivity.class);
 
-							Intent i = new Intent(getActivity(),
-									InfoTrainActivity.class);
+                            i.putExtra(DbAdapterConnection.KEY_NAME,
+                                    listOfMessage.get(position).gettrain_id());
 
-							i.putExtra(DbAdapterConnection.KEY_NAME,
-									listOfMessage.get(position).gettrain_id());
+                            startActivity(i);
 
-							startActivity(i);
+                        }
+                    });
 
-						}
-					});
+            ad.setNegativeButton(android.R.string.no,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
 
-			ad.setNegativeButton(android.R.string.no,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int arg1) {
+                        }
+                    });
+            ad.show();
+        }
+    }
 
-						}
-					});
-			ad.show();
-		}
-	}
+    public static boolean requestPhpSend(String pseudo, String message,
+                                         String trainId) {
+        try {
+            String txt = "";
 
-	public static boolean requestPhpSend(String pseudo, String message,
-			String trainId) {
-		try {
-			String txt = "";
+            // On cree le client
+            HttpClient client = new HttpClient();
 
-			// On cree le client
-			HttpClient client = new HttpClient();
+            HttpClientParams clientParams = new HttpClientParams();
+            clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
+                    "UTF-8");
+            client.setParams(clientParams);
 
-			HttpClientParams clientParams = new HttpClientParams();
-			clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
-					"UTF-8");
-			client.setParams(clientParams);
+            PostMethod methode = new PostMethod(
+                    "http://christophe.frandroid.com/betrains/php/messages.php");
+            // On ajoute les parametres du formulaire
+            methode.addParameter("code",
+                    "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs,
+            // valeur)
+            methode.addParameter("mode", "write");
+            methode.addParameter("train_id", trainId);
+            methode.addParameter("user_message", message);
+            methode.addParameter("user_name", pseudo);
 
-			PostMethod methode = new PostMethod(
-					"http://christophe.frandroid.com/betrains/php/messages.php");
-			// On ajoute les parametres du formulaire
-			methode.addParameter("code",
-					"hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs,
-			// valeur)
-			methode.addParameter("mode", "write");
-			methode.addParameter("train_id", trainId);
-			methode.addParameter("user_message", message);
-			methode.addParameter("user_name", pseudo);
+            // Le buffer qui nous servira a recuperer le code de la page
+            BufferedReader br = null;
+            try {
+                // http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html
+                client.executeMethod(methode);
+                // Pour la gestion des erreurs ou un debuggage, on recupere le
+                // nombre renvoye.
+                // System.out.println("La reponse de executeMethod est : " +
+                // retour);
+                br = new BufferedReader(new InputStreamReader(
+                        methode.getResponseBodyAsStream()));
+                String readLine;
 
-			// Le buffer qui nous servira a recuperer le code de la page
-			BufferedReader br = null;
-			try {
-				// http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html
-				client.executeMethod(methode);
-				// Pour la gestion des erreurs ou un debuggage, on recupere le
-				// nombre renvoye.
-				// System.out.println("La reponse de executeMethod est : " +
-				// retour);
-				br = new BufferedReader(new InputStreamReader(
-						methode.getResponseBodyAsStream()));
-				String readLine;
+                // Tant que la ligne en cours n'est pas vide
+                while (((readLine = br.readLine()) != null)) {
+                    txt += readLine;
+                }
+            } catch (Exception e) {
+                System.err.println(e); // erreur possible de executeMethod
+                e.printStackTrace();
+            } finally {
+                // On ferme la connexion
+                methode.releaseConnection();
+                if (br != null) {
+                    try {
+                        br.close(); // on ferme le buffer
+                    } catch (Exception e) { /* on fait rien */
+                    }
+                }
+            }
 
-				// Tant que la ligne en cours n'est pas vide
-				while (((readLine = br.readLine()) != null)) {
-					txt += readLine;
-				}
-			} catch (Exception e) {
-				System.err.println(e); // erreur possible de executeMethod
-				e.printStackTrace();
-			} finally {
-				// On ferme la connexion
-				methode.releaseConnection();
-				if (br != null) {
-					try {
-						br.close(); // on ferme le buffer
-					} catch (Exception e) { /* on fait rien */
-					}
-				}
-			}
+            return txt.contains("true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-			return txt.contains("true");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(Menu.NONE, MENU_FILTER, Menu.NONE, "Filter")
+                .setIcon(R.drawable.ic_menu_search)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+    }
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, MENU_FILTER, Menu.NONE, "Filter")
-				.setIcon(R.drawable.ic_menu_search)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_FILTER:
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_FILTER:
-			AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setTitle(R.string.chat_action_filter);
+                alert.setMessage(R.string.chat_filter_message);
 
-			alert.setTitle(R.string.chat_action_filter);
-			alert.setMessage(R.string.chat_filter_message);
+                // Set an EditText view to get user input
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                alert.setView(input);
 
-			// Set an EditText view to get user input
-			final EditText input = new EditText(getActivity());
-			input.setInputType(InputType.TYPE_CLASS_NUMBER);
-			alert.setView(input);
+                alert.setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                total = 5;
 
-			alert.setPositiveButton(R.string.ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							total = 5;
+                                Bundle bundle = new Bundle();
+                                bundle.putString(DbAdapterConnection.KEY_NAME,
+                                        input.getText().toString());
+                                Intent mIntent = new Intent(getActivity(),
+                                        ChatActivity.class);
+                                mIntent.putExtras(bundle);
+                                startActivity(mIntent);
 
-							Bundle bundle = new Bundle();
-							bundle.putString(DbAdapterConnection.KEY_NAME,
-									input.getText().toString());
-							Intent mIntent = new Intent(getActivity(),
-									ChatActivity.class);
-							mIntent.putExtras(bundle);
-							startActivity(mIntent);
+                            }
+                        });
 
-						}
-					});
+                alert.setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                            }
+                        });
 
-			alert.setNegativeButton(R.string.cancel,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-						}
-					});
-
-			alert.show();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+                alert.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

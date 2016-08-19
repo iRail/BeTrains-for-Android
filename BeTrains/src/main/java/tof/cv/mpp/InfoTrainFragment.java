@@ -70,7 +70,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     private Vehicle currentVehicle;
     private TextView mMessageText;
     private String fromTo;
-    String id;
+    String id = null;
     private long timestamp;
     GoogleMap myMap;
     RecyclerView recyclerView;
@@ -122,6 +122,9 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         registerForContextMenu(recyclerView);
+
+        if (id != null)
+            displayInfo(id, fromTo, timestamp);
     }
 
     public void displayInfoFromMemory(final String fileName, final String vehicle) {
@@ -148,6 +151,15 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                     Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
+    }
+
+    public void setInfo(String vehicle, String fromTo, long timestamp) {
+        this.id = vehicle;
+        this.fromTo = fromTo;
+        if (timestamp != 0)
+            this.timestamp = timestamp;
+        else
+            this.timestamp = System.currentTimeMillis();
     }
 
     public void displayInfo(String vehicle, String fromTo, long timestamp) {
@@ -284,7 +296,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                           .getVehicleStops().getVehicleStop(), getActivity());
                                                   recyclerView.setAdapter(trainInfoAdapter);
 
-                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentVehicle.getVehicleInfo().name + " - " + Utils.formatDate(new Date(timestamp), "HH:mm"));
+                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
                                                   PolylineOptions rectOptions = new PolylineOptions();
 
                                                   double minLat = 90;
@@ -402,9 +414,10 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         menu.add(Menu.NONE, 4, Menu.NONE, R.string.activity_label_compensation)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, 3, Menu.NONE, R.string.nav_drawer_chat)
-                .setIcon(R.drawable.ic_menu_start_conversation)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if (!(getActivity() instanceof InfoTrainActivity))
+            menu.add(Menu.NONE, 3, Menu.NONE, R.string.nav_drawer_chat)
+                    .setIcon(R.drawable.ic_menu_start_conversation)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     }
 
     @Override
@@ -579,4 +592,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
         myMap.getUiSettings().setScrollGesturesEnabled(false);
     }
+
+
 }
