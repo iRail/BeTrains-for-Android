@@ -4,6 +4,7 @@ package tof.cv.mpp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
@@ -27,6 +30,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import android.Manifest;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.common.ConnectionResult;
@@ -104,7 +109,7 @@ public class GameFragment extends BaseGameFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
         //this.getActivity().getActionBar().setIcon(R.drawable.ic_game);
 
         ViewPager pager = (ViewPager) getView().findViewById(R.id.pager);
@@ -136,8 +141,14 @@ public class GameFragment extends BaseGameFragment implements
 
         }
 
-        me = Utils.getLastLoc(this.getActivity());
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        try {
+            me = Utils.getLastLoc(this.getActivity());
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        } catch (SecurityException e) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    0);
+        }
 
         setHasOptionsMenu(true);
 
@@ -151,6 +162,26 @@ public class GameFragment extends BaseGameFragment implements
         else
             beginUserInitiatedSignIn();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            switch (requestCode) {
+                case 0: {
+                    me = Utils.getLastLoc(this.getActivity());
+                    locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+                    if (isSignedIn())
+                        setupOk();
+                    else
+                        beginUserInitiatedSignIn();
+                    return;
+                }
+            }
+        return;
     }
 
 
@@ -181,7 +212,8 @@ public class GameFragment extends BaseGameFragment implements
     public void onPause() {
         super.onPause();
         Crouton.cancelAllCroutons();
-        locationManager.removeUpdates(this);
+        if (locationManager != null)
+            locationManager.removeUpdates(this);
     }
 
 
@@ -189,7 +221,8 @@ public class GameFragment extends BaseGameFragment implements
     public void onResume() {
         super.onResume();
         try {//Some devices have no GPS
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * DateUtils.SECOND_IN_MILLIS, 10, this);
+            if (locationManager != null)
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * DateUtils.SECOND_IN_MILLIS, 10, this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -202,7 +235,7 @@ public class GameFragment extends BaseGameFragment implements
                 Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
         if (!provider.contains(LocationManager.GPS_PROVIDER)) {
-            crouton = Crouton.makeText(getActivity(), R.string.game_err_gps, Style.ALERT,R.id.pager).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
+            crouton = Crouton.makeText(getActivity(), R.string.game_err_gps, Style.ALERT, R.id.pager).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
             crouton.show();
         }
     }
@@ -348,7 +381,7 @@ public class GameFragment extends BaseGameFragment implements
     private String station3;
 
     public void setupClosest() {
-        Log.e("CVE","CLOSEST");
+        Log.e("CVE", "CLOSEST");
         try {
 
             for (StationList.Stationinfo aStation : list.station) {
@@ -374,7 +407,7 @@ public class GameFragment extends BaseGameFragment implements
             l = getView().findViewById(R.id.closest2Layout);
             ((TextView) l.findViewById(R.id.closestTitle)).setText(stationinfo
                     .getStation());
-            ((TextView)l.findViewById(R.id.closestDesc))
+            ((TextView) l.findViewById(R.id.closestDesc))
                     .setText(stationinfo.getDistance());
             station2 = stationinfo.getStation();
             setupLayout(stationinfo, R.id.closest2Layout);
@@ -545,14 +578,15 @@ public class GameFragment extends BaseGameFragment implements
         /*new DisplayPointsTask(station,)
                 .execute();*/
 
-        final LinearLayout ll =  ((LinearLayout) getView().findViewById(id));
+        final LinearLayout ll = ((LinearLayout) getView().findViewById(id));
 
         String url = "http://api.irail.be/liveboard.php/?station="
                 + station.getStation().replace(" ", "%20") + "&format=JSON&fast=true";
-        Ion.with(getActivity()).load(url).as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
+        Ion.with(getActivity()).load(url).as(new TypeToken<Station>() {
+        }).setCallback(new FutureCallback<Station>() {
             @Override
             public void onCompleted(Exception e, Station result) {
-               Station.StationDepartures stationDepartures = result.getStationDepartures();
+                Station.StationDepartures stationDepartures = result.getStationDepartures();
                 int delay = 0;
                 int num = 1;
                 if (stationDepartures != null)
@@ -626,6 +660,6 @@ public class GameFragment extends BaseGameFragment implements
     }
 
     public void crouton(String text, Style style) {
-        Crouton.makeText(this.getActivity(), text, style,R.id.my_awesome_toolbar).show();
+        Crouton.makeText(this.getActivity(), text, style, R.id.my_awesome_toolbar).show();
     }
 }
