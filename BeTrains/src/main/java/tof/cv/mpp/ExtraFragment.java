@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 
 public class ExtraFragment extends Fragment {
 	
@@ -22,5 +25,10 @@ public class ExtraFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		//getActivity().getActionBar().setIcon(R.drawable.ab_irail);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+
+		final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+		if ((!(status == ConnectionResult.SUCCESS)) && getView().findViewById(R.id.irail) != null) {
+			getView().findViewById(R.id.irail).setVisibility(View.GONE);
+		}
 	}
 }

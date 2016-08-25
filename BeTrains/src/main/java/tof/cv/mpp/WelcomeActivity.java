@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,11 +22,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import java.util.Random;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     private Fragment mContent;
     public DrawerLayout drawerLayout = null;
-
+    NavigationView navigationView;
     String close;
     /**
      * Called when the activity is first created.
@@ -49,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         navigationView.getMenu().clear();
@@ -116,9 +120,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
                 // This method will trigger on item Click of navigation menu
                 @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                public boolean onNavigationItemSelected(final MenuItem menuItem) {
 
-                    menuItem.setChecked(true);
+                    //menuItem.setChecked(true);
 
                     if (drawerLayout != null)
                         drawerLayout.closeDrawers();
@@ -157,10 +161,24 @@ public class WelcomeActivity extends AppCompatActivity {
                             break;
                     }
 
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, mContent).commit();
-                    navigationView.clearFocus();
-                    navigationView.requestFocus();
+                    //getSupportFragmentManager().beginTransaction()
+                    //        .replace(R.id.content_frame, mContent).commit();
+
+                   /*
+                    // Log.e("CVE","Hum " + navigationView.hasFocus());
+                    Log.e("CVE","pos " + menuItem.getItemId());
+                    // This is one of the dirtiest hack I made recently. I am not proud of it. Shame
+                    // But in an other hand, the Navigation Drawer should not lose focus on tablets
+                    // Or it should keep it if I call requestFocus() without delay...
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            navigationView.clearFocus();
+                            navigationView.requestFocus();
+                        }
+                    }, 500);*/
+
                     return true;
                 }
             });

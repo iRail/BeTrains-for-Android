@@ -25,6 +25,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -91,9 +96,9 @@ public class ChatFragment extends ListFragment {
                 R.id.yourmessage);
 
         setBtnSettingsListener();
-        setBtnMoreListener();
+        //setBtnMoreListener();
         setBtnSendListener();
-        Log.i("", "Created " + trainId);
+      //  Log.i("", "Created " + trainId);
         update();
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
@@ -150,7 +155,7 @@ public class ChatFragment extends ListFragment {
                     }
                 });
 
-                if (requestPhpSend(pseudo,
+                if (sendMessage(pseudo,
                         messageTxtField.getText().toString(), trainId)) {
 
                     toTast = getString(android.R.string.ok);
@@ -184,7 +189,7 @@ public class ChatFragment extends ListFragment {
         }
     };
 
-    private void setBtnMoreListener() {
+    /*private void setBtnMoreListener() {
         btnMore.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 total += 5;
@@ -192,7 +197,7 @@ public class ChatFragment extends ListFragment {
             }
         });
 
-    }
+    }*/
 
     private void setBtnSettingsListener() {
         btnSettings.setOnClickListener(new Button.OnClickListener() {
@@ -224,7 +229,7 @@ public class ChatFragment extends ListFragment {
                 // TODO: USE XML PARSER
                 listOfMessage.clear();
                 if (txt != null && !txt.equals("")) {
-                    Log.e("CVE", txt);
+                   // Log.e("CVE", txt);
                     String[] messages = txt.split("<message>");
 
                     int i = 1;
@@ -237,8 +242,8 @@ public class ChatFragment extends ListFragment {
                                         params[j].indexOf("]"));
 
                             }
-                            Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
-                                    + params[3] + " " + params[4]);
+                          //  Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
+                          //          + params[3] + " " + params[4]);
                             listOfMessage.add(new Message(params[1], params[2],
                                     params[3], params[4]));
                             i++;
@@ -247,17 +252,17 @@ public class ChatFragment extends ListFragment {
                     }
 
                 } else {
-                    Log.e("CVE", "NULL");
+//                    Log.e("CVE", "NULL");
                     System.out.println("function in connection maker returns null !!");
                     listOfMessage.add(new Message(ChatFragment.this
                             .getString(R.string.chat_no_message), ChatFragment.this
                             .getString(R.string.check_connection), "", ""));
                 }
 
-                Log.e("CVE", "START");
+              //  Log.e("CVE", "START");
 
                 if (listOfMessage != null) {
-                    Log.i(TAG, "count= " + listOfMessage.size());
+                  //  Log.i(TAG, "count= " + listOfMessage.size());
                     if (listOfMessage.size() == 0) {
                         Log.e("CVE", "EMPTY");
                         if (getActivity() != null)
@@ -280,6 +285,35 @@ public class ChatFragment extends ListFragment {
             }
         });
     }
+/*
+    public void updateMessageList() {
+        listOfMessage.clear();
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference chat = database.getReference("chat");
+        DatabaseReference trainChat = chat.child(trainId);
+        Log.e("CVE", "**** ref: " + trainChat.toString());
+
+        trainChat.setValue("testCVE", "Woot");
+        trainChat.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("CVE", "**** value: " + dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Log.e("CVE", "START");
+
+
+        if (getActivity() != null)
+            getActivity().runOnUiThread(returnRes);
+
+    }*/
 
     private Runnable returnRes = new Runnable() {
 
@@ -379,9 +413,9 @@ public class ChatFragment extends ListFragment {
             ad.show();
         }
     }
-
+/*
     public static boolean requestPhpSend(String pseudo, String message,
-                                         String trainId) {
+                                           String trainId) {
         try {
             String txt = "";
 
@@ -430,7 +464,7 @@ public class ChatFragment extends ListFragment {
                 if (br != null) {
                     try {
                         br.close(); // on ferme le buffer
-                    } catch (Exception e) { /* on fait rien */
+                    } catch (Exception e) {
                     }
                 }
             }
@@ -440,6 +474,17 @@ public class ChatFragment extends ListFragment {
             e.printStackTrace();
             return false;
         }
+    }*/
+
+    public static boolean sendMessage(String pseudo, String message,
+                                      String trainId) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference chat = database.getReference("chat");
+        DatabaseReference trainChat = chat.child(trainId);
+
+
+        return true;
     }
 
     @Override

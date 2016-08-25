@@ -33,6 +33,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -96,6 +98,12 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
+
+        final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+
+        if ((!(status == ConnectionResult.SUCCESS)) && getView().findViewById(R.id.mapContainer) != null) {
+            getView().findViewById(R.id.mapContainer).setVisibility(View.GONE);
+        }
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -296,7 +304,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                           .getVehicleStops().getVehicleStop(), getActivity());
                                                   recyclerView.setAdapter(trainInfoAdapter);
 
-                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
+                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
                                                   PolylineOptions rectOptions = new PolylineOptions();
 
                                                   double minLat = 90;

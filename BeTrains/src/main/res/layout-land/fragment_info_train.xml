@@ -5,12 +5,12 @@
     xmlns:map="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-
+    android:id="@+id/root"
     android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:id="@+id/root"
+        android:id="@+id/mapContainer"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
@@ -50,14 +50,13 @@
         <android.support.v7.widget.RecyclerView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1" />
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:id="@android:id/empty"
-            android:layout_width="fill_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 

@@ -10,7 +10,6 @@
         app:itemIconTint="@color/state_list"
         android:layout_width="@dimen/drawer_size"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav" />
 

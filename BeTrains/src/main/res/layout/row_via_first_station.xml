@@ -5,6 +5,7 @@
     android:background="@android:drawable/list_selector_background"
     android:orientation="vertical"
     android:layout_gravity="left"
+    android:clickable="true"
     android:paddingBottom="6dip"
     android:paddingRight="6dip"
     android:paddingTop="6dip" >

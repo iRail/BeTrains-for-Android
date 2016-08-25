@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 public class InfoTrainActivity extends AppCompatActivity {
 
@@ -50,6 +53,12 @@ public class InfoTrainActivity extends AppCompatActivity {
 
 
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+
+        final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+        if ((!(status == ConnectionResult.SUCCESS)) &&bottomNavigation != null) {
+            bottomNavigation.setVisibility(View.GONE);
+        }
 
         if (bottomNavigation != null) {
 
@@ -91,6 +100,24 @@ public class InfoTrainActivity extends AppCompatActivity {
                     // Manage the new y position
                 }
             });
+
+            if(mViewPager!=null)
+                mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        bottomNavigation.setCurrentItem(position);
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
         }
     }
 
