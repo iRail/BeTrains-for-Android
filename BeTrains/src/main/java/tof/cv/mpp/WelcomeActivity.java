@@ -161,8 +161,8 @@ public class WelcomeActivity extends AppCompatActivity {
                             break;
                     }
 
-                    //getSupportFragmentManager().beginTransaction()
-                    //        .replace(R.id.content_frame, mContent).commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_frame, mContent).commit();
 
                    /*
                     // Log.e("CVE","Hum " + navigationView.hasFocus());

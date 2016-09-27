@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     packagingOptions {
@@ -17,53 +17,53 @@ android {
     defaultConfig {
         applicationId "tof.cv.mpp"
         minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 6549
-        versionName "4.549"
+        targetSdkVersion 24
+        versionCode 6550
+        versionName "4.550"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
             minifyEnabled false // new version
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            shrinkResources true
+            shrinkResources false
+            zipAlignEnabled false
         }
     }
 
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {
 
+    ext.googleVersion = '24.2.1'
+    ext.googlePlayVersion = '9.6.0'
 
     compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
         // exclusion is not necessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
     }
-    compile 'com.google.firebase:firebase-core:9.4.0'
-    compile 'com.google.firebase:firebase-database:9.4.0'
 
-    compile 'com.android.support:design:23.0.0'
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:cardview-v7:23.0.0'
-    compile 'commons-httpclient:commons-httpclient:3.1'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.google.android.gms:play-services-games:9.4.0'
-    compile 'com.google.android.gms:play-services-plus:9.4.0'
-    compile 'com.google.android.gms:play-services-maps:9.4.0'
-    compile 'com.google.android.gms:play-services-location:9.4.0'
-    compile 'com.squareup.picasso:picasso:2.1.1'
-    compile 'com.etsy.android.grid:library:1.0.4'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
-    compile 'com.koushikdutta.ion:ion:2.1.8'
-    compile 'com.android.support:support-v4:23.0.0'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
-    compile 'com.aurelhubert:ahbottomnavigation:1.3.3'
+    compile "com.android.support:design:$googleVersion"
+    compile "com.android.support:appcompat-v7:$googleVersion"
+    compile "com.android.support:cardview-v7:$googleVersion"
+    compile "com.android.support:support-v4:$googleVersion"
+    compile "com.android.support:recyclerview-v7:$googleVersion"
+
+    compile "com.google.android.gms:play-services-games:$googlePlayVersion"
+    compile "com.google.android.gms:play-services-plus:$googlePlayVersion"
+    compile "com.google.android.gms:play-services-maps:$googlePlayVersion"
+    compile "com.google.android.gms:play-services-location:$googlePlayVersion"
+
+    compile "com.google.code.gson:gson:2.4"
+
+    compile "com.squareup.picasso:picasso:2.1.1"
+    compile "com.etsy.android.grid:library:1.0.4"
+    compile "com.astuetz:pagerslidingtabstrip:1.0.1"
+    compile "com.readystatesoftware.systembartint:systembartint:1.0.3"
+    compile "com.github.castorflex.smoothprogressbar:library:1.0.0"
+    compile "com.koushikdutta.ion:ion:2.1.8"
+    compile "com.aurelhubert:ahbottomnavigation:1.3.3"
 }
-
-apply plugin: 'com.google.gms.google-services'

@@ -35,6 +35,8 @@ import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -523,15 +525,32 @@ public class PlannerFragment extends ListFragment {
         if (month.contentEquals("13"))
             month = "01";
 
-        String url = "http://api.irail.be/connections.php?to="
-                // String url = "http://dev.api.irail.be/connections.php?to="
-                + myArrival + "&from=" + myStart + "&date=" + day + month
-                + year + "&time=" + hour + minutes + "&timeSel="
-                + dA + "&lang=" + langue
-                + "&typeOfTransport=train&format=json&fast=true&alerts=true";
+        String url = "";
+        // String url = "http://dev.api.irail.be/connections.php?to="
+
+        try {
+            url = URLEncoder.encode(myArrival, "UTF-8") + "&from=" + URLEncoder.encode(myStart, "UTF-8") + "&date=" + day + month
+                    + year + "&time=" + hour + minutes + "&timeSel="
+                    + dA + "&lang=" + langue
+                    + "&typeOfTransport=train&format=json&fast=true&alerts=true";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            url = myArrival + "&from=" + myStart + "&date=" + day + month
+                    + year + "&time=" + hour + minutes + "&timeSel="
+                    + dA + "&lang=" + langue
+                    + "&typeOfTransport=train&format=json&fast=true&alerts=true";
+        }
+
+
+
         url = url.replace(" ", "%20");
+
+
+        url = "https://api.irail.be/connections.php?to=" + url;
+
         Log.v(TAG, url);
 
+        final String finalUrl = url;
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
         }).setCallback(new FutureCallback<Connections>() {
             @Override
@@ -542,13 +561,26 @@ public class PlannerFragment extends ListFragment {
                 if (allConnections == null) {
                     //Log.e(TAG, "API failure!!!");
                     if (getActivity() != null)
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
 
-                                    Toast.makeText(getActivity(), R.string.txt_error,
-                                            Toast.LENGTH_LONG).show();
+                        Ion.with(PlannerFragment.this).load(finalUrl).asString().setCallback(new FutureCallback<String>() {
+                            @Override
+                            public void onCompleted(Exception e, String result) {
+                                Toast.makeText(getActivity(), result,
+                                        Toast.LENGTH_LONG).show();
+
+                                Log.e("CVE", "=> " + result);
                             }
                         });
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            Toast.makeText(getActivity(), R.string.txt_error,
+                                    Toast.LENGTH_LONG).show();
+
+
+                        }
+                    });
 
                 }
 

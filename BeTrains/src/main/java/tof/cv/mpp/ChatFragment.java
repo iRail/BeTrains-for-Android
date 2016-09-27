@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -25,23 +26,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.async.http.body.StringPart;
 import com.koushikdutta.ion.Ion;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
@@ -155,21 +146,8 @@ public class ChatFragment extends ListFragment {
                     }
                 });
 
-                if (sendMessage(pseudo,
-                        messageTxtField.getText().toString(), trainId)) {
-
-                    toTast = getString(android.R.string.ok);
-                    getActivity().runOnUiThread(displayToast);
-                    try {
-                        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("chatUnlock", true).commit();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    posted = true;
-                } else
-                    toTast = "Problem";
-                getActivity().runOnUiThread(displayToast);
-                getActivity().runOnUiThread(dismissPd);
+                requestPhpSend(pseudo,
+                        messageTxtField.getText().toString(), trainId,getActivity());
             }
         };
 
@@ -413,12 +391,39 @@ public class ChatFragment extends ListFragment {
             ad.show();
         }
     }
-/*
-    public static boolean requestPhpSend(String pseudo, String message,
-                                           String trainId) {
+
+    public boolean requestPhpSend(String pseudo, String message,
+                                           String trainId,FragmentActivity a) {
         try {
             String txt = "";
 
+            List params = new ArrayList();
+            params.add(new StringPart("code",
+                    "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
+            params.add(new StringPart("mode", "write"));
+            params.add(new StringPart("train_id", trainId));
+            params.add(new StringPart("user_message", message));
+            params.add(new StringPart("user_name", pseudo));
+
+            Ion.with(a).load("http://christophe.frandroid.com/betrains/php/messages.php").addMultipartParts(params).asString().setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String result) {
+                    if (result.contains("true")) {
+
+                        toTast = getString(android.R.string.ok);
+                       getActivity().runOnUiThread(displayToast);
+                        try {
+                            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("chatUnlock", true).commit();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                        posted = true;
+                    } else
+                        toTast = "Problem";
+                }
+            });
+
+/*
             // On cree le client
             HttpClient client = new HttpClient();
 
@@ -430,13 +435,13 @@ public class ChatFragment extends ListFragment {
             PostMethod methode = new PostMethod(
                     "http://christophe.frandroid.com/betrains/php/messages.php");
             // On ajoute les parametres du formulaire
-            methode.addParameter("code",
-                    "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"); // (champs,
+
+            methode.addParameter(); // (champs,
             // valeur)
-            methode.addParameter("mode", "write");
-            methode.addParameter("train_id", trainId);
-            methode.addParameter("user_message", message);
-            methode.addParameter("user_name", pseudo);
+            methode.addParameter();
+            methode.addParameter();
+            methode.addParameter();
+            methode.addParameter();
 
             // Le buffer qui nous servira a recuperer le code de la page
             BufferedReader br = null;
@@ -468,15 +473,15 @@ public class ChatFragment extends ListFragment {
                     }
                 }
             }
-
+*/
             return txt.contains("true");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-    }*/
+    }
 
-    public static boolean sendMessage(String pseudo, String message,
+  /*  public static boolean sendMessage(String pseudo, String message,
                                       String trainId) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -485,7 +490,7 @@ public class ChatFragment extends ListFragment {
 
 
         return true;
-    }
+    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
