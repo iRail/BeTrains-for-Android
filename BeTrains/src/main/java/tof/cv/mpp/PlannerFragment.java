@@ -551,7 +551,7 @@ public class PlannerFragment extends ListFragment {
         Log.v(TAG, url);
 
         final String finalUrl = url;
-        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
+        Ion.with(this).load(url).setTimeout(4500).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
         }).setCallback(new FutureCallback<Connections>() {
             @Override
             public void onCompleted(Exception e, Connections result) {
@@ -562,26 +562,12 @@ public class PlannerFragment extends ListFragment {
                     //Log.e(TAG, "API failure!!!");
                     if (getActivity() != null)
 
-                        Ion.with(PlannerFragment.this).load(finalUrl).asString().setCallback(new FutureCallback<String>() {
-                            @Override
-                            public void onCompleted(Exception e, String result) {
-                                Toast.makeText(getActivity(), result,
-                                        Toast.LENGTH_LONG).show();
-
-                                Log.e("CVE", "=> " + result);
-                            }
-                        });
-
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
-
                             Toast.makeText(getActivity(), R.string.txt_error,
                                     Toast.LENGTH_LONG).show();
-
-
                         }
                     });
-
                 }
 
                 try {

@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/tiptitle"
-            style="@android:style/TextAppearance.Large"
+            style="@android:style/TextAppearance.Medium"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -30,7 +30,6 @@
 
         <TextView
             android:id="@+id/tiptext"
-            style="@android:style/TextAppearance.Medium"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/darkblue" />

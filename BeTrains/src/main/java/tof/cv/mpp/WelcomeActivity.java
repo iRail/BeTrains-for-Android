@@ -2,11 +2,14 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.database.Cursor;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -22,7 +24,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.util.Random;
+import java.util.Arrays;
+
+import tof.cv.mpp.Utils.DbAdapterConnection;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -39,6 +43,73 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            DbAdapterConnection mDbHelper = new DbAdapterConnection(this);
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+            shortcutManager.removeAllDynamicShortcuts();
+            mDbHelper.open();
+            Cursor mCursor = mDbHelper.fetchAllFav();
+            try {
+                while (mCursor.moveToNext()) {
+                    String item = mCursor.getString(mCursor
+                            .getColumnIndex(DbAdapterConnection.KEY_FAV_NAME));
+                    String itemTwo = mCursor.getString(mCursor
+                            .getColumnIndex(DbAdapterConnection.KEY_FAV_NAMETWO));
+                    int type = mCursor.getInt(mCursor
+                            .getColumnIndex(DbAdapterConnection.KEY_FAV_TYPE));
+                    ShortcutInfo shortcut = null;
+                    Intent i;
+                    switch (type) {
+                        case 1:
+                            i = new Intent(this, InfoStationActivity.class);
+                            i.putExtra("Name", item);
+                            i.putExtra("ID", itemTwo);
+
+                            shortcut = new ShortcutInfo.Builder(this, itemTwo)
+                                    .setShortLabel(item)
+                                    .setLongLabel(item + " - " + itemTwo)
+                                    .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_station))
+                                    .setIntent(i.setAction(""))
+                                    .build();
+                            break;
+                        case 2:
+                            i = new Intent(this, InfoTrainActivity.class);
+                            i.putExtra("Name", item);
+
+                            shortcut = new ShortcutInfo.Builder(this, item)
+                                    .setShortLabel(item)
+                                    .setLongLabel(item)
+                                    .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_train))
+                                    .setIntent(i.setAction(""))
+                                    .build();
+                            break;
+                        case 3:
+                            i = new Intent(this, WelcomeActivity.class);
+                            i.putExtra("Departure", item);
+                            i.putExtra("Arrival", itemTwo);
+
+                            shortcut = new ShortcutInfo.Builder(this, item + " - " + itemTwo)
+                                    .setShortLabel(item + " - " + itemTwo)
+                                    .setLongLabel(item + " - " + itemTwo)
+                                    .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_map))
+                                    //.setIntent(i)
+                                    .setIntent(i.setAction(""))
+                                    .build();
+                            break;
+                    }
+
+                    if (shortcut != null)
+                        shortcutManager.addDynamicShortcuts(Arrays.asList(shortcut));
+                }
+            } finally {
+                mCursor.close();
+            }
+
+
+            mDbHelper.close();
+        }
+
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);

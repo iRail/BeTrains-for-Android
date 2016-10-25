@@ -215,12 +215,13 @@ public class StationPickerActivity extends ActionBarActivity implements
                 if (delta > 10 * DateUtils.DAY_IN_MILLIS || !finalLangue.contentEquals(mPrefs.getString("stationsLan", ""))) {
 
                     Ion.with(getActivity())
-                            .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue)
+                            .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
                             .as(new TypeToken<StationLocationApi>() {
                             })
                             .setCallback(new FutureCallback<StationLocationApi>() {
                                 @Override
                                 public void onCompleted(Exception e, StationLocationApi apiList) {
+                                    Log.e("CVE"+apiList,""+apiList);
                                     if (apiList != null && apiList.station != null) {
                                         SharedPreferences.Editor ed = mPrefs.edit();
                                         Gson gson = new Gson();
@@ -234,7 +235,7 @@ public class StationPickerActivity extends ActionBarActivity implements
                 }
             } else
                 Ion.with(getActivity())
-                        .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue)
+                        .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
                                 .as(new TypeToken<StationLocationApi>() {
                                 })
                                 .setCallback(new FutureCallback<StationLocationApi>() {
@@ -242,6 +243,8 @@ public class StationPickerActivity extends ActionBarActivity implements
                                     public void onCompleted(Exception e, StationLocationApi apiList) {
                                         if (e != null && e.getMessage() != null)
                                             Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG);
+
+                                        Log.e("CVE"+apiList,""+apiList);
 
                                         if (apiList != null && apiList.station != null) {
                                             SharedPreferences.Editor ed = mPrefs.edit();
@@ -253,6 +256,8 @@ public class StationPickerActivity extends ActionBarActivity implements
 
                                             stationList = apiList.station;
                                         }
+                                        else
+
                                         refreshList(finalLangue.contentEquals("en"));
                                     }
                                 });
