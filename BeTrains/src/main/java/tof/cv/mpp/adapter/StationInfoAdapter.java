@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Alert;
+import tof.cv.mpp.bo.Occupancy;
 import tof.cv.mpp.bo.Station;
 
 public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
@@ -40,6 +41,7 @@ public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
             TextView station = (TextView) v.findViewById(R.id.tv_station);
             TextView train = (TextView) v.findViewById(R.id.tv_train);
             ImageView alert = (ImageView) v.findViewById(R.id.alert);
+            ImageView occupancy = (ImageView) v.findViewById(R.id.occupancy);
 
             if (trainstop.getAlerts() != null && trainstop.getAlerts().getNumber() > 0) {
                 alert.setVisibility(View.VISIBLE);
@@ -72,6 +74,23 @@ public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
                 platform.setText("");
 
             train.setText(Utils.getTrainId(trainstop.getVehicle()));
+
+            switch (trainstop.getOccupancy().getName()) {
+                case Occupancy.HIGH:
+                    occupancy.setImageResource(R.drawable.ic_occupancy_high);
+                    occupancy.setVisibility(View.VISIBLE);
+                    break;
+                case Occupancy.MEDIUM:
+                    occupancy.setImageResource(R.drawable.ic_occupancy_medium);
+                    occupancy.setVisibility(View.VISIBLE);
+                    break;
+                case Occupancy.LOW:
+                    occupancy.setImageResource(R.drawable.ic_occupancy_low);
+                    occupancy.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    occupancy.setVisibility(View.GONE);
+            }
 
         }
         return v;

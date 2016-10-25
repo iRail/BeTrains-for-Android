@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -25,8 +26,8 @@
         android:id="@+id/alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_alert"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_alert" />
 
     <TextView
         android:id="@+id/tv_delay"
@@ -35,20 +36,33 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="6dip"
-        android:text="delay"
+        tools:text="delay"
         android:textColor="#FF0000" />
 
-
-    <TextView
-        android:id="@+id/tv_station"
-        style="@style/TextElementMid"
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Station"
-        android:textColor="@color/darkblue"
-        android:textStyle="bold" />
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_station"
+            style="@style/TextElementMid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/darkblue"
+            android:textStyle="bold"
+            tools:text="Station" />
+    </RelativeLayout>
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/occupancy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        tools:src="@drawable/ic_occupancy_high" />
 
     <TextView
         android:id="@+id/tv_train"
@@ -59,15 +73,18 @@
         android:textColor="@color/darkblue"
         android:textSize="16dip" />
 
-    <TextView
-        android:id="@+id/tv_platform"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:paddingLeft="16dp"
-        android:text="X"
-        android:textColor="@color/lightblue"
-        android:textSize="16dip"
-        android:textStyle="bold" />
 
-</LinearLayout>
+</FrameLayout>
+
+<TextView
+android:id="@+id/tv_platform"
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+android:gravity="center"
+android:paddingLeft="16dp"
+android:text="X"
+android:textColor="@color/lightblue"
+android:textSize="16dip"
+android:textStyle="bold" />
+
+    </LinearLayout>

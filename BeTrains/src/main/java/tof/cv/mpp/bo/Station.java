@@ -99,6 +99,12 @@ public class Station {
 		private String canceled="";
 		PlatformInfo platforminfo;
 
+		public Occupancy getOccupancy() {
+			return occupancy;
+		}
+
+		private Occupancy occupancy;
+
 		public PlatformInfo getPlatforminfo() {
 			return platforminfo;
 		}
