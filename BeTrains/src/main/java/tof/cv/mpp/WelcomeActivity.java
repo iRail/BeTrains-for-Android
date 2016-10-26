@@ -66,7 +66,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             i.putExtra("Name", item);
                             i.putExtra("ID", itemTwo);
 
-                            shortcut = new ShortcutInfo.Builder(this, itemTwo)
+                            shortcut = new ShortcutInfo.Builder(this, itemTwo==null?item:itemTwo)
                                     .setShortLabel(item)
                                     .setLongLabel(item + " - " + itemTwo)
                                     .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_station))
