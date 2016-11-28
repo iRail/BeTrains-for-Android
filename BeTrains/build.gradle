@@ -18,8 +18,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 6553
-        versionName "4.553"
+        versionCode 6554
+        versionName "4.554"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

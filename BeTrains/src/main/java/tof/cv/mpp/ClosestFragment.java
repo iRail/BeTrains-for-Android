@@ -564,8 +564,12 @@ public class ClosestFragment extends ListFragment {
                     .setCallback(new FutureCallback<StationLocationApi>() {
                         @Override
                         public void onCompleted(Exception e, StationLocationApi apiList) {
-                            mDbHelper.open();
 
+                            if(apiList == null || apiList.station == null){
+                                m_ProgressDialog.hide();
+                                return;
+                            }
+                            mDbHelper.open();
                             Log.e("CVE", "SIZE= " + apiList.station.size() + "");
 
                             if (apiList.station.size() > 0)

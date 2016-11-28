@@ -66,12 +66,17 @@ public class WelcomeActivity extends AppCompatActivity {
                             i.putExtra("Name", item);
                             i.putExtra("ID", itemTwo);
 
-                            shortcut = new ShortcutInfo.Builder(this, itemTwo==null?item:itemTwo)
-                                    .setShortLabel(item)
-                                    .setLongLabel(item + " - " + itemTwo)
-                                    .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_station))
-                                    .setIntent(i.setAction(""))
-                                    .build();
+                            try {
+                                shortcut = new ShortcutInfo.Builder(this, itemTwo==null?item:itemTwo)
+                                        .setShortLabel(item)
+                                        .setLongLabel(item + " - " + itemTwo)
+                                        .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_station))
+                                        .setIntent(i.setAction(""))
+                                        .build();
+                            } catch (Exception e) {
+                                //TODO Why is ID null here? To investigate
+                                e.printStackTrace();
+                            }
                             break;
                         case 2:
                             i = new Intent(this, InfoTrainActivity.class);
