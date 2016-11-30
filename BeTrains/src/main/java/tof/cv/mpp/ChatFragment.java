@@ -8,9 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,37 +25,35 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.body.StringPart;
 import com.koushikdutta.ion.Ion;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
-import tof.cv.mpp.adapter.MessageAdapter;
+import tof.cv.mpp.adapter.MessageViewHolder;
 import tof.cv.mpp.bo.Message;
 
-public class ChatFragment extends ListFragment {
+public class ChatFragment extends Fragment {
     /**
      * Called when the activity is first created.
      */
+    FirebaseRecyclerAdapter mFirebaseAdapter;
     private TextView mTitleText;
     private Button btnSettings;
     private Button btnSend;
-    private Button btnMore;
     private EditText messageTxtField;
     private final String TAG = "MessagesTrain.java";
-    private int total = 15;
     private boolean posted = false;
-    private ArrayList<Message> listOfMessage = new ArrayList<Message>();
-    private ProgressDialog progressDialog;
     String trainId;
     private String toTast;
     private String toEmpty;
@@ -79,17 +80,13 @@ public class ChatFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
 
         mTitleText = (TextView) getView().findViewById(R.id.pseudo);
-        // mBodyText = (TextView) findViewById(R.id.messagesblock);
         btnSettings = (Button) getView().findViewById(R.id.settings);
         btnSend = (Button) getView().findViewById(R.id.send);
-        btnMore = (Button) getView().findViewById(R.id.more);
         messageTxtField = (EditText) getView().findViewById(
                 R.id.yourmessage);
 
         setBtnSettingsListener();
-        //setBtnMoreListener();
         setBtnSendListener();
-      //  Log.i("", "Created " + trainId);
         update();
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
@@ -138,16 +135,8 @@ public class ChatFragment extends ListFragment {
         Runnable trainSearch = new Runnable() {
 
             public void run() {
-
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        progressDialog = ProgressDialog.show(getActivity(), "",
-                                getString(R.string.patient), true);
-                    }
-                });
-
                 requestPhpSend(pseudo,
-                        messageTxtField.getText().toString(), trainId,getActivity());
+                        messageTxtField.getText().toString(), trainId, getActivity());
             }
         };
 
@@ -156,26 +145,12 @@ public class ChatFragment extends ListFragment {
 
     }
 
-    private Runnable dismissPd = new Runnable() {
-        public void run() {
-            progressDialog.dismiss();
-        }
-    };
     private Runnable displayToast = new Runnable() {
         public void run() {
             Toast.makeText(getActivity(), toTast, Toast.LENGTH_LONG).show();
         }
     };
 
-    /*private void setBtnMoreListener() {
-        btnMore.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                total += 5;
-                update();
-            }
-        });
-
-    }*/
 
     private void setBtnSettingsListener() {
         btnSettings.setOnClickListener(new Button.OnClickListener() {
@@ -194,123 +169,131 @@ public class ChatFragment extends ListFragment {
     }
 
     public void update() {
-        Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
-                .setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
-                .setBodyParameter("message_count", "" + total)
-                .setBodyParameter("message_index", "" + 0)
-                .setBodyParameter("mode", "read")
-                .setBodyParameter("order", "DESC")
-                .setBodyParameter("train_id", trainId)
-                .asString(Charset.forName("ISO-8859-1")).setCallback(new FutureCallback<String>() {
+        Log.e("CVE", "TRAIN: " + trainId);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
+
+
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
+                MessageViewHolder>(
+                Message.class,
+                R.layout.row_message,
+                MessageViewHolder.class,
+                trainId == null ? ref.limitToLast(99) : ref.orderByChild("train_id")
+                        .equalTo(trainId).limitToLast(99)) {
+
             @Override
-            public void onCompleted(Exception e, String txt) {
-                // TODO: USE XML PARSER
-                listOfMessage.clear();
-                if (txt != null && !txt.equals("")) {
-                   // Log.e("CVE", txt);
-                    String[] messages = txt.split("<message>");
+            protected void populateViewHolder(MessageViewHolder viewHolder,
+                                              final Message message, int position) {
+                viewHolder.getNickname().setText(message.getUser_name());
 
-                    int i = 1;
-                    if (messages.length > 1) {
+                viewHolder.getMessagebody().setText(message.getUser_message());
 
-                        while (i < messages.length) {
-                            String[] params = messages[i].split("CDATA");
-                            for (int j = 1; j < params.length; j++) {
-                                params[j] = params[j].substring(1,
-                                        params[j].indexOf("]"));
+                if (message.getEntry_date().contains(":"))
+                    viewHolder.getTime().setText(message.getEntry_date().substring(0, message.getEntry_date().lastIndexOf(":")));
+                else
+                    viewHolder.getTime().setText(message.getEntry_date());
 
-                            }
-                          //  Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
-                          //          + params[3] + " " + params[4]);
-                            listOfMessage.add(new Message(params[1], params[2],
-                                    params[3], params[4]));
-                            i++;
+                viewHolder.getTrainid().setText(message.getTrain_id());
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                        if (trainId == null) {
+                            ad.setTitle(getResources().getString(
+                                    R.string.chat_open_train_messages,
+                                    message.getTrain_id()));
+                            ad.setPositiveButton(android.R.string.ok,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int arg1) {
+
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(DbAdapterConnection.KEY_NAME,
+                                                    message.getTrain_id());
+                                            Intent mIntent = new Intent(getContext(),
+                                                    ChatActivity.class);
+                                            mIntent.putExtras(bundle);
+                                            startActivityForResult(mIntent, 0);
+
+                                        }
+                                    });
+
+                            ad.setNegativeButton(android.R.string.no,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int arg1) {
+
+                                        }
+                                    });
+                            ad.show();
+                        } else {
+                            ad.setTitle(getResources().getString(R.string.chat_open_train_info,
+                                    message.getTrain_id()));
+                            ad.setPositiveButton(android.R.string.ok,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int arg1) {
+
+                                            Intent i = new Intent(getActivity(),
+                                                    InfoTrainActivity.class);
+
+                                            i.putExtra(DbAdapterConnection.KEY_NAME,
+                                                    message.getTrain_id());
+
+                                            startActivity(i);
+
+                                        }
+                                    });
+
+                            ad.setNegativeButton(android.R.string.no,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int arg1) {
+
+                                        }
+                                    });
+                            ad.show();
                         }
-
                     }
+                });
+            }
+        };
 
-                } else {
-//                    Log.e("CVE", "NULL");
-                    System.out.println("function in connection maker returns null !!");
-                    listOfMessage.add(new Message(ChatFragment.this
-                            .getString(R.string.chat_no_message), ChatFragment.this
-                            .getString(R.string.check_connection), "", ""));
-                }
-
-              //  Log.e("CVE", "START");
-
-                if (listOfMessage != null) {
-                  //  Log.i(TAG, "count= " + listOfMessage.size());
-                    if (listOfMessage.size() == 0) {
-                        Log.e("CVE", "EMPTY");
-                        if (getActivity() != null)
-                            getActivity().runOnUiThread(updateEmpty);
-                    } else {
-                        Log.e("CVE", "OK");
-                        if (getActivity() != null)
-                            getActivity().runOnUiThread(returnRes);
-                    }
-                    toEmpty = getString(R.string.chat_no_message);
-                } else {
-                    Log.e("CVE", "CONN");
-                    toEmpty = getString(R.string.check_connection);
-                    getActivity().runOnUiThread(updateEmpty);
-                }
-
-                if (listOfMessage != null && listOfMessage.size() > 0)
+        AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                TextView messagesEmpty = (TextView) getView().findViewById(
+                        android.R.id.empty);
+                //Log.e("CVE", "NUMBER " + itemCount);
+                if (itemCount > 0) {
                     if (getActivity() instanceof InfoTrainActivity)
-                        ((InfoTrainActivity) getActivity()).setChatBadge(listOfMessage.size());
+                        ((InfoTrainActivity) getActivity()).setChatBadge();
+                    messagesEmpty.setVisibility(View.GONE);
+                } else {
+                    messagesEmpty.setVisibility(View.VISIBLE);
+                    messagesEmpty.setText(R.string.chat_no_message);
+                }
             }
-        });
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                //perform check and show/hide empty view
+            }
+        };
+        mFirebaseAdapter.registerAdapterDataObserver(mObserver);
+
+
+        RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mMessageRecyclerView.setLayoutManager(mLayoutManager);
+        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+
     }
-/*
-    public void updateMessageList() {
-        listOfMessage.clear();
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference chat = database.getReference("chat");
-        DatabaseReference trainChat = chat.child(trainId);
-        Log.e("CVE", "**** ref: " + trainChat.toString());
-
-        trainChat.setValue("testCVE", "Woot");
-        trainChat.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("CVE", "**** value: " + dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        Log.e("CVE", "START");
-
-
-        if (getActivity() != null)
-            getActivity().runOnUiThread(returnRes);
-
-    }*/
-
-    private Runnable returnRes = new Runnable() {
-
-        public void run() {
-            MessageAdapter adapter = new MessageAdapter(getActivity(),
-                    R.layout.row_message, listOfMessage);
-            setListAdapter(adapter);
-        }
-
-    };
-    private Runnable updateEmpty = new Runnable() {
-
-        public void run() {
-            TextView messagesEmpty = (TextView) getView().findViewById(
-                    android.R.id.empty);
-            messagesEmpty.setText(toEmpty);
-        }
-
-    };
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFirebaseAdapter.cleanup();
+    }
 
     public void onResume() {
         super.onResume();
@@ -333,67 +316,8 @@ public class ChatFragment extends ListFragment {
         update();
     }
 
-    @Override
-    public void onListItemClick(ListView l, final View v, final int position,
-                                long id) {
-        super.onListItemClick(l, v, position, id);
-        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-        if (trainId == null) {
-            ad.setTitle(getResources().getString(
-                    R.string.chat_open_train_messages,
-                    listOfMessage.get(position).gettrain_id()));
-            ad.setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString(DbAdapterConnection.KEY_NAME,
-                                    listOfMessage.get(position).gettrain_id());
-                            Intent mIntent = new Intent(v.getContext(),
-                                    ChatActivity.class);
-                            mIntent.putExtras(bundle);
-                            startActivityForResult(mIntent, 0);
-
-                        }
-                    });
-
-            ad.setNegativeButton(android.R.string.no,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-
-                        }
-                    });
-            ad.show();
-        } else {
-            ad.setTitle(getResources().getString(R.string.chat_open_train_info,
-                    listOfMessage.get(position).gettrain_id()));
-            ad.setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-
-                            Intent i = new Intent(getActivity(),
-                                    InfoTrainActivity.class);
-
-                            i.putExtra(DbAdapterConnection.KEY_NAME,
-                                    listOfMessage.get(position).gettrain_id());
-
-                            startActivity(i);
-
-                        }
-                    });
-
-            ad.setNegativeButton(android.R.string.no,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-
-                        }
-                    });
-            ad.show();
-        }
-    }
-
     public boolean requestPhpSend(String pseudo, String message,
-                                           String trainId,FragmentActivity a) {
+                                  String trainId, FragmentActivity a) {
         try {
             String txt = "";
 
@@ -411,7 +335,7 @@ public class ChatFragment extends ListFragment {
                     if (result.contains("true")) {
 
                         toTast = getString(android.R.string.ok);
-                       getActivity().runOnUiThread(displayToast);
+                        getActivity().runOnUiThread(displayToast);
                         try {
                             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("chatUnlock", true).commit();
                         } catch (Exception e1) {
@@ -422,75 +346,12 @@ public class ChatFragment extends ListFragment {
                         toTast = "Problem";
                 }
             });
-
-/*
-            // On cree le client
-            HttpClient client = new HttpClient();
-
-            HttpClientParams clientParams = new HttpClientParams();
-            clientParams.setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,
-                    "UTF-8");
-            client.setParams(clientParams);
-
-            PostMethod methode = new PostMethod(
-                    "http://christophe.frandroid.com/betrains/php/messages.php");
-            // On ajoute les parametres du formulaire
-
-            methode.addParameter(); // (champs,
-            // valeur)
-            methode.addParameter();
-            methode.addParameter();
-            methode.addParameter();
-            methode.addParameter();
-
-            // Le buffer qui nous servira a recuperer le code de la page
-            BufferedReader br = null;
-            try {
-                // http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html
-                client.executeMethod(methode);
-                // Pour la gestion des erreurs ou un debuggage, on recupere le
-                // nombre renvoye.
-                // System.out.println("La reponse de executeMethod est : " +
-                // retour);
-                br = new BufferedReader(new InputStreamReader(
-                        methode.getResponseBodyAsStream()));
-                String readLine;
-
-                // Tant que la ligne en cours n'est pas vide
-                while (((readLine = br.readLine()) != null)) {
-                    txt += readLine;
-                }
-            } catch (Exception e) {
-                System.err.println(e); // erreur possible de executeMethod
-                e.printStackTrace();
-            } finally {
-                // On ferme la connexion
-                methode.releaseConnection();
-                if (br != null) {
-                    try {
-                        br.close(); // on ferme le buffer
-                    } catch (Exception e) {
-                    }
-                }
-            }
-*/
             return txt.contains("true");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-
-  /*  public static boolean sendMessage(String pseudo, String message,
-                                      String trainId) {
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference chat = database.getReference("chat");
-        DatabaseReference trainChat = chat.child(trainId);
-
-
-        return true;
-    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -517,8 +378,6 @@ public class ChatFragment extends ListFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
-                                total = 5;
-
                                 Bundle bundle = new Bundle();
                                 bundle.putString(DbAdapterConnection.KEY_NAME,
                                         input.getText().toString());

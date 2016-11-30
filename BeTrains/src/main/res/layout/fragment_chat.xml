@@ -1,16 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:background="@color/primarycolor"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/pseudo"
@@ -34,23 +34,16 @@
     </LinearLayout>
 
     <include layout="@layout/colorstrip" />
-    <!--
-             <ScrollView android:id="@+id/sv" android:layout_width="fill_parent" 
-			android:layout_height="0dip" android:layout_weight="1" android:paddingTop="9dip"> 
-			<TextView android:id="@+id/messagesblock" style="@style/TextElement" android:gravity="top|left" 
-			android:paddingLeft="6dip" xmlns:android="http://schemas.android.com/apk/res/android" 
-			android:layout_width="wrap_content" android:layout_height="wrap_content" 
-			android:layout_gravity="top" android:text="@string/txt_loading" /> </ScrollView>
-    -->
 
-    <ListView
-        android:id="@android:id/list"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:paddingLeft="6dip"
         android:paddingRight="6dip"
-        android:scrollbars="none" />
+        android:scrollbars="vertical" />
 
     <TextView
         android:id="@android:id/empty"
@@ -79,12 +72,4 @@
             android:layout_height="wrap_content"
             android:text="@string/chat_send" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/chat_load_messages" />
-
 </LinearLayout>

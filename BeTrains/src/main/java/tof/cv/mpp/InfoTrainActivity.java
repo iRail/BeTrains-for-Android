@@ -57,7 +57,7 @@ public class InfoTrainActivity extends AppCompatActivity {
         final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
         if ((!(status == ConnectionResult.SUCCESS)) &&bottomNavigation != null) {
-            bottomNavigation.setVisibility(View.GONE);
+            //bottomNavigation.setVisibility(View.GONE);
         }
 
         if (bottomNavigation != null) {
@@ -121,9 +121,9 @@ public class InfoTrainActivity extends AppCompatActivity {
         }
     }
 
-    public void setChatBadge(int i) {
+    public void setChatBadge() {
         if (bottomNavigation != null)
-            bottomNavigation.setNotification(""+i, 1);
+            bottomNavigation.setNotification("!", 1);
     }
 
     @Override

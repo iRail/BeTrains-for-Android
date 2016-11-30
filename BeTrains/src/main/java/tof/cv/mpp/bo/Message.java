@@ -2,37 +2,37 @@ package tof.cv.mpp.bo;
 
 public class Message{
 
-		private String auteur;
-		private String body;
-		private String time;
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public String getTrain_id() {
+		return train_id;
+	}
+
+	public String getEntry_date() {
+		return entry_date;
+	}
+
+	public String getUser_message() {
+		return user_message;
+	}
+
+	private String user_name;
+		private String user_message;
+		private String entry_date;
 		private String train_id;
 
-		public Message(String pauteur, String pbody, String ptime, String ptrain_id){
-			this.auteur=pauteur;
-			this.body=pbody;
-			this.time=ptime;
-			this.train_id=ptrain_id;
+		public Message(String user_name, String user_message, String entry_date, String train_id){
+			this.user_name=user_name;
+			this.user_message=user_message;
+			this.entry_date=entry_date;
+			this.train_id=train_id;
 		}
 
-		public String getauteur() {
-			return this.auteur;
-		}
+	public Message() {
+	}
 
-		public String getbody() {
-			return this.body;
-		}
-
-		public String gettime() {
-			return this.time;
-		}
-
-		public String gettrain_id() {
-			return this.train_id;
-		}
-
-
-
-		
 
 
 }

@@ -230,9 +230,9 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                     if (messageList != null && messageList.size() > 0) {
                         Log.i(TAG, "count= " + messageList.size());
                         Message result = messageList.get(0);
-                        setLastMessageText(Html.fromHtml(result.getauteur()
-                                + ": " + result.getbody() + "<br />" + "<small>"
-                                + result.gettime() + "</small>"));
+                        setLastMessageText(Html.fromHtml(result.getUser_name()
+                                + ": " + result.getUser_message() + "<br />" + "<small>"
+                                + result.getEntry_date() + "</small>"));
                     } else
                         mMessageText.setVisibility(View.GONE);
                 } catch (Exception e1) {
