@@ -1,7 +1,7 @@
 package tof.cv.mpp;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -31,12 +32,9 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.async.http.body.StringPart;
-import com.koushikdutta.ion.Ion;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
@@ -55,8 +53,7 @@ public class ChatFragment extends Fragment {
     private final String TAG = "MessagesTrain.java";
     private boolean posted = false;
     String trainId;
-    private String toTast;
-    private String toEmpty;
+    DatabaseReference ref;
 
     private static final int MENU_FILTER = 0;
 
@@ -131,25 +128,22 @@ public class ChatFragment extends Fragment {
     }
 
     private void postMessage(final String pseudo) {
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => "+c.getTime());
 
-        Runnable trainSearch = new Runnable() {
-
-            public void run() {
-                requestPhpSend(pseudo,
-                        messageTxtField.getText().toString(), trainId, getActivity());
-            }
-        };
-
-        Thread thread = new Thread(null, trainSearch, "MyThread");
-        thread.start();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        ref.push().setValue(new Message(pseudo,messageTxtField.getText().toString(),formattedDate,trainId));
+        update();
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        messageTxtField.setText("");
+        messageTxtField.clearFocus();
 
     }
-
-    private Runnable displayToast = new Runnable() {
-        public void run() {
-            Toast.makeText(getActivity(), toTast, Toast.LENGTH_LONG).show();
-        }
-    };
 
 
     private void setBtnSettingsListener() {
@@ -170,7 +164,7 @@ public class ChatFragment extends Fragment {
 
     public void update() {
         Log.e("CVE", "TRAIN: " + trainId);
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
+        ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
 
 
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
@@ -316,42 +310,6 @@ public class ChatFragment extends Fragment {
         update();
     }
 
-    public boolean requestPhpSend(String pseudo, String message,
-                                  String trainId, FragmentActivity a) {
-        try {
-            String txt = "";
-
-            List params = new ArrayList();
-            params.add(new StringPart("code",
-                    "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a"));
-            params.add(new StringPart("mode", "write"));
-            params.add(new StringPart("train_id", trainId));
-            params.add(new StringPart("user_message", message));
-            params.add(new StringPart("user_name", pseudo));
-
-            Ion.with(a).load("http://christophe.frandroid.com/betrains/php/messages.php").addMultipartParts(params).asString().setCallback(new FutureCallback<String>() {
-                @Override
-                public void onCompleted(Exception e, String result) {
-                    if (result.contains("true")) {
-
-                        toTast = getString(android.R.string.ok);
-                        getActivity().runOnUiThread(displayToast);
-                        try {
-                            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("chatUnlock", true).commit();
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                        posted = true;
-                    } else
-                        toTast = "Problem";
-                }
-            });
-            return txt.contains("true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
