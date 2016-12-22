@@ -110,7 +110,7 @@ public class GameFragment extends BaseGameFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
-        //this.getActivity().getActionBar().setIcon(R.drawable.ic_game);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_game);
 
         ViewPager pager = (ViewPager) getView().findViewById(R.id.pager);
         titles = this.getResources().getStringArray(R.array.titles);

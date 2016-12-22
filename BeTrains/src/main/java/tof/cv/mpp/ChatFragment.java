@@ -91,7 +91,7 @@ public class ChatFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                 !isTablet);
 
-        //getActivity().getActionBar().setIcon(R.drawable.ab_chat);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_chat);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
     }

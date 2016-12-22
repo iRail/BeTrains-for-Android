@@ -23,7 +23,7 @@ public class ExtraFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		//getActivity().getActionBar().setIcon(R.drawable.ab_irail);
+		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_extras);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
 
 		final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
