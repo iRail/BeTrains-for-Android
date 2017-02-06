@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/root"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -50,22 +50,29 @@
                     android:fitsSystemWindows="false"
                     app:layout_collapseMode="parallax"
                     app:layout_scrollFlags="scroll|enterAlways"
+                    map:cameraTargetLat="50.5039"
+                    map:cameraTargetLng="4.4699"
                     map:cameraZoom="13"
                     map:liteMode="true"
-                    map:mapType="satellite"
-                    map:cameraTargetLat="50.5039"
-                    map:cameraTargetLng="4.4699"/>
+                    map:mapType="satellite" />
 
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@android:id/list"
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+            />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:id="@android:id/empty"

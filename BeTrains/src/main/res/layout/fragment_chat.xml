@@ -46,7 +46,7 @@
         android:scrollbars="vertical" />
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/emptychat"
         style="@style/TextElement"
         android:layout_width="fill_parent"
         android:layout_height="0dip"

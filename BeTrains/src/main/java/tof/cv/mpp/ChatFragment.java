@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -129,11 +130,11 @@ public class ChatFragment extends Fragment {
 
     private void postMessage(final String pseudo) {
         Calendar c = Calendar.getInstance();
-        System.out.println("Current time => "+c.getTime());
+        System.out.println("Current time => " + c.getTime());
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-        ref.push().setValue(new Message(pseudo,messageTxtField.getText().toString(),formattedDate,trainId));
+        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId));
         update();
         View view = getActivity().getCurrentFocus();
         if (view != null) {
@@ -164,7 +165,12 @@ public class ChatFragment extends Fragment {
 
     public void update() {
         Log.e("CVE", "TRAIN: " + trainId);
+        final RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
+
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
+        Query ref2 = trainId == null ? ref.limitToLast(99) : ref.orderByChild("train_id")
+                .equalTo(trainId).limitToLast(99);
+
 
 
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
@@ -172,8 +178,7 @@ public class ChatFragment extends Fragment {
                 Message.class,
                 R.layout.row_message,
                 MessageViewHolder.class,
-                trainId == null ? ref.limitToLast(99) : ref.orderByChild("train_id")
-                        .equalTo(trainId).limitToLast(99)) {
+                ref2) {
 
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder,
@@ -248,38 +253,61 @@ public class ChatFragment extends Fragment {
                     }
                 });
             }
-        };
 
-        AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
             @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                TextView messagesEmpty = (TextView) getView().findViewById(
-                        android.R.id.empty);
-                //Log.e("CVE", "NUMBER " + itemCount);
+            protected void onDataChanged() {
+                int itemCount= mMessageRecyclerView.getAdapter().getItemCount();
+
+                TextView messagesEmpty = (TextView) getActivity().findViewById(
+                        R.id.emptychat);
+
                 if (itemCount > 0) {
                     if (getActivity() instanceof InfoTrainActivity)
-                        ((InfoTrainActivity) getActivity()).setChatBadge();
+                        ((InfoTrainActivity) getActivity()).setChatBadge(itemCount);
                     messagesEmpty.setVisibility(View.GONE);
                 } else {
                     messagesEmpty.setVisibility(View.VISIBLE);
                     messagesEmpty.setText(R.string.chat_no_message);
                 }
             }
+        };
+
+        AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                Log.e("CVEADAPTER", "onItemRangeChanged ");
+            }
+
+            @Override
+            public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+                Log.e("CVEADAPTER", "onItemRangeMoved ");
+            }
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+                Log.e("CVEADAPTER", "onItemRangeChanged ");
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart,itemCount);
+            }
 
             @Override
             public void onItemRangeRemoved(int positionStart, int itemCount) {
-                //perform check and show/hide empty view
+                Log.e("CVEADAPTER", "onItemRangeRemoved ");
             }
+
         };
-        mFirebaseAdapter.registerAdapterDataObserver(mObserver);
 
-
-        RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+
+        mFirebaseAdapter.registerAdapterDataObserver(mObserver);
 
     }
 

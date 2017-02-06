@@ -7,11 +7,6 @@
             android:summary=""
             android:title="@string/settings_chat_pseudo" />
 
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preffirstM"
-            android:summary="@string/settings_chat_last_message_summary"
-            android:title="@string/settings_chat_last_message" />
     </PreferenceCategory>
 
 </PreferenceScreen>

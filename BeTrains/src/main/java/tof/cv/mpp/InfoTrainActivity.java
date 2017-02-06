@@ -121,9 +121,9 @@ public class InfoTrainActivity extends AppCompatActivity {
         }
     }
 
-    public void setChatBadge() {
+    public void setChatBadge(int i) {
         if (bottomNavigation != null)
-            bottomNavigation.setNotification("!", 1);
+            bottomNavigation.setNotification(""+i, 1);
     }
 
     @Override

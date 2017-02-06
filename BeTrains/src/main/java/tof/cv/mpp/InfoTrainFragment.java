@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,7 +71,8 @@ import tof.cv.mpp.widget.TrainWidgetProvider;
 public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     protected static final String TAG = "ChatFragment";
     private Vehicle currentVehicle;
-    private TextView mMessageText;
+    private SwipeRefreshLayout swipeContainer;
+
     private String fromTo;
     String id = null;
     private long timestamp;
@@ -97,7 +99,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
 
         final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
 
@@ -112,20 +113,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mMessageText.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                if (currentVehicle != null) {
-                    Bundle bundle = new Bundle();
-
-                    bundle.putString(DbAdapterConnection.KEY_NAME,
-                            currentVehicle.getId());
-                    Intent mIntent = new Intent(v.getContext(),
-                            ChatActivity.class);
-                    mIntent.putExtras(bundle);
-                    startActivityForResult(mIntent, 0);
-                }
-            }
-        });
         recyclerView = (RecyclerView) getView().findViewById(android.R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -133,16 +120,30 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
         if (id != null)
             displayInfo(id, fromTo, timestamp);
+
+        swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeContainer);
+        if(swipeContainer!=null){
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    // Your code to refresh the list here.
+                    // Make sure you call swipeContainer.setRefreshing(false)
+                    // once the network request has completed successfully.
+                    displayInfo(id, fromTo, timestamp);
+                }
+            });
+            swipeContainer.setColorSchemeResources(
+                    R.color.primarycolor);
+        }
+
+        // Configure the refreshing colors
+
+
     }
 
     public void displayInfoFromMemory(final String fileName, final String vehicle) {
         getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         this.timestamp = System.currentTimeMillis();
-        mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
-        if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
-                .getBoolean("preffirstM", true)) {
-            displayLastMessage(vehicle);
-        }
 
         currentVehicle = Utils.getMemoryvehicle(fileName, InfoTrainFragment.this.getActivity());
         getView().findViewById(R.id.progress).setVisibility(View.GONE);
@@ -179,67 +180,8 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
             this.timestamp = timestamp;
         else
             this.timestamp = System.currentTimeMillis();
-        mMessageText = (TextView) getActivity().findViewById(R.id.last_message);
-        if (PreferenceManager.getDefaultSharedPreferences(this.getActivity())
-                .getBoolean("preffirstM", true)) {
-            displayLastMessage(vehicle);
-
-        }
 
         myTrainSearch(vehicle);
-    }
-
-    private void displayLastMessage(String vehicle) {
-        mMessageText.setVisibility(View.VISIBLE);
-        setLastMessageText(getString(R.string.train_loading_last_msg));
-        Ion.with(this).load("http://christophe.frandroid.com/betrains/php/messages.php")
-                .setBodyParameter("id", "hZkzZDzsiF5354LP42SdsuzbgNBXZa78123475621857a")
-                .setBodyParameter("message_count", "" + 1)
-                .setBodyParameter("message_index", "" + 0)
-                .setBodyParameter("mode", "read")
-                .setBodyParameter("order", "DESC")
-                .setBodyParameter("train_id", vehicle)
-                .asString(Charset.forName("ISO-8859-1")).setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String txt) {
-                // TODO: USE XML PARSER
-                try {
-                    ArrayList<Message> messageList = new ArrayList<>();
-                    if (txt != null && !txt.equals("")) {
-                        String[] messages = txt.split("<message>");
-
-                        int i = 1;
-                        if (messages.length > 1) {
-                            while (i < messages.length) {
-                                String[] params = messages[i].split("CDATA");
-                                for (int j = 1; j < params.length; j++) {
-                                    params[j] = params[j].substring(1,
-                                            params[j].indexOf("]"));
-
-                                }
-                                Log.e(TAG, "messages: " + params[1] + " " + params[2] + " "
-                                        + params[3] + " " + params[4]);
-                                messageList.add(new Message(params[1], params[2],
-                                        params[3], params[4]));
-                                i++;
-                            }
-
-                        }
-
-                    }
-                    if (messageList != null && messageList.size() > 0) {
-                        Log.i(TAG, "count= " + messageList.size());
-                        Message result = messageList.get(0);
-                        setLastMessageText(Html.fromHtml(result.getUser_name()
-                                + ": " + result.getUser_message() + "<br />" + "<small>"
-                                + result.getEntry_date() + "</small>"));
-                    } else
-                        mMessageText.setVisibility(View.GONE);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
     }
 
 
@@ -262,6 +204,8 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
                                           @Override
                                           public void onCompleted(Exception e, Response<Vehicle> result) {
+                                              if (swipeContainer != null)
+                                              swipeContainer.setRefreshing(false);
 
                                               if (result != null) {
                                                   currentVehicle = result.getResult();
@@ -583,16 +527,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-
-    public void setLastMessageText(Spanned spanned) {
-        mMessageText.setText(spanned);
-    }
-
-    public void setLastMessageText(String text) {
-        mMessageText.setText(text);
-        mMessageText.setVisibility(text.length() > 1 ? View.VISIBLE : View.GONE);
-
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
