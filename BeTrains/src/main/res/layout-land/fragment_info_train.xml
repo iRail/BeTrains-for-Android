@@ -3,14 +3,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/root"
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:layout_width="0dp"
         android:id="@+id/mapContainer"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
@@ -28,8 +28,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,12 +46,16 @@
                 android:indeterminate="true" />
         </RelativeLayout>
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:id="@android:id/empty"
@@ -66,21 +70,6 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/More_info"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
 
-        <include layout="@layout/colorstrip" />
-
-        <TextView
-            android:id="@+id/last_message"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/action_bar_tint"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:textColor="#FF000000" />
     </LinearLayout>
 </LinearLayout>

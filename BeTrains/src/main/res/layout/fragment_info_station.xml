@@ -2,15 +2,15 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
 
         <ImageView
@@ -23,22 +23,22 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_awesome_toolbar"
-            android:layout_height="wrap_content"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_width="match_parent"
-            android:minHeight="?attr/actionBarSize" />
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <ImageButton
             android:id="@+id/Button_pic"
-            android:src="@android:drawable/ic_menu_camera"
-            android:onClick="pic"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:visibility="gone"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginTop="?attr/actionBarSize"
+            android:gravity="center"
+            android:onClick="pic"
+            android:src="@android:drawable/ic_menu_camera"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -47,8 +47,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:gravity="center"
         android:background="@color/primarycolor"
+        android:gravity="center"
         android:orientation="horizontal">
 
 
@@ -63,11 +63,11 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
-            android:padding="8dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:text="@string/loading"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
@@ -75,32 +75,37 @@
 
         <ImageButton
             android:id="@+id/Button_next"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@android:drawable/ic_media_next" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="6dp">
+        android:layout_height="6dp"
+        android:gravity="center">
 
-        <include
-            layout="@layout/colorstrip" />
+        <include layout="@layout/colorstrip" />
 
         <fr.castorflex.android.smoothprogressbar.SmoothProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/progress"
             android:layout_width="match_parent"
             android:layout_height="12dp"
-            android:indeterminate="true"
 
-            android:id="@+id/progress" />
+            android:indeterminate="true" />
     </RelativeLayout>
 
-
-    <ListView
-        android:id="@android:id/list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@android:id/empty"
