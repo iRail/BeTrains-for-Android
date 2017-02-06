@@ -45,13 +45,14 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            int i=0;
             DbAdapterConnection mDbHelper = new DbAdapterConnection(this);
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
             shortcutManager.removeAllDynamicShortcuts();
             mDbHelper.open();
             Cursor mCursor = mDbHelper.fetchAllFav();
             try {
-                while (mCursor.moveToNext()) {
+                while (mCursor.moveToNext() && i<4) {
                     String item = mCursor.getString(mCursor
                             .getColumnIndex(DbAdapterConnection.KEY_FAV_NAME));
                     String itemTwo = mCursor.getString(mCursor
