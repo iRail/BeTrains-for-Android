@@ -824,6 +824,8 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             debugLog("We're already expecting the result of a previous resolution.");
             return;
         }
+        if(mConnectionResult==null)
+            return;
 
         debugLog("resolveConnectionResult: trying to resolve result: "
                 + mConnectionResult);

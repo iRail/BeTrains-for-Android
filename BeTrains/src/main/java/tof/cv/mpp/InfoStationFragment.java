@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -43,6 +44,8 @@ public class InfoStationFragment extends ListFragment {
     private long timestamp;
     private String stationString;
     private String id;
+    private SwipeRefreshLayout swipeContainer;
+
     private Target t = new Target() {
         public void onBitmapLoaded(Bitmap bitmapPic, Picasso.LoadedFrom from) {
             try {
@@ -121,6 +124,18 @@ public class InfoStationFragment extends ListFragment {
 
         setHasOptionsMenu(true);
 
+        swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeContainer);
+        if(swipeContainer!=null){
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    searchThread();
+                }
+            });
+            swipeContainer.setColorSchemeResources(
+                    R.color.primarycolor);
+        }
+
     }
 
 
@@ -184,6 +199,9 @@ public class InfoStationFragment extends ListFragment {
                 getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 // if (pd != null)
                 //     pd.dismiss();
+                if (swipeContainer != null)
+                    swipeContainer.setRefreshing(false);
+
                 if (currentStation != null)
                     if (currentStation.getStationDepartures() != null) {
 
