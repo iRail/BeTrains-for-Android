@@ -82,8 +82,7 @@ public class ClosestFragment extends ListFragment {
 
         setHasOptionsMenu(true);
 
-        // getActivity().getActionBar().setIcon(
-        //         R.drawable.ab_closest);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_closest);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
         m_ProgressDialog = new MyProgressDialog(getActivity());

@@ -77,7 +77,7 @@ public class CompensationFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         registerForContextMenu(getListView());
-        // getActivity().getActionBar().setIcon(R.drawable.ab_sncb);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_compensation);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
