@@ -256,6 +256,9 @@ public class ChatFragment extends Fragment {
 
             @Override
             protected void onDataChanged() {
+                if(getActivity()==null)
+                    return;
+
                 int itemCount= mMessageRecyclerView.getAdapter().getItemCount();
 
                 TextView messagesEmpty = (TextView) getActivity().findViewById(
