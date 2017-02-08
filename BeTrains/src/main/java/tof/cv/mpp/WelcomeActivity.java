@@ -241,7 +241,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
 
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, mContent).commit();
+                            .replace(R.id.content_frame, mContent).addToBackStack("").commit();
 
                    /*
                     // Log.e("CVE","Hum " + navigationView.hasFocus());
