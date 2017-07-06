@@ -56,6 +56,7 @@ public class Vehicle {
 
         private String station;
         private long time;
+        private int left;
         private String delay;
         private String canceled;
         Station.StationInfo stationinfo;
@@ -81,6 +82,10 @@ public class Vehicle {
 
         public long getTime() {
             return time;
+        }
+
+        public int hasLeft() {
+            return left;
         }
 
         public String getDelay() {

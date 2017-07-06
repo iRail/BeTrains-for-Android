@@ -64,6 +64,8 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.Info
                 } catch (Exception e) {
                     holder.delay.setText(o.getDelay());
                 }
+
+            holder.left.setVisibility(("1".contentEquals("" + o.hasLeft())) ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
@@ -77,6 +79,7 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.Info
         TextView time;
         TextView delay;
         TextView station;
+        View left;
         TextView platform;
         Vehicle.VehicleStop item;
 
@@ -86,6 +89,7 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.Info
             time = (TextView) v.findViewById(R.id.time);
             delay = (TextView) v.findViewById(R.id.delay);
             station = (TextView) v.findViewById(R.id.station);
+            left = (View) v.findViewById(R.id.left);
             platform = (TextView) v.findViewById(R.id.platform);
         }
 

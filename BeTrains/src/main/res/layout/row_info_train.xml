@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:clickable="false"
     android:orientation="horizontal"
-    android:padding="16dip" >
+    android:paddingLeft="16dip"
+    android:paddingRight="16dip">
+
+    <View
+        android:id="@+id/left"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="8dp"
+        android:background="@color/primarycolor" />
 
     <TextView
         android:id="@+id/time"
@@ -15,6 +24,8 @@
         android:background="@color/blackbg"
         android:gravity="center"
         android:padding="6dp"
+        android:layout_marginBottom="8dip"
+        android:layout_marginTop="8dip"
         android:text="XX:XX"
         android:textColor="@color/darkyellow"
         android:textStyle="bold" />
@@ -23,23 +34,23 @@
     <TextView
         android:id="@+id/delay"
         style="@style/TextElementMid"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="6dip"
-        android:textColor="#FF0000" />
+        android:textColor="#FF0000"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/station"
         style="@style/TextElementMid"
-        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:text="TRAIN"
-        android:textColor="@color/darkblue" />
+        android:textColor="@color/darkblue"
+        android:textStyle="bold" />
 
 
     <TextView
