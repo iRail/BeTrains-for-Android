@@ -92,8 +92,10 @@ public class RSSDocument {
 							}else if(property.getNodeName().contains("link")){
 								if(property.getFirstChild()!=null)
 									pubDate = property.getFirstChild().getNodeValue();
+								else
+									pubDate=null;
 							}else if(property.getNodeName().contains("description")){
-								System.out.println("item found !!"+ property.getFirstChild().getNodeValue());
+								//System.out.println("item found !!"+ property.getFirstChild().getNodeValue());
 								description = property.getFirstChild().getNodeValue();
 							}else if(property.getNodeName().contains("pubDate")){
 								pubDate = property.getFirstChild().getNodeValue();
