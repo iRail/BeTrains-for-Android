@@ -46,7 +46,7 @@ public class TrafficAdapter extends ArrayAdapter<RSSItem>{
 
 		String pubDate = myRssFeed.getList().get(position).getPubdate();
 		//Todo: Parse the text date to display in user locale.
-		listPubdate.setText(pubDate;
+		listPubdate.setText(pubDate);
 		
 		TextView message = (TextView) row
 				.findViewById(R.id.message);
