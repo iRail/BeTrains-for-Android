@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -47,7 +47,7 @@ import tof.cv.mpp.adapter.IndexAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import tof.cv.mpp.bo.StationLocationApi;
 
-public class StationPickerActivity extends ActionBarActivity implements
+public class StationPickerActivity extends AppCompatActivity implements
         ViewPager.OnPageChangeListener {
 
     MyAdapter mAdapter;

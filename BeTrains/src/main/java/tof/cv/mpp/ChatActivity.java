@@ -2,7 +2,7 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -10,7 +10,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 
-public class ChatActivity extends ActionBarActivity {
+public class ChatActivity extends AppCompatActivity {
     public final static String ID = "CgkI9Y3S0soCEAIQAw";
 
 
