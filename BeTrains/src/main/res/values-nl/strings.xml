@@ -136,5 +136,8 @@
     <string name="info">Info</string>
     <string name="game_wait">You need to wait before your next Check-in</string>
     <string name="loading">Laden…</string>
+    <string name="activity_label_notif">Notif</string>
+    <string name="notif_explanation">You can add a notification about this train, that will update every 2 minutes (pay attention to your battery).\n\nJust activate it by clicking the below button</string>
+    <string name="totalDelay">Max Delay:</string>
 
 </resources>

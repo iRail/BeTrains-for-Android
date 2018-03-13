@@ -153,5 +153,8 @@
     <string name="info">Info</string>
     <string name="game_wait">You need to wait before your next Check-in</string>
     <string name="loading">Charger…</string>
+    <string name="activity_label_notif">Notif</string>
+    <string name="notif_explanation">Ajoutez une notification qui se mettra à jour toutes les 2 minutes.(Attention à votre batterie).\n\nIl suffit de l'activer en clickant sur ce bouton</string>
+    <string name="totalDelay">Retard max:</string>
 
 </resources>

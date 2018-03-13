@@ -173,4 +173,7 @@
     <string name="widget_empty">Open your train information and click \'Add to widget\'".</string>
     <string name="widget_confirm">Add to Widget?</string>
     <string name="widget_added">%s added to widget</string>
+    <string name="activity_label_notif">Notif</string>
+    <string name="notif_explanation">You can add a notification about this train, that will update every 2 minutes (pay attention to your battery).\n\nJust activate it by clicking the below button</string>
+    <string name="totalDelay">Max Delay:</string>
 </resources>

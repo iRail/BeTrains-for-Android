@@ -57,7 +57,7 @@ public class Vehicle {
         private String station;
         private long time;
         private int left;
-        private String delay;
+        public int delay;
         private String canceled;
         Station.StationInfo stationinfo;
 
@@ -89,14 +89,18 @@ public class Vehicle {
         }
 
         public String getDelay() {
-            return delay;
+            return ""+delay;
+        }
+
+        public int getDelayinMin() {
+            return delay/60;
         }
 
         public String getStatus() {
-            if (delay.contentEquals("0"))
+            if (delay==0)
                 return "";
 
-            return "+" + Integer.valueOf(delay) / 60 + "'";
+            return "+" + delay / 60 + "'";
         }
     }
 

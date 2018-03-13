@@ -199,7 +199,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON&alerts=true";
-        Log.e("CVE", url);
+
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
                                           @Override

@@ -36,8 +36,8 @@ public class InfoTrainActivity extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         timestamp = bundle.getLong("timestamp") * 1000;
         name = bundle.getString("Name");//.replaceAll("[^0-9]+", "");
-        Log.i("***", "bundle: " + bundle.getString("Name"));
-        Log.i("***", "NAME: " + name);
+        //Log.i("***", "bundle: " + bundle.getString("Name"));
+        //Log.i("***", "NAME: " + name);
         fromTo = bundle.getString("fromto");
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -67,8 +67,11 @@ public class InfoTrainActivity extends AppCompatActivity {
 
             AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.activity_label_chat, R.drawable.ic_nav_chat, R.color.primarycolor);
 
+            AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.activity_label_notif, R.drawable.ic_nav_notif, R.color.primarycolor);
+
             bottomNavigation.addItem(item1);
             bottomNavigation.addItem(item2);
+            bottomNavigation.addItem(item3);
 
             // bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
 
@@ -155,7 +158,7 @@ public class InfoTrainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -169,6 +172,11 @@ public class InfoTrainActivity extends AppCompatActivity {
                     ChatFragment chatFragment = new ChatFragment();
                     chatFragment.trainId = InfoTrainActivity.this.name;
                     return chatFragment;
+
+                case 2:
+                    NotifFragment notifFragment = new NotifFragment();
+                    notifFragment.trainId = InfoTrainActivity.this.name;
+                    return notifFragment;
 
             }
             return null;

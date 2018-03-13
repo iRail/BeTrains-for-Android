@@ -18,13 +18,7 @@ import java.util.List;
 
 public class MyPreferenceActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
-	// private MyPrefAdapter mAdapter;
-	// private ViewPager mPager;
-	public static int PAGE_GENERAL = 0;
-	public static int PAGE_PLANNER = 1;
-	public static int PAGE_TWITTER = 2;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -38,12 +32,11 @@ public class MyPreferenceActivity extends PreferenceActivity implements
 			e.printStackTrace();
 		}
 
-		if (hasNoHeader) {
+		/*if (hasNoHeader && getIntent().getExtras()==null) {
 			this.setContentView(R.layout.activity_preference);
 			addPreferencesFromResource(R.xml.activity_preferences);
 			addPreferencesFromResource(R.xml.activity_planner_preferences);
-			addPreferencesFromResource(R.xml.activity_twitter_preferences);
-		}
+		}*/
 
 
         SystemBarTintManager tintManager = new SystemBarTintManager(this);

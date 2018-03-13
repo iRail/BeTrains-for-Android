@@ -107,43 +107,13 @@
             android:name="tof.cv.search.SearchProvider"
             android:authorities="tof.cv.search.SearchProvider" />
 
-        <!-- The widget provider -->
-        <!--
-        receiver android:name=".widget.TrainAppWidgetProvider">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="BETRAIN_WIDGET_UPDATE"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info"/>
-        </receiver>
-        <receiver
-            android:name=".widget.TrainWidgetProvider"
-            android:enabled="@bool/isApi11"
-            android:label="BeTrains Scrollable">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="tof.cv.mpp.widget.action.REFRESH"/>
-                <action android:name="tof.cv.mpp.widget.action.UPDATE"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info"/>
-        </receiver>
-
         <service
-            android:name=".widget.TrainWidgetService"
-            android:enabled="@bool/isApi11"
             android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
-
-        <provider
-            android:name=".widget.TrainDataProvider"
-            android:authorities="tof.cv.mpp.widget.provider"
-            android:enabled="@bool/isApi11"/
-        -->
+            android:name=".NotifJobService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
