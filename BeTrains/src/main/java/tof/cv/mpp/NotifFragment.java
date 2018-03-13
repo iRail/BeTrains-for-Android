@@ -1,5 +1,10 @@
 package tof.cv.mpp;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -28,9 +34,12 @@ import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.StationLocation;
 import tof.cv.mpp.bo.Vehicle;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+
 public class NotifFragment extends Fragment {
 
     public String trainId;
+    int notif = 0;
 
     public NotifFragment() {
     }
@@ -38,62 +47,64 @@ public class NotifFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            notif = ((NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE)).getActiveNotifications().length;
+            if (notif > 0)
+                ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.cancel));
+        }
+
         getView().findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle myExtrasBundle = new Bundle();
                 myExtrasBundle.putString("id", trainId);
 
-                Log.e("CVE", "CLICK " + trainId);
+                if (notif > 0) {
+                    FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getContext()));
+                    dispatcher.cancelAll();
+                    NotificationManagerCompat.from(getContext()).cancel(0);
+                    notif = 0;
+                    ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.ok));
 
-                final String url = "http://api.irail.be/vehicle.php/?id=" + trainId
-                        + "&lang=" + getString(R.string.url_lang) + "&format=JSON&alerts=true";
-                Ion.with(getContext()).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
-                }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
-                    @Override
-                    public void onCompleted(Exception e, Response<Vehicle> result) {
+                } else {
+                    final String url = "http://api.irail.be/vehicle.php/?id=" + trainId
+                            + "&lang=" + getString(R.string.url_lang) + "&format=JSON&alerts=true";
+                    Ion.with(getContext()).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
+                    }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
+                        @Override
+                        public void onCompleted(Exception e, Response<Vehicle> result) {
 
-                        if (result == null)
-                            return;
+                            if (result == null)
+                                return;
 
-                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), "NOTIF")
-                                .setSmallIcon(R.mipmap.ic_launcher);
-                        int totaldelay = 0;
-                        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
-                        int count = 0;
-                        for (Vehicle.VehicleStop aStop : result.getResult().getVehicleStops().getVehicleStop()) {
-                            if (aStop.hasLeft() == 0) {
-                                if (aStop.getDelayinMin() > totaldelay)
-                                    totaldelay = aStop.getDelayinMin();
-                                style = style.addLine(aStop.getStation() + " - " + Utils.formatDate(aStop.getTime(), false, false) + " " + (aStop.delay == 0 ? "" : " +" + (aStop.getDelayinMin()) + "'"));
-                            }
+                            notif = Utils.createNotif(result, trainId, getContext());
+
+                            ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.cancel));
+
                         }
-                        mBuilder.setStyle(style).setContentTitle(trainId).setContentText(getString(R.string.totalDelay) + " " + totaldelay + "min")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-                        notificationManager.notify(0, mBuilder.build());
+                    });
 
-                    }
-                });
+                    FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getContext()));
 
-                FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getContext()));
+                    dispatcher.cancelAll();
 
-                dispatcher.cancelAll();
+                    Job myJob = dispatcher.newJobBuilder()
+                            .setService(NotifJobService.class) // the JobService that will be called
+                            .setTag("NOTIF")        // uniquely identifies the job
+                            .setRecurring(true)
+                            .setExtras(myExtrasBundle)
+                            .setReplaceCurrent(true)
+                            .setLifetime(Lifetime.FOREVER)
+                            .addConstraint(Constraint.ON_ANY_NETWORK)
+                            .setTrigger(Trigger.executionWindow(30, 120))
+                            .build();
 
-                Job myJob = dispatcher.newJobBuilder()
-                        .setService(NotifJobService.class) // the JobService that will be called
-                        .setTag("NOTIF")        // uniquely identifies the job
-                        .setRecurring(true)
-                        .setExtras(myExtrasBundle)
-                        .setReplaceCurrent(true)
-                        .setLifetime(Lifetime.FOREVER)
-                        .addConstraint(Constraint.ON_ANY_NETWORK)
-                        .setTrigger(Trigger.executionWindow(20, 20))
-                        .build();
+                    dispatcher.mustSchedule(myJob);
 
-                dispatcher.mustSchedule(myJob);
+                }
 
-                //dispatcher.cancel("NotifJobService");
             }
         });
     }

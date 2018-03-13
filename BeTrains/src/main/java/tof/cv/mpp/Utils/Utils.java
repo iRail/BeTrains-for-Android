@@ -1,14 +1,20 @@
 package tof.cv.mpp.Utils;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.Button;
 
 import com.google.gson.Gson;
+import com.koushikdutta.ion.Response;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -31,6 +37,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import tof.cv.mpp.InfoTrainActivity;
+import tof.cv.mpp.NotifBroadcastReceiver;
+import tof.cv.mpp.R;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.bo.Vehicle;
 
@@ -262,5 +271,53 @@ public class Utils {
 		}
 
 		return null;
+	}
+
+	public static int createNotif(Response<Vehicle> result, String trainId,Context c){
+		int type = 0;
+		try {
+			type = result.getResult().getVehicleStops().getVehicleStop().get(result.getResult().getVehicleStops().getVehicleStop().size() - 1).hasLeft();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		Intent openIntent = new Intent(c, InfoTrainActivity.class);
+		openIntent.putExtra("Name", trainId);
+		openIntent.putExtra("timestamp", System.currentTimeMillis()/1000);
+		openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+				| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent openPendingIntent =PendingIntent.getActivity(c, 0,
+				openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		Intent dismissIntent = new Intent(c, NotifBroadcastReceiver.class);
+		dismissIntent.setAction("ACTION_OPEN");
+		dismissIntent.putExtra("id", trainId);
+		PendingIntent dismissPendingIntent =
+				PendingIntent.getBroadcast(c, 0, dismissIntent, 0);
+
+
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(c, "NOTIF")
+				.setSmallIcon(R.mipmap.ic_launcher)
+				.setContentIntent(openPendingIntent)
+				.addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_open), openPendingIntent))
+				.addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_dismiss), dismissPendingIntent));
+
+		int totaldelay = 0;
+		NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+		int count = 0;
+		for (Vehicle.VehicleStop aStop : result.getResult().getVehicleStops().getVehicleStop()) {
+			if (aStop.hasLeft() == type) {
+				if (aStop.getDelayinMin() > totaldelay)
+					totaldelay = aStop.getDelayinMin();
+				style = style.addLine(aStop.getStation() + " - " + Utils.formatDate(aStop.getTime(), false, false) + " " + (aStop.delay == 0 ? "" : " +" + (aStop.getDelayinMin()) + "'"));
+			}
+		}
+		mBuilder.setStyle(style).setContentTitle(trainId).setContentText(c.getString(R.string.totalDelay) + " " + totaldelay + "min")
+				.setPriority(NotificationCompat.PRIORITY_DEFAULT).setOngoing(true);
+		NotificationManagerCompat notificationManager = NotificationManagerCompat.from(c);
+
+		notificationManager.notify(0, mBuilder.build());
+
+		return 1;
 	}
 }

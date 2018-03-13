@@ -25,7 +25,6 @@ public class NotifJobService extends JobService {
     @Override
     public boolean onStartJob(final JobParameters job) {
         trainId = (String) job.getExtras().get("id");
-        Log.e("CVEJOB", "JOB " + trainId);
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + trainId
                 + "&lang=" + getString(R.string.url_lang) + "&format=JSON&alerts=true";
@@ -37,22 +36,7 @@ public class NotifJobService extends JobService {
                 if (result == null)
                     return;
 
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "NOTIF")
-                        .setSmallIcon(R.mipmap.ic_launcher);
-                int totaldelay = 0;
-                NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
-                int count = 0;
-                for (Vehicle.VehicleStop aStop : result.getResult().getVehicleStops().getVehicleStop()) {
-                    if (aStop.hasLeft() == 0) {
-                        if (aStop.getDelayinMin() > totaldelay)
-                            totaldelay = aStop.getDelayinMin();
-                        style = style.addLine(aStop.getStation() + " - " + Utils.formatDate(aStop.getTime(), false, false) + " " + (aStop.delay == 0 ? "" : " +" + (aStop.getDelayinMin()) + "'"));
-                    }
-                }
-                mBuilder.setStyle(style).setContentTitle(trainId).setContentText(getString(R.string.totalDelay) + " " + totaldelay + "min")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                notificationManager.notify(0, mBuilder.build());
+                Utils.createNotif(result, trainId, getApplicationContext());
 
                 jobFinished(job, false);
             }

@@ -35,6 +35,7 @@ public class InfoTrainActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         timestamp = bundle.getLong("timestamp") * 1000;
+        Log.e("CVE","Time "+timestamp);
         name = bundle.getString("Name");//.replaceAll("[^0-9]+", "");
         //Log.i("***", "bundle: " + bundle.getString("Name"));
         //Log.i("***", "NAME: " + name);
