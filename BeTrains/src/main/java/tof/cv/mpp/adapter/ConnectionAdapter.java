@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Occupancy;
+import tof.cv.mpp.bo.Via;
 
 public class ConnectionAdapter extends AbstractAdapter<Connection> {
 
@@ -118,16 +120,27 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
                 arrivaltime.setText(conn.getArrival().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getArrival()
                         .getTime(), false, false));
             }
-
+            LinearLayout container = v.findViewById(R.id.viacontainer);
+            container.removeAllViews();
             if (numberoftrains != null) { //
-                // Log.i("BETRAINS", "number" + conn.getVias()));
-                if (conn.getVias() != null)
+                if (conn.getVias() != null) {
                     numberoftrains.setText(Html.fromHtml(
                             getContext().getString(R.string.route_planner_num_trains)
                                     + " <b>"
                                     + (conn.getVias().getNumberOfVias() + 1)
                                     + "</b>"));
-                else
+
+                   /* LayoutInflater inflater = LayoutInflater.from(getContext());
+                    for (Via aVia : conn.getVias().via) {
+                        View inflatedLayout = inflater.inflate(R.layout.row_via_planner, container, false);
+                        ((TextView) inflatedLayout.findViewById(R.id.tv_start)).setText(Utils.formatDate(aVia.getDeparture().getTime(), false, false));
+                        ((TextView) inflatedLayout.findViewById(R.id.tv_middle)).setText(aVia.getName());
+                        ((TextView) inflatedLayout.findViewById(R.id.tv_end)).setText(Utils.formatDate(aVia.getArrival().getTime(), false, false));
+                        ((LinearLayout) v.findViewById(R.id.viacontainer)).addView(inflatedLayout);
+                    }*/
+
+
+                } else
                     numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn
                             .getDeparture().getVehicle())));
             }
@@ -153,8 +166,7 @@ public class ConnectionAdapter extends AbstractAdapter<Connection> {
                     default:
                         occupancy.setVisibility(View.GONE);
                 }
-            }
-            else
+            } else
                 occupancy.setVisibility(View.GONE);
 
         }

@@ -10,6 +10,7 @@
     <LinearLayout
         android:id="@+id/timeline"
         android:layout_width="fill_parent"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="+X&apos;"
+            android:text="+X'"
             android:textColor="@color/red"
             android:textStyle="bold" />
 
@@ -48,6 +49,7 @@
             <TextView
                 android:id="@+id/duration"
                 style="@style/TextElementMid"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/route_planner_duration"
@@ -70,7 +72,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="+X&apos;"
+            android:text="+X'"
             android:textColor="@color/red"
             android:textStyle="bold" />
     </LinearLayout>
@@ -111,6 +113,12 @@
             android:singleLine="true"
             android:text="DEPARTURE" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viacontainer"
+        android:orientation="vertical"/>
 
     <TextView
         android:id="@+id/alertText"

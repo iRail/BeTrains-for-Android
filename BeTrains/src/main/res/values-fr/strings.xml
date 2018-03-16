@@ -159,8 +159,17 @@
     <string name="notif_open">Mon Train</string>
     <string name="notif_dismiss">Quitter</string>
     <string name="prefMailTitle">Mail</string>
-    <string name="pref_hide_google">Cacher ma photo dans le Chat</string>
+    <string name="pref_hide_google">Cacher ma photo</string>
+    <string name="pref_hide_google_sum">Ce serait dommage, une si jolie frimousse...</string>
     <string name="msg_api_error_title">Erreur serveur</string>
     <string name="msg_api_error">désolé, petit soucis, merci de me contacter par mail et aller voir si il y a un message derrière cette url:</string>
+    <string name="pref_google">Clickez ici pour vous logger en un click</string>
+    <string name="settings_chat_status">Statut</string>
+    <string name="pref_status_title">Clickez pour vérifier</string>
+    <string name="pref_status_sum">Vous pouvez gagner votre statut sur le chat... Mais attention.. Avec de grands pouvoirs viennent de grandes responsabilités</string>
+    <string name="pref_status_donator">Généreux Donateur</string>
+    <string name="pref_status_donator_sum">Make a paypal donation to christophe.versieux@gmail.com</string>
+    <string name="pref_status_beta">Beta-Testeur</string>
+    <string name="pref_status_beta_sum">Participe aux beta tests de l\'application (Voir Play Store)</string>
 
 </resources>

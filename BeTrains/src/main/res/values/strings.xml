@@ -179,7 +179,16 @@
     <string name="notif_open">Open</string>
     <string name="notif_dismiss">Dismiss</string>
     <string name="prefMailTitle">Mail</string>
-    <string name="pref_hide_google">Hide my picture in the chat</string>
+    <string name="pref_hide_google">Hide my picture</string>
+    <string name="pref_hide_google_sum">Check if you want to hide your pretty face</string>
     <string name="msg_api_error_title">Error from the server</string>
     <string name="msg_api_error">We are having issues to find your train, please go to this adress and check the error:</string>
+    <string name="pref_google">Click here to login with Google</string>
+    <string name="settings_chat_status">Status</string>
+    <string name="pref_status_title">Click here to check</string>
+    <string name="pref_status_sum">You can earn one of these status. But pay attention... with great power comes great responsibility</string>
+    <string name="pref_status_donator">Donator</string>
+    <string name="pref_status_donator_sum">Make a paypal donation to christophe.versieux@gmail.com</string>
+    <string name="pref_status_beta">Beta-Tester</string>
+    <string name="pref_status_beta_sum">Participated in BeTrains Beta tests (See Play Store)</string>
 </resources>

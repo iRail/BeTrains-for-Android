@@ -14,6 +14,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     private TextView time;
     private TextView messagebody;
     private TextView nickname;
+    public TextView donator;
+    public TextView beta;
     public View itemView;
     public ImageView iv;
 
@@ -24,6 +26,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         messagebody = (TextView) itemView.findViewById(R.id.messagebody);
         nickname = (TextView) itemView.findViewById(R.id.nickname);
         iv = (ImageView) itemView.findViewById(R.id.profile_image);
+        donator = (TextView) itemView.findViewById(R.id.donator);
+        beta = (TextView) itemView.findViewById(R.id.beta);
         this.itemView = itemView;
     }
 

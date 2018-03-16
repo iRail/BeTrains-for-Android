@@ -179,6 +179,11 @@ public class DialogViaFragment extends DialogFragment {
 
                 TextView tv = new TextView(DialogViaFragment.this.getActivity());
                 tv.setTextColor(getResources().getColor(R.color.red));
+                int padding_in_dp = 8;  // 6 dps
+                final float scale = getResources().getDisplayMetrics().density;
+                int padding_in_px = (int) (padding_in_dp * scale + 0.5f);
+
+                tv.setPadding(padding_in_px,0,padding_in_px,padding_in_px);
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 tv.setLayoutParams(layoutParams);
                 tv.setGravity(Gravity.CENTER);

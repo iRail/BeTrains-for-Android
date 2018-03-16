@@ -61,6 +61,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
+        settings.edit().putBoolean("beta",true).apply();
+
         navigationView = findViewById(R.id.navigation);
         navigationView.getMenu().clear();
 

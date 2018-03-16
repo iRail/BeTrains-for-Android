@@ -231,7 +231,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
 
                                                       final String finalHtml = html;
-                                                      Snackbar.make(getView(), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
+                                                      Snackbar.make(getView().findViewById(R.id.map), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
                                                               .setAction("OK", new View.OnClickListener() {
                                                                   @Override
                                                                   public void onClick(View v) {

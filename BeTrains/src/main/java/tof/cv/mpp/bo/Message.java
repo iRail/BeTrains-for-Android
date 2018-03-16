@@ -24,14 +24,18 @@ public class Message {
     private String train_id;
     public String pic_url;
     public String user_id;
+    public boolean donator;
+    public boolean beta;
 
-    public Message(String user_name, String user_message, String entry_date, String train_id, String pic, String user) {
+    public Message(String user_name, String user_message, String entry_date, String train_id, String pic, String user,boolean don,boolean beta) {
         this.user_name = user_name;
         this.user_message = user_message;
         this.entry_date = entry_date;
         this.train_id = train_id;
         this.pic_url = pic;
         this.user_id = user;
+        this.donator=don;
+        this.beta=beta;
     }
 
     public Message() {

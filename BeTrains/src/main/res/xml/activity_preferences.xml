@@ -5,7 +5,7 @@
             android:key="login"
             android:icon="@drawable/glogo"
             android:title="Inscription avec Google"
-            android:summary="C'est plus rapide ;-)"
+            android:summary="@string/pref_google"
             />
 
         <EditTextPreference
@@ -14,10 +14,25 @@
 
         <CheckBoxPreference
             android:title="@string/pref_hide_google"
+            android:summary="@string/pref_hide_google_sum"
             android:defaultValue="false"
             android:enabled="false"
             android:key="hidepic"/>
 
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_chat_status" >
+
+        <Preference
+            android:title="@string/pref_status_donator"
+            android:summary="@string/pref_status_donator_sum"
+            android:defaultValue="false"
+            android:key="donator"/>
+
+        <Preference
+            android:title="@string/pref_status_beta"
+            android:summary="@string/pref_status_beta_sum"
+            android:defaultValue="false"
+            android:key="beta"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

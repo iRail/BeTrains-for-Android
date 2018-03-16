@@ -60,8 +60,8 @@ public class ChatFragment extends Fragment {
     private boolean posted = false;
     String trainId;
     DatabaseReference ref;
-    Resources res  ;
-    int tileSize ;
+    Resources res;
+    int tileSize;
 
 
     private static final int MENU_FILTER = 0;
@@ -100,7 +100,7 @@ public class ChatFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                 !isTablet);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_chat);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_chat);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
 
     }
@@ -142,13 +142,16 @@ public class ChatFragment extends Fragment {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-        String pic="";
-        if(getContext()!=null)
-            pic=PreferenceManager.getDefaultSharedPreferences(getContext()).getString("profilepic","NOPIC");
+        String pic = "";
+        if (getContext() != null && !PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("hidepic", false))
+            pic = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("profilepic", "NOPIC");
 
-        String user_id = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("prefmail","");
+        String user_id = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("prefmail", "");
+        boolean donator = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("donator", false);
+        boolean beta = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("beta", false);
 
-        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId,pic,user_id));
+        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic, user_id, donator, beta));
+
         update();
         View view = getActivity().getCurrentFocus();
         if (view != null) {
@@ -178,7 +181,7 @@ public class ChatFragment extends Fragment {
     }
 
     public void update() {
-        Log.e("CVE", "TRAIN: " + trainId);
+        // Log.e("CVE", "TRAIN: " + trainId);
         final RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
 
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
@@ -209,9 +212,19 @@ public class ChatFragment extends Fragment {
 
                 viewHolder.getTrainid().setText(message.getTrain_id());
 
-                if(message.pic_url!=null && message.pic_url.length()>0)
+                if(message.beta)
+                    viewHolder.beta.setVisibility(View.VISIBLE);
+                else
+                    viewHolder.beta.setVisibility(View.GONE);
+
+                if(message.donator)
+                    viewHolder.donator.setVisibility(View.VISIBLE);
+                else
+                    viewHolder.donator.setVisibility(View.GONE);
+
+                if (message.pic_url != null && message.pic_url.length() > 0)
                     Picasso.with(getContext()).load(message.pic_url).into(viewHolder.iv);
-                else{
+                else {
 
                     final LetterTileProvider tileProvider = new LetterTileProvider(getContext());
                     final Bitmap letterTile = tileProvider.getLetterTile(message.getUser_name(), message.getUser_name(), tileSize, tileSize);
@@ -281,10 +294,10 @@ public class ChatFragment extends Fragment {
 
             @Override
             protected void onDataChanged() {
-                if(getActivity()==null)
+                if (getActivity() == null)
                     return;
 
-                int itemCount= mMessageRecyclerView.getAdapter().getItemCount();
+                int itemCount = mMessageRecyclerView.getAdapter().getItemCount();
 
                 TextView messagesEmpty = (TextView) getActivity().findViewById(
                         R.id.emptychat);
@@ -292,8 +305,9 @@ public class ChatFragment extends Fragment {
                 if (itemCount > 0) {
                     if (getActivity() instanceof InfoTrainActivity)
                         ((InfoTrainActivity) getActivity()).setChatBadge(itemCount);
-                    messagesEmpty.setVisibility(View.GONE);
-                } else {
+                    if (messagesEmpty != null)
+                        messagesEmpty.setVisibility(View.GONE);
+                } else if (messagesEmpty != null) {
                     messagesEmpty.setVisibility(View.VISIBLE);
                     messagesEmpty.setText(R.string.chat_no_message);
                 }
@@ -319,7 +333,7 @@ public class ChatFragment extends Fragment {
 
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart,itemCount);
+                super.onItemRangeInserted(positionStart, itemCount);
             }
 
             @Override
@@ -347,7 +361,6 @@ public class ChatFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-        Log.i("BETRAINS", "train ID= " + trainId);
         if (trainId != null)
             mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
                     getActivity()).getString("prefname", "Anonymous")

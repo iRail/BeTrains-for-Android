@@ -103,10 +103,6 @@ public class PlannerFragment extends ListFragment {
                 Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
     }
 
-    public void onStart() {
-        super.onStart();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -243,33 +239,7 @@ public class PlannerFragment extends ListFragment {
                 doSearch();
             }
         });
-       /* Button btnInfoArrival = (Button) getView().findViewById(
-                R.id.btn_info_arrival);
-        btnInfoArrival.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
 
-                String station = tvArrival.getText().toString();
-                Intent i = new Intent(getActivity(), InfoStationActivity.class);
-                i.putExtra("Name", station);
-                i.putExtra("Hour", mDate.get(Calendar.HOUR));
-                i.putExtra("Minute", mDate.get(Calendar.MINUTE));
-                startActivityForResult(i, ACTIVITY_STATION);
-
-            }
-        });
-        Button btnInfoDeparture = (Button) getView().findViewById(
-                R.id.btn_infos_departure);
-        btnInfoDeparture.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                String station = tvDeparture.getText().toString();
-                Intent i = new Intent(getActivity(), InfoStationActivity.class);
-                i.putExtra("Name", station);
-                i.putExtra("Hour", mDate.get(Calendar.HOUR));
-                i.putExtra("Minute", mDate.get(Calendar.MINUTE));
-                startActivityForResult(i, ACTIVITY_STATION);
-
-            }
-        });*/
 
         Button btnAfter = (Button) getView().findViewById(R.id.mybuttonAfter);
         btnAfter.setOnClickListener(new Button.OnClickListener() {

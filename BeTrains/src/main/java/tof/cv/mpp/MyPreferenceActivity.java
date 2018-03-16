@@ -3,7 +3,11 @@ package tof.cv.mpp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -29,7 +33,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -81,10 +94,64 @@ public class MyPreferenceActivity extends PreferenceActivity implements
             addPreferencesFromResource(R.xml.activity_preferences);
             setSummary((EditTextPreference) getPreferenceScreen().findPreference("prefname"));
 
-            if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("google",false))
-                getPreferenceScreen().findPreference("hidepic").setEnabled(true);
+            if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("donator", false))
+                getPreferenceScreen().findPreference("donator").setEnabled(false);
 
+            if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("beta", false))
+                getPreferenceScreen().findPreference("beta").setEnabled(false);
+
+            if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("google", false))
+                getPreferenceScreen().findPreference("hidepic").setEnabled(true);
+            String pic = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("profilepic", "");
+
+            if (pic.length() > 0) {
+                Target target = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        getPreferenceScreen().findPreference("hidepic").setIcon(new BitmapDrawable(getResources(), bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    }
+                };
+                Picasso.with(getActivity()).load(pic).into(target);
+            }
+
+            getPreferenceScreen().findPreference("donator").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    String mail = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("prefmail", "X").replace(".", "");
+                    FirebaseDatabase.getInstance().getReference().child("donator").child(mail).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                           // Log.e("CVE", "Status " + dataSnapshot);
+                            if (dataSnapshot == null || dataSnapshot.getValue() == null)
+                                return;
+                            long value = (long) dataSnapshot.getValue();
+
+                            if (value == 1) {
+                                PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("donator", true);
+                                getPreferenceScreen().findPreference("donator").setEnabled(false);
+                                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    return true;
+                }
+            });
         }
+
 
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -145,6 +212,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements
                 updateUI(null);
             }
         }
+
         public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
             Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -178,7 +246,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements
                         .putString("prefname", account.getGivenName())
                         .putString("preflastname", account.getFamilyName())
                         .putString("profilepic", account.getPhotoUrl().toString())
-                        .putString("prefmail", account.getEmail()).putBoolean("google",true).apply();
+                        .putString("prefmail", account.getEmail()).putBoolean("google", true).apply();
 
 
                 onCreate(getArguments());
