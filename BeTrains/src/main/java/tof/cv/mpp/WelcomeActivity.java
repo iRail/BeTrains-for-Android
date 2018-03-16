@@ -44,15 +44,180 @@ public class WelcomeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setupShortcuts();
+
+        setContentView(R.layout.responsive_content_frame);
+        setProgressBarIndeterminateVisibility(false);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
+        }else{
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setNavigationBarTintEnabled(true);
+            tintManager.setTintResource(R.color.primarycolor);
+        }
+
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        navigationView = findViewById(R.id.navigation);
+        navigationView.getMenu().clear();
+
+        drawerLayout = findViewById(R.id.drawer);
+
+        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
+            navigationView.inflateMenu(R.menu.nav);
+        else
+            navigationView.inflateMenu(R.menu.nav_nogps);
+
+        if (drawerLayout != null)
+           setupDrawer();
+
+
+        if (navigationView != null)
+            setupNavigation();
+
+        int pos = Integer.valueOf(settings.getString(
+                getString(R.string.key_activity), "1"));
+
+        if (getIntent().hasExtra("Departure") && getIntent().hasExtra("Arrival"))
+            pos = 1;
+
+        switch (pos) {
+            case 1:
+                mContent = new PlannerFragment();
+                break;
+            case 2:
+                mContent = new TrafficFragment();
+                break;
+            case 3:
+                mContent = new ChatFragment();
+                break;
+            case 4:
+                mContent = new StarredFragment();
+                break;
+            case 5:
+                mContent = new ClosestFragment();
+                break;
+            case 6:
+                mContent = new GameFragment();
+                break;
+            default:
+                mContent = new PlannerFragment();
+                close = getString(R.string.activity_label_planner);
+                break;
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, mContent).commit();
+
+    }
+
+    private void setupNavigation() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(final MenuItem menuItem) {
+                if (drawerLayout != null)
+                    drawerLayout.closeDrawers();
+
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_item_plan:
+                        mContent = new PlannerFragment();
+                        break;
+                    case R.id.navigation_item_iss:
+                        mContent = new TrafficFragment();
+                        break;
+                    case R.id.navigation_item_chat:
+                        mContent = new ChatFragment();
+                        break;
+                    case R.id.navigation_item_star:
+                        mContent = new StarredFragment();
+                        break;
+                    case R.id.navigation_item_closest:
+                        mContent = new ClosestFragment();
+                        break;
+                    case R.id.navigation_item_game:
+                        mContent = new GameFragment();
+                        break;
+                    case R.id.navigation_item_comp:
+                        mContent = new CompensationFragment();
+                        break;
+                    case R.id.navigation_item_extras:
+                        mContent = new ExtraFragment();
+                        break;
+                    default:
+                        mContent = new PlannerFragment();
+                        close = getString(R.string.activity_label_planner);
+                        break;
+                }
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, mContent).addToBackStack("").commit();
+
+                return true;
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                (Toolbar) findViewById(R.id.my_awesome_toolbar),
+                R.string.app_name, R.string.app_name) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();
+            }
+            ;
+        };
+
+        mDrawerToggle.syncState();
+
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
+                if (mContent instanceof PlannerFragment && findViewById(R.id.tuto) != null)
+                    findViewById(R.id.tuto).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
+    }
+
+    private void setupShortcuts() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            int num=0;
+            int num = 0;
             DbAdapterConnection mDbHelper = new DbAdapterConnection(this);
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
             shortcutManager.removeAllDynamicShortcuts();
             mDbHelper.open();
             Cursor mCursor = mDbHelper.fetchAllFav();
             try {
-                while (mCursor.moveToNext() && num<=4) {
+                while (mCursor.moveToNext() && num <= 4) {
                     String item = mCursor.getString(mCursor
                             .getColumnIndex(DbAdapterConnection.KEY_FAV_NAME));
                     String itemTwo = mCursor.getString(mCursor
@@ -68,7 +233,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             i.putExtra("ID", itemTwo);
 
                             try {
-                                shortcut = new ShortcutInfo.Builder(this, itemTwo==null?item:itemTwo)
+                                shortcut = new ShortcutInfo.Builder(this, itemTwo == null ? item : itemTwo)
                                         .setShortLabel(item)
                                         .setLongLabel(item + " - " + itemTwo)
                                         .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_station))
@@ -117,193 +282,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
             mDbHelper.close();
         }
-
-
-        setContentView(R.layout.responsive_content_frame);
-        setProgressBarIndeterminateVisibility(false);
-
-        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
-
-        try {//Just in case setStatusBarColor not available
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
-        } catch (Error e) {
-            e.printStackTrace();
-        }
-
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
-
-        navigationView = (NavigationView) findViewById(R.id.navigation);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
-        navigationView.getMenu().clear();
-
-        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
-            navigationView.inflateMenu(R.menu.nav);
-        else
-            navigationView.inflateMenu(R.menu.nav_nogps);
-
-        if (drawerLayout != null) {
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            mDrawerToggle = new ActionBarDrawerToggle(
-                    this,
-                    drawerLayout,
-                    (Toolbar) findViewById(R.id.my_awesome_toolbar),
-                    R.string.app_name, R.string.app_name) {
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    // code here will execute once the drawer is opened
-
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                }
-
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    super.onDrawerClosed(drawerView);
-                    // Code here will execute once drawer is closed
-                    invalidateOptionsMenu();
-                }
-
-                ;
-            };
-
-            mDrawerToggle.syncState();
-
-            drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-                @Override
-                public void onDrawerSlide(View drawerView, float slideOffset) {
-                }
-
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
-                    if (mContent instanceof PlannerFragment && findViewById(R.id.tuto)!=null)
-                        findViewById(R.id.tuto).setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                }
-
-                @Override
-                public void onDrawerStateChanged(int newState) {
-                }
-            });
-        }
-
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-                // This method will trigger on item Click of navigation menu
-                @Override
-                public boolean onNavigationItemSelected(final MenuItem menuItem) {
-
-                    //menuItem.setChecked(true);
-
-                    if (drawerLayout != null)
-                        drawerLayout.closeDrawers();
-
-                    switch (menuItem.getItemId()) {
-                        case R.id.navigation_item_plan:
-                            mContent = new PlannerFragment();
-                            break;
-                        /*case R.id.navigation_item_notif:
-                            mContent = new NotifFragment();
-                            break;*/
-                        case R.id.navigation_item_iss:
-                            mContent = new TrafficFragment();
-                            break;
-                        case R.id.navigation_item_chat:
-                            mContent = new ChatFragment();
-                            break;
-                        case R.id.navigation_item_star:
-                            mContent = new StarredFragment();
-                            break;
-                        case R.id.navigation_item_closest:
-                            mContent = new ClosestFragment();
-                            break;
-                        case R.id.navigation_item_game:
-                            mContent = new GameFragment();
-                            break;
-                        case R.id.navigation_item_comp:
-                            mContent = new CompensationFragment();
-                            break;
-                        case R.id.navigation_item_extras:
-                            mContent = new ExtraFragment();
-                            break;
-                        default:
-                            mContent = new PlannerFragment();
-                            close = getString(R.string.activity_label_planner);
-                            break;
-                    }
-
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, mContent).addToBackStack("").commit();
-
-                   /*
-                    // Log.e("CVE","Hum " + navigationView.hasFocus());
-                    Log.e("CVE","pos " + menuItem.getItemId());
-                    // This is one of the dirtiest hack I made recently. I am not proud of it. Shame
-                    // But in an other hand, the Navigation Drawer should not lose focus on tablets
-                    // Or it should keep it if I call requestFocus() without delay...
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            navigationView.clearFocus();
-                            navigationView.requestFocus();
-                        }
-                    }, 500);*/
-
-                    return true;
-                }
-            });
-        }
-
-// Set the default screen at startup from Preferences
-        int pos = Integer.valueOf(settings.getString(
-                getString(R.string.key_activity), "1"));
-
-        if (getIntent().hasExtra("Departure") && getIntent().hasExtra("Arrival"))
-            pos = 1;
-
-        switch (pos) {
-            case 1:
-                mContent = new PlannerFragment();
-                break;
-            case 2:
-                mContent = new TrafficFragment();
-                break;
-            case 3:
-                mContent = new ChatFragment();
-                break;
-            case 4:
-                mContent = new StarredFragment();
-                break;
-            case 5:
-                mContent = new ClosestFragment();
-                break;
-            case 6:
-                mContent = new GameFragment();
-                break;
-            default:
-                mContent = new PlannerFragment();
-                close = getString(R.string.activity_label_planner);
-                break;
-        }
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, mContent).commit();
-
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        //tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintResource(R.color.primarycolor);
-
-
     }
 
     @Override
