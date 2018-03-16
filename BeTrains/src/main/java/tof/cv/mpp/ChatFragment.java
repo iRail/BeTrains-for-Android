@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -33,6 +35,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +45,7 @@ import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.adapter.MessageViewHolder;
 import tof.cv.mpp.bo.Message;
+import tof.cv.mpp.view.LetterTileProvider;
 
 public class ChatFragment extends Fragment {
     /**
@@ -55,6 +60,9 @@ public class ChatFragment extends Fragment {
     private boolean posted = false;
     String trainId;
     DatabaseReference ref;
+    Resources res  ;
+    int tileSize ;
+
 
     private static final int MENU_FILTER = 0;
 
@@ -107,7 +115,7 @@ public class ChatFragment extends Fragment {
                 } else {
                     String pseudo = PreferenceManager
                             .getDefaultSharedPreferences(getActivity())
-                            .getString("prefPseudo", "Anonymous");
+                            .getString("prefname", "Anonymous");
                     if (pseudo.contentEquals("Anonymous"))
                         Toast.makeText(
                                 getActivity(),
@@ -134,7 +142,13 @@ public class ChatFragment extends Fragment {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId));
+        String pic="";
+        if(getContext()!=null)
+            pic=PreferenceManager.getDefaultSharedPreferences(getContext()).getString("profilepic","NOPIC");
+
+        String user_id = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("prefmail","");
+
+        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId,pic,user_id));
         update();
         View view = getActivity().getCurrentFocus();
         if (view != null) {
@@ -171,7 +185,8 @@ public class ChatFragment extends Fragment {
         Query ref2 = trainId == null ? ref.limitToLast(99) : ref.orderByChild("train_id")
                 .equalTo(trainId).limitToLast(99);
 
-
+        res = getResources();
+        tileSize = res.getDimensionPixelSize(R.dimen.letter_tile_size);
 
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
                 MessageViewHolder>(
@@ -193,6 +208,16 @@ public class ChatFragment extends Fragment {
                     viewHolder.getTime().setText(message.getEntry_date());
 
                 viewHolder.getTrainid().setText(message.getTrain_id());
+
+                if(message.pic_url!=null && message.pic_url.length()>0)
+                    Picasso.with(getContext()).load(message.pic_url).into(viewHolder.iv);
+                else{
+
+                    final LetterTileProvider tileProvider = new LetterTileProvider(getContext());
+                    final Bitmap letterTile = tileProvider.getLetterTile(message.getUser_name(), message.getUser_name(), tileSize, tileSize);
+                    viewHolder.iv.setImageBitmap(letterTile);
+                }
+
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -325,11 +350,11 @@ public class ChatFragment extends Fragment {
         Log.i("BETRAINS", "train ID= " + trainId);
         if (trainId != null)
             mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
-                    getActivity()).getString("prefPseudo", "Anonymous")
+                    getActivity()).getString("prefname", "Anonymous")
                     + " - " + trainId);
         else
             mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
-                    getActivity()).getString("prefPseudo", "Anonymous"));
+                    getActivity()).getString("prefname", "Anonymous"));
 
         LinearLayout mSendLayout = (LinearLayout) getView().findViewById(
                 R.id.send_layout);

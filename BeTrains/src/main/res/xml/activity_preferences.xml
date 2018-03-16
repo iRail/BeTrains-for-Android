@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory android:title="@string/settings_chat_title" >
+        <Preference
+            android:key="login"
+            android:icon="@drawable/glogo"
+            android:title="Inscription avec Google"
+            android:summary="C'est plus rapide ;-)"
+            />
+
         <EditTextPreference
-            android:defaultValue="Anonymous"
-            android:key="prefPseudo"
-            android:summary=""
-            android:title="@string/settings_chat_pseudo" />
+            android:title="@string/settings_chat_pseudo"
+            android:key="prefname"/>
+
+        <CheckBoxPreference
+            android:title="@string/pref_hide_google"
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="hidepic"/>
 
     </PreferenceCategory>
 

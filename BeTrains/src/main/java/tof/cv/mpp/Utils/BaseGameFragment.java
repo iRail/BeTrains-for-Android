@@ -49,12 +49,8 @@ public abstract class BaseGameFragment extends Fragment implements
     // The game helper object. This class is mainly a wrapper around this object.
     protected GameHelper mHelper;
 
-    // We expose these constants here because we don't want users of this class
-    // to have to know about GameHelper at all.
     public static final int CLIENT_GAMES = GameHelper.CLIENT_GAMES;
-    public static final int CLIENT_APPSTATE = GameHelper.CLIENT_APPSTATE;
-    public static final int CLIENT_PLUS = GameHelper.CLIENT_PLUS;
-    public static final int CLIENT_ALL = GameHelper.CLIENT_ALL;
+
 
     // Requested clients. By default, that's just the games client.
     protected int mRequestedClients = CLIENT_GAMES;

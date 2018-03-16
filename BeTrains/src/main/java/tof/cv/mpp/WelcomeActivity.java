@@ -179,7 +179,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 @Override
                 public void onDrawerOpened(View drawerView) {
                     PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
-                    if (mContent instanceof PlannerFragment)
+                    if (mContent instanceof PlannerFragment && findViewById(R.id.tuto)!=null)
                         findViewById(R.id.tuto).setVisibility(View.GONE);
                 }
 

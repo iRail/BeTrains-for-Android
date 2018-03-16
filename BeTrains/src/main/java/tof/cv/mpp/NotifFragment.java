@@ -23,6 +23,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 import com.google.android.gms.location.Geofence;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -40,6 +41,7 @@ public class NotifFragment extends Fragment {
 
     public String trainId;
     int notif = 0;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public NotifFragment() {
     }
@@ -47,7 +49,7 @@ public class NotifFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             notif = ((NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE)).getActiveNotifications().length;
@@ -60,7 +62,8 @@ public class NotifFragment extends Fragment {
             public void onClick(View view) {
                 Bundle myExtrasBundle = new Bundle();
                 myExtrasBundle.putString("id", trainId);
-
+                Bundle params = new Bundle();
+                mFirebaseAnalytics.logEvent("ButtonNotif", params);
                 if (notif > 0) {
                     FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getContext()));
                     dispatcher.cancelAll();

@@ -2,8 +2,10 @@ package tof.cv.mpp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -12,7 +14,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -47,6 +53,7 @@ import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
+import tof.cv.mpp.bo.LogCVE;
 import tof.cv.mpp.view.DateTimePicker;
 
 public class PlannerFragment extends ListFragment {
@@ -330,7 +337,7 @@ public class PlannerFragment extends ListFragment {
         }
     }
 
-    private void fillData() {
+    private void fillData(final String url) {
 
         if (allConnections != null && allConnections.connection != null) {
             connAdapter = new ConnectionAdapter(this.getActivity()
@@ -342,6 +349,33 @@ public class PlannerFragment extends ListFragment {
             PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
 
         } else {
+            Log.e("CVE", "NULL");
+
+            if (url != null && url.length() > 0) {
+                // Linkify the message
+                final SpannableString s = new SpannableString(getString(R.string.msg_api_error)+" - "+url);
+                Linkify.addLinks(s, Linkify.ALL);
+
+                final AlertDialog d = new AlertDialog.Builder(getContext())
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse(url));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel,null)
+                        .setTitle(R.string.msg_api_error_title)
+                        .setMessage(s)
+                        .create();
+
+                d.show();
+                // Make the textview clickable. Must be called after show()
+                ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+            }
+
+
             allConnections = Utils.getCachedConnections(PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("cached", ""));
             if (allConnections != null) {
                 connAdapter = new ConnectionAdapter(this.getActivity()
@@ -441,10 +475,10 @@ public class PlannerFragment extends ListFragment {
 
         switch (requestCode) {
             case ACTIVITY_DISPLAY:
-                fillData();
+                fillData("");
                 break;
             case ACTIVITY_STOP:
-                fillData();
+                fillData("");
                 break;
 
             case ACTIVITY_GETSTARTSTATION:
@@ -489,6 +523,7 @@ public class PlannerFragment extends ListFragment {
 
     }
 
+    //DatabaseReference ref;
     private void mySearchThread(final Activity a) {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -526,8 +561,7 @@ public class PlannerFragment extends ListFragment {
             month = "01";
 
         String url = "";
-        // String url = "http://dev.api.irail.be/connections.php?to="
-
+        //ref = FirebaseDatabase.getInstance().getReference().child("log").getRef();
         try {
             url = URLEncoder.encode(myArrival, "UTF-8") + "&from=" + URLEncoder.encode(myStart, "UTF-8") + "&date=" + day + month
                     + year + "&time=" + hour + minutes + "&timeSel="
@@ -539,39 +573,43 @@ public class PlannerFragment extends ListFragment {
                     + year + "&time=" + hour + minutes + "&timeSel="
                     + dA + "&lang=" + langue
                     + "&typeOfTransport=train&format=json&fast=true&alerts=true";
+            // ref.push().setValue(new LogCVE("CATCH",e.getMessage(),url,""));
         }
-
 
 
         url = url.replace(" ", "%20");
 
 
         url = "https://api.irail.be/connections.php?to=" + url;
-
+        // ref.push().setValue(new LogCVE("URL","",url,""));
         Log.v(TAG, url);
-
+        Log.e("CVE", "Search " + url);
         final String finalUrl = url;
         Ion.with(this).load(url).setTimeout(4500).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
         }).setCallback(new FutureCallback<Connections>() {
             @Override
             public void onCompleted(Exception e, Connections result) {
-                if (e != null)
+                if (e != null) {
+                    //ref.push().setValue(new LogCVE("NULL","",finalUrl,""));
                     e.printStackTrace();
+                }
+
                 allConnections = result;
                 if (allConnections == null) {
                     //Log.e(TAG, "API failure!!!");
                     if (getActivity() != null)
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getActivity(), R.string.txt_error,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getActivity(), R.string.txt_error,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
                 }
 
                 try {
-                    fillData();
+
+                    fillData(finalUrl);
                     getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -586,7 +624,7 @@ public class PlannerFragment extends ListFragment {
     public void onResume() {
         super.onResume();
         try {
-            fillData();
+            fillData("");
         } catch (Exception e) {
             //Log.i(TAG, "Impossible to fill Data:\n" + e.getMessage());
             e.printStackTrace();

@@ -156,5 +156,11 @@
     <string name="activity_label_notif">Notif</string>
     <string name="notif_explanation">Ajoutez une notification qui se mettra à jour toutes les 2 minutes.(Attention à votre batterie).\n\nIl suffit de l'activer en clickant sur ce bouton</string>
     <string name="totalDelay">Retard max:</string>
+    <string name="notif_open">Mon Train</string>
+    <string name="notif_dismiss">Quitter</string>
+    <string name="prefMailTitle">Mail</string>
+    <string name="pref_hide_google">Cacher ma photo dans le Chat</string>
+    <string name="msg_api_error_title">Erreur serveur</string>
+    <string name="msg_api_error">désolé, petit soucis, merci de me contacter par mail et aller voir si il y a un message derrière cette url:</string>
 
 </resources>

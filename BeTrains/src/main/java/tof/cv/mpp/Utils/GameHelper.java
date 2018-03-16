@@ -24,8 +24,7 @@ import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.request.GameRequest;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.Plus.PlusOptions;
+
 
 public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -95,7 +94,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
 
     // Api options to use when adding each API, null for none
     GamesOptions mGamesApiOptions = GamesOptions.builder().build();
-    PlusOptions mPlusApiOptions = null;
+
     NoOptions mAppStateApiOptions = null;
 
     // Google API client object we manage.
@@ -104,9 +103,8 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Client request flags
     public final static int CLIENT_NONE = 0x00;
     public final static int CLIENT_GAMES = 0x01;
-    public final static int CLIENT_PLUS = 0x02;
     public final static int CLIENT_APPSTATE = 0x04;
-    public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS
+    public final static int CLIENT_ALL = CLIENT_GAMES
             | CLIENT_APPSTATE;
 
     // What clients were requested? (bit flags)
@@ -234,14 +232,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         mAppStateApiOptions = options;
     }
 
-    /**
-     * Sets the options to pass when setting up the Plus API. Call before
-     * setup().
-     */
-    public void setPlusApiOptions(PlusOptions options) {
-        doApiOptionsPreCheck();
-        mPlusApiOptions = options;
-    }
+
 
     /**
      * Creates a GoogleApiClient.Builder for use with @link{#setup}. Normally,
@@ -265,10 +256,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             builder.addScope(Games.SCOPE_GAMES);
         }
 
-        if (0 != (mRequestedClients & CLIENT_PLUS)) {
-            builder.addApi(Plus.API, mPlusApiOptions);
-            builder.addScope(Plus.SCOPE_PLUS_LOGIN);
-        }
 
         mGoogleApiClientBuilder = builder;
         return builder;
@@ -507,13 +494,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             // nothing to do
             debugLog("signOut: was already disconnected, ignoring.");
             return;
-        }
-
-        // for Plus, "signing out" means clearing the default account and
-        // then disconnecting
-        if (0 != (mRequestedClients & CLIENT_PLUS)) {
-            debugLog("Clearing default account on PlusClient.");
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
         }
 
         // For the games client, signing out means calling signOut and

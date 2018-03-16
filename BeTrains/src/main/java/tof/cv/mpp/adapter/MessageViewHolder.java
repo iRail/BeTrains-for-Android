@@ -2,6 +2,7 @@ package tof.cv.mpp.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import tof.cv.mpp.R;
@@ -14,6 +15,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     private TextView messagebody;
     private TextView nickname;
     public View itemView;
+    public ImageView iv;
 
     public MessageViewHolder(View itemView) {
         super(itemView);
@@ -21,6 +23,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         time = (TextView) itemView.findViewById(R.id.time);
         messagebody = (TextView) itemView.findViewById(R.id.messagebody);
         nickname = (TextView) itemView.findViewById(R.id.nickname);
+        iv = (ImageView) itemView.findViewById(R.id.profile_image);
         this.itemView = itemView;
     }
 
