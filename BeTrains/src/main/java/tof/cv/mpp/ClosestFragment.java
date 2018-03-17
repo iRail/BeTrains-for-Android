@@ -151,8 +151,8 @@ public class ClosestFragment extends ListFragment {
                     case 1:
                         try {
                             Uri uri = Uri.parse("google.navigation:q="
-                                    + ((double) clicked.getLat() / 1E6) + ","
-                                    + ((double) clicked.getLon() / 1E6));
+                                    + ((double) clicked.getLat() ) + ","
+                                    + ((double) clicked.getLon() ));
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
                         } catch (ActivityNotFoundException e) {
@@ -167,9 +167,9 @@ public class ClosestFragment extends ListFragment {
                             Intent i = new Intent(
                                     android.content.Intent.ACTION_VIEW, Uri
                                     .parse("geo:0,0?q="
-                                            + (clicked.getLat() / 1E6)
+                                            + (clicked.getLat() )
                                             + ","
-                                            + (clicked.getLon() / 1E6)
+                                            + (clicked.getLon() )
                                             + " (" + clicked.getStation()
                                             + ")"));
                         /*

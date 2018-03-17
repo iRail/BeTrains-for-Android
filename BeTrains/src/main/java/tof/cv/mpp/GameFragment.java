@@ -110,7 +110,7 @@ public class GameFragment extends BaseGameFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_game);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_game);
 
         ViewPager pager = (ViewPager) getView().findViewById(R.id.pager);
         titles = this.getResources().getStringArray(R.array.titles);
@@ -332,7 +332,8 @@ public class GameFragment extends BaseGameFragment implements
                     while (it.hasNext()) {
                         adapter.add(it.next());
                     }
-                    ((MyStaggeredGridView) getView().findViewById(R.id.listAchivement)).setAdapter(adapter);
+                    if (getView() != null)
+                        ((MyStaggeredGridView) getView().findViewById(R.id.listAchivement)).setAdapter(adapter);
 
                 }
             });
@@ -574,7 +575,7 @@ public class GameFragment extends BaseGameFragment implements
 
     }
 
-    public void setupLayout(final StationList.Stationinfo station, int id) {
+    public void setupLayout(final StationList.Stationinfo station, final int id) {
         /*new DisplayPointsTask(station,)
                 .execute();*/
 
@@ -586,6 +587,10 @@ public class GameFragment extends BaseGameFragment implements
         }).setCallback(new FutureCallback<Station>() {
             @Override
             public void onCompleted(Exception e, Station result) {
+                if (result == null)
+                    return;
+                if (getActivity() == null)
+                    return;
                 Station.StationDepartures stationDepartures = result.getStationDepartures();
                 int delay = 0;
                 int num = 1;
@@ -612,7 +617,7 @@ public class GameFragment extends BaseGameFragment implements
                     public void onClick(View arg0) {
 
                         if (station.distance > 0.5) {
-                            crouton(getString(R.string.game_too_far) + " " + station.getDistance(), Style.ALERT);
+                            crouton(getString(R.string.game_too_far) + " " + station.getDistance(), Style.ALERT,id);
                             return;
                         }
                         if ((System.currentTimeMillis() > PreferenceManager
@@ -660,6 +665,9 @@ public class GameFragment extends BaseGameFragment implements
     }
 
     public void crouton(String text, Style style) {
-        Crouton.makeText(this.getActivity(), text, style, R.id.my_awesome_toolbar).show();
+        Crouton.makeText(this.getActivity(), text, style, R.id.pager).show();
+    }
+    public void crouton(String text, Style style,int view) {
+        Crouton.makeText(this.getActivity(), text, style, view).show();
     }
 }
