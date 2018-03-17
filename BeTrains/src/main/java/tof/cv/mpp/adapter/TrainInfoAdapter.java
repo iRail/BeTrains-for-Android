@@ -1,13 +1,14 @@
 package tof.cv.mpp.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,64 +16,112 @@ import java.util.ArrayList;
 import tof.cv.mpp.InfoStationActivity;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
+import tof.cv.mpp.bo.Alert;
+import tof.cv.mpp.bo.Alerts;
 import tof.cv.mpp.bo.Vehicle;
 
-public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.InfotrainHolder> {
+public class TrainInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     ArrayList<Vehicle.VehicleStop> list;
+    String train;
+    Alerts alerts;
+    boolean hasAlerts;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
-    public TrainInfoAdapter(ArrayList<Vehicle.VehicleStop> list, Context context) {
+    public TrainInfoAdapter(ArrayList<Vehicle.VehicleStop> list, Context context, Alerts alerts, String train) {
         this.list = list;
+        this.alerts = alerts;
+        this.train = train;
+        hasAlerts = (alerts != null && alerts.getNumber() > 0);
     }
 
     @Override
-    public TrainInfoAdapter.InfotrainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_info_train, parent, false);
-        TrainInfoAdapter.InfotrainHolder viewHolder = new TrainInfoAdapter.InfotrainHolder(v);
-        return viewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        if (viewType == TYPE_HEADER) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_info_train_alert, parent, false);
+            return new VHHeader(v);
+        } else {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_info_train, parent, false);
+            return new TrainInfoAdapter.InfotrainHolder(v);
+        }
+
+
     }
 
     @Override
-    public void onBindViewHolder(InfotrainHolder holder, int position) {
-        Vehicle.VehicleStop o = list.get(position);
-        if (o != null) {
-            holder.item = o;
-            holder.station.setText(Html.fromHtml(o.getStation()));
+    public void onBindViewHolder(RecyclerView.ViewHolder holderParam, int position) {
+        if (holderParam instanceof InfotrainHolder) {
+            InfotrainHolder holder = (InfotrainHolder) holderParam;
+            Vehicle.VehicleStop o = list.get(position+(hasAlerts?-1:0));
+            if (o != null) {
+                holder.item = o;
+                holder.station.setText(Html.fromHtml(o.getStation()));
 
-            if (o.getPlatforminfo() != null) {
-                holder.platform.setText(o.getPlatforminfo().name);
+                if (o.getPlatforminfo() != null) {
+                    holder.platform.setText(o.getPlatforminfo().name);
 
-                if (o.getPlatforminfo() != null && o.getPlatforminfo().normal == 0)
-                    holder.platform
-                            .setText("! " + holder.platform.getText() + " !");
-            } else
-                holder.platform.setText("");
+                    if (o.getPlatforminfo() != null && o.getPlatforminfo().normal == 0)
+                        holder.platform
+                                .setText("! " + holder.platform.getText() + " !");
+                } else
+                    holder.platform.setText("");
 
 
-            if (o.isCancelled())
-                holder.time.setText(Html.fromHtml("<font color=\"red\">XXXX</font>"));
-            else
-                holder.time.setText(Utils.formatDate(o.getTime(), false, false));
+                if (o.isCancelled())
+                    holder.time.setText(Html.fromHtml("<font color=\"red\">XXXX</font>"));
+                else
+                    holder.time.setText(Utils.formatDate(o.getTime(), false, false));
 
-            if (o.getDelay().contentEquals("0"))
-                holder.delay.setText("");
-            else
-                try {
-                    holder.delay.setText("+"
-                            + (Integer.valueOf(o.getDelay()) / 60)
-                            + "'");
-                } catch (Exception e) {
-                    holder.delay.setText(o.getDelay());
+                if (o.getDelay().contentEquals("0"))
+                    holder.delay.setText("");
+                else
+                    try {
+                        holder.delay.setText("+"
+                                + (Integer.valueOf(o.getDelay()) / 60)
+                                + "'");
+                    } catch (Exception e) {
+                        holder.delay.setText(o.getDelay());
+                    }
+
+                holder.left.setVisibility(("1".contentEquals("" + o.hasLeft())) ? View.VISIBLE : View.INVISIBLE);
+
+            }
+        }
+        if (holderParam instanceof VHHeader) {
+            VHHeader holder = (VHHeader) holderParam;
+            holder.train = train;
+            holder.text = "";
+            holder.html = "";
+            if (alerts.getAlertlist() != null)
+                for (Alert anAlert : alerts.getAlertlist()) {
+                    holder.text += anAlert.getHeader() + " / ";
+                    holder.html += ("<h3>" + anAlert.getHeader() + "</h3>");
+                    holder.html += (anAlert.getDescription());
                 }
 
-            holder.left.setVisibility(("1".contentEquals("" + o.hasLeft())) ? View.VISIBLE : View.INVISIBLE);
+
+            if (holder.text.endsWith(" / "))
+                holder.text = holder.text.substring(0, holder.text.length() - 3);
+
+            holder.alert.setText(holder.text);
         }
+
     }
 
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list.size() + (hasAlerts ? 1 : 0);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (hasAlerts && position == 0)
+            return TYPE_HEADER;
+
+        return TYPE_ITEM;
     }
 
     public static class InfotrainHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -100,6 +149,27 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<TrainInfoAdapter.Info
             i.putExtra("ID", item.getStationInfo().getId());
             i.putExtra("timestamp", item.getTime());
             view.getContext().startActivity(i);
+        }
+    }
+
+    public static class VHHeader extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView alert;
+        String html;
+        String text;
+        String train;
+
+        public VHHeader(View v) {
+            super(v);
+            v.setOnClickListener(this);
+            alert = (TextView) v.findViewById(R.id.alert);
+        }
+
+        @Override
+        public void onClick(View view) {
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle(train)
+                    .setMessage(Html.fromHtml(html))
+                    .show();
         }
     }
 }

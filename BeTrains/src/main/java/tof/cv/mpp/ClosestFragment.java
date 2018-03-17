@@ -172,15 +172,7 @@ public class ClosestFragment extends ListFragment {
                                             + (clicked.getLon() )
                                             + " (" + clicked.getStation()
                                             + ")"));
-                        /*
-                         * Intent i = new Intent(getActivity(),
-						 * MapStationActivity.class);
-						 * 
-						 * i.putExtra("Name", clicked.getStation());
-						 * i.putExtra("lat", (clicked.getLat() / 1E6));
-						 * 
-						 * i.putExtra("lon", (clicked.getLon() / 1E6));
-						 */
+
                             startActivity(i);
                         } catch (ActivityNotFoundException e) {
                             (Toast.makeText(getActivity(), R.string.closest_map_err,

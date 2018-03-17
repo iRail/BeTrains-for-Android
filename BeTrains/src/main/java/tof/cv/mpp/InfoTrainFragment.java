@@ -9,29 +9,19 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -55,15 +45,12 @@ import com.koushikdutta.ion.Response;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Date;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.bo.Alert;
-import tof.cv.mpp.bo.Message;
 import tof.cv.mpp.bo.Vehicle;
 import tof.cv.mpp.widget.TrainAppWidgetProvider;
 import tof.cv.mpp.widget.TrainWidgetProvider;
@@ -150,7 +137,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         if (currentVehicle != null
                 && currentVehicle.getVehicleStops() != null) {
             TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
-                    .getVehicleStops().getVehicleStop(), getActivity());
+                    .getVehicleStops().getVehicleStop(), getActivity(), currentVehicle.getAlerts(),currentVehicle.getVehicleInfo().name);
 
 
             recyclerView.setAdapter(trainInfoAdapter);
@@ -215,37 +202,9 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
                                               if (currentVehicle != null
                                                       && currentVehicle.getVehicleStops() != null) {
-                                                  if (currentVehicle.getAlerts() != null && currentVehicle.getAlerts().getNumber() > 0) {
-                                                      String text = "";
-                                                      String html = "";
-                                                      if (currentVehicle.getAlerts().getAlertlist() != null)
-                                                          for (Alert anAlert : currentVehicle.getAlerts().getAlertlist()) {
-                                                              text += anAlert.getHeader() + " / ";
-                                                              html += ("<h3>" + anAlert.getHeader() + "</h3>");
-                                                              html += (anAlert.getDescription());
-                                                          }
-
-
-                                                      if (text.endsWith(" / "))
-                                                          text = text.substring(0, text.length() - 3);
-
-
-                                                      final String finalHtml = html;
-                                                      Snackbar.make(getView().findViewById(R.id.map), Html.fromHtml(text), Snackbar.LENGTH_INDEFINITE)
-                                                              .setAction("OK", new View.OnClickListener() {
-                                                                  @Override
-                                                                  public void onClick(View v) {
-                                                                      new AlertDialog.Builder(getActivity())
-                                                                              .setTitle(currentVehicle.getVehicleInfo().name)
-                                                                              .setMessage(Html.fromHtml(finalHtml))
-                                                                              .show();
-                                                                  }
-                                                              }).show();
-                                                  }
-
 
                                                   TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
-                                                          .getVehicleStops().getVehicleStop(), getActivity());
+                                                          .getVehicleStops().getVehicleStop(), getActivity(),currentVehicle.getAlerts(),currentVehicle.getVehicleInfo().name);
                                                   recyclerView.setAdapter(trainInfoAdapter);
 
                                                   ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
