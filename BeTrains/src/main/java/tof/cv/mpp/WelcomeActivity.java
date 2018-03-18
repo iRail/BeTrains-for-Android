@@ -27,6 +27,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import java.util.Arrays;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
+import tof.cv.mpp.view.LetterTileProvider;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -53,7 +54,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
-        }else{
+        } else {
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setNavigationBarTintEnabled(true);
             tintManager.setTintResource(R.color.primarycolor);
@@ -74,7 +75,7 @@ public class WelcomeActivity extends AppCompatActivity {
             navigationView.inflateMenu(R.menu.nav_nogps);
 
         if (drawerLayout != null)
-           setupDrawer();
+            setupDrawer();
 
 
         if (navigationView != null)
@@ -183,6 +184,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 super.onDrawerClosed(drawerView);
                 invalidateOptionsMenu();
             }
+
             ;
         };
 
@@ -211,7 +213,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setupShortcuts() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             int num = 0;
             DbAdapterConnection mDbHelper = new DbAdapterConnection(this);
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
@@ -228,6 +230,11 @@ public class WelcomeActivity extends AppCompatActivity {
                             .getColumnIndex(DbAdapterConnection.KEY_FAV_TYPE));
                     ShortcutInfo shortcut = null;
                     Intent i;
+
+                    int tileSize = getResources().getDimensionPixelSize(R.dimen.letter_tile_size);
+                    ;
+                    LetterTileProvider tileProvider = new LetterTileProvider(this);
+
                     switch (type) {
                         case 1:
                             i = new Intent(this, InfoStationActivity.class);
@@ -238,7 +245,11 @@ public class WelcomeActivity extends AppCompatActivity {
                                 shortcut = new ShortcutInfo.Builder(this, itemTwo == null ? item : itemTwo)
                                         .setShortLabel(item)
                                         .setLongLabel(item + " - " + itemTwo)
-                                        .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_station))
+                                        .setIcon(
+                                                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ?
+                                                        Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
+                                                        : Icon.createWithBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
+                                        )
                                         .setIntent(i.setAction(""))
                                         .build();
                             } catch (Exception e) {
@@ -247,13 +258,18 @@ public class WelcomeActivity extends AppCompatActivity {
                             }
                             break;
                         case 2:
+                            String numbers = item.replaceAll("\\D+", "");
                             i = new Intent(this, InfoTrainActivity.class);
                             i.putExtra("Name", item);
 
                             shortcut = new ShortcutInfo.Builder(this, item)
                                     .setShortLabel(item)
                                     .setLongLabel(item)
-                                    .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_train))
+                                    .setIcon(
+                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ?
+                                                    Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(numbers, numbers, tileSize, tileSize))
+                                                    : Icon.createWithBitmap(tileProvider.getLetterTile(numbers, numbers, tileSize, tileSize))
+                                    )
                                     .setIntent(i.setAction(""))
                                     .build();
                             break;
@@ -262,13 +278,19 @@ public class WelcomeActivity extends AppCompatActivity {
                             i.putExtra("Departure", item);
                             i.putExtra("Arrival", itemTwo);
 
+
                             shortcut = new ShortcutInfo.Builder(this, item + " - " + itemTwo)
                                     .setShortLabel(item + " - " + itemTwo)
                                     .setLongLabel(item + " - " + itemTwo)
-                                    .setIcon(Icon.createWithResource(this, R.drawable.ic_fav_map))
+                                    .setIcon(
+                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ?
+                                                    Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
+                                                    : Icon.createWithBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
+                                    )
                                     //.setIntent(i)
                                     .setIntent(i.setAction(""))
                                     .build();
+
                             break;
                     }
 

@@ -144,7 +144,7 @@ public class ChatFragment extends Fragment {
         String formattedDate = df.format(c.getTime());
         String pic = "";
         if (getContext() != null && !PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("hidepic", false))
-            pic = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("profilepic", "NOPIC");
+            pic = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("profilepic", "");
 
         String user_id = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("prefmail", "");
         boolean donator = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("donator", false);

@@ -602,23 +602,6 @@ public class PlannerFragment extends ListFragment {
 
     }
 
-    public void noDataClick(int position) {
-
-        // TODO If there were no results, launch browser to check connection.
-
-		/*
-         * Intent i = new Intent(this, InfoTrainActivity.class);
-		 * 
-		 * i.putExtra("fromto", tvDeparture.getText().toString() + " - " +
-		 * tvArrival.getText().toString());
-		 * 
-		 * i.putExtra(ConnectionDbAdapter.KEY_TRAINS, c.getString(c
-		 * .getColumnIndexOrThrow(ConnectionDbAdapter.KEY_TRAINS)));
-		 * 
-		 * startActivity(i);
-		 */
-    }
-
     private void showDateTimeDialog() {
 
         final DateTimePicker mDateTimeDialog = new DateTimePicker(

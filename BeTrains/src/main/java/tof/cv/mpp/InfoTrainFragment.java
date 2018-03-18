@@ -109,7 +109,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
             displayInfo(id, fromTo, timestamp);
 
         swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeContainer);
-        if(swipeContainer!=null){
+        if (swipeContainer != null) {
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -137,7 +137,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         if (currentVehicle != null
                 && currentVehicle.getVehicleStops() != null) {
             TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
-                    .getVehicleStops().getVehicleStop(), getActivity(), currentVehicle.getAlerts(),currentVehicle.getVehicleInfo().name);
+                    .getVehicleStops().getVehicleStop(), getActivity(), currentVehicle.getAlerts(), currentVehicle.getVehicleInfo().name);
 
 
             recyclerView.setAdapter(trainInfoAdapter);
@@ -183,16 +183,19 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                     .formatDate(new Date(timestamp), "HHmm");
             dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
         }
+        String lan = getString(R.string.url_lang);
+        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("prefnl", false))
+            lan = "NL";
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
-                + "&lang=" + getString(R.string.url_lang) + dateTime + "&format=JSON&alerts=true";
+                + "&lang=" + lan + dateTime + "&format=JSON&alerts=true";
 
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
                                           @Override
                                           public void onCompleted(Exception e, Response<Vehicle> result) {
                                               if (swipeContainer != null)
-                                              swipeContainer.setRefreshing(false);
+                                                  swipeContainer.setRefreshing(false);
 
                                               if (result != null) {
                                                   currentVehicle = result.getResult();
@@ -204,7 +207,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                       && currentVehicle.getVehicleStops() != null) {
 
                                                   TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
-                                                          .getVehicleStops().getVehicleStop(), getActivity(),currentVehicle.getAlerts(),currentVehicle.getVehicleInfo().name);
+                                                          .getVehicleStops().getVehicleStop(), getActivity(), currentVehicle.getAlerts(), currentVehicle.getVehicleInfo().name);
                                                   recyclerView.setAdapter(trainInfoAdapter);
 
                                                   ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Utils.formatDate(new Date(timestamp), "dd MMM HH:mm"));
@@ -434,6 +437,8 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         ad.setPositiveButton(android.R.string.ok,
                 new android.content.DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
+                        if(currentVehicle.getId()==null)
+                            return;
                         final DbAdapterConnection mDbHelper = new DbAdapterConnection(
                                 getActivity());
                         mDbHelper.open();

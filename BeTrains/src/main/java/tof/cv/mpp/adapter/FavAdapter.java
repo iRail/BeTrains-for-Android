@@ -2,8 +2,12 @@ package tof.cv.mpp.adapter;
 
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.DbAdapterConnection;
+import tof.cv.mpp.view.LetterTileProvider;
+
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,20 +36,24 @@ public class FavAdapter extends CursorAdapter {
 				.getColumnIndex(DbAdapterConnection.KEY_FAV_TYPE);
 
 		int type = cursor.getInt(typeColumn);
+		int  tileSize = context.getResources().getDimensionPixelSize(R.dimen.letter_tile_size);;
+		LetterTileProvider tileProvider = new LetterTileProvider(context);
+
 		switch (type) {
 		case 1:
 			typeTv.setText(context.getString(R.string.station));
-			imageView.setImageResource(R.drawable.ic_fav_station);
+			imageView.setImageBitmap(tileProvider.getLetterTile(cursor.getString(nameColumn),cursor.getString(nameColumn), tileSize, tileSize));
 			nameTv.setText(cursor.getString(nameColumn));
 			break;
 		case 2:
 			typeTv.setText(context.getString(R.string.train));
-			imageView.setImageResource(R.drawable.ic_fav_train);
+			String numbers= cursor.getString(nameColumn).replaceAll("\\D+","");
+			imageView.setImageBitmap(tileProvider.getLetterTile(numbers, cursor.getString(nameColumn), tileSize, tileSize));
 			nameTv.setText(cursor.getString(nameColumn));
 			break;
 		case 3:
 			typeTv.setText(context.getString(R.string.trip));
-			imageView.setImageResource(R.drawable.ic_fav_map);
+			imageView.setImageBitmap(tileProvider.getLetterTile(cursor.getString(nameColumn),cursor.getString(nameColumn), tileSize, tileSize));
 			nameTv.setText(cursor.getString(nameColumn)+" - "+cursor.getString(nameTwoColumn));
 			break;
 		}

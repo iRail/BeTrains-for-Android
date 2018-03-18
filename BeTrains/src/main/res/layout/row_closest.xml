@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="wrap_content">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:orientation="vertical">
 
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:id="@+id/tv_name"
-		android:text="Station" android:textColor="@color/darkblue"
-		android:textStyle="bold" />
-		
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="fill_parent" android:text="XXXXm" android:id="@+id/tv_dis"
-		android:textColor="@color/darkblue" android:layout_marginBottom="2dip" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Station"
+        android:textColor="@color/darkblue"
+        android:textStyle="bold" />
 
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:id="@+id/tv_gps"
-		android:text="xxxxxxxx" android:textColor="@color/darkblue"
-		android:textSize="11sp" />
+    <TextView
+        android:id="@+id/tv_dis"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="2dip"
+        android:text="XXXXm"
+        android:textColor="@color/darkblue" />
+
+    <TextView
+        android:id="@+id/tv_gps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="xxxxxxxx"
+        android:textColor="@color/darkblue"
+        android:textSize="11sp" />
 
 </LinearLayout>
