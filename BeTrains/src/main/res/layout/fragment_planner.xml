@@ -1,173 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
 
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/tuto"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:background="@color/primarycolor"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="98dp"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:src="@drawable/swipe" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/intro_swipe"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
-
-    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <LinearLayout
+            android:id="@+id/tuto"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@color/primarycolor"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="98dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/swipe" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/intro_swipe"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/Ly_Pannel_Sup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primarycolor"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <Button
-
-                    android:id="@+id/tv_start"
-                    style="@android:style/TextAppearance.Large"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="marquee"
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:background="@drawable/selectorbutton"
-                    android:padding="16dp"
-                    android:text="City START"
-                    android:textColor="@android:color/white" />
-
-                <Button
-                    android:id="@+id/mybuttonInvert"
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/selectorbutton"
-                    android:text=">&lt;"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"></Button>
-
-                <Button
-                    android:id="@+id/tv_stop"
-                    style="@android:style/TextAppearance.Large"
-                    android:background="@drawable/selectorbutton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="marquee"
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:padding="16dp"
-                    android:text="City STOP"
-                    android:textColor="@android:color/white" />
-
-
-            </LinearLayout>
-
 
             <LinearLayout
-                android:id="@+id/boutonweb"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/mybuttonBefore"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dip"
-                    android:text="&lt;&lt;"
-                    android:textStyle="bold"></Button>
-
-                <Button
-                    android:id="@+id/mybuttonSearch"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dip"
-                    android:layout_weight="1"
-                    android:text="@string/search"
-                    android:textStyle="bold"></Button>
-
-                <Button
-                    android:id="@+id/mybuttonAfter"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=">>"
-
-                    android:textStyle="bold"></Button>
-            </LinearLayout>
-
-            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:gravity="center">
-                <include layout="@layout/colorstrip" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                <LinearLayout
+                    android:id="@+id/Ly_Pannel_Sup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:id="@+id/progress"
-                     />
-            </RelativeLayout>
+                    android:background="@color/primarycolor"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/tv_start"
+                        style="@android:style/TextAppearance.Large"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:padding="16dp"
+                        android:textColor="@android:color/white"
+                        tools:text="City START" />
+
+                    <TextView
+                        android:id="@+id/mybuttonInvert"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selectorbutton"
+                        android:text=">&lt;"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_stop"
+                        style="@android:style/TextAppearance.Large"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selectorbutton"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:padding="16dp"
+                        android:textColor="@android:color/white"
+                        tools:text="City STOP" />
+
+                </LinearLayout>
 
 
-            <ListView
-                android:id="@android:id/list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/Ly_Pannel_Sup"
-                android:cacheColorHint="#00000000"
-                android:gravity="bottom"
-                android:scrollbars="none" />
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:gravity="center">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="12dp"
-            app:backgroundTint="#FFFF0000"
-            android:src="@drawable/ic_fab_search"
-            app:borderWidth="0dp"
-            app:elevation="6dp"
-            app:fabSize="mini"
-            app:layout_anchor="@android:id/list"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="#FFFF8888" />
+                    <include layout="@layout/colorstrip" />
 
-    </FrameLayout>
+                    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true" />
+                </RelativeLayout>
 
-</LinearLayout>
+
+                <ListView
+                    android:id="@android:id/list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Ly_Pannel_Sup"
+                    android:cacheColorHint="#00000000"
+                    android:gravity="bottom"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/primarycolor"
+        app:fabAlignmentMode="center"
+        app:layout_anchorGravity="center"
+        app:navigationIcon="@null" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="#FFFF0000"
+        app:layout_anchor="@id/bar"
+        app:rippleColor="#FFFF8888"
+        app:srcCompat="@drawable/ic_fab_search" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

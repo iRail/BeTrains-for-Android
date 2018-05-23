@@ -26,7 +26,7 @@
     android:padding="0dip"
     android:background="#FFFFFFFF">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_awesome_toolbar"
         android:layout_height="wrap_content"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -37,14 +37,14 @@
     <include layout="@layout/colorstrip" />
 
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1">
 
 
-        <android.support.v4.view.PagerTitleStrip
+        <androidx.viewpager.widget.PagerTitleStrip
             style="@style/PagerTitleStrip"
             android:padding="8dp"
             android:background="@color/primarycolor"
@@ -55,7 +55,7 @@
 
         <include layout="@layout/colorstrip" />
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
 
 </LinearLayout>

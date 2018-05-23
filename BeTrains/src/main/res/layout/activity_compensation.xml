@@ -7,7 +7,7 @@
     android:layout_height="fill_parent">
     <!-- We use a Toolbar so that our drawer can be displayed
  in front of the action bar -->
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_awesome_toolbar"
         android:layout_height="wrap_content"
         android:background="@color/primarycolor"

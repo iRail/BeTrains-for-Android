@@ -10,12 +10,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.ListFragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -70,7 +70,7 @@ public class PlannerFragment extends ListFragment {
     public static String abDatePattern = "EEE dd MMM";
     public static String abTimePattern = "HH:mm";
 
-    int positionClicked;
+    private int positionClicked;
 
     private static Connections allConnections = new Connections();
 
@@ -85,9 +85,9 @@ public class PlannerFragment extends ListFragment {
     private static SharedPreferences settings;
     private SharedPreferences.Editor editor;
 
-    public String fromIntentArrivalStation = null;
-    public String fromIntentDepartureStation = null;
-    public boolean fromIntent = false;
+    private String fromIntentArrivalStation = null;
+    private String fromIntentDepartureStation = null;
+    private boolean fromIntent = false;
 
     // Second part need to be cleaned
 
@@ -147,26 +147,6 @@ public class PlannerFragment extends ListFragment {
         if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false) && ((WelcomeActivity) this.getActivity()).drawerLayout != null && !getResources().getBoolean(R.bool.tablet_layout))
             this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);
 
-        final LinearLayout layout = (LinearLayout) getView().findViewById(R.id.Ly_Pannel_Sup);
-        final ViewTreeObserver observer = layout.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                try {
-                    View fab = getView().findViewById(R.id.fab);
-
-                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
-
-                    params.topMargin = layout.getHeight() - (fab.getHeight() / 2);
-
-                    fab.setLayoutParams(params);
-                } catch (Exception e) {
-                    // e.printStackTrace();
-                }
-                //observer.removeGlobalOnLayoutListener(this);
-            }
-        });
-
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
     }
@@ -196,7 +176,7 @@ public class PlannerFragment extends ListFragment {
     }
 
     private void setAllBtnListener() {
-        Button btnInvert = (Button) getView().findViewById(R.id.mybuttonInvert);
+        TextView btnInvert = (TextView) getView().findViewById(R.id.mybuttonInvert);
         btnInvert.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 fillStations(tvArrival.getText().toString(),
@@ -204,17 +184,7 @@ public class PlannerFragment extends ListFragment {
             }
         });
 
-        Button btnSearch = (Button) getView().findViewById(R.id.mybuttonSearch);
-
         final FragmentActivity a = this.getActivity();
-
-        btnSearch.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                mySearchThread(a);
-
-            }
-        });
 
         tvDeparture.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -232,7 +202,7 @@ public class PlannerFragment extends ListFragment {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(
+        FloatingActionButton fab = getActivity().findViewById(
                 R.id.fab);
         fab.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -241,25 +211,7 @@ public class PlannerFragment extends ListFragment {
         });
 
 
-        Button btnAfter = (Button) getView().findViewById(R.id.mybuttonAfter);
-        btnAfter.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                mDate.add(Calendar.HOUR, 1);
-                updateActionBar();
-                mySearchThread(a);
-            }
-        });
 
-        Button btnBefore = (Button) getView().findViewById(R.id.mybuttonBefore);
-        btnBefore.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                mDate.add(Calendar.HOUR, -1);
-                updateActionBar();
-                mySearchThread(a);
-            }
-        });
 
     }
 
@@ -580,7 +532,7 @@ public class PlannerFragment extends ListFragment {
                 try {
 
                     fillData(finalUrl);
-                    getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                   getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

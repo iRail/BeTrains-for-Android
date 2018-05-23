@@ -74,23 +74,23 @@ public class StationInfoAdapter extends ArrayAdapter<Station.StationDeparture> {
                 platform.setText("");
 
             train.setText(Utils.getTrainId(trainstop.getVehicle()));
-
-            switch (trainstop.getOccupancy().getName()) {
-                case Occupancy.HIGH:
-                    occupancy.setImageResource(R.drawable.ic_occupancy_high);
-                    occupancy.setVisibility(View.VISIBLE);
-                    break;
-                case Occupancy.MEDIUM:
-                    occupancy.setImageResource(R.drawable.ic_occupancy_medium);
-                    occupancy.setVisibility(View.VISIBLE);
-                    break;
-                case Occupancy.LOW:
-                    occupancy.setImageResource(R.drawable.ic_occupancy_low);
-                    occupancy.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    occupancy.setVisibility(View.GONE);
-            }
+            if (trainstop.getOccupancy() != null)
+                switch (trainstop.getOccupancy().getName()) {
+                    case Occupancy.HIGH:
+                        occupancy.setImageResource(R.drawable.ic_occupancy_high);
+                        occupancy.setVisibility(View.VISIBLE);
+                        break;
+                    case Occupancy.MEDIUM:
+                        occupancy.setImageResource(R.drawable.ic_occupancy_medium);
+                        occupancy.setVisibility(View.VISIBLE);
+                        break;
+                    case Occupancy.LOW:
+                        occupancy.setImageResource(R.drawable.ic_occupancy_low);
+                        occupancy.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        occupancy.setVisibility(View.GONE);
+                }
 
         }
         return v;

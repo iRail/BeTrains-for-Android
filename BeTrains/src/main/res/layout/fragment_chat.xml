@@ -36,7 +36,7 @@
     <include layout="@layout/colorstrip" />
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="fill_parent"
         android:layout_height="0dip"

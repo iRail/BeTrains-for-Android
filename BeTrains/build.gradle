@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 'android-P'
+    buildToolsVersion "28-rc2"
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
@@ -14,10 +14,13 @@ android {
 
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
     defaultConfig {
         applicationId "tof.cv.mpp"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 6570
         versionName "4.704"
         vectorDrawables.useSupportLibrary = true
@@ -44,57 +47,48 @@ allprojects {
         maven {
             url "https://maven.google.com"
         }
+       // maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
     }
 }
 
 dependencies {
-
-    ext.googleVersion = '26.1.0'
-    ext.googlePlayVersion = '11.8.0'
-
-    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+    ext.googleVersion = '28.0.0-alpha1'
+    ext.googlePlayVersion = '15.0.1'
+    implementation('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
         // exclusion is not necessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
     }
+   // implementation 'com.google.android.material:material:1.0.0-alpha1'
 
-    compile "com.android.support:design:$googleVersion"
-    compile "com.android.support:appcompat-v7:$googleVersion"
-    compile "com.android.support:cardview-v7:$googleVersion"
-    compile "com.android.support:support-v4:$googleVersion"
-    compile "com.android.support:recyclerview-v7:$googleVersion"
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'androidx.cardview:cardview:1.0.0-alpha1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
 
-    compile "com.google.android.gms:play-services-games:$googlePlayVersion"
-    compile "com.google.android.gms:play-services-maps:$googlePlayVersion"
-    compile "com.google.android.gms:play-services-location:$googlePlayVersion"
-    compile "com.google.android.gms:play-services-auth:$googlePlayVersion"
-
-
-    compile "com.google.firebase:firebase-database:$googlePlayVersion"
-    compile "com.google.firebase:firebase-core:$googlePlayVersion"
-    compile "com.google.firebase:firebase-crash:$googlePlayVersion"
-    compile "com.google.firebase:firebase-auth:$googlePlayVersion"
-
-    compile 'com.firebaseui:firebase-ui-database:1.2.0'
-
-    compile 'com.google.code.gson:gson:2.8.1'
-
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.etsy.android.grid:library:1.0.4'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
-    compile 'com.koushikdutta.ion:ion:2.2.1'
-    compile 'com.aurelhubert:ahbottomnavigation:1.3.3'
-
+    implementation "com.google.android.gms:play-services-games:$googlePlayVersion"
+    implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
+    implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
+    implementation "com.google.android.gms:play-services-auth:$googlePlayVersion"
+    implementation 'com.google.firebase:firebase-database:15.0.1'
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'com.google.firebase:firebase-crash:15.0.2'
+    implementation 'com.google.firebase:firebase-auth:15.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:1.2.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.etsy.android.grid:library:1.0.4'
+    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    implementation 'com.github.castorflex.smoothprogressbar:library:1.1.0'
+    implementation 'com.koushikdutta.ion:ion:2.2.1'
+    implementation 'com.aurelhubert:ahbottomnavigation:1.3.3'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
-
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
-    compile 'com.google.firebase:firebase-core:11.8.0'
-
-
-    compile 'de.hdodenhof:circleimageview:2.2.0'
-
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //implementation 'com.teragence:background:0.5.4.5'
 }
 apply plugin: 'com.google.gms.google-services'

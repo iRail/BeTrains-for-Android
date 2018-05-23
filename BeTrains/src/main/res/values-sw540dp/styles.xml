@@ -14,12 +14,4 @@
         <item name="android:layout_marginRight">0dp</item>
     </style>
 
-    <style name="Theme.MyTheme" parent="Theme.MyBaseTheme">
-        <item name="colorControlActivated">@color/primarycolor</item>
-        <item name="colorControlHighlight">@color/primarycolor</item>
-        <item name="android:listViewStyle">@style/MyListView</item>
-    </style>
-    <style name="MyListView" parent="@android:style/Widget.ListView">
-        <item name="android:listSelector">@drawable/selector</item>
-    </style>
 </resources>

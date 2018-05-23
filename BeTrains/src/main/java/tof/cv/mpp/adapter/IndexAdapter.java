@@ -12,21 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
-import tof.cv.mpp.Utils.ConnectionMaker;
-
-/**
- * Created by versieuxchristophe on 24/10/15.
- */
 public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer, Filterable {
     private HashMap<String, Integer> alphaIndexer;
     private ArrayList<String> sections = new ArrayList<>();
-    ArrayList<String> list;
-    ArrayList<String> data = new ArrayList<>();
-    ContainsFilter myFilter;
-    boolean filtered;
+    private ArrayList<String> list;
+    private ContainsFilter myFilter;
+    private boolean filtered;
 
     @Override
     public Filter getFilter() {
@@ -37,7 +29,6 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
 
     public IndexAdapter(Context c, int resource, ArrayList<String> pData) {
         super(c, resource, pData);
-        this.data = pData;
         this.list = (ArrayList<String>) pData.clone();
         alphaIndexer = new HashMap<>();
         sections.clear();

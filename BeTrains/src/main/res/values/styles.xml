@@ -1,108 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-     Copyright 2010 Google Inc. Licensed under the Apache License, Version 
-	2.0 (the "License"); you may not use this file except in compliance with 
-	the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
-	Unless required by applicable law or agreed to in writing, software distributed 
-	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-	the specific language governing permissions and limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <style name="Theme.MyTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-    <style name="Theme.TranslucentActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
-    </style>
-
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/primarycolor</item>
-    </style>
-
-    <style name="Widget.ActionBar.Transparent">
-        <item name="android:background">#66000000</item>
-    </style>
-
-
-    <style name="Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
-        <item name="android:windowTitleStyle">@style/MyOwnDialogTitle</item>
-    </style>
-
-    <style name="MyOwnDialogTitle">
-        <item name="android:textAppearance">
-            @android:style/TextAppearance.DeviceDefault.DialogWindowTitle
-        </item>
-        <item name="android:drawableRight">@drawable/icon</item>
-    </style>
-
-    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:padding">50dp</item>
-    </style>
-
-    <style name="NoTitleDialog" parent="android:style/Theme.Dialog">
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="NavDrawer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
-    </style>
-
-    <style name="Theme.MyBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/mybg</item>
-        <item name="android:listViewStyle">@style/MyListViewTheme</item>
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
         <item name="colorAccent">@color/coloraccent</item>
+        <!-- New MaterialComponents attributes. -->
+        <item name="colorPrimaryLight">?attr/colorPrimary</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorSecondaryLight">?attr/colorPrimaryLight</item>
+        <item name="colorSecondaryDark">?attr/colorPrimaryDark</item>
+        <item name="scrimBackground">@color/mtrl_scrim_color</item>
+        <item name="snackbarButtonStyle">?attr/borderlessButtonStyle</item>
+
         <item name="spbStyle">@style/GNowProgressBar</item>
 
     </style>
-
-    <style name="Theme.MyTheme" parent="Theme.MyBaseTheme">
-
-    </style>
-
-    <style name="GNowProgressBar" parent="SmoothProgressBar">
-        <item name="spb_stroke_separator_length">0dp</item>
-        <item name="spb_sections_count">3</item>
-        <item name="spb_speed">1.7</item>
-        <item name="spb_progressiveStart_speed">2</item>
-        <item name="spb_progressiveStop_speed">3.4</item>
-        <item name="spb_interpolator">spb_interpolator_acceleratedecelerate</item>
-        <item name="spb_mirror_mode">false</item>
-        <item name="spb_reversed">false</item>
-        <item name="spb_gradients">true</item>
-        <item name="spb_colors">@array/belgian_colors</item>
-        <item name="spb_progressiveStart_activated">true</item>
-    </style>
-
-
-    <style name="Theme.MyABTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/mybg</item>
-        <item name="android:listViewStyle">@style/MyListViewTheme</item>
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-    </style>
-
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/primarycolor</item>
-    </style>
-
-    <style name="nowCardStyle">
-        <item name="android:background">@drawable/search_bg_shadow</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">#707070</item>
-    </style>
-
-    <style name="TextHeader2">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#ff29549f</item>
-        <item name="android:textIsSelectable">true</item>
-    </style>
-
     <style name="HomeButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">fill_parent</item>
@@ -115,15 +30,10 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="Title">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/darkblue</item>
-        <item name="android:background">@null</item>
+    <style name="nowCardStyle">
+        <item name="android:background">@drawable/search_bg_shadow</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#707070</item>
     </style>
 
     <style name="TextElementBig" parent="@android:style/TextAppearance.Holo.Large">
@@ -153,34 +63,6 @@
         <item name="android:background">@null</item>
     </style>
 
-
-    <!--style name="TextElementBig" parent="@android:style/TextAppearance.Holo.Title">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/darkblue</item>
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="TextElementMid" parent="@android:style/TextAppearance.Holo.Subhead">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/darkblue</item>
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="TextElement" parent="@android:style/TextAppearance.Holo.Body1">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/darkblue</item>
-        <item name="android:background">@null</item>
-    </style-->
-
     <style name="GenericProgressBackground" parent="android:Theme">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
@@ -201,6 +83,106 @@
         <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="Theme.MyABTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/mybg</item>
+        <item name="android:listViewStyle">@style/MyListViewTheme</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="Theme.TranslucentActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/primarycolor</item>
+    </style>
+
+
+
+    <style name="Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowTitleStyle">@style/MyOwnDialogTitle</item>
+    </style>
+
+    <style name="MyOwnDialogTitle">
+        <item name="android:textAppearance">
+            @android:style/TextAppearance.DeviceDefault.DialogWindowTitle
+        </item>
+        <item name="android:drawableRight">@drawable/icon</item>
+    </style>
+
+    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:padding">50dp</item>
+    </style>
+
+    <style name="NoTitleDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="NavDrawer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
+    </style>
+
+    <style name="Theme.MyBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/mybg</item>
+        <item name="colorPrimary">@color/primarycolor</item>
+        <item name="colorPrimaryDark">@color/primarydarkcolor</item>
+        <item name="colorAccent">@color/coloraccent</item>
+
+    </style>
+
+
+    <style name="GNowProgressBar" parent="SmoothProgressBar">
+        <item name="spb_stroke_separator_length">0dp</item>
+        <item name="spb_sections_count">3</item>
+        <item name="spb_speed">3.4</item>
+        <item name="spb_progressiveStart_speed">3.4</item>
+        <item name="spb_progressiveStop_speed">3.4</item>
+        <item name="spb_interpolator">spb_interpolator_acceleratedecelerate</item>
+        <item name="spb_mirror_mode">false</item>
+        <item name="spb_reversed">false</item>
+        <item name="spb_gradients">true</item>
+        <item name="spb_colors">@array/belgian_colors</item>
+        <item name="spb_progressiveStart_activated">false</item>
+    </style>
+
+
+
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/primarycolor</item>
+    </style>
+
+
+
+    <style name="TextHeader2">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ff29549f</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+
+    <style name="Title">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:background">@null</item>
+    </style>
+
+
+
+
+
+
+
 
     <style name="MyListViewTheme" parent="@android:style/Widget.Holo.ListView">
         <item name="android:textColor">@color/darkblue</item>

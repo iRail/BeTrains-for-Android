@@ -10,19 +10,22 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+//import com.teragence.client.SdkControls;
 
 import java.util.Arrays;
 
@@ -46,11 +49,13 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupShortcuts();
+       // SdkControls.initialize(this);
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
+       // setSupportActionBar((BottomAppBar)findViewById(R.id.bar));
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
