@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.app.ShareCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -381,10 +383,11 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     public void saveToSd() {
 
         int maxDelay = 0;
-        for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
-            if (Integer.valueOf(aStop.getDelay()) > maxDelay)
-                maxDelay = Integer.valueOf(aStop.getDelay());
-        }
+        if (currentVehicle.getVehicleStops() !=null)
+            for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
+                if (Integer.valueOf(aStop.getDelay()) > maxDelay)
+                    maxDelay = Integer.valueOf(aStop.getDelay());
+            }
 
         final FileOutputStream f;
         Context context = getActivity();
@@ -434,7 +437,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         ad.setPositiveButton(android.R.string.ok,
                 new android.content.DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        if(currentVehicle.getId()==null)
+                        if (currentVehicle.getId() == null)
                             return;
                         final DbAdapterConnection mDbHelper = new DbAdapterConnection(
                                 getActivity());

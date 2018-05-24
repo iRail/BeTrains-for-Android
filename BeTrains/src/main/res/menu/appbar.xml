@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/appbar_prev"
+        android:showAsAction="always"
+        app:showAsAction="always"
+        android:iconTint="@color/action_bar_tint"
+        android:icon="@drawable/ic_prev"
+        android:title="@string/appbar_prev" />
+    <item
+        android:id="@+id/appbar_next"
+        android:showAsAction="always"
+        app:showAsAction="always"
+        android:iconTint="@color/action_bar_tint"
+        android:icon="@drawable/ic_next"
+        android:title="@string/appbar_next" />
+
+
+
+
+</menu>

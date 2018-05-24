@@ -21,9 +21,10 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 6570
-        versionName "4.704"
+        versionCode 6584
+        versionName "4.8.4"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -47,7 +48,7 @@ allprojects {
         maven {
             url "https://maven.google.com"
         }
-       // maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
+       maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
     }
 }
 
@@ -58,13 +59,26 @@ dependencies {
         // exclusion is not necessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
     }
-   // implementation 'com.google.android.material:material:1.0.0-alpha1'
 
-    implementation 'com.google.android.material:material:1.0.0-alpha1'
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'androidx.cardview:cardview:1.0.0-alpha1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
+    implementation 'androidx.multidex:multidex-instrumentation:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+
+    implementation ('com.google.android.material:material:1.0.0-alpha1'){
+                exclude group: 'androidx.multidex', module: 'multidex-instrumentation'
+            }
+
+    implementation ('androidx.appcompat:appcompat:1.0.0-alpha1'){
+        exclude group: 'androidx.multidex', module: 'multidex-instrumentation'
+    }
+    implementation ('androidx.cardview:cardview:1.0.0-alpha1'){
+        exclude group: 'androidx.multidex', module: 'multidex-instrumentation'
+    }
+    implementation ('androidx.legacy:legacy-support-v4:1.0.0-alpha1'){
+        exclude group: 'androidx.multidex', module: 'multidex-instrumentation'
+    }
+    implementation ('androidx.recyclerview:recyclerview:1.0.0-alpha1'){
+        exclude group: 'androidx.multidex', module: 'multidex-instrumentation'
+    }
 
     implementation "com.google.android.gms:play-services-games:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
@@ -89,6 +103,8 @@ dependencies {
     }
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    //implementation 'com.teragence:background:0.5.4.5'
+   implementation 'com.teragence:background:1.0.5.21'
+
+
 }
 apply plugin: 'com.google.gms.google-services'

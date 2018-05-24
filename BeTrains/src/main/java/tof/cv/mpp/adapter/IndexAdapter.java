@@ -18,7 +18,6 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
     private ArrayList<String> sections = new ArrayList<>();
     private ArrayList<String> list;
     private ContainsFilter myFilter;
-    private boolean filtered;
 
     @Override
     public Filter getFilter() {
@@ -27,8 +26,10 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
         return myFilter;
     }
 
+    @SuppressWarnings("unchecked")
     public IndexAdapter(Context c, int resource, ArrayList<String> pData) {
         super(c, resource, pData);
+
         this.list = (ArrayList<String>) pData.clone();
         alphaIndexer = new HashMap<>();
         sections.clear();
@@ -82,7 +83,6 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
             ArrayList<String> tempList = new ArrayList<>();
             int length = list.size();
             int add = 0;
-            filtered = false;
             for (int i = 0; i < length; i++) {
                 String obj = list.get(i);
                 Log.e("CVE", obj);
@@ -90,7 +90,6 @@ public class IndexAdapter extends ArrayAdapter<String> implements SectionIndexer
                     if (toFilter.length() > 0 && obj.toLowerCase().startsWith(toFilter.toLowerCase())) {
                         tempList.add(add, obj);
                         add++;
-                        filtered = true;
                     } else
                         tempList.add(obj);
                 }

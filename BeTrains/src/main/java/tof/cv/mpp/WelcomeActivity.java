@@ -25,7 +25,7 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-//import com.teragence.client.SdkControls;
+import com.teragence.client.SdkControls;
 
 import java.util.Arrays;
 
@@ -49,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupShortcuts();
-       // SdkControls.initialize(this);
+        SdkControls.initialize(this);
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);

@@ -10,12 +10,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -63,6 +68,7 @@ public class PlannerFragment extends ListFragment {
     private static final int MENU_DT = 0;
     private static final int MENU_FAV = 1;
     private static final int MENU_PREF = 2;
+    private static final int MENU_FAV_ADD = 3;
 
     public Calendar mDate;
 
@@ -211,19 +217,20 @@ public class PlannerFragment extends ListFragment {
         });
 
 
-
-
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        menu.add(Menu.NONE, MENU_DT, Menu.NONE, R.string.action_change_datetime)
+       /* menu.add(Menu.NONE, MENU_DT, Menu.NONE, R.string.action_change_datetime)
                 .setIcon(R.drawable.ic_menu_time)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.action_add_to_favorites)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);*/
+        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.action_goto_favorites)
                 .setIcon(R.drawable.ic_menu_star)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        menu.add(Menu.NONE, MENU_FAV_ADD, Menu.NONE, R.string.action_add_to_favorites)
+                .setIcon(R.drawable.ic_menu_star_add)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         menu.add(Menu.NONE, MENU_PREF, Menu.NONE, R.string.action_settings)
@@ -237,9 +244,12 @@ public class PlannerFragment extends ListFragment {
             case (MENU_DT):
                 showDateTimeDialog();
                 return true;
-            case (MENU_FAV):
+            case (MENU_FAV_ADD):
                 Utils.addAsStarred(tvDeparture.getText().toString(), tvArrival
                         .getText().toString(), 3, context);
+                startActivity(new Intent(getActivity(), StarredActivity.class));
+                return true;
+            case (MENU_FAV):
                 startActivity(new Intent(getActivity(), StarredActivity.class));
                 return true;
             case (MENU_PREF):
@@ -260,7 +270,7 @@ public class PlannerFragment extends ListFragment {
     }
 
     private void fillData(final String url) {
-
+        BottomAppBar bap = getActivity().findViewById(R.id.bar);
         if (allConnections != null && allConnections.connection != null) {
             connAdapter = new ConnectionAdapter(this.getActivity()
                     .getBaseContext(), R.layout.row_planner,
@@ -269,13 +279,14 @@ public class PlannerFragment extends ListFragment {
             setListAdapter(connAdapter);
             registerForContextMenu(getListView());
             PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
-
+            if (bap.getMenu().size() == 0)
+                bap.replaceMenu(R.menu.appbar);
         } else {
             Log.e("CVE", "NULL");
 
             if (url != null && url.length() > 0) {
                 // Linkify the message
-                final SpannableString s = new SpannableString(getString(R.string.msg_api_error)+" - "+url);
+                final SpannableString s = new SpannableString(getString(R.string.msg_api_error) + " - " + url);
                 Linkify.addLinks(s, Linkify.ALL);
 
                 final AlertDialog d = new AlertDialog.Builder(getContext())
@@ -287,7 +298,7 @@ public class PlannerFragment extends ListFragment {
                                 startActivity(intent);
                             }
                         })
-                        .setNegativeButton(R.string.cancel,null)
+                        .setNegativeButton(R.string.cancel, null)
                         .setTitle(R.string.msg_api_error_title)
                         .setMessage(s)
                         .create();
@@ -306,12 +317,45 @@ public class PlannerFragment extends ListFragment {
                 );
                 setListAdapter(connAdapter);
                 registerForContextMenu(getListView());
+                if (bap.getMenu().size() == 0)
+                    bap.inflateMenu(R.menu.appbar);
             } else {
                 fillWithTips();
             }
 
         }
-
+        bap.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.appbar_prev:
+                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        mDate.add(Calendar.HOUR, -1);
+                        updateActionBar();
+                        mySearchThread(getActivity());
+                        break;
+                    case R.id.appbar_next:
+                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        mDate.add(Calendar.HOUR, 1);
+                        updateActionBar();
+                        mySearchThread(getActivity());
+                        break;
+                    /*case R.id.appbar_mix:
+                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        fillStations(tvArrival.getText().toString(),
+                                tvDeparture.getText().toString());
+                        mySearchThread(getActivity());
+                        break;*/
+                }
+                return false;
+            }
+        });
+        bap.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateTimeDialog();
+            }
+        });
     }
 
     public void fillWithTips() {
@@ -532,7 +576,7 @@ public class PlannerFragment extends ListFragment {
                 try {
 
                     fillData(finalUrl);
-                   getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                    getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

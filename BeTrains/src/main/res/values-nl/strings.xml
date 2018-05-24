@@ -154,5 +154,6 @@
     <string name="pref_status_donator_sum">Make a paypal donation to christophe.versieux@gmail.com</string>
     <string name="pref_status_beta">Beta Tester</string>
     <string name="pref_status_beta_sum">Participated in BeTrains Beta tests (See Play Store)</string>
+    <string name="appbar_next">Next</string>
 
 </resources>

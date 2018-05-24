@@ -129,9 +129,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:backgroundTint="@color/primarycolor"
+        app:theme="@style/ThemeOverlay.MaterialComponents.Dark"
         app:fabAlignmentMode="center"
-        app:layout_anchorGravity="center"
-        app:navigationIcon="@null" />
+        app:navigationIcon="@drawable/ic_menu_time" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
