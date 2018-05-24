@@ -109,10 +109,11 @@
                 </RelativeLayout>
 
 
-                <ListView
+                <tof.cv.mpp.view.CoordinatedListView
                     android:id="@android:id/list"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_below="@id/Ly_Pannel_Sup"
                     android:cacheColorHint="#00000000"
                     android:gravity="bottom"
@@ -131,12 +132,14 @@
         app:backgroundTint="@color/primarycolor"
         app:theme="@style/ThemeOverlay.MaterialComponents.Dark"
         app:fabAlignmentMode="center"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_menu_time" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:backgroundTint="#FFFF0000"
         app:layout_anchor="@id/bar"
         app:rippleColor="#FFFF8888"

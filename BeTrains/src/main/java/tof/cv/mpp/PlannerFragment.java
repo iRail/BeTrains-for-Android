@@ -155,6 +155,10 @@ public class PlannerFragment extends ListFragment {
 
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
+
+        BottomAppBar bap = getActivity().findViewById(R.id.bar);
+
+        bap.setHideOnScroll(true);
     }
 
     public void doSearch() {
