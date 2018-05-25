@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relative"
+    android:id="@+id/bg"
+    android:transitionName="bg"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -16,6 +17,7 @@
 
         <TextView
             android:id="@+id/departtime"
+            android:transitionName="daparture"
             style="@style/TextElementBig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,6 +61,7 @@
 
         <TextView
             android:id="@+id/arrivaltime"
+            android:transitionName="arrival"
             style="@style/TextElementBig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

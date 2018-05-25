@@ -11,8 +11,6 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,18 +24,17 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
-    <!-- android:name="android.support.multidex.MultiDexApplication"-->
-    <!-- android:name="androidx.multidex.MultiDexApplication"-->
+    <!-- android:name="android.support.multidex.MultiDexApplication" -->
+    <!-- android:name="androidx.multidex.MultiDexApplication" -->
     <application
+        android:banner="@drawable/drawerlogo"
         android:configChanges="keyboardHidden|orientation"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:banner="@drawable/drawerlogo"
         android:theme="@style/Theme.MyTheme">
         <meta-data
             android:name="teragencePartnerId"
             android:value="versieux" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -53,6 +50,7 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="tof.cv.mpp.OPEN_DYNAMIC_SHORTCUT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -63,10 +61,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <!--intent-filter>
+            <!--
+            intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter-->
+            </intent-filter
+            -->
 
             <meta-data
                 android:name="android.app.searchable"
@@ -108,35 +108,37 @@
             android:theme="@style/Theme.MyABTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-
-        <!--
-         <service android:name=".GeofenceTransitionsIntentService"/>
-        -->
+        <!--          <service android:name=".GeofenceTransitionsIntentService"/> -->
 
         <provider
             android:name="tof.cv.search.SearchProvider"
             android:authorities="tof.cv.search.SearchProvider" />
 
         <service
-            android:exported="false"
-            android:name=".NotifJobService">
+            android:name=".NotifJobService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".NotifBroadcastReceiver"
             android:enabled="true"
-            android:exported="false" >
-        </receiver>
+            android:exported="false"></receiver>
 
-        <!--receiver android:name="com.teragence.client.service.PresenceReceiver" >
+        <!--
+        receiver android:name="com.teragence.client.service.PresenceReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver-->
+        </receiver
+        -->
 
+        <activity
+            android:name=".DetailActivity"
+            android:theme="@style/Theme.UserDialog"></activity>
     </application>
 
 </manifest>

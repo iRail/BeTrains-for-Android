@@ -139,6 +139,7 @@
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database-connection-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: androidx.recyclerview:recyclerview-1.0.0-alpha1" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-runtime-2.0.0-alpha1" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout-solver:1.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: de.hdodenhof:circleimageview-2.2.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: androidx.documentfile:documentfile-1.0.0-alpha1" level="project" />
@@ -183,6 +184,7 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core-2.0.0-alpha1" level="project" />
     <orderEntry type="library" name="Gradle: androidx.loader:loader-1.0.0-alpha1" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment-1.0.0-alpha1" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout-1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.localbroadcastmanager:localbroadcastmanager-1.0.0-alpha1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-crash-15.0.2" level="project" />
     <orderEntry type="library" name="Gradle: androidx.transition:transition-1.0.0-alpha1" level="project" />

@@ -3,6 +3,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.MyTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowContentTransitions">true</item>
+
 
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
@@ -178,7 +180,16 @@
     </style>
 
 
-
+    <style name="Theme.UserDialog" parent="Theme.MyTheme">
+        <item name="android:windowFrame">@null</item>
+        <!--item name="android:windowIsFloating">true</item-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
 
 

@@ -10,17 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.ListFragment;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -33,14 +22,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -53,12 +42,18 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.ListFragment;
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
-import tof.cv.mpp.bo.LogCVE;
 import tof.cv.mpp.view.DateTimePicker;
 
 public class PlannerFragment extends ListFragment {
@@ -132,14 +127,14 @@ public class PlannerFragment extends ListFragment {
         tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
         getView().findViewById(R.id.progress).setVisibility(View.GONE);
         setAllBtnListener();
-        String pStart = settings.getString("pStart", "MONS");
+        String pStart = settings.getString("pStart", "Mons");
         try {
             pStart = getActivity().getIntent().getExtras().getString("Departure", pStart);
         } catch (Exception e) {
             //e.printStackTrace();
         }
 
-        String pStop = settings.getString("pStop", "TOURNAI");
+        String pStop = settings.getString("pStop", "Tournai");
         try {
             pStop = getActivity().getIntent().getExtras().getString("Arrival", pStop);
         } catch (Exception e) {
@@ -147,6 +142,13 @@ public class PlannerFragment extends ListFragment {
         }
 
         fillStations(pStart, pStop);
+
+        try {
+            fillData("");
+        } catch (Exception e) {
+            //Log.i(TAG, "Impossible to fill Data:\n" + e.getMessage());
+            e.printStackTrace();
+        }
 
         updateActionBar();
 
@@ -159,6 +161,8 @@ public class PlannerFragment extends ListFragment {
         BottomAppBar bap = getActivity().findViewById(R.id.bar);
 
         bap.setHideOnScroll(true);
+
+
     }
 
     public void doSearch() {
@@ -401,37 +405,26 @@ public class PlannerFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        super.onListItemClick(listView, view, position, id);
         positionClicked = position;
 
         try {
 
             Connection currentConnection = allConnections.connection
                     .get(positionClicked);
-            FragmentManager fm = getActivity().getSupportFragmentManager();
-            DialogViaFragment editNameDialog = new DialogViaFragment(
-                    allConnections.connection.get(positionClicked));
-            editNameDialog.show(fm, "fragment_edit_name");
-            /*
-            if (currentConnection.getVias() != null
-					&& currentConnection.getVias().via.size() > 0) {
 
-				FragmentManager fm = getActivity().getSupportFragmentManager();
-				DialogViaFragment editNameDialog = new DialogViaFragment(
-						allConnections.connection.get(positionClicked));
-				editNameDialog.show(fm, "fragment_edit_name");
 
-			} else {
-				Intent i = new Intent(getActivity(), InfoTrainActivity.class);
-				i.putExtra("Name", currentConnection.getDeparture()
-						.getVehicle());
-				i.putExtra("fromto", tvDeparture.getText().toString() + " - "
-						+ tvArrival.getText().toString());
-				i.putExtra("Hour", mDate.get(Calendar.HOUR));
-				i.putExtra("Minute", mDate.get(Calendar.MINUTE));
-				startActivity(i);
-			}*/
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("connection", new Gson().toJson(currentConnection));
+           Pair<View, String> p1 = Pair.create(view.findViewById(R.id.bg), "bg");
+
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(),p1);
+            startActivity(intent, options.toBundle());
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -591,16 +584,7 @@ public class PlannerFragment extends ListFragment {
     }
 
 
-    public void onResume() {
-        super.onResume();
-        try {
-            fillData("");
-        } catch (Exception e) {
-            //Log.i(TAG, "Impossible to fill Data:\n" + e.getMessage());
-            e.printStackTrace();
-        }
 
-    }
 
     private void showDateTimeDialog() {
 

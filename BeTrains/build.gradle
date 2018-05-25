@@ -21,10 +21,10 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 6585
-        versionName "4.8.5"
+        versionCode 6587
+        versionName "4.8.7"
         vectorDrawables.useSupportLibrary = true
-       // multiDexEnabled true
+        // multiDexEnabled true
     }
     buildTypes {
         release {
@@ -48,7 +48,7 @@ allprojects {
         maven {
             url "https://maven.google.com"
         }
-      // maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
+        // maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
     }
 }
 
@@ -93,8 +93,9 @@ dependencies {
     }
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-   //implementation 'com.teragence:background:1.0.5.21'
+    //implementation 'com.teragence:background:1.0.5.21'
 
 
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
