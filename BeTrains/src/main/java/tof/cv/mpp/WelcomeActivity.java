@@ -10,27 +10,25 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-//import com.teragence.client.SdkControls;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.view.LetterTileProvider;
+
+//import com.teragence.client.SdkControls;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -57,13 +55,6 @@ public class WelcomeActivity extends AppCompatActivity {
        // setSupportActionBar((BottomAppBar)findViewById(R.id.bar));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primarycolortransparent));
-        } else {
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setNavigationBarTintEnabled(true);
-            tintManager.setTintResource(R.color.primarycolor);
-        }
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -349,12 +340,6 @@ public class WelcomeActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(intent, "Mail"));
     }
 
-    public void oniRailClick(View v) {
-        Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
-        marketLaunch.setData(Uri
-                .parse("market://details?id=be.irail.liveboards"));
-        startActivity(marketLaunch);
-    }
 
     public void onGuiardClick(View v) {
         Intent marketLaunch = new Intent(Intent.ACTION_VIEW);

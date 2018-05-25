@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,7 +42,11 @@ import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
@@ -205,6 +210,21 @@ public class ChatFragment extends Fragment {
                                               final Message message, int position) {
                 viewHolder.getNickname().setText(message.getUser_name());
 
+                if(message.getUser_message()!=null & message.getUser_message().contains("http")){
+                    List<String> extractedUrls = extractUrls(message.getUser_message());
+
+                    for (String url : extractedUrls)
+                    {
+
+                        if(url.endsWith(".gif")){
+                           message.setUserMessage( message.getUser_message().replace(url,""));
+                            Glide.with(viewHolder.image).load(url).into(viewHolder.image);
+                            break;
+                        }
+                    }
+                }else
+                    viewHolder.image.setImageDrawable(null);
+
                 viewHolder.getMessagebody().setText(message.getUser_message());
 
                 if (message.getEntry_date().contains(":"))
@@ -292,6 +312,22 @@ public class ChatFragment extends Fragment {
                         }
                     }
                 });
+            }
+
+            public  List<String> extractUrls(String text)
+            {
+                List<String> containedUrls = new ArrayList<String>();
+                String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+                Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
+                Matcher urlMatcher = pattern.matcher(text);
+
+                while (urlMatcher.find())
+                {
+                    containedUrls.add(text.substring(urlMatcher.start(0),
+                            urlMatcher.end(0)));
+                }
+
+                return containedUrls;
             }
 
             @Override

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import tof.cv.mpp.Utils.DbAdapterConnection;
 
@@ -33,12 +32,6 @@ public class ChatActivity extends AppCompatActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
 
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintResource(R.color.primarycolor);
     }
 
     @Override

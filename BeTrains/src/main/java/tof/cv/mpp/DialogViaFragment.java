@@ -42,34 +42,6 @@ public class DialogViaFragment extends DialogFragment {
     }
 
 
-    /*
-     * private void setOnListListener() { listview.setOnItemClickListener(new
-     * OnItemClickListener() {
-     *
-     * public void onItemClick(AdapterView<?> arg0, View aView, int position,
-     * long aLong) {
-     *
-     * final Via currentVia = currentConnection.getVias().via .get(position /
-     * 2);
-     *
-     * if (position % 2 == 1) {
-     * startTrainInfoActivity(Utils.getTrainId(currentVia .getVehicle())); }
-     *
-     * else startStationInfoActivity(currentVia.getName(), currentVia
-     * .getDeparture().getTime());
-     *
-     * } }); }
-     */
-
-
-
-    /*
-     * private String getDepartureVehicle() { return
-     * currentConnection.getDeparture().getVehicle(); }
-     *
-     * private String getArrivalVehicle() { return
-     * currentConnection.getArrival().getVehicle(); }
-     */
 
 
 }

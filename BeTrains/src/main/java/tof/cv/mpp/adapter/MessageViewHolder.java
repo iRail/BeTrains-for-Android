@@ -18,6 +18,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public TextView beta;
     public View itemView;
     public ImageView iv;
+    public ImageView image;
 
     public MessageViewHolder(View itemView) {
         super(itemView);
@@ -28,6 +29,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         iv = (ImageView) itemView.findViewById(R.id.profile_image);
         donator = (TextView) itemView.findViewById(R.id.donator);
         beta = (TextView) itemView.findViewById(R.id.beta);
+        image = (ImageView) itemView.findViewById(R.id.image);
         this.itemView = itemView;
     }
 

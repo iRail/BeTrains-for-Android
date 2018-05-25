@@ -3,8 +3,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.MyTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowContentTransitions">true</item>
-
+        <item name="android:windowActivityTransitions">true</item>
 
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>

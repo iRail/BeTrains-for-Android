@@ -2,11 +2,10 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 
 public class CompensationActivity extends AppCompatActivity {
@@ -18,12 +17,7 @@ public class CompensationActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_compensation);
 		setSupportActionBar((Toolbar) findViewById(R.id.my_awesome_toolbar));
 
-		SystemBarTintManager tintManager = new SystemBarTintManager(this);
-		// enable status bar tint
-		tintManager.setStatusBarTintEnabled(true);
-		// enable navigation bar tint
-		tintManager.setNavigationBarTintEnabled(true);
-		tintManager.setTintResource(R.color.primarycolor);
+
 	}
 	
 	@Override

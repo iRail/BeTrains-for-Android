@@ -1,6 +1,7 @@
 package tof.cv.mpp;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -99,9 +100,13 @@ public class PlannerFragment extends ListFragment {
     private static final int ACTIVITY_GETSTOPSTATION = 4;
 
     private void updateActionBar() {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(
-                Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(
+                    Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -421,9 +426,10 @@ public class PlannerFragment extends ListFragment {
 
             ActivityOptionsCompat options = ActivityOptionsCompat.
                     makeSceneTransitionAnimation(getActivity(),p1);
-            startActivity(intent, options.toBundle());
-
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());//, options.toBundle());
+            }else
+                startActivity(intent);
 
 
         } catch (Exception e) {

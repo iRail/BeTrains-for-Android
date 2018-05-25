@@ -1,5 +1,24 @@
 package tof.cv.mpp;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.Html;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+
 import androidx.appcompat.app.AppCompatActivity;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ViaAdapter;
@@ -7,23 +26,6 @@ import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Station;
 import tof.cv.mpp.bo.Via;
-
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import com.google.android.material.card.MaterialCardView;
-import com.google.gson.Gson;
 
 public class DetailActivity extends AppCompatActivity {
     private static final String TAG = "BETRAINS";
@@ -37,7 +39,21 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          getWindow().setExitTransition(new Fade());
+        }
+
         setContentView(R.layout.dialog_connection_detail);
+
+       findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("CVE","CLICK");
+                finish();
+            }
+        });
 
         currentConnection = new Gson().fromJson(getIntent().getStringExtra("connection"), Connection.class);
         Log.e("CVE", "" + currentConnection);

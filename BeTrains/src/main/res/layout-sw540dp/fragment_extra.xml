@@ -79,30 +79,4 @@
         </LinearLayout>
     </LinearLayout>
 
-
-    <LinearLayout
-        style="@style/nowCardStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/irail"
-        android:layout_margin="@dimen/multipane_half_padding"
-        android:onClick="oniRailClick"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:padding="10dip"
-            android:src="@drawable/ab_irail" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dip"
-            android:text="BeTrains Liveboards - Google Play"
-            android:textColor="@color/darkblue" />
-    </LinearLayout>
-
 </LinearLayout>

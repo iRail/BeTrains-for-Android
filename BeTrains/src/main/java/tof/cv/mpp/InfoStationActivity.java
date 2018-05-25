@@ -4,12 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class InfoStationActivity extends AppCompatActivity {
     /**
@@ -37,47 +36,7 @@ public class InfoStationActivity extends AppCompatActivity {
         InfoStationFragment fragment = (InfoStationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         fragment.displayInfo(name, timestamp, id);
 
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintResource(R.color.primarycolor);
-
-/*
-        Application app = getApplication();
-        app.registerOnProvideAssistDataListener(new Application.OnProvideAssistDataListener() {
-            @Override
-            public void onProvideAssistData(Activity activity, Bundle bundle) {
-                bundle.putString(Intent.EXTRA_ASSIST_CONTEXT, "BeTrains");
-            }
-        });*/
     }
-/*
-    @Override
-    public void onProvideAssistData(Bundle data) {
-
-        Bundle my = new Bundle();
-        my.putString(Intent.EXTRA_ASSIST_CONTEXT, "Hi");
-        data.putBundle(Intent.EXTRA_ASSIST_CONTEXT, my);
-    }
-
-    @Override
-    public void onProvideAssistContent(AssistContent assistContent) {
-        super.onProvideAssistContent(assistContent);
-
-        try {
-            String structuredJson = new JSONObject()
-                    .put("@type", "MusicRecording")
-                    .put("@id", "https://example.com/music/recording")
-                    .put("name", "Album Title")
-                    .toString();
-
-            assistContent.setStructuredData(structuredJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

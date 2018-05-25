@@ -39,7 +39,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,13 +105,6 @@ public class StationPickerActivity extends AppCompatActivity implements
         mPager.setOnPageChangeListener(this);
         mDbHelper = new DbAdapterConnection(this);
 
-
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintResource(R.color.primarycolor);
     }
 
     @Override

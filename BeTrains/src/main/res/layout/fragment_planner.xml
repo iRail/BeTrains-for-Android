@@ -72,6 +72,7 @@
                         android:id="@+id/mybuttonInvert"
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:background="@drawable/selectorbutton"
                         android:text=">&lt;"
                         android:textColor="@android:color/white"

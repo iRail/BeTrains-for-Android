@@ -18,10 +18,7 @@
             android:id="@+id/navigation_item_chat"
             android:icon="@drawable/ic_nav_chat"
             android:title="@string/nav_drawer_chat"/>
-        <item
-            android:id="@+id/navigation_item_star"
-            android:icon="@drawable/ic_nav_star"
-            android:title="@string/nav_drawer_starred"/>
+
         <item
             android:id="@+id/navigation_item_comp"
             android:icon="@drawable/ic_nav_comp"

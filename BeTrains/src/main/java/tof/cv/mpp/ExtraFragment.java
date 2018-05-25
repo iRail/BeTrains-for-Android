@@ -25,9 +25,6 @@ public class ExtraFragment extends Fragment {
 		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_extras);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
 
-		final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-		if ((!(status == ConnectionResult.SUCCESS)) && getView().findViewById(R.id.irail) != null) {
-			getView().findViewById(R.id.irail).setVisibility(View.GONE);
-		}
+
 	}
 }

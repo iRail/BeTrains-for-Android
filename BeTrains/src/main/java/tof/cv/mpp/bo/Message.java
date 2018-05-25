@@ -42,6 +42,10 @@ public class Message {
     }
 
 
+    public void setUserMessage(String replace) {
+        this.user_message=replace;
+
+    }
 }
 
 
