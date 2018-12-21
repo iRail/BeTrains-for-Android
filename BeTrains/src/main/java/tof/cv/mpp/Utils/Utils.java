@@ -306,7 +306,7 @@ public class Utils {
         int totaldelay = 0;
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
         int count = 0;
-        if (result.getResult().getVehicleStops() != null)
+        if (result.getResult()!=null && result.getResult().getVehicleStops() != null)
             for (Vehicle.VehicleStop aStop : result.getResult().getVehicleStops().getVehicleStop()) {
                 if (aStop.hasLeft() == type) {
                     if (aStop.getDelayinMin() > totaldelay)

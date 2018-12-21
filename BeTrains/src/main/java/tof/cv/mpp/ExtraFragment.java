@@ -22,8 +22,12 @@ public class ExtraFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_extras);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+		try {
+			((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_extras);
+			((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 
 	}

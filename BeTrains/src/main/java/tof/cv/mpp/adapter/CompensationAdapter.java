@@ -41,12 +41,16 @@ public class CompensationAdapter extends AbstractAdapter<String> {
 
             delay.setText("+"+o[1]+"'");
 
-            if (!o[2].contentEquals(""))
-                detail.setText(o[2]);
-            else
-                detail.setText(getContext().getString(R.string.compensation_empty_detail));
+            try {
+                if (!o[2].contentEquals(""))
+                    detail.setText(o[2]);
+                else
+                    detail.setText(getContext().getString(R.string.compensation_empty_detail));
 
-            title.setText(getContext().getString(R.string.train)+" "+o[3]);
+                title.setText(getContext().getString(R.string.train)+" "+o[3]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
         }

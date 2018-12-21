@@ -82,7 +82,11 @@ import tof.cv.mpp.R;
             c.drawText(mFirstChar, 0, 1, 0 + width / 2, 0 + height / 2
                     + (mBounds.bottom - mBounds.top) / 2, mPaint);
         } else {
-            c.drawBitmap(mDefaultBitmap, 0, 0, null);
+            try {
+                c.drawBitmap(mDefaultBitmap, 0, 0, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return bitmap;
     }

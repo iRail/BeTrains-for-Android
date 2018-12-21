@@ -10,13 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +30,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -48,10 +39,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.adapter.MessageViewHolder;
 import tof.cv.mpp.bo.Message;
+import tof.cv.mpp.view.CoolEditText;
 import tof.cv.mpp.view.LetterTileProvider;
 
 public class ChatFragment extends Fragment {
@@ -62,7 +60,7 @@ public class ChatFragment extends Fragment {
     private TextView mTitleText;
     private Button btnSettings;
     private Button btnSend;
-    private EditText messageTxtField;
+    private CoolEditText messageTxtField;
     private final String TAG = "MessagesTrain.java";
     private boolean posted = false;
     String trainId;
@@ -95,7 +93,7 @@ public class ChatFragment extends Fragment {
         mTitleText = (TextView) getView().findViewById(R.id.pseudo);
         btnSettings = (Button) getView().findViewById(R.id.settings);
         btnSend = (Button) getView().findViewById(R.id.send);
-        messageTxtField = (EditText) getView().findViewById(
+        messageTxtField = getView().findViewById(
                 R.id.yourmessage);
 
         setBtnSettingsListener();
@@ -104,11 +102,14 @@ public class ChatFragment extends Fragment {
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
-                !isTablet);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_chat);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    !isTablet);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_chat);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -157,7 +158,11 @@ public class ChatFragment extends Fragment {
         boolean donator = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("donator", false);
         boolean beta = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("beta", false);
 
-        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic, user_id, donator, beta));
+
+        if (user_id.endsWith("@cloudtestlabaccounts.com"))
+            Toast.makeText(getActivity(), "Hello Bot", Toast.LENGTH_LONG).show();
+        else
+            ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic, user_id, donator, beta));
 
         update();
         View view = getActivity().getCurrentFocus();
@@ -210,19 +215,18 @@ public class ChatFragment extends Fragment {
                                               final Message message, int position) {
                 viewHolder.getNickname().setText(message.getUser_name());
 
-                if(message.getUser_message()!=null & message.getUser_message().contains("http")){
+                if (message.getUser_message() != null & message.getUser_message().contains("http")) {
                     List<String> extractedUrls = extractUrls(message.getUser_message());
 
-                    for (String url : extractedUrls)
-                    {
+                    for (String url : extractedUrls) {
 
-                        if(url.endsWith(".gif")){
-                           message.setUserMessage( message.getUser_message().replace(url,""));
+                        if (url.endsWith(".gif")) {
+                            message.setUserMessage(message.getUser_message().replace(url, ""));
                             Glide.with(viewHolder.image).load(url).into(viewHolder.image);
                             break;
                         }
                     }
-                }else
+                } else
                     viewHolder.image.setImageDrawable(null);
 
                 viewHolder.getMessagebody().setText(message.getUser_message());
@@ -234,12 +238,12 @@ public class ChatFragment extends Fragment {
 
                 viewHolder.getTrainid().setText(message.getTrain_id());
 
-                if(message.beta)
+                if (message.beta)
                     viewHolder.beta.setVisibility(View.VISIBLE);
                 else
                     viewHolder.beta.setVisibility(View.GONE);
 
-                if(message.donator)
+                if (message.donator)
                     viewHolder.donator.setVisibility(View.VISIBLE);
                 else
                     viewHolder.donator.setVisibility(View.GONE);
@@ -314,15 +318,13 @@ public class ChatFragment extends Fragment {
                 });
             }
 
-            public  List<String> extractUrls(String text)
-            {
+            public List<String> extractUrls(String text) {
                 List<String> containedUrls = new ArrayList<String>();
                 String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
                 Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
                 Matcher urlMatcher = pattern.matcher(text);
 
-                while (urlMatcher.find())
-                {
+                while (urlMatcher.find()) {
                     containedUrls.add(text.substring(urlMatcher.start(0),
                             urlMatcher.end(0)));
                 }

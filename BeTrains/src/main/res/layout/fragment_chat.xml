@@ -60,10 +60,9 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
-        <EditText xmlns:android="http://schemas.android.com/apk/res/android"
+        <tof.cv.mpp.view.CoolEditText xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/yourmessage"
             android:layout_width="0dip"
-            android:inputType="textCapSentences"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 

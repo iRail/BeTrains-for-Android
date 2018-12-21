@@ -46,8 +46,12 @@ public class TrafficFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_issues);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+		try {
+			((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_issues);
+			((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getLang() {

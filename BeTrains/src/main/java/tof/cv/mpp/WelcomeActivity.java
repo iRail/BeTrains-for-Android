@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.view.LetterTileProvider;
 
-//import com.teragence.client.SdkControls;
+import com.teragence.client.SdkControls;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -47,7 +47,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupShortcuts();
-       // SdkControls.initialize(this);
+       SdkControls.initialize(this);
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);

@@ -818,7 +818,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
                 mExpectingResolution = true;
                 mConnectionResult.startResolutionForResult(mActivity,
                         RC_RESOLVE);
-            } catch (SendIntentException e) {
+            } catch (Exception e) {
                 // Try connecting again
                 debugLog("SendIntentException, so connecting again.");
                 connect();

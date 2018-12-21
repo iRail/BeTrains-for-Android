@@ -81,7 +81,6 @@
             android:layout_marginBottom="2dip"
             android:autoLink="web"
             android:textColor="@color/darkblue"
-            android:textIsSelectable="true"
             tool:text="BODY" />
 
         <ImageView

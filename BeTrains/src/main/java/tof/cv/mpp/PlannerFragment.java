@@ -130,7 +130,8 @@ public class PlannerFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
         tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
-        getView().findViewById(R.id.progress).setVisibility(View.GONE);
+        if (getView().findViewById(R.id.progress) != null)
+            getView().findViewById(R.id.progress).setVisibility(View.GONE);
         setAllBtnListener();
         String pStart = settings.getString("pStart", "Mons");
         try {
@@ -171,7 +172,8 @@ public class PlannerFragment extends ListFragment {
     }
 
     public void doSearch() {
-        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        if (getView().findViewById(R.id.progress) != null)
+            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
         mySearchThread(this.getActivity());
     }
 
@@ -342,13 +344,15 @@ public class PlannerFragment extends ListFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.appbar_prev:
-                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        if (getView().findViewById(R.id.progress) != null)
+                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
                         mDate.add(Calendar.HOUR, -1);
                         updateActionBar();
                         mySearchThread(getActivity());
                         break;
                     case R.id.appbar_next:
-                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        if (getView().findViewById(R.id.progress) != null)
+                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
                         mDate.add(Calendar.HOUR, 1);
                         updateActionBar();
                         mySearchThread(getActivity());
@@ -422,13 +426,13 @@ public class PlannerFragment extends ListFragment {
 
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("connection", new Gson().toJson(currentConnection));
-           Pair<View, String> p1 = Pair.create(view.findViewById(R.id.bg), "bg");
+            Pair<View, String> p1 = Pair.create(view.findViewById(R.id.bg), "bg");
 
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(getActivity(),p1);
+                    makeSceneTransitionAnimation(getActivity(), p1);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());//, options.toBundle());
-            }else
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());//, options.toBundle());
+            } else
                 startActivity(intent);
 
 
@@ -579,7 +583,8 @@ public class PlannerFragment extends ListFragment {
                 try {
 
                     fillData(finalUrl);
-                    getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                    if (getView().findViewById(R.id.progress) != null)
+                        getView().findViewById(R.id.progress).setVisibility(View.GONE);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -588,8 +593,6 @@ public class PlannerFragment extends ListFragment {
 
 
     }
-
-
 
 
     private void showDateTimeDialog() {

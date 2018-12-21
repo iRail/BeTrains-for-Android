@@ -47,8 +47,12 @@ public class StarredFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         registerForContextMenu(getListView());
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_starred);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        try {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_starred);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void onResume() {
