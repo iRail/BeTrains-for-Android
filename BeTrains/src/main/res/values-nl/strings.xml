@@ -29,7 +29,7 @@
     <string name="settings_general_first_screen">Eerste scherm</string>
     <string name="settings_general_first_screen_summary">Waar moet de applicatie opstarten?</string>
     <string name="app_name">BeTrains</string>
-    <string name="patient">Even geduld, de data worden geladen.</string>
+    <string name="patient">Even geduld, de data wordt opgeladen.</string>
     <string name="issues_empty">Geen verkeershinder</string>
     <string name="route_planner_duration">Duur:</string>
     <string name="search">Zoek</string>
