@@ -275,9 +275,9 @@ public class Utils {
     }
 
     public static int createNotif(Response<Vehicle> result, String trainId, Context c) {
-        int type = 0;
+        boolean hasLeft = false;
         try {
-            type = result.getResult().getVehicleStops().getVehicleStop().get(result.getResult().getVehicleStops().getVehicleStop().size() - 1).hasLeft();
+            hasLeft = result.getResult().getVehicleStops().getVehicleStop().get(result.getResult().getVehicleStops().getVehicleStop().size() - 1).hasLeft();
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -306,9 +306,9 @@ public class Utils {
         int totaldelay = 0;
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
         int count = 0;
-        if (result.getResult()!=null && result.getResult().getVehicleStops() != null)
+        if (result.getResult() != null && result.getResult().getVehicleStops() != null)
             for (Vehicle.VehicleStop aStop : result.getResult().getVehicleStops().getVehicleStop()) {
-                if (aStop.hasLeft() == type) {
+                if (!aStop.hasLeft()) {
                     if (aStop.getDelayinMin() > totaldelay)
                         totaldelay = aStop.getDelayinMin();
                     style = style.addLine(aStop.getStation() + " - " + Utils.formatDate(aStop.getTime(), false, false) + " " + (aStop.delay == 0 ? "" : " +" + (aStop.getDelayinMin()) + "'"));

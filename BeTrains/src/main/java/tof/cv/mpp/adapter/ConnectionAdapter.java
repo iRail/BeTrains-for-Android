@@ -492,7 +492,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
 
                             try {
-                                String path = "trains/SNCB_" + type.parent_type + "_" + type.sub_type + "_R.GIF";
+                                String path = "trains/SNCB_" + type.parent_type  + (type.sub_type.length()>0?("_"+type.sub_type):"") + "_R.GIF";
                                 Log.e("CVE", path);
                                 InputStream ims = c.getAssets().open(path);
                                 Drawable d = Drawable.createFromStream(ims, null);

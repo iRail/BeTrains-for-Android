@@ -3,8 +3,11 @@ package tof.cv.mpp.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +57,7 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holderParam, int position) {
         if (holderParam instanceof InfotrainHolder) {
             InfotrainHolder holder = (InfotrainHolder) holderParam;
-            Vehicle.VehicleStop o = list.get(position+(hasAlerts?-1:0));
+            Vehicle.VehicleStop o = list.get(position + (hasAlerts ? -1 : 0));
             if (o != null) {
                 holder.item = o;
                 holder.station.setText(Html.fromHtml(o.getStation()));
@@ -85,7 +88,7 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         holder.delay.setText(o.getDelay());
                     }
 
-                holder.left.setVisibility(("1".contentEquals("" + o.hasLeft())) ? View.VISIBLE : View.INVISIBLE);
+                holder.left.setVisibility(o.hasLeft() ? View.VISIBLE : View.INVISIBLE);
 
             }
         }

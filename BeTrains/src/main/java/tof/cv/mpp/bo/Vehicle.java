@@ -84,8 +84,8 @@ public class Vehicle {
             return time;
         }
 
-        public int hasLeft() {
-            return left;
+        public boolean hasLeft() {
+            return left==1;
         }
 
         public String getDelay() {
