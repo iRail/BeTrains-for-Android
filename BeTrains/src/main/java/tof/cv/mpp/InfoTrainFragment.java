@@ -209,7 +209,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                           .getVehicleStops().getVehicleStop(), getActivity(), currentVehicle.getAlerts(), currentVehicle.getVehicleInfo().name);
                                                   recyclerView.setAdapter(trainInfoAdapter);
 
-                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentVehicle.getVehicleInfo().name.replace("BE.NMBS.",""));
+                                                  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentVehicle.getVehicleInfo().name.replace("BE.NMBS.", ""));
                                                   PolylineOptions rectOptions = new PolylineOptions();
                                                   PolylineOptions rectOptionsTranspa = new PolylineOptions();
 
@@ -219,23 +219,27 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                   double maxLon = 0;
                                                   double delta = 0.05;
 
+                                                  boolean trainRunning=true;
+
                                                   myMap.clear();
                                                   try {
                                                       for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
 
-                                                          myMap.addMarker(new MarkerOptions()
-                                                                  .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
-                                                                  .anchor(0.5f, 0.5f)
-                                                                  .icon(BitmapDescriptorFactory.fromResource(aStop.hasLeft() ?
-                                                                          R.drawable.stop :
-                                                                          R.drawable.stopt)));
+                                                              myMap.addMarker(new MarkerOptions()
+                                                                      .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
+                                                                      .anchor(0.5f, 0.5f)
+                                                                      .icon(BitmapDescriptorFactory.fromResource(aStop.hasLeft() ?
+                                                                              R.drawable.stop :
+                                                                              R.drawable.stopt)));
 
                                                           if (aStop.hasLeft()) {
                                                               rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
                                                               rectOptionsTranspa.getPoints().clear();
                                                               rectOptionsTranspa.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
-                                                          } else
+                                                          } else{
                                                               rectOptionsTranspa.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
+                                                                trainRunning=false;
+                                                          }
 
 
                                                           if (maxLat < aStop.getStationInfo().getLocationY())
@@ -251,9 +255,9 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                               minLon = aStop.getStationInfo().getLocationX();
                                                       }
 
-                                                      myMap.addPolyline(rectOptions.color(Color.argb(255, 0, 0, 255)));
+                                                      myMap.addPolyline(rectOptions.color(Color.rgb( 0, 0, 255)));
 
-                                                      myMap.addPolyline(rectOptionsTranspa.color(Color.argb(60, 0, 0, 255)));
+                                                      myMap.addPolyline(rectOptionsTranspa.color(Color.rgb( 150, 150, 150)));
 
                                                       LatLngBounds bounds = new LatLngBounds(
                                                               new LatLng(minLat - delta, minLon - delta), new LatLng(maxLat + delta, maxLon + delta));
