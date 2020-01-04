@@ -34,7 +34,7 @@
     <string name="activity_label_planner">Planner</string>
 
     <!-- Intro -->
-    <string name="intro_swipe">Swipe from the edge of the screen to access more features.</string>
+
     <string name="intro_tip_a_title">Getting started</string>
     <string name="intro_tip_a">To start immediately, click on the search button.</string>
     <string name="intro_tip_b_title">Change stations</string>
@@ -195,4 +195,6 @@
     <string name="appbar_prev">Previous</string>
     <string name="appbar_mix">Mix</string>
     <string name="action_goto_favorites">Favs</string>
+    <string name="channel_name">Train Watching</string>
+    <string name="channel_description">When you want to look for a specific train</string>
 </resources>

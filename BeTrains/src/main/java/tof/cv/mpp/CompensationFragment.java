@@ -77,8 +77,12 @@ public class CompensationFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         registerForContextMenu(getListView());
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_compensation);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        try {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_compensation);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         boolean isTablet = this.getActivity().getResources().getBoolean(R.bool.tablet_layout);
 

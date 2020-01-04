@@ -106,7 +106,6 @@
 
     <string name="game_cooling">Prochain:</string>
     <string name="game_text">Rendez-vous à moins de 500m d\'une gare, au plus il y a du retard, au plus vous aurez des points!</string>
-    <string name="intro_swipe">Glissez votre doigt depuis le bord gauche du téléphone pour faire apparaitre le menu.</string>
     <string name="game_too_far">Vous êtes trop loin:</string>
     <string name="game_err_gps">GPS is OFF. Click here to enable.</string>
     <string name="info_station_submit_picture_title">Pictures</string>
@@ -171,6 +170,11 @@
     <string name="pref_status_donator_sum">Make a paypal donation to christophe.versieux@gmail.com</string>
     <string name="pref_status_beta">Beta-Testeur</string>
     <string name="pref_status_beta_sum">Participe aux beta tests de l\'application (Voir Play Store)</string>
-    <string name="appbar_next">Next</string>
+    <string name="appbar_next">Suivant</string>
+    <string name="appbar_prev">Precedent</string>
+    <string name="appbar_mix">Mix</string>
+    <string name="action_goto_favorites">Favoris</string>
+    <string name="channel_name">Suivi des trains</string>
+    <string name="channel_description">Quand vous surveillez un train</string>
 
 </resources>

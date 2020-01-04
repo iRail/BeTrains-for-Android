@@ -1,6 +1,7 @@
 package tof.cv.mpp;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -217,6 +218,7 @@ public class GameFragment extends BaseGameFragment implements
     }
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onResume() {
         super.onResume();
@@ -270,7 +272,7 @@ public class GameFragment extends BaseGameFragment implements
         boolean chat = sp.getBoolean("chatUnlock", false);
         Log.e("", "chat " + chat);
         try {
-            Games.Achievements.setSteps(getApiClient(), PlannerFragment.SEARCH, score);
+            Games.Achievements.setSteps(getApiClient(),"CgkI9Y3S0soCEAIQCQ", score);
             if (chat)
                 Games.Achievements.unlock(getApiClient(), ChatActivity.ID);
         } catch (Exception e) {

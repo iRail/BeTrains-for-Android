@@ -82,8 +82,12 @@ public class ClosestFragment extends ListFragment {
 
         setHasOptionsMenu(true);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_closest);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        try {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_closest);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         m_ProgressDialog = new MyProgressDialog(getActivity());
         mDbHelper = new DbAdapterLocation(getActivity());

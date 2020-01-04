@@ -1,5 +1,7 @@
 package tof.cv.mpp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ShortcutInfo;
@@ -28,7 +30,7 @@ import androidx.fragment.app.Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.view.LetterTileProvider;
 
-import com.teragence.client.SdkControls;
+//import com.teragence.client.SdkControls;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -47,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupShortcuts();
-       SdkControls.initialize(this);
+       //SdkControls.initialize(this);
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
@@ -82,6 +84,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("Departure") && getIntent().hasExtra("Arrival"))
             pos = 1;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("TRAIN_WATCH", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         switch (pos) {
             case 1:
@@ -194,8 +208,6 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
-                if (mContent instanceof PlannerFragment && findViewById(R.id.tuto) != null)
-                    findViewById(R.id.tuto).setVisibility(View.GONE);
             }
 
             @Override

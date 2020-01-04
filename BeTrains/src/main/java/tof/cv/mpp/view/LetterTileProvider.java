@@ -69,7 +69,7 @@ import tof.cv.mpp.R;
      */
     public Bitmap getLetterTile(String displayName, String key, int width, int height) {
         final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        final char firstChar = displayName.charAt(0);
+        final char firstChar = (displayName.length()>0?displayName.charAt(0):"-".charAt(0));
 
         final Canvas c = mCanvas;
         c.setBitmap(bitmap);

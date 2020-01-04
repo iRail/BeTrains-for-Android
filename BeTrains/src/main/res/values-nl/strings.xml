@@ -90,7 +90,6 @@
     <string name="pref_selectFreq_sum">1 uur</string>
     <string name="game_cooling">Next Checkin:</string>
     <string name="game_text">you need to be closer than 500m from a station to check-in. The more delay at the station, the more points you get</string>
-    <string name="intro_swipe">Swipe van links naar rechts om het menu te openen.</string>
     <string name="game_too_far">You are too far:</string>
     <string name="game_err_gps">GPS is OFF. Click here to enable.</string>
     <string name="info_station_submit_picture_title">Pictures</string>
@@ -155,5 +154,10 @@
     <string name="pref_status_beta">Beta Tester</string>
     <string name="pref_status_beta_sum">Participated in BeTrains Beta tests (See Play Store)</string>
     <string name="appbar_next">Next</string>
+    <string name="appbar_prev">Previous</string>
+    <string name="appbar_mix">Mix</string>
+    <string name="action_goto_favorites">Favs</string>
+    <string name="channel_name">Train Watching</string>
+    <string name="channel_description">When you want to look for a specific train</string>
 
 </resources>

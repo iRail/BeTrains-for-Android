@@ -297,7 +297,7 @@ public class Utils {
                 PendingIntent.getBroadcast(c, 0, dismissIntent, 0);
 
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(c, "NOTIF")
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(c, "TRAIN_WATCH")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(openPendingIntent)
                 .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_open), openPendingIntent))

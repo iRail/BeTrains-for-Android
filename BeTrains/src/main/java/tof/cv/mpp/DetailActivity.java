@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ViaAdapter;
 import tof.cv.mpp.bo.Alert;
@@ -42,15 +43,15 @@ public class DetailActivity extends AppCompatActivity {
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          getWindow().setExitTransition(new Fade());
+            getWindow().setExitTransition(new Fade());
         }
 
         setContentView(R.layout.dialog_connection_detail);
 
-       findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("CVE","CLICK");
+                Log.e("CVE", "CLICK");
                 finish();
             }
         });
@@ -193,10 +194,8 @@ public class DetailActivity extends AppCompatActivity {
                     text = text.substring(0, text.length() - 2);
 
                 tv.setText(Html.fromHtml(text));
-                //  ll.addView(tv);
+                ll.addView(tv);
             }
-
-            // scroll.addView(ll);
 
 
         }

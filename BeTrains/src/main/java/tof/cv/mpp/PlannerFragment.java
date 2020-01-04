@@ -1,19 +1,12 @@
 package tof.cv.mpp;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -24,13 +17,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -43,24 +43,18 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.ListFragment;
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
-import tof.cv.mpp.bo.Connection;
+import tof.cv.mpp.adapter.TipAdapter;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
 
-public class PlannerFragment extends ListFragment {
+public class PlannerFragment extends Fragment {
 
-    boolean isDebug = false;
-    public static final String SEARCH = "CgkI9Y3S0soCEAIQCQ";
+    RecyclerView recyclerView;
+
+    //boolean isDebug = false;
     private static final int MENU_DT = 0;
     private static final int MENU_FAV = 1;
     private static final int MENU_PREF = 2;
@@ -72,17 +66,10 @@ public class PlannerFragment extends ListFragment {
     public static String abDatePattern = "EEE dd MMM";
     public static String abTimePattern = "HH:mm";
 
-    private int positionClicked;
-
     private static Connections allConnections = new Connections();
 
     private TextView tvDeparture;
     private TextView tvArrival;
-
-    private ConnectionAdapter connAdapter;
-
-    private String TAG = "BETRAINS";
-    private Activity context;
 
     private static SharedPreferences settings;
     private SharedPreferences.Editor editor;
@@ -117,10 +104,8 @@ public class PlannerFragment extends ListFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // this.setRetainInstance(true);
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = settings.edit();
-        context = this.getActivity();
         mDate = Calendar.getInstance();
         setHasOptionsMenu(true);
     }
@@ -128,24 +113,30 @@ public class PlannerFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
-        tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
+        if (getView() == null)
+            return;
+        tvDeparture = getView().findViewById(R.id.tv_start);
+        tvArrival = getView().findViewById(R.id.tv_stop);
+        recyclerView = getView().findViewById(R.id.recyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
+
         if (getView().findViewById(R.id.progress) != null)
             getView().findViewById(R.id.progress).setVisibility(View.GONE);
         setAllBtnListener();
         String pStart = settings.getString("pStart", "Mons");
-        try {
-            pStart = getActivity().getIntent().getExtras().getString("Departure", pStart);
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-
         String pStop = settings.getString("pStop", "Tournai");
-        try {
-            pStop = getActivity().getIntent().getExtras().getString("Arrival", pStop);
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
+
+        if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null)
+            try {
+                pStart = getActivity().getIntent().getExtras().getString("Departure", pStart);
+                pStop = getActivity().getIntent().getExtras().getString("Arrival", pStop);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         fillStations(pStart, pStop);
 
@@ -158,8 +149,6 @@ public class PlannerFragment extends ListFragment {
 
         updateActionBar();
 
-        if (!PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getBoolean("navigation_drawer_learned", false) && ((WelcomeActivity) this.getActivity()).drawerLayout != null && !getResources().getBoolean(R.bool.tablet_layout))
-            this.getView().findViewById(R.id.tuto).setVisibility(View.VISIBLE);
 
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
@@ -261,7 +250,7 @@ public class PlannerFragment extends ListFragment {
                 return true;
             case (MENU_FAV_ADD):
                 Utils.addAsStarred(tvDeparture.getText().toString(), tvArrival
-                        .getText().toString(), 3, context);
+                        .getText().toString(), 3, getActivity());
                 startActivity(new Intent(getActivity(), StarredActivity.class));
                 return true;
             case (MENU_FAV):
@@ -287,20 +276,19 @@ public class PlannerFragment extends ListFragment {
     private void fillData(final String url) {
         BottomAppBar bap = getActivity().findViewById(R.id.bar);
         if (allConnections != null && allConnections.connection != null) {
-            connAdapter = new ConnectionAdapter(this.getActivity()
-                    .getBaseContext(), R.layout.row_planner,
-                    allConnections.connection
-            );
-            setListAdapter(connAdapter);
-            registerForContextMenu(getListView());
+            ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection,getActivity());
+            recyclerView.setAdapter(connAdapter);
+
             PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
             if (bap.getMenu().size() == 0)
                 bap.replaceMenu(R.menu.appbar);
         } else {
-            Log.e("CVE", "NULL");
+
 
             if (url != null && url.length() > 0) {
-                // Linkify the message
+                Log.e("CVE", "PAS DE RESULTATS");
+
+                /*/ Linkify the message
                 final SpannableString s = new SpannableString(getString(R.string.msg_api_error) + " - " + url);
                 Linkify.addLinks(s, Linkify.ALL);
 
@@ -321,17 +309,21 @@ public class PlannerFragment extends ListFragment {
                 d.show();
                 // Make the textview clickable. Must be called after show()
                 ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+                 */
+                String message = getString(R.string.txt_error);
+                if (allConnections.message != null & allConnections.message.length() > 0) {
+                    message = allConnections.message;
+                }
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
 
 
             allConnections = Utils.getCachedConnections(PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("cached", ""));
             if (allConnections != null) {
-                connAdapter = new ConnectionAdapter(this.getActivity()
-                        .getBaseContext(), R.layout.row_planner,
-                        allConnections.connection
-                );
-                setListAdapter(connAdapter);
-                registerForContextMenu(getListView());
+                ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection,getActivity());
+                recyclerView.setAdapter(connAdapter);
+                //registerForContextMenu(getListView());
                 if (bap.getMenu().size() == 0)
                     bap.inflateMenu(R.menu.appbar);
             } else {
@@ -376,6 +368,7 @@ public class PlannerFragment extends ListFragment {
     }
 
     public void fillWithTips() {
+
         List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
         // fill the map with data
@@ -399,12 +392,7 @@ public class PlannerFragment extends ListFragment {
         map.put("title", getString(R.string.intro_tip_d));
         list.add(map);
 
-        // Use a SimpleAdapter to display tips
-        String[] from = {"tip", "title"};
-        int[] to = {R.id.tiptitle, R.id.tiptext};
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), list,
-                R.layout.row_tip, from, to);
-        setListAdapter(adapter);
+        recyclerView.setAdapter(new TipAdapter(list));
     }
 
     @Override
@@ -413,34 +401,6 @@ public class PlannerFragment extends ListFragment {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-    @Override
-    public void onListItemClick(ListView listView, View view, int position, long id) {
-        super.onListItemClick(listView, view, position, id);
-        positionClicked = position;
-
-        try {
-
-            Connection currentConnection = allConnections.connection
-                    .get(positionClicked);
-
-
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("connection", new Gson().toJson(currentConnection));
-            Pair<View, String> p1 = Pair.create(view.findViewById(R.id.bg), "bg");
-
-            ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(getActivity(), p1);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());//, options.toBundle());
-            } else
-                startActivity(intent);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            // noDataClick(positionClicked);
-        }
-    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -514,7 +474,7 @@ public class PlannerFragment extends ListFragment {
             langue = "NL";
 
         String dA = "depart";
-        if (settings.getString(context.getString(R.string.key_planner_da), "1")
+        if (settings.getString(getString(R.string.key_planner_da), "1")
                 .contentEquals("2"))
             dA = "arrive";
 
@@ -546,7 +506,6 @@ public class PlannerFragment extends ListFragment {
                     + year + "&time=" + hour + minutes + "&timeSel="
                     + dA + "&lang=" + langue
                     + "&typeOfTransport=train&format=json&fast=true&alerts=true";
-            // ref.push().setValue(new LogCVE("CATCH",e.getMessage(),url,""));
         }
 
 
@@ -555,7 +514,7 @@ public class PlannerFragment extends ListFragment {
 
         url = "https://api.irail.be/connections.php?to=" + url;
         // ref.push().setValue(new LogCVE("URL","",url,""));
-        Log.v(TAG, url);
+
         Log.e("CVE", "Search " + url);
         final String finalUrl = url;
         Ion.with(this).load(url).setTimeout(4500).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
@@ -597,16 +556,12 @@ public class PlannerFragment extends ListFragment {
 
     private void showDateTimeDialog() {
 
-        final DateTimePicker mDateTimeDialog = new DateTimePicker(
-                (Context) getActivity(), this);
-
+        final DateTimePicker mDateTimeDialog = new DateTimePicker(getActivity(), this);
         final String timeS = android.provider.Settings.System.getString(
                 getActivity().getContentResolver(),
                 android.provider.Settings.System.TIME_12_24);
         final boolean is24h = !(timeS == null || timeS.equals("12"));
-
         mDateTimeDialog.setIs24HourView(is24h);
-
         mDateTimeDialog.show();
     }
 }

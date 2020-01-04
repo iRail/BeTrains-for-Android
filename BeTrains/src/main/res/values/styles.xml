@@ -9,10 +9,11 @@
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
         <item name="colorAccent">@color/coloraccent</item>
         <!-- New MaterialComponents attributes. -->
-        <item name="colorPrimaryLight">?attr/colorPrimary</item>
+
         <item name="colorSecondary">?attr/colorPrimary</item>
+        <!--item name="colorPrimaryLight">?attr/colorPrimary</item>
         <item name="colorSecondaryLight">?attr/colorPrimaryLight</item>
-        <item name="colorSecondaryDark">?attr/colorPrimaryDark</item>
+        <item name="colorSecondaryDark">?attr/colorPrimaryDark</item-->
         <item name="scrimBackground">@color/mtrl_scrim_color</item>
         <item name="snackbarButtonStyle">?attr/borderlessButtonStyle</item>
 
