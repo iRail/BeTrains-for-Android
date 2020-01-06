@@ -24,6 +24,10 @@ import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -160,9 +164,10 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                             .getDeparture().getVehicle())));
             }
 
+            holder.trainId = conn.getDeparture().getVehicle();
+
             holder.trainIconUrl = "https://staging.api.irail.be/composition.php?id=" +
-                    conn.getDeparture().getVehicle() + "&format=json";
-            //holder.trainIcon.setImageDrawable(null);
+                    holder.trainId + "&format=json";
             holder.loadicon();
 
 
@@ -452,6 +457,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         ImageView trainIcon;
         LinearLayout container;
         String trainIconUrl;
+        String trainId;
         View v;
 
         public ConnectionViewHolder(@NonNull View v) {
@@ -476,44 +482,111 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         }
 
         public void loadicon() {
-            Ion.with(c).load(trainIconUrl)
-                    .as(new TypeToken<TrainComposition>() {
-                    }).setCallback(new FutureCallback<TrainComposition>() {
-                @Override
-                public void onCompleted(Exception e, TrainComposition result) {
-                    if (result != null && result.composition != null) {
-                        if (result.composition.segments.segment.get(0).composition != null) {
-                            trainIcon.setVisibility(View.VISIBLE);
-                            MaterialType type = result.composition.segments.segment.get(0).composition.units.
-                                    unit.get(result.composition.segments.segment.get(0).composition.units.unit.size()>1?1:0).materialType;
+            final TrainComposition.Composition.Segments.Segment.SegmentComposition composition = getCompositionFromCache(trainId);
+            if (composition == null)
+                Ion.with(c).load(trainIconUrl)
+                        .as(new TypeToken<TrainComposition>() {
+                        }).setCallback(new FutureCallback<TrainComposition>() {
+                    @Override
+                    public void onCompleted(Exception e, TrainComposition result) {
+                        Log.e("CVE", "ION " + trainId);
+                        if (result != null && result.composition != null) {
+                            if (result.composition.segments.segment.get(0).composition != null) {
 
-                            //Log.e("CVETYPE_ORIGINAL", "" + type.parent_type
-                            //       + " - " + type.sub_type
-                            //       + " - " + type.orientation);
-
-                            type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, result.composition.segments.segment.get(0).composition.units.unit.get(0).seatsFirstClass);
+                                cacheComposition(trainId, result.composition.segments.segment.get(0).composition);
+                                displayComposition(composition, trainIcon);
 
 
-                            try {
-                                String path = "trains/SNCB_" + type.parent_type  + (type.sub_type.length()>0?("_"+type.sub_type):"") + "_R.GIF";
-                                Log.e("CVE", path);
-                                InputStream ims = c.getAssets().open(path);
-                                Drawable d = Drawable.createFromStream(ims, null);
-                                trainIcon.setImageDrawable(d);
-                                ims.close();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                                return;
-                            }
+                            } else trainIcon.setVisibility(View.GONE);
+                        } else
+                            trainIcon.setVisibility(View.GONE);
+                    }
+                });
+            else {
+                Log.e("CVE", "CACHE " + trainId);
+                displayComposition(composition, trainIcon);
+            }
 
-
-                        } else trainIcon.setVisibility(View.GONE);
-                    } else
-                        trainIcon.setVisibility(View.GONE);
-                }
-            });
         }
     }
 
+    private void displayComposition(TrainComposition.Composition.Segments.Segment.SegmentComposition composition, ImageView trainIcon) {
+        trainIcon.setVisibility(View.VISIBLE);
+        if (composition == null) {
+            //Log.e("CVE","Composition null ");
+            return;
+        }
+        MaterialType type = composition.units.
+                unit.get(composition.units.unit.size() > 1 ? 1 : 0).materialType;
+
+        type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(0).seatsFirstClass);
+
+
+        try {
+            String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
+            Log.e("CVE", path);
+            InputStream ims = c.getAssets().open(path);
+            Drawable d = Drawable.createFromStream(ims, null);
+            trainIcon.setImageDrawable(d);
+            ims.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
+
+    }
+
+    private void cacheComposition(String trainId, TrainComposition.Composition.Segments.Segment.SegmentComposition composition) {
+
+        try {
+            File file = new File(c.getCacheDir() + File.separator + "composition" + File.separator + trainId + ".cache");
+            //Log.e("CVE", "File to " + file.getName());
+
+            if (!file.getParentFile().exists())
+                file.getParentFile().mkdirs();
+
+            if (!file.exists())
+                file.createNewFile();
+
+            FileOutputStream stream = new FileOutputStream(file);
+            try {
+                stream.write(new Gson().toJson(composition).getBytes());
+            } finally {
+                stream.close();
+            }
+
+
+            Log.e("CVE", "Cached to " + file.getName());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private TrainComposition.Composition.Segments.Segment.SegmentComposition getCompositionFromCache(String trainId) {
+
+        try {
+            File file = new File(c.getCacheDir() + File.separator + "composition" + File.separator + trainId + ".cache");
+            int length = (int) file.length();
+
+            byte[] bytes = new byte[length];
+
+            FileInputStream in = new FileInputStream(file);
+            try {
+                in.read(bytes);
+            } finally {
+                in.close();
+            }
+
+            String contents = new String(bytes);
+            // Log.e("CVE", "I got:  " + contents);
+            return new Gson().fromJson(contents, TrainComposition.Composition.Segments.Segment.SegmentComposition.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+    }
 
 }
