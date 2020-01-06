@@ -9,6 +9,9 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,10 +172,20 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         @Override
         public void onClick(View view) {
-            new AlertDialog.Builder(view.getContext())
+
+
+            final SpannableString s = new SpannableString(html); // msg should have url to enable clicking
+            Linkify.addLinks(s, Linkify.ALL);
+
+
+            AlertDialog d = new AlertDialog.Builder(view.getContext())
                     .setTitle(train)
-                    .setMessage(Html.fromHtml(html))
-                    .show();
+                    .setMessage(Html.fromHtml(html)).create();
+
+            d.show();
+
+            ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+            ((TextView) d.findViewById(android.R.id.message)).setLinkTextColor(view.getContext().getResources().getColor(R.color.darkblue));
         }
     }
 }
