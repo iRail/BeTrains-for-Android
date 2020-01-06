@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.fragment.app.ListFragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -103,8 +105,8 @@ public class InfoStationFragment extends ListFragment {
         nextButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
 
-               // pd = ProgressDialog.show(getActivity(), "",
-               //         getString(R.string.txt_patient), true);
+                // pd = ProgressDialog.show(getActivity(), "",
+                //         getString(R.string.txt_patient), true);
 
                 timestamp += (60 * 60 * 1000);
                 searchThread();
@@ -114,8 +116,8 @@ public class InfoStationFragment extends ListFragment {
         prevButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
 
-               // pd = ProgressDialog.show(getActivity(), "",
-               //         getString(R.string.txt_patient), true);
+                // pd = ProgressDialog.show(getActivity(), "",
+                //         getString(R.string.txt_patient), true);
 
                 timestamp -= (60 * 60 * 1000);
                 searchThread();
@@ -125,7 +127,7 @@ public class InfoStationFragment extends ListFragment {
         setHasOptionsMenu(true);
 
         swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeContainer);
-        if(swipeContainer!=null){
+        if (swipeContainer != null) {
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -184,15 +186,14 @@ public class InfoStationFragment extends ListFragment {
         if (id != null && id.length() > 0)
             url = "http://api.irail.be/liveboard.php/?id="
                     + id + dateTime
-                    + "&format=JSON&fast=true" + "&lang=" + langue+"&alerts=true";
+                    + "&format=JSON&fast=true" + "&lang=" + langue + "&alerts=true";
         else
             url = "http://api.irail.be/liveboard.php/?station="
                     + stationString.replace(" ", "%20") + dateTime
-                    + "&format=JSON&fast=true" + "&lang=" + langue+"&alerts=true";
+                    + "&format=JSON&fast=true" + "&lang=" + langue + "&alerts=true";
 
-        Log.e("CVE","Show station from: " + url);
-
-        Ion.with(this).load(url).userAgent("WazaBe: BeTrains "+BuildConfig.VERSION_NAME+" for Android").as(new TypeToken<Station>(){}).setCallback(new FutureCallback<Station>() {
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Station>() {
+        }).setCallback(new FutureCallback<Station>() {
             @Override
             public void onCompleted(Exception e, Station result) {
                 currentStation = result;
@@ -205,9 +206,10 @@ public class InfoStationFragment extends ListFragment {
                 if (currentStation != null)
                     if (currentStation.getStationDepartures() != null) {
 
-                        if (id != null)
-                            //Picasso.with(InfoStationFragment.this.getActivity()).load("http://wazabe.byethost8.com/" + currentStation.getStationStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
-                            Picasso.with(InfoStationFragment.this.getActivity()).load("http://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationinfo().getId().replace("BE.NMBS.", "") + ".jpg").error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                        if (id != null) {
+                            String url = "https://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationinfo().getId().replace("BE.NMBS.", "") + ".jpg";
+                            Picasso.with(InfoStationFragment.this.getActivity()).load(url).error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                        }
 
                         stationString = currentStation.getStation();
 

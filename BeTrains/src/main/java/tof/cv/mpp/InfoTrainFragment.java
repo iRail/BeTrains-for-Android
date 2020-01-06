@@ -104,8 +104,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
         registerForContextMenu(recyclerView);
 
-        if (id != null)
-            displayInfo(id, fromTo, timestamp);
+
 
         swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeContainer);
         if (swipeContainer != null) {
@@ -511,8 +510,10 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         myMap = googleMap;
-        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
         myMap.getUiSettings().setScrollGesturesEnabled(false);
+
+        if (id != null)
+            displayInfo(id, fromTo, timestamp);
     }
 
 

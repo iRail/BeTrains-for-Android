@@ -160,7 +160,8 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                             .getDeparture().getVehicle())));
             }
 
-            holder.trainIconUrl = "https://staging.api.irail.be/composition.php?id=" + conn.getDeparture().getVehicle() + "&format=json";
+            holder.trainIconUrl = "https://staging.api.irail.be/composition.php?id=" +
+                    conn.getDeparture().getVehicle() + "&format=json";
             //holder.trainIcon.setImageDrawable(null);
             holder.loadicon();
 
@@ -424,11 +425,12 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             case "HLE16":
             case "HLE19":
             case "HLE20":
-            case "HLE21":
                 if (subType.isEmpty()) {
                     newSubType = "B";
                 }
                 break;
+            case "HLE21":
+
         }
 
         return new MaterialType(newParentType, newSubType, orientation);
@@ -482,7 +484,8 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     if (result != null && result.composition != null) {
                         if (result.composition.segments.segment.get(0).composition != null) {
                             trainIcon.setVisibility(View.VISIBLE);
-                            MaterialType type = result.composition.segments.segment.get(0).composition.units.unit.get(0).materialType;
+                            MaterialType type = result.composition.segments.segment.get(0).composition.units.
+                                    unit.get(result.composition.segments.segment.get(0).composition.units.unit.size()>1?1:0).materialType;
 
                             //Log.e("CVETYPE_ORIGINAL", "" + type.parent_type
                             //       + " - " + type.sub_type

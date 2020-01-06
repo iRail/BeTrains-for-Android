@@ -3,86 +3,90 @@ package tof.cv.mpp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.fragment.app.ListFragment;
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import tof.cv.mpp.rss.DownloadTrafficTask;
-import tof.cv.mpp.rss.RSSFeed;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.ListFragment;
+
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import tof.cv.mpp.adapter.TrafficAdapter;
+import tof.cv.mpp.bo.Perturbations;
 
 
 public class TrafficFragment extends ListFragment {
-	protected static final String TAG = "ActivityTraffic";
-	private RSSFeed myRssFeed = null;
-	private String lang;
+    protected static final String TAG = "ActivityTraffic";
+    private String lang;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_traffic, null);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_traffic, null);
+    }
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
 
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
+        SharedPreferences settings = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
 
-		lang = this.getString(R.string.url_lang_2);
-		if (settings.getBoolean("prefnl", false)) {
-			lang = "n";
-		}
+        lang = this.getString(R.string.url_lang);
+        if (settings.getBoolean("prefnl", false)) {
+            lang = "nl";
+        }
 
-		new DownloadTrafficTask(this).execute();
-		
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		try {
-			((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_issues);
-			((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        String url = "https://api.irail.be/disturbances/?format=json&lang=" + lang;
+        Log.e("CVE", url);
+        Ion.with(this).load(url).as(new TypeToken<Perturbations>() {
+        }).setCallback(new FutureCallback<Perturbations>() {
+            @Override
+            public void onCompleted(Exception e, Perturbations result) {
 
-	public String getLang() {
-		return lang;
-	}
+                try {
+                    Log.e("CVE", "" + result);
+                    if (result != null) {
+                        if (result.disturbance != null) {
+                            TrafficAdapter adapter = new TrafficAdapter(getActivity(),
+                                    R.layout.row_rss, result, getLayoutInflater());
+                            setListAdapter(adapter);
+                        } else
+                            ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.issues_empty);
 
-	public RSSFeed getRssFeed() {
-		return myRssFeed;
-	}
 
-	public void setRssFeed(RSSFeed rssFeed) {
-		this.myRssFeed = rssFeed;
-	}
+                    } else
+                        ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.check_connection);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
-	/*@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		Log.i("FragmentList", "Item clicked: " + id);
-		
-		TrafficAdapter a=(TrafficAdapter) this.getListAdapter();
-		
-		AlertDialog.Builder alertbox = new AlertDialog.Builder(
-				this.getActivity());
-		alertbox.setTitle(a.getItem(position).getTitle());
-		alertbox.setMessage(Html.fromHtml(a.getItem(position).getDescription()));
-		// "\n\n"+myRssFeed.getItem(position).getPubdate());
-		alertbox.setNeutralButton(android.R.string.ok,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface arg0, int arg1) {
-					}
-				});
-		alertbox.show();
-	}*/
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_issues);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

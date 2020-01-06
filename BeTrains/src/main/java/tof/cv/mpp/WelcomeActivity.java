@@ -18,6 +18,7 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
+import com.teragence.client.SdkControls;
 
 import java.util.Arrays;
 
@@ -27,6 +28,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.view.LetterTileProvider;
 
@@ -49,12 +51,12 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupShortcuts();
-       //SdkControls.initialize(this);
+        SdkControls.initialize(this);
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
 
-       // setSupportActionBar((BottomAppBar)findViewById(R.id.bar));
+        // setSupportActionBar((BottomAppBar)findViewById(R.id.bar));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 
