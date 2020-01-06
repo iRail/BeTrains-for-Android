@@ -108,7 +108,7 @@ public class TrainInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (holder.text.endsWith(" / "))
                 holder.text = holder.text.substring(0, holder.text.length() - 3);
 
-            holder.alert.setText(holder.text);
+            holder.alert.setText(Html.fromHtml(holder.text));
         }
 
     }
