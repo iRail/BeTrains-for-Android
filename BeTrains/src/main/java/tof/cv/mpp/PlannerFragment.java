@@ -288,29 +288,6 @@ public class PlannerFragment extends Fragment {
             if (url != null && url.length() > 0) {
                 Log.e("CVE", "PAS DE RESULTATS");
 
-                /*/ Linkify the message
-                final SpannableString s = new SpannableString(getString(R.string.msg_api_error) + " - " + url);
-                Linkify.addLinks(s, Linkify.ALL);
-
-                final AlertDialog d = new AlertDialog.Builder(getContext())
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setData(Uri.parse(url));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, null)
-                        .setTitle(R.string.msg_api_error_title)
-                        .setMessage(s)
-                        .create();
-
-                d.show();
-                // Make the textview clickable. Must be called after show()
-                ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-
-                 */
                 String message = getString(R.string.txt_error);
                 if (allConnections.message != null & allConnections.message.length() > 0) {
                     message = allConnections.message;

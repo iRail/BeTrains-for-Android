@@ -29,6 +29,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import tof.cv.mpp.DetailActivity;
@@ -483,6 +485,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         public void loadicon() {
             final TrainComposition.Composition.Segments.Segment.SegmentComposition composition = getCompositionFromCache(trainId);
+
             if (composition == null)
                 Ion.with(c).load(trainIconUrl)
                         .as(new TypeToken<TrainComposition>() {
@@ -491,10 +494,11 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     public void onCompleted(Exception e, TrainComposition result) {
                         Log.e("CVE", "ION " + trainId);
                         if (result != null && result.composition != null) {
+                            Log.e("CVE", "ION RESULT OK" + trainId+" ->"+result.composition.segments.segment.get(0).composition);
                             if (result.composition.segments.segment.get(0).composition != null) {
 
                                 cacheComposition(trainId, result.composition.segments.segment.get(0).composition);
-                                displayComposition(composition, trainIcon);
+                                displayComposition(result.composition.segments.segment.get(0).composition, trainIcon);
 
 
                             } else trainIcon.setVisibility(View.GONE);
@@ -503,7 +507,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     }
                 });
             else {
-                Log.e("CVE", "CACHE " + trainId);
+                //Log.e("CVE", "CACHE " + trainId);
                 displayComposition(composition, trainIcon);
             }
 
@@ -523,8 +527,9 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
 
         try {
+            //Log.e("CVE","DISPLAY ");
             String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
-            Log.e("CVE", path);
+            //Log.e("CVE", path);
             InputStream ims = c.getAssets().open(path);
             Drawable d = Drawable.createFromStream(ims, null);
             trainIcon.setImageDrawable(d);
@@ -540,7 +545,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         try {
             File file = new File(c.getCacheDir() + File.separator + "composition" + File.separator + trainId + ".cache");
-            //Log.e("CVE", "File to " + file.getName());
 
             if (!file.getParentFile().exists())
                 file.getParentFile().mkdirs();
@@ -556,7 +560,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             }
 
 
-            Log.e("CVE", "Cached to " + file.getName());
+            //Log.e("CVE", "Cached to " + file.getName());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -567,6 +571,21 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         try {
             File file = new File(c.getCacheDir() + File.separator + "composition" + File.separator + trainId + ".cache");
+
+            if (file.exists()) {
+                Calendar time = Calendar.getInstance();
+                time.add(Calendar.HOUR, -24);
+                //I store the required attributes here and delete them
+                Date lastModified = new Date(file.lastModified());
+                if (lastModified.before(time.getTime())) {
+                    //Log.e("CVE", "FILE IS TOO OLD, DELETE IT");
+                    file.delete();
+                    return null;
+                } //else
+                    //Log.e("CVE", "FILE IS UP TO DATE");
+            } else
+                return null;
+
             int length = (int) file.length();
 
             byte[] bytes = new byte[length];
@@ -579,7 +598,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             }
 
             String contents = new String(bytes);
-            // Log.e("CVE", "I got:  " + contents);
+            //Log.e("CVE", "I got:  " + contents);
             return new Gson().fromJson(contents, TrainComposition.Composition.Segments.Segment.SegmentComposition.class);
         } catch (IOException e) {
             e.printStackTrace();
