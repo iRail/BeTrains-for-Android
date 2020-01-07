@@ -21,8 +21,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 6605
-        versionName "4.8.28"
+        versionCode 6607
+        versionName "4.8.30"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -49,6 +49,9 @@ allprojects {
             url "https://maven.google.com"
         }
         maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
+        maven {
+            url 'https://ci.android.com/builds/submitted/6052626/androidx_snapshot/latest/repository/'
+        }
     }
 }
 
@@ -71,7 +74,7 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.2.0-alpha03'
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0-SNAPSHOT'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
