@@ -476,13 +476,13 @@ public class PlannerFragment extends Fragment {
             url = URLEncoder.encode(myArrival, "UTF-8") + "&from=" + URLEncoder.encode(myStart, "UTF-8") + "&date=" + day + month
                     + year + "&time=" + hour + minutes + "&timeSel="
                     + dA + "&lang=" + langue
-                    + "&format=json&fast=true&alerts=true";
+                    + "&typeOfTransport=train&format=json&fast=true&alerts=true";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             url = myArrival + "&from=" + myStart + "&date=" + day + month
                     + year + "&time=" + hour + minutes + "&timeSel="
                     + dA + "&lang=" + langue
-                    + "&format=json&fast=true&alerts=true";
+                    + "&typeOfTransport=train&format=json&fast=true&alerts=true";
         }
 
 

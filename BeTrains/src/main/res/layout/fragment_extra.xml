@@ -2,19 +2,19 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
     android:id="@+id/layout_root"
-    android:fitsSystemWindows="true"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:background="#fff3f3f3"
     android:clipToPadding="true"
-    tools:context=".WelcomeActivity"
-    android:layout_height="wrap_content">
+    android:fitsSystemWindows="true"
+    tools:context=".WelcomeActivity">
 
     <LinearLayout
 
-        android:clipToPadding="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -40,44 +40,16 @@
                 android:text="Android - Applications\n+32 (0)485/03.99.49\nchristophe.versieux@gmail.com"
                 android:textColor="#ff777777" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:onClick="onMailClick"
+                android:src="@drawable/mail" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:onClick="onPlusClick"
-                    android:src="@drawable/plus" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:onClick="onMailClick"
-                    android:src="@drawable/mail" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -131,13 +103,38 @@
 
                 <TextView
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="Cookicons:\nPremium Material Iconography"
                     android:textColor="#ff777777" />
 
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/nowCardStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:padding="10dip"
+                android:text="OPEN SOURCE LICENSES/CREDITS"
+                android:textColor="#ff777777" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="10dip"
+                android:text="All train data: irail.be: https://docs.irail.be/
+\n\nTrain icons: http://www.mlgtraffic.net/\n(Creative Commons Attribution-Non commercial-Share Alike 3.0 License.)"
+                android:textColor="#ff777777" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,10 +1,9 @@
 package tof.cv.mpp.adapter;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -33,7 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import tof.cv.mpp.DetailActivity;
+import tof.cv.mpp.InfoStationActivity;
+import tof.cv.mpp.InfoTrainActivity;
 import tof.cv.mpp.R;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.bo.Alert;
@@ -41,6 +40,7 @@ import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.MaterialType;
 import tof.cv.mpp.bo.Occupancy;
 import tof.cv.mpp.bo.TrainComposition;
+import tof.cv.mpp.bo.Via;
 
 public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder> {
     List<Connection> connection;
@@ -62,11 +62,12 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
     @Override
     public void onBindViewHolder(@NonNull final ConnectionViewHolder holder, int position) {
+        //if (position != 0) return;
         final Connection conn = connection.get(position);
-        holder.v.setOnClickListener(new View.OnClickListener() {
+        holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(c, DetailActivity.class);
+                /*Intent intent = new Intent(c, DetailActivity.class);
                 intent.putExtra("connection", new Gson().toJson(conn));
                 Pair<View, String> p1 = Pair.create(view.findViewById(R.id.bg), "bg");
 
@@ -76,11 +77,13 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     c.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(c).toBundle());//, options.toBundle());
                 } else
                     c.startActivity(intent);
-                c.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                c.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);*/
+                holder.card.setVisibility((holder.card.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
             }
         });
 
         if (conn != null) {
+            holder.co = conn;
             if (conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
                 holder.alert.setVisibility(View.VISIBLE);
                 holder.alertText.setVisibility(View.VISIBLE);
@@ -115,42 +118,53 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             else
                 holder.delayA.setText("");
 
+            holder.departureName.setText(conn.getDeparture().getStation());
+            holder.departureName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startStationInfoActivity(
+                            conn.getDeparture().getStation(), conn.getDeparture().getTime(), conn.getDeparture().getStationInfo().getId());
+                }
+            });
 
-            if (holder.departure != null) {
+            holder.arrivalName.setText(conn.getArrival().getStation());
+            holder.arrivalName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startStationInfoActivity(
+                            conn.getArrival().getStation(), conn.getArrival().getTime(), conn.getArrival().getStationInfo().getId());
+                }
+            });
 
+            holder.departure
+                    .setText((conn.getDeparture().getPlatform()
+                            .contentEquals("") ? "" : c.getString(R.string.platform) + " " + conn
+                            .getDeparture().getPlatform()));
+
+            if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
                 holder.departure
-                        .setText((conn.getDeparture().getPlatform()
-                                .contentEquals("") ? "" : c.getString(R.string.platform) + " " + conn
-                                .getDeparture().getPlatform()));
+                        .setText("! " + holder.departure.getText() + " !");
 
-                if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
-                    holder.departure
-                            .setText("! " + holder.departure.getText() + " !");
-            }
-            if (holder.arrival != null) {
-                holder.arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
-                        : c.getString(R.string.platform) + " " + conn.getArrival().getPlatform()));
 
-                if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
-                    holder.arrival
-                            .setText("! " + holder.arrival.getText() + " !");
-            }
+            holder.arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
+                    : c.getString(R.string.platform) + " " + conn.getArrival().getPlatform()));
 
-            if (holder.triptime != null) {
-                holder.triptime.setText(Html.fromHtml(
-                        c.getString(R.string.route_planner_duration)
-                                + " <b>"
-                                + Utils.formatDate(conn.getDuration(), true, false)
-                                + "</b>"));
-            }
-            if (holder.departtime != null) {
-                holder.departtime.setText(conn.getDeparture().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getDeparture()
-                        .getTime(), false, false));
-            }
-            if (holder.arrivaltime != null) {
-                holder.arrivaltime.setText(conn.getArrival().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getArrival()
-                        .getTime(), false, false));
-            }
+            if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
+                holder.arrival
+                        .setText("! " + holder.arrival.getText() + " !");
+
+            holder.triptime.setText(Html.fromHtml(
+                    c.getString(R.string.route_planner_duration)
+                            + " <b>"
+                            + Utils.formatDate(conn.getDuration(), true, false)
+                            + "</b>"));
+
+            holder.departtime.setText(conn.getDeparture().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getDeparture()
+                    .getTime(), false, false));
+
+            holder.arrivaltime.setText(conn.getArrival().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getArrival()
+                    .getTime(), false, false));
+
             holder.container.removeAllViews();
             if (holder.numberoftrains != null) { //
                 if (conn.getVias() != null) {
@@ -166,19 +180,49 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                             .getDeparture().getVehicle())));
             }
 
-            holder.trainId = conn.getDeparture().getVehicle();
+            int i = 1;
+            LayoutInflater inflater = (LayoutInflater) holder.lltrains.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            holder.lltrains.removeAllViews();
 
-            holder.trainIconUrl = "https://staging.api.irail.be/composition.php?id=" +
-                    holder.trainId + "&format=json";
-            holder.loadicon();
+            View v = inflater.inflate(R.layout.row_connection_detail, null);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startTrainInfoActivity(conn.getDeparture().getVehicle());
+                }
+            });
+            holder.lltrains.addView(v);
 
+            if (conn.getVias() != null && conn.getVias().via != null)
+                for (final Via aVia : conn.getVias().via) {
+                    v = inflater.inflate(R.layout.row_via_station, null);
+                    v.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startStationInfoActivity(aVia.getDeparture().getStation(), aVia.getArrival().getTime(), aVia.getStationInfo().getId());
+                        }
+                    });
+
+                    holder.lltrains.addView(v);
+
+
+                    v = inflater.inflate(R.layout.row_connection_detail, null);
+                    v.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startTrainInfoActivity(aVia.getDeparture().getVehicle());
+                        }
+                    });
+                    holder.lltrains.addView(v);
+                }
+
+            holder.loadicon(Long.valueOf(conn.getDeparture().getTime()));
 
             if (conn.getOccupancy() != null) {
                 holder.occupancy.setVisibility(View.VISIBLE);
 
                 switch (conn.getOccupancy().getName()) {
                     case Occupancy.UNKNOWN:
-                        //occupancy.setImageResource(R.drawable.ic_occupancy_unknown);
                         holder.occupancy.setVisibility(View.GONE);
                         break;
                     case Occupancy.HIGH:
@@ -208,7 +252,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     // Credits to him.
 
 
-    public MaterialType convert(String parentType, String subType, String orientation, int firstClassSeats) {
+    private MaterialType convert(String parentType, String subType, String orientation, int firstClassSeats) {
         if (parentType.startsWith("HLE")) {
             return convertHle(parentType, subType, orientation);
         } else if (parentType.startsWith("AM") || parentType.startsWith("MR") || parentType.startsWith("AR")) {
@@ -220,7 +264,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         }
     }
 
-    public MaterialType convertCarriage(String parentType, String subType, String orientation, int firstClassSeats) {
+    private MaterialType convertCarriage(String parentType, String subType, String orientation, int firstClassSeats) {
         String newParentType = parentType;
         String newSubType = subType;
 
@@ -303,7 +347,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         return new MaterialType(newParentType, newSubType, orientation);
     }
 
-    public MaterialType convertAm(String parentType, String subType, String orientation, int firstClassSeats) {
+    private MaterialType convertAm(String parentType, String subType, String orientation, int firstClassSeats) {
         String newParentType = parentType;
         String newSubType = subType;
 
@@ -415,7 +459,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         return new MaterialType(newParentType, newSubType, orientation);
     }
 
-    public MaterialType convertHle(String parentType, String subType, String orientation) {
+    private MaterialType convertHle(String parentType, String subType, String orientation) {
         String newParentType = parentType;
         String newSubType = subType;
 
@@ -437,6 +481,8 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 }
                 break;
             case "HLE21":
+            case "HLE27":
+                newSubType = "";//OR U???
 
         }
 
@@ -444,11 +490,13 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     }
 
 
-    public class ConnectionViewHolder extends RecyclerView.ViewHolder {
+    class ConnectionViewHolder extends RecyclerView.ViewHolder {
         TextView delayD;
         TextView delayA;
         TextView departure;
+        TextView departureName;
         TextView arrival;
+        TextView arrivalName;
         TextView triptime;
         TextView departtime;
         TextView arrivaltime;
@@ -456,20 +504,21 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         TextView numberoftrains;
         ImageView alert;
         TextView alertText;
-        ImageView trainIcon;
         LinearLayout container;
-        String trainIconUrl;
-        String trainId;
-        View v;
+        LinearLayout lltrains;
+        View parent;
+        CardView card;
+        Connection co;
 
-        public ConnectionViewHolder(@NonNull View v) {
+        private ConnectionViewHolder(@NonNull View v) {
             super(v);
-
             container = v.findViewById(R.id.viacontainer);
             delayD = v.findViewById(R.id.delayD);
             delayA = v.findViewById(R.id.delayA);
             departure = v.findViewById(R.id.departure);
             arrival = v.findViewById(R.id.arrival);
+            departureName = v.findViewById(R.id.departurename);
+            arrivalName = v.findViewById(R.id.arrivalname);
             triptime = v.findViewById(R.id.duration);
             departtime = v.findViewById(R.id.departtime);
             arrivaltime = v.findViewById(R.id.arrivaltime);
@@ -477,68 +526,239 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             numberoftrains = v.findViewById(R.id.numberoftrains);
             alert = v.findViewById(R.id.alert);
             alertText = v.findViewById(R.id.alertText);
-            trainIcon = v.findViewById(R.id.trainicon);
-            this.v = v;
+            lltrains = v.findViewById(R.id.lltrains);
+            card = v.findViewById(R.id.card);
+            this.parent = v;
 
 
         }
 
-        public void loadicon() {
-            final TrainComposition.Composition.Segments.Segment.SegmentComposition composition = getCompositionFromCache(trainId);
+        private void loadicon(long prevTime) {
 
-            if (composition == null)
-                Ion.with(c).load(trainIconUrl)
+            int i = 0;
+            if (co.getVias() != null && co.getVias().via != null) {
+                for (final Via aVia : co.getVias().via) {
+
+
+                    final TrainComposition.Composition.Segments.Segment.SegmentComposition composition =
+                            getCompositionFromCache(aVia.getVehicle());
+                    final int position = i;
+                    final long prevTimeFinal = prevTime;
+                    if (composition == null)
+                        Ion.with(c).load("https://api.irail.be/composition.php?id=" + aVia.getVehicle() + "&format=json#")
+                                .as(new TypeToken<TrainComposition>() {
+                                }).setCallback(new FutureCallback<TrainComposition>() {
+                            @Override
+                            public void onCompleted(Exception e, TrainComposition result) {
+                                // Log.e("CVE", "Ion " + result);
+                                if (result != null && result.composition != null) {
+                                    if (result.composition.segments.segment.get(0).composition != null) {
+                                        //Log.e("CVE", "ADDDD");
+                                        cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);
+                                        displayComposition(result.composition.segments.segment.get(0).composition,
+                                                aVia.getVehicle(),
+                                                lltrains.getChildAt(position), aVia, prevTimeFinal);
+                                    }
+                                } else
+                                    displayComposition(null,
+                                            aVia.getVehicle(),
+                                            lltrains.getChildAt(position), aVia, prevTimeFinal);
+                            }
+                        });
+                    else {
+                        // Log.e("CVE", "CACHE " + aMap.getKey());
+                        displayComposition(composition,
+                                aVia.getVehicle(),
+                                lltrains.getChildAt(i), aVia, prevTime);
+                    }
+                    i++;
+                    loadStations(lltrains.getChildAt(i), aVia);
+                    i++;
+                    prevTime = Long.valueOf(aVia.getDeparture().getTime());
+                }
+
+            }
+
+            final TrainComposition.Composition.Segments.Segment.SegmentComposition lastCompo =
+                    getCompositionFromCache(co.getArrival().getVehicle());
+
+            long start = co.getArrival().getTimeLong();
+            long end = (co.getVias() == null ? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
+            final long lastDuration = start - end;
+
+            Log.e("CVE", "Between " +
+                    start
+                    + " / " +
+                    end
+            );
+            //Log.e("CVE", "I: " + i);
+
+            if (lastCompo == null)
+                Ion.with(c).load("https://api.irail.be/composition.php?id=" + co.getArrival().getVehicle() + "&format=json#")
                         .as(new TypeToken<TrainComposition>() {
                         }).setCallback(new FutureCallback<TrainComposition>() {
                     @Override
                     public void onCompleted(Exception e, TrainComposition result) {
-                        Log.e("CVE", "ION " + trainId);
                         if (result != null && result.composition != null) {
-                            Log.e("CVE", "ION RESULT OK" + trainId+" ->"+result.composition.segments.segment.get(0).composition);
                             if (result.composition.segments.segment.get(0).composition != null) {
-
-                                cacheComposition(trainId, result.composition.segments.segment.get(0).composition);
-                                displayComposition(result.composition.segments.segment.get(0).composition, trainIcon);
-
-
-                            } else trainIcon.setVisibility(View.GONE);
+                                cacheComposition(co.getArrival().getVehicle(), result.composition.segments.segment.get(0).composition);
+                                displayComposition(result.composition.segments.segment.get(0).composition,
+                                        co.getArrival().getVehicle(),
+                                        lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
+                            }
                         } else
-                            trainIcon.setVisibility(View.GONE);
+                            displayComposition(null,
+                                    co.getArrival().getVehicle(),
+                                    lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
                     }
                 });
             else {
-                //Log.e("CVE", "CACHE " + trainId);
-                displayComposition(composition, trainIcon);
+                displayComposition(lastCompo,
+                        co.getArrival().getVehicle(),
+                        lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
+            }
+        }
+
+    }
+
+    private void loadStations(View stationRow, Via aVia) {
+        if (stationRow == null)
+            return;
+
+        TextView tvArrival = ((TextView) stationRow
+                .findViewById(R.id.tv_arrival_platform));
+        tvArrival.setText(aVia.getArrival().getPlatform());
+
+        if (aVia.getArrival().getPlatforminfo() != null && aVia.getArrival().getPlatforminfo().normal == 0)
+            tvArrival
+                    .setText("!" + tvArrival.getText() + "!");
+
+        TextView tvDeparture = ((TextView) stationRow
+                .findViewById(R.id.tv_departure_platform));
+        tvDeparture.setText(aVia.getDeparture().getPlatform());
+
+        if (aVia.getDeparture().getPlatforminfo() != null && aVia.getDeparture().getPlatforminfo().normal == 0)
+            tvDeparture
+                    .setText("!" + tvDeparture.getText() + "!");
+
+
+        ((TextView) stationRow.findViewById(R.id.tv_arrival_time))
+                .setText(Utils.formatDate(aVia.getArrival()
+                        .getTime(), false, false));
+        ((TextView) stationRow.findViewById(R.id.tv_departure_time))
+                .setText(Utils.formatDate(aVia.getDeparture()
+                        .getTime(), false, false));
+        ((TextView) stationRow.findViewById(R.id.tv_station))
+                .setText(aVia.getName());
+
+        ((TextView) stationRow.findViewById(R.id.tv_duration))
+                .setText("("
+                        + Utils.formatDate(aVia.getTimeBetween(),
+                        true, false) + ")");
+
+       /* ((TextView) stationRow.findViewById(R.id.tv_duration))
+                .setTextColor(c);
+        ((TextView) stationRow.findViewById(R.id.tv_arrival_time))
+                .setTextColor(c);
+        ((TextView) stationRow.findViewById(R.id.tv_departure_time))
+                .setTextColor(c);
+        ((TextView) stationRow
+                .findViewById(R.id.tv_arrival_platform))
+                .setTextColor(c);
+        ((TextView) stationRow
+                .findViewById(R.id.tv_departure_platform))
+                .setTextColor(c);*/
+
+
+        //setStationListener(stationRow, aVia);
+
+    }
+
+    private void displayComposition(TrainComposition.Composition.Segments.Segment.SegmentComposition composition,
+                                    String name, View v, Via aVia, long prevtime) {
+        //boolean i1 = false;
+        //boolean i2 = false;
+
+        if (v == null || v.findViewById(R.id.train_name) == null) {
+            // Log.e("CVE",name);
+            return;
+        }
+
+        ((TextView) v.findViewById(R.id.train_name)).setText(name.replace("BE.NMBS.", ""));
+
+        if (aVia != null)
+            ((TextView) v.findViewById(R.id.tv_duration))
+                    .setText(Utils.formatDate(
+                            (Long.valueOf(aVia.getArrival().getTime()) - prevtime),
+                            true, false));
+        else
+            ((TextView) v.findViewById(R.id.tv_duration))
+                    .setText(Utils.formatDate(
+                            (Long.valueOf(prevtime)),
+                            true, false));
+
+        if (composition == null) {
+            v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
+            v.findViewById(R.id.trainicon).setVisibility(View.GONE);
+            return;
+        }
+
+        if (composition.units.unit.size() > 1) {
+            MaterialType type = composition.units.
+                    unit.get(1).materialType;
+            type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(1).seatsFirstClass);
+            v.findViewById(R.id.trainicon).setVisibility(View.GONE);
+            try {
+                String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
+                // Log.e("CVE", "WAGON: " + path);
+                InputStream ims = c.getAssets().open(path);
+                Drawable d = Drawable.createFromStream(ims, null);
+                ((ImageView) v.findViewById(R.id.trainicon)).setImageDrawable(d);
+                ims.close();
+                v.findViewById(R.id.trainicon).setVisibility(View.VISIBLE);
+                //i1 = true;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return;
             }
 
         }
-    }
 
-    private void displayComposition(TrainComposition.Composition.Segments.Segment.SegmentComposition composition, ImageView trainIcon) {
-        trainIcon.setVisibility(View.VISIBLE);
-        if (composition == null) {
-            //Log.e("CVE","Composition null ");
-            return;
-        }
         MaterialType type = composition.units.
-                unit.get(composition.units.unit.size() > 1 ? 1 : 0).materialType;
-
+                unit.get(0).materialType;
         type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(0).seatsFirstClass);
-
-
+        v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
         try {
-            //Log.e("CVE","DISPLAY ");
             String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
-            //Log.e("CVE", path);
+            //Log.e("CVE", "LOCO: " + path);
             InputStream ims = c.getAssets().open(path);
             Drawable d = Drawable.createFromStream(ims, null);
-            trainIcon.setImageDrawable(d);
+            ((ImageView) v.findViewById(R.id.trainiconloco)).setImageDrawable(d);
             ims.close();
+            v.findViewById(R.id.trainiconloco).setVisibility(View.VISIBLE);
+            // i2 = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             return;
         }
+        // v.setVisibility((i1 || i2) ? View.VISIBLE : View.GONE);
 
+
+    }
+
+    private void startStationInfoActivity(String station, String time, String id) {
+        Intent i = new Intent(c, InfoStationActivity.class);
+        i.putExtra("Name", station);
+        i.putExtra("ID", id);
+        i.putExtra("timestamp", Long.valueOf(time));
+        c.startActivity(i);
+    }
+
+    private void startTrainInfoActivity(String vehicle) {
+        Intent i = new Intent(c, InfoTrainActivity.class);
+        //i.putExtra("fromto", getDeparture() + " - " + getArrival());
+        i.putExtra("Name", vehicle);
+        c.startActivity(i);
     }
 
     private void cacheComposition(String trainId, TrainComposition.Composition.Segments.Segment.SegmentComposition composition) {
@@ -558,10 +778,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             } finally {
                 stream.close();
             }
-
-
-            //Log.e("CVE", "Cached to " + file.getName());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -582,7 +798,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     file.delete();
                     return null;
                 } //else
-                    //Log.e("CVE", "FILE IS UP TO DATE");
+                //Log.e("CVE", "FILE IS UP TO DATE");
             } else
                 return null;
 

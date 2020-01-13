@@ -21,8 +21,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 6607
-        versionName "4.8.30"
+        versionCode 6610
+        versionName "4.8.40"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -113,4 +113,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.getkeepsafe.dexcount'

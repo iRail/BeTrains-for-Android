@@ -3,28 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/bg"
-    android:background="?selectableItemBackground"
-    android:transitionName="bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:transitionName="bg">
 
     <LinearLayout
         android:id="@+id/timeline"
         android:layout_width="fill_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/departtime"
-            android:transitionName="daparture"
             style="@style/TextElementBig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:transitionName="daparture" />
 
         <TextView
             android:id="@+id/delayD"
@@ -47,8 +49,8 @@
                 android:id="@+id/alert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_alert"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_alert" />
 
             <TextView
                 android:id="@+id/duration"
@@ -63,12 +65,12 @@
 
         <TextView
             android:id="@+id/arrivaltime"
-            android:transitionName="arrival"
             style="@style/TextElementBig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="99:99"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:transitionName="arrival" />
 
         <TextView
             android:id="@+id/delayA"
@@ -86,7 +88,8 @@
         android:id="@+id/secondline"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/departure"
@@ -120,10 +123,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/viacontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/viacontainer"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
     <TextView
         android:id="@+id/alertText"
@@ -139,16 +142,66 @@
         android:id="@+id/occupancy"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:gravity="center"/>
+        android:gravity="center" />
 
-
-    <ImageView
-        android:id="@+id/trainicon"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:layout_marginTop="12dp"
-        android:visibility="gone"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#EEE"
+        android:elevation="12dp"
+        android:transitionName="bg"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/departurename"
+                style="@style/TextElementMid"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/route_planner_duration"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+
+            <LinearLayout
+                android:id="@+id/lltrains"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/row_connection_detail" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/arrivalname"
+                style="@style/TextElementMid"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/route_planner_duration"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

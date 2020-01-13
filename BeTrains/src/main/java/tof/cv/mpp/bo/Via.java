@@ -24,7 +24,7 @@ public class Via {
 	}
 
 	public String getVehicle() {
-		return vehicle;
+		return arrival.getVehicle();
 	}
 
 	public Station getArrival() {

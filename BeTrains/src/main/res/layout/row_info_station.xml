@@ -36,6 +36,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="6dip"
+        android:textStyle="bold"
         tools:text="delay"
         android:textColor="#FF0000" />
 
