@@ -25,8 +25,8 @@
             android:id="@+id/my_awesome_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            app:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+            android:minHeight="?attr/actionBarSize" />
 
         <ImageButton
             android:id="@+id/Button_pic"

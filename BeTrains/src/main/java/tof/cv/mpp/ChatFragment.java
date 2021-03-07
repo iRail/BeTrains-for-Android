@@ -263,56 +263,21 @@ public class ChatFragment extends Fragment {
                     public void onClick(View view) {
                         AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                         if (trainId == null) {
-                            ad.setTitle(getResources().getString(
-                                    R.string.chat_open_train_messages,
-                                    message.getTrain_id()));
-                            ad.setPositiveButton(android.R.string.ok,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int arg1) {
-
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString(DbAdapterConnection.KEY_NAME,
-                                                    message.getTrain_id());
-                                            Intent mIntent = new Intent(getContext(),
-                                                    ChatActivity.class);
-                                            mIntent.putExtras(bundle);
-                                            startActivityForResult(mIntent, 0);
-
-                                        }
-                                    });
-
-                            ad.setNegativeButton(android.R.string.no,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int arg1) {
-
-                                        }
-                                    });
-                            ad.show();
+                            Bundle bundle = new Bundle();
+                            bundle.putString(DbAdapterConnection.KEY_NAME,
+                                    message.getTrain_id());
+                            Intent mIntent = new Intent(getContext(),
+                                    ChatActivity.class);
+                            mIntent.putExtras(bundle);
+                            startActivityForResult(mIntent, 0);
                         } else {
-                            ad.setTitle(getResources().getString(R.string.chat_open_train_info,
-                                    message.getTrain_id()));
-                            ad.setPositiveButton(android.R.string.ok,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int arg1) {
+                            Intent i = new Intent(getActivity(),
+                                    InfoTrainActivity.class);
 
-                                            Intent i = new Intent(getActivity(),
-                                                    InfoTrainActivity.class);
+                            i.putExtra(DbAdapterConnection.KEY_NAME,
+                                    message.getTrain_id());
 
-                                            i.putExtra(DbAdapterConnection.KEY_NAME,
-                                                    message.getTrain_id());
-
-                                            startActivity(i);
-
-                                        }
-                                    });
-
-                            ad.setNegativeButton(android.R.string.no,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int arg1) {
-
-                                        }
-                                    });
-                            ad.show();
+                            startActivity(i);
                         }
                     }
                 });

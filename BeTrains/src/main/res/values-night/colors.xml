@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primarycolor">#37474F</color>
+    <color name="list_bg">#455A64</color>
+    <color name="list_bg_ripple">#969696</color>
+    <color name="darkblue">#B0BEC5</color>
+    <color name="card_bg">#263238</color>
+
+</resources>

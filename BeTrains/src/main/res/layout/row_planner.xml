@@ -5,7 +5,7 @@
     android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:background="@drawable/ripple"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
@@ -153,7 +153,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="#EEE"
+        android:backgroundTint="@color/card_bg"
         android:elevation="12dp"
         android:transitionName="bg"
         android:visibility="gone">

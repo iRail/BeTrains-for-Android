@@ -233,10 +233,10 @@ public class GameFragment extends BaseGameFragment implements
             this.beginUserInitiatedSignIn();
         init = true;
 
-        String provider = Settings.Secure.getString(getActivity().getContentResolver(),
+        String provider = ""+Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
-        if (!provider.contains(LocationManager.GPS_PROVIDER)) {
+        if (LocationManager.GPS_PROVIDER.contains(provider)) {
             crouton = Crouton.makeText(getActivity(), R.string.game_err_gps, Style.ALERT, R.id.pager).setConfiguration(CONFIGURATION_INFINITE).setOnClickListener(this);
             crouton.show();
         }

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BeTrains/BeTrains.iml" filepath="$PROJECT_DIR$/BeTrains/BeTrains.iml" />
       <module fileurl="file://$PROJECT_DIR$/BeTrains-for-Android.iml" filepath="$PROJECT_DIR$/BeTrains-for-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.iml" filepath="$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.iml" />
     </modules>
   </component>
 </project>

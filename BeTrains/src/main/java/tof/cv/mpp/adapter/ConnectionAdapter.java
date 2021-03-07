@@ -583,7 +583,10 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     getCompositionFromCache(co.getArrival().getVehicle());
 
             long start = co.getArrival().getTimeLong();
-            long end = (co.getVias() == null ? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
+            long end = 0;
+
+            end = ((co.getVias() == null || co.getVias().via.size()==0 )? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
+
             final long lastDuration = start - end;
 
             Log.e("CVE", "Between " +

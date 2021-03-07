@@ -67,7 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
         navigationView.getMenu().clear();
 
-        drawerLayout = findViewById(R.id.drawer);
+        drawerLayout =(DrawerLayout)  findViewById(R.id.drawer);
 
         if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
             navigationView.inflateMenu(R.menu.nav);

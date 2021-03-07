@@ -4,6 +4,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
     <include layout="@layout/colorstrip" />
 
     <ListView

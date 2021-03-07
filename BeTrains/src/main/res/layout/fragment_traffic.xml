@@ -3,11 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
+    android:background="@color/mybg"
     android:orientation="vertical" >
 
     <TextView
         android:id="@android:id/empty"
-        android:background="@drawable/search_bg_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:textColor="@color/darkblue"

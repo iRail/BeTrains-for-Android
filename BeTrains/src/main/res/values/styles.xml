@@ -2,21 +2,16 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.MyTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.MyTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowActivityTransitions">true</item>
-
+        <item name="android:windowBackground">@color/mybg</item>
+        <item name="android:actionMenuTextColor">@color/blackbg</item>
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
         <item name="colorAccent">@color/coloraccent</item>
-        <!-- New MaterialComponents attributes. -->
-
         <item name="colorSecondary">?attr/colorPrimary</item>
-        <!--item name="colorPrimaryLight">?attr/colorPrimary</item>
-        <item name="colorSecondaryLight">?attr/colorPrimaryLight</item>
-        <item name="colorSecondaryDark">?attr/colorPrimaryDark</item-->
         <item name="scrimBackground">@color/mtrl_scrim_color</item>
         <item name="snackbarButtonStyle">?attr/borderlessButtonStyle</item>
-
         <item name="spbStyle">@style/GNowProgressBar</item>
 
     </style>
@@ -86,7 +81,7 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Theme.MyABTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+    <style name="Theme.MyABTheme" parent="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/mybg</item>
         <item name="android:listViewStyle">@style/MyListViewTheme</item>
@@ -103,25 +98,6 @@
 
 
 
-    <style name="Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
-        <item name="android:windowTitleStyle">@style/MyOwnDialogTitle</item>
-    </style>
-
-    <style name="MyOwnDialogTitle">
-        <item name="android:textAppearance">
-            @android:style/TextAppearance.DeviceDefault.DialogWindowTitle
-        </item>
-        <item name="android:drawableRight">@drawable/icon</item>
-    </style>
-
-    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:padding">50dp</item>
-    </style>
-
-    <style name="NoTitleDialog" parent="android:style/Theme.Dialog">
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
     <style name="NavDrawer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
@@ -129,7 +105,6 @@
 
     <style name="Theme.MyBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/mybg</item>
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
         <item name="colorAccent">@color/coloraccent</item>
@@ -191,18 +166,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-
-
-
-
     <style name="MyListViewTheme" parent="@android:style/Widget.Holo.ListView">
         <item name="android:textColor">@color/darkblue</item>
     </style>
 
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView"></style>
-
-    <style name="Theme.MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

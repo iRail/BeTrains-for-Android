@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -15,7 +16,10 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -51,9 +55,8 @@ public class MyPreferenceActivity extends PreferenceActivity implements
 
         super.onCreate(savedInstanceState);
 
-        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        //this.getActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
     protected boolean isValidFragment(String fragmentName) {
         return true;

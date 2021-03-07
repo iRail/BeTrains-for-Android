@@ -18,7 +18,7 @@
     <color name="coloraccent">#ff263238</color>
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="action_bar_tint">#FFbbbbbb</color>
-    <color name="mybg">#fff3f3f3</color>
+    <color name="mybg">@color/list_bg</color>
     <color name="title_background">#ff999999</color>
 
     <color name="buttons">#cc000000</color>
@@ -56,6 +56,10 @@
     <color name="belgian_color_3">#FFEE0000</color>
 
     <color name="transpa">#00EE0000</color>
+    <color name="list_bg">#FAFAFA</color>
+    <color name="list_bg_ripple">#969696</color>
+    <color name="card_bg">#FAFAFA</color>
+
     <array name="letter_tile_colors">
         <item>#f16364</item>
         <item>#f58559</item>
