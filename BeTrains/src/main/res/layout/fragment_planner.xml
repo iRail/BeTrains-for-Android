@@ -29,9 +29,9 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/selectorbutton"
                 android:layout_weight="1"
-                android:ellipsize="marquee"
+                android:ellipsize="middle"
                 android:gravity="center"
-                android:maxLines="2"
+                android:singleLine="true"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
                 tools:text="City START" />
@@ -53,9 +53,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selectorbutton"
-                android:ellipsize="marquee"
+                android:ellipsize="middle"
                 android:gravity="center"
-                android:maxLines="2"
+                android:singleLine="true"
                 android:padding="8dp"
                 android:textColor="@android:color/white"
                 tools:text="City STOP" />
@@ -74,15 +74,41 @@
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:indeterminate="true" />
         </RelativeLayout>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/singlealertcard"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/primarycolor"
+            android:visibility="gone"
+            android:elevation="12dp"
+            android:transitionName="bg">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/singlealert"
+                android:layout_gravity="center"
+                android:textColor="@android:color/holo_red_dark"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:padding="12dp"
+                android:layout_height="wrap_content"
+                tools:text="*** ALERT ****"/>
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="fill_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 
 

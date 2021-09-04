@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -384,7 +386,6 @@ public class GameFragment extends BaseGameFragment implements
     private String station3;
 
     public void setupClosest() {
-        Log.e("CVE", "CLOSEST");
         try {
 
             for (StationList.Stationinfo aStation : list.station) {
@@ -427,7 +428,6 @@ public class GameFragment extends BaseGameFragment implements
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     String id = "";
@@ -581,7 +581,7 @@ public class GameFragment extends BaseGameFragment implements
         /*new DisplayPointsTask(station,)
                 .execute();*/
 
-        final LinearLayout ll = ((LinearLayout) getView().findViewById(id));
+        final CardView ll = getView().findViewById(id);
 
         String url = "http://api.irail.be/liveboard.php/?station="
                 + station.getStation().replace(" ", "%20") + "&format=JSON&fast=true";
@@ -612,7 +612,7 @@ public class GameFragment extends BaseGameFragment implements
                 final int i = delay < 60 ? 1 : delay / 60;
 
                 TextView tv = (TextView) ll.findViewById(R.id.closestTime);
-                tv.setText(getString(R.string.game_station_score) + num);
+                tv.setText(getString(R.string.game_station_score) +" : "+ num);
                 ll.setOnClickListener(new View.OnClickListener() {
 
                     @Override

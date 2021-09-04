@@ -30,6 +30,7 @@
             android:id="@+id/settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
             android:text="@string/chat_settings" />
     </LinearLayout>
 
@@ -70,6 +71,7 @@
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
             android:text="@string/chat_send" />
     </LinearLayout>
 </LinearLayout>

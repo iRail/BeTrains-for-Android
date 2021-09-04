@@ -100,14 +100,15 @@ public class MyPreferenceActivity extends PreferenceActivity implements
                     }
 
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
                     }
                 };
-                Picasso.with(getActivity()).load(pic).into(target);
+                Picasso.get().load(pic).into(target);
             }
 
             getPreferenceScreen().findPreference("donator").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

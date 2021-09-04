@@ -1,12 +1,16 @@
 package tof.cv.mpp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -20,6 +24,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -30,7 +40,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -42,11 +51,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.ConnectionAdapter;
 import tof.cv.mpp.adapter.TipAdapter;
+import tof.cv.mpp.bo.Alert;
+import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
 
@@ -74,27 +86,12 @@ public class PlannerFragment extends Fragment {
     private static SharedPreferences settings;
     private SharedPreferences.Editor editor;
 
-    private String fromIntentArrivalStation = null;
-    private String fromIntentDepartureStation = null;
-    private boolean fromIntent = false;
-
-    // Second part need to be cleaned
 
     private static final int ACTIVITY_DISPLAY = 0;
     private static final int ACTIVITY_STOP = 1;
-    private static final int ACTIVITY_STATION = 2;
-    private static final int ACTIVITY_GETSTARTSTATION = 3;
-    private static final int ACTIVITY_GETSTOPSTATION = 4;
 
-    private void updateActionBar() {
-        try {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(
-                    Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    ActivityResultLauncher<Intent> arrivalActivityLauncher;
+    ActivityResultLauncher<Intent> departureActivityResultLauncher;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,30 +99,60 @@ public class PlannerFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_planner, null);
     }
 
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        arrivalActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        assert result.getData() != null;
+                        String gare = result.getData().getStringExtra("GARE");
+                        assert gare != null;
+                        if (!gare.contentEquals("")) {
+                            tvArrival.setText(gare);
+                            editor.putString("pStop", gare);
+                            editor.commit();
+                        }
+                    }
+                });
+
+        departureActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        assert result.getData() != null;
+                        String gare = result.getData().getStringExtra("GARE");
+                        assert gare != null;
+                        if (!gare.contentEquals("")) {
+                            tvDeparture.setText(gare);
+                            editor.putString("pStart", gare);
+                            editor.commit();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = settings.edit();
         mDate = Calendar.getInstance();
         setHasOptionsMenu(true);
-    }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (getView() == null)
-            return;
         tvDeparture = getView().findViewById(R.id.tv_start);
         tvArrival = getView().findViewById(R.id.tv_stop);
         recyclerView = getView().findViewById(R.id.recyclerview);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-
-        if (getView().findViewById(R.id.progress) != null)
-            getView().findViewById(R.id.progress).setVisibility(View.GONE);
         setAllBtnListener();
+
         String pStart = settings.getString("pStart", "Mons");
         String pStop = settings.getString("pStop", "Tournai");
 
@@ -143,21 +170,15 @@ public class PlannerFragment extends Fragment {
         try {
             fillData("");
         } catch (Exception e) {
-            //Log.i(TAG, "Impossible to fill Data:\n" + e.getMessage());
             e.printStackTrace();
         }
 
         updateActionBar();
 
-
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
 
-        BottomAppBar bap = getActivity().findViewById(R.id.bar);
-
-        bap.setHideOnScroll(true);
-
-
+        ((BottomAppBar) getActivity().findViewById(R.id.bar)).setHideOnScroll(true);
     }
 
     public void doSearch() {
@@ -167,58 +188,42 @@ public class PlannerFragment extends Fragment {
     }
 
     public void fillStations(String departure, String arrival) {
-        // Log.e("", "fill " + departure + " - " + arrival + " - " + fromIntent);
-        tvDeparture = (TextView) getView().findViewById(R.id.tv_start);
-        tvArrival = (TextView) getView().findViewById(R.id.tv_stop);
+        tvDeparture = requireView().findViewById(R.id.tv_start);
+        tvArrival =requireView().findViewById(R.id.tv_stop);
 
-        if (fromIntent) {
-            fromIntent = false;
-            tvDeparture.setText(fromIntentDepartureStation);
-            tvArrival.setText(fromIntentArrivalStation);
-            // mySearchThread();
-        } else {
-            if (departure != null && arrival != null) {
-                tvDeparture.setText(departure);
-                tvArrival.setText(arrival);
-            }
+        if (departure != null && arrival != null) {
+            tvDeparture.setText(departure);
+            tvArrival.setText(arrival);
         }
-
     }
 
     private void setAllBtnListener() {
-        TextView btnInvert = (TextView) getView().findViewById(R.id.mybuttonInvert);
-        btnInvert.setOnClickListener(new Button.OnClickListener() {
+        TextView btnInvert = requireView().findViewById(R.id.mybuttonInvert);
+        btnInvert.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 fillStations(tvArrival.getText().toString(),
                         tvDeparture.getText().toString());
             }
         });
 
-        final FragmentActivity a = this.getActivity();
+        tvDeparture.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(),
+                    StationPickerActivity.class);
 
-        tvDeparture.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(),
-                        StationPickerActivity.class);
-                startActivityForResult(i, ACTIVITY_GETSTARTSTATION);
-            }
+            departureActivityResultLauncher.launch(i);
+
         });
 
-        tvArrival.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(),
-                        StationPickerActivity.class);
-                startActivityForResult(i, ACTIVITY_GETSTOPSTATION);
-            }
+        tvArrival.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(),
+                    StationPickerActivity.class);
+
+            arrivalActivityLauncher.launch(i);
         });
 
         FloatingActionButton fab = getActivity().findViewById(
                 R.id.fab);
-        fab.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                doSearch();
-            }
-        });
+        fab.setOnClickListener(v -> doSearch());
 
 
     }
@@ -276,15 +281,15 @@ public class PlannerFragment extends Fragment {
     private void fillData(final String url) {
         BottomAppBar bap = getActivity().findViewById(R.id.bar);
         if (allConnections != null && allConnections.connection != null) {
-            ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection,getActivity());
+            boolean singleAlert = checkSingleAlert(allConnections);
+            ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), singleAlert);
             recyclerView.setAdapter(connAdapter);
+
 
             PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
             if (bap.getMenu().size() == 0)
                 bap.replaceMenu(R.menu.appbar);
         } else {
-
-
             if (url != null && url.length() > 0) {
                 Log.e("CVE", "PAS DE RESULTATS");
 
@@ -297,8 +302,10 @@ public class PlannerFragment extends Fragment {
 
 
             allConnections = Utils.getCachedConnections(PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("cached", ""));
+
+
             if (allConnections != null) {
-                ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection,getActivity());
+                ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), checkSingleAlert(allConnections));
                 recyclerView.setAdapter(connAdapter);
                 //registerForContextMenu(getListView());
                 if (bap.getMenu().size() == 0)
@@ -342,6 +349,51 @@ public class PlannerFragment extends Fragment {
                 showDateTimeDialog();
             }
         });
+    }
+
+    private boolean checkSingleAlert(Connections allConnections) {
+        String toCompare = null;
+
+        String html = "";
+        for (Connection c : allConnections.connection) {
+            String textAlert = "";
+            html = "";
+            if (c.getAlerts().getAlertlist() != null)
+                for (Alert anAlert : c.getAlerts().getAlertlist()) {
+                    textAlert += anAlert.getHeader() + "<br/>";
+                    html += ("<h3>" + anAlert.getHeader() + "</h3>");
+                    html += (anAlert.getDescription());
+                }
+
+            if (!textAlert.contentEquals(toCompare == null ? textAlert : toCompare)) {
+                getView().findViewById(R.id.singlealertcard).setVisibility(View.GONE);
+                return false;
+            }
+            toCompare = textAlert;
+        }
+        if (toCompare.endsWith("<br/>"))
+            toCompare = toCompare.substring(0, toCompare.length() - 5);
+
+
+        getView().findViewById(R.id.singlealertcard).setVisibility(View.VISIBLE);
+
+        ((TextView) getView().findViewById(R.id.singlealert)).setText(Html.fromHtml(toCompare));
+
+        final SpannableString s = new SpannableString(html); // msg should have url to enable clicking
+        Linkify.addLinks(s, Linkify.ALL);
+
+        String finalHtml = html;
+        getView().findViewById(R.id.singlealertcard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog d = new AlertDialog.Builder(getContext())
+                        .setMessage(Html.fromHtml(finalHtml)).create();
+                d.show();
+            }
+        });
+
+
+        return true;
     }
 
     public void fillWithTips() {
@@ -391,29 +443,6 @@ public class PlannerFragment extends Fragment {
                 fillData("");
                 break;
 
-            case ACTIVITY_GETSTARTSTATION:
-                if (intent != null) {
-                    String gare = intent.getStringExtra("GARE");
-                    if (!gare.contentEquals("")) {
-                        tvDeparture.setText(gare);
-                        editor.putString("pStart", gare);
-                        editor.commit();
-                    }
-                }
-
-                break;
-
-            case ACTIVITY_GETSTOPSTATION:
-                if (intent != null) {
-                    String gare = intent.getStringExtra("GARE");
-                    if (!gare.contentEquals("")) {
-                        tvArrival.setText(gare);
-                        editor.putString("pStop", gare);
-                        editor.commit();
-                    }
-                }
-                break;
-
             default:
                 break;
 
@@ -435,7 +464,7 @@ public class PlannerFragment extends Fragment {
 
     //DatabaseReference ref;
     private void mySearchThread(final Activity a) {
-
+        Log.e("CVE", "SEARCH");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         int score = sp.getInt("searchGame", 0) + 1;
         sp.edit().putInt("searchGame", score).commit();
@@ -446,7 +475,6 @@ public class PlannerFragment extends Fragment {
         myArrival = tvArrival.getText().toString();
 
         String langue = getString(R.string.url_lang);
-        // There is a setting to force dutch when Android is in English.
         if (settings.getBoolean("prefnl", false))
             langue = "NL";
 
@@ -471,7 +499,6 @@ public class PlannerFragment extends Fragment {
             month = "01";
 
         String url = "";
-        //ref = FirebaseDatabase.getInstance().getReference().child("log").getRef();
         try {
             url = URLEncoder.encode(myArrival, "UTF-8") + "&from=" + URLEncoder.encode(myStart, "UTF-8") + "&date=" + day + month
                     + year + "&time=" + hour + minutes + "&timeSel="
@@ -485,14 +512,12 @@ public class PlannerFragment extends Fragment {
                     + "&typeOfTransport=train&format=json&fast=true&alerts=true";
         }
 
-
         url = url.replace(" ", "%20");
 
 
         url = "https://api.irail.be/connections.php?to=" + url;
-        // ref.push().setValue(new LogCVE("URL","",url,""));
-
         Log.e("CVE", "Search " + url);
+
         final String finalUrl = url;
         Ion.with(this).load(url).setTimeout(4500).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
         }).setCallback(new FutureCallback<Connections>() {
@@ -504,8 +529,8 @@ public class PlannerFragment extends Fragment {
                 }
 
                 allConnections = result;
+
                 if (allConnections == null) {
-                    //Log.e(TAG, "API failure!!!");
                     if (getActivity() != null)
 
                         getActivity().runOnUiThread(new Runnable() {
@@ -540,5 +565,15 @@ public class PlannerFragment extends Fragment {
         final boolean is24h = !(timeS == null || timeS.equals("12"));
         mDateTimeDialog.setIs24HourView(is24h);
         mDateTimeDialog.show();
+    }
+
+    private void updateActionBar() {
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(
+                    Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

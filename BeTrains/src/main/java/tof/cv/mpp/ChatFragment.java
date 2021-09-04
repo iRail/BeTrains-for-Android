@@ -249,7 +249,7 @@ public class ChatFragment extends Fragment {
                     viewHolder.donator.setVisibility(View.GONE);
 
                 if (message.pic_url != null && message.pic_url.length() > 0)
-                    Picasso.with(getContext()).load(message.pic_url).into(viewHolder.iv);
+                    Picasso.get().load(message.pic_url).into(viewHolder.iv);
                 else {
 
                     final LetterTileProvider tileProvider = new LetterTileProvider(getContext());

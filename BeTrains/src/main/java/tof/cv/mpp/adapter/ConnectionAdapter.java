@@ -45,10 +45,12 @@ import tof.cv.mpp.bo.Via;
 public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder> {
     List<Connection> connection;
     Activity c;
+    boolean singleAlert;
 
-    public ConnectionAdapter(List<Connection> connection, Activity a) {
+    public ConnectionAdapter(List<Connection> connection, Activity a, boolean singleAlert) {
         this.connection = connection;
         this.c = a;
+        this.singleAlert=singleAlert;
     }
 
     @NonNull
@@ -84,18 +86,19 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         if (conn != null) {
             holder.co = conn;
-            if (conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
+            if (!singleAlert && conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
                 holder.alert.setVisibility(View.VISIBLE);
                 holder.alertText.setVisibility(View.VISIBLE);
                 String text = "";
+
                 if (conn.getAlerts().getAlertlist() != null)
                     for (Alert anAlert : conn.getAlerts().getAlertlist())
-                        text += anAlert.getHeader() + " / ";
+                        text += anAlert.getHeader() + "<br/>";
 
-                if (text.endsWith(" / "))
-                    text = text.substring(0, text.length() - 3);
+                if (text.endsWith("<br/>"))
+                    text = text.substring(0, text.length() - 5);
 
-                holder.alertText.setText(text);
+                holder.alertText.setText(Html.fromHtml(text));
             } else {
                 holder.alert.setVisibility(View.GONE);
                 holder.alertText.setVisibility(View.GONE);
@@ -584,17 +587,9 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
             long start = co.getArrival().getTimeLong();
             long end = 0;
-
             end = ((co.getVias() == null || co.getVias().via.size()==0 )? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
 
             final long lastDuration = start - end;
-
-            Log.e("CVE", "Between " +
-                    start
-                    + " / " +
-                    end
-            );
-            //Log.e("CVE", "I: " + i);
 
             if (lastCompo == null)
                 Ion.with(c).load("https://api.irail.be/composition.php?id=" + co.getArrival().getVehicle() + "&format=json#")

@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:id="@+id/closestLayout"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/nowCardStyle"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="18dp">
+    android:layout_gravity="center"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/card_bg"
+    android:elevation="12dp"
+    android:transitionName="bg">
 
-    <TextView
-        android:id="@+id/closestTitle"
-        style="@android:style/TextAppearance.Large"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/closestLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@android:color/darker_gray" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="18dp">
 
-    <TextView
-        android:id="@+id/closestDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:singleLine="true" />
+        <TextView
+            android:id="@+id/closestTitle"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/darker_gray" />
 
-    <TextView
-        android:id="@+id/closestTime"
-        style="@android:style/TextAppearance.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:text="*"
-        android:textColor="@android:color/darker_gray" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/closestDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/closestTime"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="*"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

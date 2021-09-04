@@ -188,6 +188,8 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + lan + dateTime + "&format=JSON&alerts=true";
 
+        Log.e("CVE","URL: "+url);
+
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
                                           @Override
@@ -420,6 +422,8 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
         final String url = "http://api.irail.be/vehicle.php/?id=" + id
                 + "&lang=" + langue + dateTime + "&format=JSON&fast=true";
+
+        Log.e("CVE","URL: "+url);
 
         Ion.with(this).load(url).asString().setCallback(new FutureCallback<String>() {
             @Override

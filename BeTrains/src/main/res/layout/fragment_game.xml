@@ -11,7 +11,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="48dip"
-        android:background="@drawable/background_tabs" />
+        android:background="@color/primarycolor" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

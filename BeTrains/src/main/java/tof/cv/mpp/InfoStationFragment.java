@@ -58,6 +58,11 @@ public class InfoStationFragment extends ListFragment {
 
         }
 
+        @Override
+        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+        }
+
         public void onBitmapFailed(Drawable errorDrawable) {
             try {//Strange bugs in console To investigate
                 getView().findViewById(R.id.Button_pic).setVisibility(View.VISIBLE);
@@ -208,7 +213,7 @@ public class InfoStationFragment extends ListFragment {
 
                         if (id != null) {
                             String url = "https://res.cloudinary.com/dywgd02hq/image/upload/" + currentStation.getStationinfo().getId().replace("BE.NMBS.", "") + ".jpg";
-                            Picasso.with(InfoStationFragment.this.getActivity()).load(url).error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
+                            Picasso.get().load(url).error(R.drawable.gare).placeholder(R.drawable.gare).into(t);
                         }
 
                         stationString = currentStation.getStation();
@@ -261,7 +266,7 @@ public class InfoStationFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                if (currentStation != null) {
+                if (currentStation != null && currentStation.getStationinfo()!=null) {
                     Utils.addAsStarred(currentStation.getStation(), currentStation.getStationinfo().getId(), 1,
                             getActivity());
                     startActivity(new Intent(getActivity(), StarredActivity.class));

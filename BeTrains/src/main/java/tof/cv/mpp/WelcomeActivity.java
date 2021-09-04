@@ -18,7 +18,6 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
-import com.teragence.client.SdkControls;
 
 import java.util.Arrays;
 
@@ -51,7 +50,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupShortcuts();
-        SdkControls.initialize(this);
 
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
