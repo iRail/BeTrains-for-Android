@@ -53,12 +53,12 @@ import tof.cv.mpp.view.CoolEditText;
 import tof.cv.mpp.view.LetterTileProvider;
 
 public class ChatFragment extends Fragment {
+
     /**
      * Called when the activity is first created.
      */
     FirebaseRecyclerAdapter mFirebaseAdapter;
     private TextView mTitleText;
-    private Button btnSettings;
     private Button btnSend;
     private CoolEditText messageTxtField;
     private final String TAG = "MessagesTrain.java";
@@ -70,6 +70,7 @@ public class ChatFragment extends Fragment {
 
 
     private static final int MENU_FILTER = 0;
+    private static final int MENU_PROFILE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,12 +92,10 @@ public class ChatFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mTitleText = (TextView) getView().findViewById(R.id.pseudo);
-        btnSettings = (Button) getView().findViewById(R.id.settings);
         btnSend = (Button) getView().findViewById(R.id.send);
         messageTxtField = getView().findViewById(
                 R.id.yourmessage);
 
-        setBtnSettingsListener();
         setBtnSendListener();
         update();
 
@@ -105,7 +104,6 @@ public class ChatFragment extends Fragment {
         try {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(
                     !isTablet);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_chat);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,23 +170,6 @@ public class ChatFragment extends Fragment {
         }
         messageTxtField.setText("");
         messageTxtField.clearFocus();
-
-    }
-
-
-    private void setBtnSettingsListener() {
-        btnSettings.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= 11)
-                    startActivity(new Intent(getActivity(),
-                            MyPreferenceActivity.class).putExtra(
-                            PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-                            Prefs1Fragment.class.getName()));
-                else {
-                    startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
-                }
-            }
-        });
 
     }
 
@@ -369,7 +350,7 @@ public class ChatFragment extends Fragment {
         if (trainId != null)
             mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
                     getActivity()).getString("prefname", "Anonymous")
-                    + " - " + trainId);
+                    + " - " + trainId.replace("BE.NMBS.",""));
         else
             mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
                     getActivity()).getString("prefname", "Anonymous"));
@@ -389,6 +370,10 @@ public class ChatFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add(Menu.NONE, MENU_FILTER, Menu.NONE, "Filter")
                 .setIcon(R.drawable.ic_menu_search)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        menu.add(Menu.NONE, MENU_PROFILE, Menu.NONE, "Profile")
+                .setIcon(R.drawable.ic_profile)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
 
@@ -429,6 +414,16 @@ public class ChatFragment extends Fragment {
                         });
 
                 alert.show();
+                return true;
+            case MENU_PROFILE:
+                if (Build.VERSION.SDK_INT >= 11)
+                    startActivity(new Intent(getActivity(),
+                            MyPreferenceActivity.class).putExtra(
+                            PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                            Prefs1Fragment.class.getName()));
+                else {
+                    startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

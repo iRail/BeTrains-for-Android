@@ -20,7 +20,6 @@
     <string name="station">Station</string>
     <string name="train">Train</string>
     <string name="trip">Trip</string>
-    <string name="platform">Platform</string>
     <string name="check_connection">Please check your Internet connection.</string>
     <string name="irail_issue">Problem with the server</string>
     <string name="irail_issue_detail">We have issues with the server, you can wait for us to fix it, or send more informations by email.\n\nWe are sorry for the inconvenience.</string>
@@ -86,9 +85,6 @@
     <string name="action_change_datetime">Change date and time</string>
     <string name="action_add_to_favorites">Add to favorites</string>
 
-    <!-- Route Planner -->
-    <string name="route_planner_duration">Duration:</string>
-    <string name="route_planner_num_trains">Trains:</string>
 
     <!-- Station info -->
     <string name="station_picker_title_belgium">Belgium</string>

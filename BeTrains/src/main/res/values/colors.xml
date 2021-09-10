@@ -12,6 +12,7 @@
 	-->
 <resources>
     <color name="primarycolor">#FF37474e</color>
+    <color name="lightcolor">#879fab</color>
     <color name="primarycolortranspa">#879fab</color>
     <color name="primarycolortransparent">#BB263238</color>
     <color name="primarydarkcolor">#ff263238</color>

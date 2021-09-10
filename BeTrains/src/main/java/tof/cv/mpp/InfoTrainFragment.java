@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -124,27 +125,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         // Configure the refreshing colors
 
 
-    }
-
-    public void displayInfoFromMemory(final String fileName, final String vehicle) {
-        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-        this.timestamp = System.currentTimeMillis();
-
-        currentVehicle = Utils.getMemoryvehicle(fileName, InfoTrainFragment.this.getActivity());
-        getView().findViewById(R.id.progress).setVisibility(View.GONE);
-        if (currentVehicle != null
-                && currentVehicle.getVehicleStops() != null) {
-            TrainInfoAdapter trainInfoAdapter = new TrainInfoAdapter(currentVehicle
-                    .getVehicleStops().getVehicleStop(), getActivity(), currentVehicle.getAlerts(), currentVehicle.getVehicleInfo().name);
-
-
-            recyclerView.setAdapter(trainInfoAdapter);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Utils.formatDate(new Date(timestamp), "HH:mm"));
-        } else {
-            Toast.makeText(getActivity(), R.string.check_connection,
-                    Toast.LENGTH_LONG).show();
-            getActivity().finish();
-        }
     }
 
     public void setInfo(String vehicle, String fromTo, long timestamp) {
@@ -306,6 +286,11 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                               }
                                                           });
                                                           builder.create().show();
+                                                      }else{
+                                                          recyclerView.setVisibility(View.GONE);
+                                                          TextView tv = getView().findViewById(R.id.empty_view);
+                                                          tv.setVisibility(View.VISIBLE);
+                                                          tv.setText(currentVehicle.message);
                                                       }
 
                                                   }

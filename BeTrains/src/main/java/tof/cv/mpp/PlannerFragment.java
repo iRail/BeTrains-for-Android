@@ -519,7 +519,7 @@ public class PlannerFragment extends Fragment {
         Log.e("CVE", "Search " + url);
 
         final String finalUrl = url;
-        Ion.with(this).load(url).setTimeout(4500).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
         }).setCallback(new FutureCallback<Connections>() {
             @Override
             public void onCompleted(Exception e, Connections result) {

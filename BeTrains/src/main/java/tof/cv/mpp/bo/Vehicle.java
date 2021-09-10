@@ -14,6 +14,7 @@ public class Vehicle {
     private VehicleStops stops;
     private String version;
     private String vehicle;
+    public String message;
     private long timestamp;
     private Vehicleinfo vehicleinfo;
 

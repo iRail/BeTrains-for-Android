@@ -15,7 +15,6 @@
     <string name="activity_label_planner">Routeplanner</string>
     <string name="activity_label_chat">Chat</string>
     <string name="activity_label_starred">Favorieten</string>
-    <string name="platform">Spoor </string>
     <string name="intro_tip_a_title">Om te beginnen</string>
     <string name="intro_tip_a">Om onmiddellijk te starten, klik op \'zoeken\'</string>
     <string name="intro_tip_b_title">Stationskeuze</string>
@@ -31,7 +30,6 @@
     <string name="app_name">BeTrains</string>
     <string name="patient">Even geduld, de data wordt opgeladen.</string>
     <string name="issues_empty">Geen verkeershinder</string>
-    <string name="route_planner_duration">Duur:</string>
     <string name="search">Zoek</string>
     <string name="train_add_to_widget">Voeg toe aan widget</string>
     <string name="url_lang">nl</string>

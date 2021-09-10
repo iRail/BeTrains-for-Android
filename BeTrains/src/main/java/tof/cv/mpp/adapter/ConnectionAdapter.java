@@ -3,6 +3,7 @@ package tof.cv.mpp.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,7 +52,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     public ConnectionAdapter(List<Connection> connection, Activity a, boolean singleAlert) {
         this.connection = connection;
         this.c = a;
-        this.singleAlert=singleAlert;
+        this.singleAlert = singleAlert;
     }
 
     @NonNull
@@ -140,25 +142,19 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             });
 
             holder.departure
-                    .setText((conn.getDeparture().getPlatform()
-                            .contentEquals("") ? "" : c.getString(R.string.platform) + " " + conn
-                            .getDeparture().getPlatform()));
+                    .setText(conn.getDeparture().getPlatform());
 
             if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
-                holder.departure
-                        .setText("! " + holder.departure.getText() + " !");
+                holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
 
 
-            holder.arrival.setText((conn.getArrival().getPlatform().contentEquals("") ? ""
-                    : c.getString(R.string.platform) + " " + conn.getArrival().getPlatform()));
+            holder.arrival.setText(conn.getArrival().getPlatform());
 
             if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
-                holder.arrival
-                        .setText("! " + holder.arrival.getText() + " !");
+                holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
 
             holder.triptime.setText(Html.fromHtml(
-                    c.getString(R.string.route_planner_duration)
-                            + " <b>"
+                             " <b>"
                             + Utils.formatDate(conn.getDuration(), true, false)
                             + "</b>"));
 
@@ -170,17 +166,27 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
             holder.container.removeAllViews();
             if (holder.numberoftrains != null) { //
-                if (conn.getVias() != null) {
-                    holder.numberoftrains.setText(Html.fromHtml(
-                            c.getString(R.string.route_planner_num_trains)
-                                    + " <b>"
-                                    + (conn.getVias().getNumberOfVias() + 1)
-                                    + "</b>"));
+                if (conn.getVias() != null && conn.getVias().via!=null &&conn.getVias().via.size()>1) {
+                    holder.numberoftrainsll.removeAllViews();
+                    holder.numberoftrainsll.setVisibility(View.VISIBLE);
 
+                    holder.numberoftrains.setVisibility(View.GONE);
 
-                } else
+                    LayoutInflater inflater = (LayoutInflater) holder.numberoftrainsll.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    for (Via avia : conn.getVias().via) {
+                        View v = inflater.inflate(R.layout.atrain, null);
+                        holder.numberoftrainsll.addView(v);
+
+                    }
+
+                } else {
+                    holder.numberoftrains.setVisibility(View.VISIBLE);
+                    holder.numberoftrainsll.setVisibility(View.GONE);
+
                     holder.numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn
                             .getDeparture().getVehicle())));
+                }
+
             }
 
             int i = 1;
@@ -505,6 +511,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         TextView arrivaltime;
         ImageView occupancy;
         TextView numberoftrains;
+        LinearLayoutCompat numberoftrainsll;
         ImageView alert;
         TextView alertText;
         LinearLayout container;
@@ -527,6 +534,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             arrivaltime = v.findViewById(R.id.arrivaltime);
             occupancy = v.findViewById(R.id.occupancy);
             numberoftrains = v.findViewById(R.id.numberoftrains);
+            numberoftrainsll = v.findViewById(R.id.numberoftrainsll);
             alert = v.findViewById(R.id.alert);
             alertText = v.findViewById(R.id.alertText);
             lltrains = v.findViewById(R.id.lltrains);
@@ -587,7 +595,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
             long start = co.getArrival().getTimeLong();
             long end = 0;
-            end = ((co.getVias() == null || co.getVias().via.size()==0 )? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
+            end = ((co.getVias() == null || co.getVias().via.size() == 0) ? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
 
             final long lastDuration = start - end;
 
@@ -653,22 +661,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 .setText("("
                         + Utils.formatDate(aVia.getTimeBetween(),
                         true, false) + ")");
-
-       /* ((TextView) stationRow.findViewById(R.id.tv_duration))
-                .setTextColor(c);
-        ((TextView) stationRow.findViewById(R.id.tv_arrival_time))
-                .setTextColor(c);
-        ((TextView) stationRow.findViewById(R.id.tv_departure_time))
-                .setTextColor(c);
-        ((TextView) stationRow
-                .findViewById(R.id.tv_arrival_platform))
-                .setTextColor(c);
-        ((TextView) stationRow
-                .findViewById(R.id.tv_departure_platform))
-                .setTextColor(c);*/
-
-
-        //setStationListener(stationRow, aVia);
 
     }
 

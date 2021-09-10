@@ -28,7 +28,6 @@
     <string name="intro_tip_d">Cliquer sur l\'icone du coin supérieur
 		gauche pour arriver au menu principal.</string>
     <string name="app_name">BeTrains</string>
-    <string name="platform">Quai </string>
     <string name="activity_label_planner">Demande d\'itinéraire</string>
     <string name="activity_label_chat">Chat</string>
     <string name="activity_label_settings">Préférences</string>
@@ -36,7 +35,6 @@
     <string name="activity_label_starred">Favoris</string>
     <string name="patient">Un instant SVP...</string>
     <string name="issues_empty">Pas de problèmes de circulation</string>
-    <string name="route_planner_duration">Dur:</string>
     <string name="search">Chercher</string>
     <string name="train_add_to_widget">Widget</string>
     <string name="url_lang">fr</string>

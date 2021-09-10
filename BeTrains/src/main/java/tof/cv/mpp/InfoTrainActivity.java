@@ -60,11 +60,12 @@ public class InfoTrainActivity extends AppCompatActivity {
         if ((!(status == ConnectionResult.SUCCESS)) &&bottomNavigation != null) {
             //bottomNavigation.setVisibility(View.GONE);
         }
+        setTitle(name.replace("BE.NMBS.",""));
 
         if (bottomNavigation != null) {
 
             AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.app_name, R.drawable.ic_nav_plan, R.color.primarycolor);
-            item1.setTitle(name);
+            item1.setTitle(name.replace("BE.NMBS.",""));
 
             AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.activity_label_chat, R.drawable.ic_nav_chat, R.color.primarycolor);
 

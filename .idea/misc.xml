@@ -3,11 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/drawable/circle.xml" value="0.221875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/atrain.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/closest.xml" value="0.1171875" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_chat.xml" value="0.1171875" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_compensation.xml" value="0.1171875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_info_train.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_twitter.xml" value="0.1171875" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_achieve.xml" value="0.1171875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_connection_detail.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_planner.xml" value="0.20572916666666666" />
       </map>
     </option>
   </component>

@@ -1,18 +1,20 @@
 {
-  "version": 2,
+  "version": 3,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "tof.cv.mpp",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 6611,
-      "versionName": "4.8.41",
+      "attributes": [],
+      "versionCode": 6618,
+      "versionName": "4.10.03",
       "outputFile": "BeTrains-release.apk"
     }
-  ]
+  ],
+  "elementType": "File"
 }
