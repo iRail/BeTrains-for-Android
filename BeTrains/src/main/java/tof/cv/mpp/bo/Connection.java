@@ -33,4 +33,7 @@ public class Connection {
 	}
 
 
+    public void removeAlerts() {
+		alerts=null;
+    }
 }

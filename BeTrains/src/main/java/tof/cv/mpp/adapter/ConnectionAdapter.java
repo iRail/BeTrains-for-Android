@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,9 +48,9 @@ import tof.cv.mpp.bo.Via;
 public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder> {
     List<Connection> connection;
     Activity c;
-    boolean singleAlert;
+    ArrayList<Alert> singleAlert;
 
-    public ConnectionAdapter(List<Connection> connection, Activity a, boolean singleAlert) {
+    public ConnectionAdapter(List<Connection> connection, Activity a, ArrayList<Alert> singleAlert) {
         this.connection = connection;
         this.c = a;
         this.singleAlert = singleAlert;
@@ -88,21 +89,30 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         if (conn != null) {
             holder.co = conn;
-            if (!singleAlert && conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
-                holder.alert.setVisibility(View.VISIBLE);
+            if (conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
                 holder.alertText.setVisibility(View.VISIBLE);
                 String text = "";
 
                 if (conn.getAlerts().getAlertlist() != null)
-                    for (Alert anAlert : conn.getAlerts().getAlertlist())
-                        text += anAlert.getHeader() + "<br/>";
+                    for (Alert anAlert : conn.getAlerts().getAlertlist()) {
+                        boolean toDel = false;
+                        for (Alert aSingleAlert : singleAlert) {
+                            if (aSingleAlert.getHeader().contentEquals(anAlert.getHeader()))
+                                toDel = true;
+                        }
+                        if (!toDel)
+                            text += anAlert.getHeader() + "<br/>";
+                    }
 
                 if (text.endsWith("<br/>"))
                     text = text.substring(0, text.length() - 5);
+                if (text.length() > 0){
+                    holder.alertText.setVisibility(View.VISIBLE);
+                    holder.alertText.setText(Html.fromHtml(text));
+                }else
+                    holder.alertText.setVisibility(View.GONE);
 
-                holder.alertText.setText(Html.fromHtml(text));
             } else {
-                holder.alert.setVisibility(View.GONE);
                 holder.alertText.setVisibility(View.GONE);
             }
 
@@ -154,7 +164,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
 
             holder.triptime.setText(Html.fromHtml(
-                             " <b>"
+                    " <b>"
                             + Utils.formatDate(conn.getDuration(), true, false)
                             + "</b>"));
 
@@ -166,7 +176,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
             holder.container.removeAllViews();
             if (holder.numberoftrains != null) { //
-                if (conn.getVias() != null && conn.getVias().via!=null &&conn.getVias().via.size()>1) {
+                if (conn.getVias() != null && conn.getVias().via != null && conn.getVias().via.size() > 1) {
                     holder.numberoftrainsll.removeAllViews();
                     holder.numberoftrainsll.setVisibility(View.VISIBLE);
 
@@ -512,7 +522,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         ImageView occupancy;
         TextView numberoftrains;
         LinearLayoutCompat numberoftrainsll;
-        ImageView alert;
         TextView alertText;
         LinearLayout container;
         LinearLayout lltrains;
@@ -535,7 +544,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             occupancy = v.findViewById(R.id.occupancy);
             numberoftrains = v.findViewById(R.id.numberoftrains);
             numberoftrainsll = v.findViewById(R.id.numberoftrainsll);
-            alert = v.findViewById(R.id.alert);
             alertText = v.findViewById(R.id.alertText);
             lltrains = v.findViewById(R.id.lltrains);
             card = v.findViewById(R.id.card);

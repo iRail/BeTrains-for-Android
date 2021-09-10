@@ -189,7 +189,7 @@ public class PlannerFragment extends Fragment {
 
     public void fillStations(String departure, String arrival) {
         tvDeparture = requireView().findViewById(R.id.tv_start);
-        tvArrival =requireView().findViewById(R.id.tv_stop);
+        tvArrival = requireView().findViewById(R.id.tv_stop);
 
         if (departure != null && arrival != null) {
             tvDeparture.setText(departure);
@@ -280,8 +280,9 @@ public class PlannerFragment extends Fragment {
 
     private void fillData(final String url) {
         BottomAppBar bap = getActivity().findViewById(R.id.bar);
+
         if (allConnections != null && allConnections.connection != null) {
-            boolean singleAlert = checkSingleAlert(allConnections);
+            ArrayList<Alert> singleAlert = checkSingleAlert(allConnections);
             ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), singleAlert);
             recyclerView.setAdapter(connAdapter);
 
@@ -302,7 +303,7 @@ public class PlannerFragment extends Fragment {
 
 
             allConnections = Utils.getCachedConnections(PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("cached", ""));
-
+            //allConnections.connection.get(0).removeAlerts();
 
             if (allConnections != null) {
                 ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), checkSingleAlert(allConnections));
@@ -351,33 +352,45 @@ public class PlannerFragment extends Fragment {
         });
     }
 
-    private boolean checkSingleAlert(Connections allConnections) {
-        String toCompare = null;
+    private ArrayList<Alert> checkSingleAlert(Connections allConnections) {
+
+        if(allConnections.connection.get(0).getAlerts()==null)
+            return null;
+
+        ArrayList<Alert> toReturn = allConnections.connection.get(0).getAlerts().getAlertlist();
 
         String html = "";
-        for (Connection c : allConnections.connection) {
-            String textAlert = "";
-            html = "";
-            if (c.getAlerts().getAlertlist() != null)
-                for (Alert anAlert : c.getAlerts().getAlertlist()) {
-                    textAlert += anAlert.getHeader() + "<br/>";
-                    html += ("<h3>" + anAlert.getHeader() + "</h3>");
-                    html += (anAlert.getDescription());
-                }
 
-            if (!textAlert.contentEquals(toCompare == null ? textAlert : toCompare)) {
-                getView().findViewById(R.id.singlealertcard).setVisibility(View.GONE);
-                return false;
-            }
-            toCompare = textAlert;
+        for (Connection c : allConnections.connection) {
+            if (c.getAlerts().getAlertlist() != null)
+                for (Alert aSingleAlert : toReturn) {
+                    boolean toDel = true;
+                    for (Alert anAlert : c.getAlerts().getAlertlist()) {
+                        if (aSingleAlert.getHeader().contentEquals(anAlert.getHeader()))
+                            toDel = false;
+                    }
+                    if (toDel)
+                        toReturn.remove(aSingleAlert);
+                }
         }
-        if (toCompare.endsWith("<br/>"))
-            toCompare = toCompare.substring(0, toCompare.length() - 5);
+
+        if (toReturn.size() == 0)
+            return null;
+
+        String textAlert = "";
+        html = "";
+        for (Alert anAlert : toReturn) {
+            textAlert += anAlert.getHeader() + "<br/>";
+            html += ("<h3>" + anAlert.getHeader() + "</h3>");
+            html += (anAlert.getDescription());
+        }
+        if (textAlert.endsWith("<br/>"))
+            textAlert = textAlert.substring(0, textAlert.length() - 5);
 
 
         getView().findViewById(R.id.singlealertcard).setVisibility(View.VISIBLE);
 
-        ((TextView) getView().findViewById(R.id.singlealert)).setText(Html.fromHtml(toCompare));
+        ((TextView) getView().findViewById(R.id.singlealert)).setText(Html.fromHtml(textAlert));
 
         final SpannableString s = new SpannableString(html); // msg should have url to enable clicking
         Linkify.addLinks(s, Linkify.ALL);
@@ -393,7 +406,7 @@ public class PlannerFragment extends Fragment {
         });
 
 
-        return true;
+        return toReturn;
     }
 
     public void fillWithTips() {

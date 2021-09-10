@@ -26,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00"
-            android:textStyle="bold"
             android:transitionName="daparture" />
 
         <TextView
@@ -38,32 +37,19 @@
             android:singleLine="true"
             android:text="+X'"
             android:textColor="@color/red"
-            android:textStyle="bold" />
+          />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
 
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/alert"
-                android:paddingEnd="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_alert" />
 
             <TextView
                 android:id="@+id/duration"
                 style="@style/TextElementBig"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textStyle="normal"
                 tool:text="xxhxx"/>
 
-        </LinearLayout>
 
         <TextView
             android:id="@+id/arrivaltime"
@@ -71,7 +57,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="99:99"
-            android:textStyle="bold"
             android:transitionName="arrival" />
 
         <TextView
@@ -82,8 +67,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="+X'"
-            android:textColor="@color/red"
-            android:textStyle="bold" />
+            android:textColor="@color/red" />
     </LinearLayout>
 
     <LinearLayout
@@ -145,6 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingBottom="8dp"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="gone" />
 
