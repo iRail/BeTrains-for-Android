@@ -358,6 +358,7 @@ public class PlannerFragment extends Fragment {
             return null;
 
         ArrayList<Alert> toReturn = allConnections.connection.get(0).getAlerts().getAlertlist();
+        ArrayList<Alert> toRemove = new ArrayList<>();
 
         String html = "";
 
@@ -370,9 +371,11 @@ public class PlannerFragment extends Fragment {
                             toDel = false;
                     }
                     if (toDel)
-                        toReturn.remove(aSingleAlert);
+                        toRemove.add(aSingleAlert);
                 }
         }
+
+        toReturn.remove(toRemove);
 
         if (toReturn.size() == 0)
             return null;
