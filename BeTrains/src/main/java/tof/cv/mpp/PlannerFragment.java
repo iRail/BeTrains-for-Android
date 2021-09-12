@@ -295,7 +295,7 @@ public class PlannerFragment extends Fragment {
                 Log.e("CVE", "PAS DE RESULTATS");
 
                 String message = getString(R.string.txt_error);
-                if (allConnections.message != null & allConnections.message.length() > 0) {
+                if (allConnections != null && allConnections.message != null && allConnections.message.length() > 0) {
                     message = allConnections.message;
                 }
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();

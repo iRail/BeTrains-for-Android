@@ -66,6 +66,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="6dp"
+            android:id="@+id/bottomPart"
             android:gravity="center">
 
             <include layout="@layout/colorstrip" />
