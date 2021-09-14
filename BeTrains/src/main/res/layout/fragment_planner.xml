@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/singlealert"
                 android:layout_gravity="center"
-                android:textColor="@android:color/holo_red_dark"
+                android:textColor="@android:color/white"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
                 android:padding="12dp"

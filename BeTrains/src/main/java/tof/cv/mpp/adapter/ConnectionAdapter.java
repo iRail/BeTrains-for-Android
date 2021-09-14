@@ -154,13 +154,13 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             holder.departure
                     .setText(conn.getDeparture().getPlatform());
 
-            if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
-                holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
+           // if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
+               holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
 
 
             holder.arrival.setText(conn.getArrival().getPlatform());
 
-            if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
+            //if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
                 holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
 
             holder.triptime.setText(Html.fromHtml(

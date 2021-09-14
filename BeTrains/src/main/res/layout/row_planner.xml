@@ -84,6 +84,7 @@
             android:minWidth="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
+            android:textColor="@android:color/white"
             android:background="@drawable/circle"
             android:gravity="center"
             tool:text="*" />
@@ -111,6 +112,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="8dp"
+            android:textColor="@android:color/white"
             android:background="@drawable/circle"
             android:gravity="center"
             android:singleLine="true"
