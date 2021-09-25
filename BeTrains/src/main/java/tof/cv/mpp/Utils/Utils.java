@@ -287,18 +287,27 @@ public class Utils {
         openIntent.putExtra("timestamp", System.currentTimeMillis() / 1000);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent openPendingIntent = PendingIntent.getActivity(c, 0,
-                openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent openPendingIntent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            openPendingIntent = PendingIntent.getActivity(c, 0,
+                    openIntent,  PendingIntent.FLAG_IMMUTABLE);
+        }else{
+            openPendingIntent = PendingIntent.getActivity(c, 0,
+                    openIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        }
 
         Intent dismissIntent = new Intent(c, NotifBroadcastReceiver.class);
         dismissIntent.setAction("ACTION_OPEN");
         dismissIntent.putExtra("id", trainId);
         PendingIntent dismissPendingIntent =
-                PendingIntent.getBroadcast(c, 0, dismissIntent, 0);
-
+                null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            dismissPendingIntent = PendingIntent.getBroadcast(c, 0, dismissIntent, PendingIntent.FLAG_IMMUTABLE);
+        }else
+            dismissPendingIntent = PendingIntent.getBroadcast(c, 0, dismissIntent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(c, "TRAIN_WATCH")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.atrain)
                 .setContentIntent(openPendingIntent)
                 .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_open), openPendingIntent))
                 .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_dismiss), dismissPendingIntent));

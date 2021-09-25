@@ -16,6 +16,7 @@
 
     <color name="list_bg">@android:color/system_accent1_0</color>
     <color name="lightcolor">@android:color/system_accent2_200</color>
+    <color name="lighttextcolor">@android:color/system_accent2_700</color>
 
     <color name="card_bg">@android:color/system_neutral1_50</color>
 

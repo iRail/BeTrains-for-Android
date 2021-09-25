@@ -11,10 +11,12 @@
      android:text="@string/notif_explanation"
      android:padding="16dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button"
+        android:backgroundTint="@color/lightcolor"
+        android:textColor="@color/lighttextcolor"
         android:layout_margin="@dimen/widget_margin"
         android:text="@string/ok"/>
 

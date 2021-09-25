@@ -52,8 +52,6 @@ import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.Utils.Utils;
 import tof.cv.mpp.adapter.TrainInfoAdapter;
 import tof.cv.mpp.bo.Vehicle;
-import tof.cv.mpp.widget.TrainAppWidgetProvider;
-import tof.cv.mpp.widget.TrainWidgetProvider;
 
 public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
     protected static final String TAG = "ChatFragment";
@@ -464,12 +462,12 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
                         mDbHelper.close();
 
-                        Intent intent = new Intent(
+                        /*Intent intent = new Intent(
                                 TrainAppWidgetProvider.TRAIN_WIDGET_UPDATE);
                         getActivity().sendBroadcast(intent);
 
                         intent = new Intent(TrainWidgetProvider.UPDATE_ACTION);
-                        getActivity().sendBroadcast(intent);
+                        getActivity().sendBroadcast(intent);*/
 
                         Toast.makeText(getActivity(),
                                 getString(R.string.widget_added, ""),
