@@ -3,13 +3,16 @@
     android:layout_width="fill_parent"
     android:padding="16dp"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/listtitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/darkblue"
+        android:textColor="@color/lighttextcolor"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -18,13 +21,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
+        android:textColor="@color/lighttextcolor"
         android:autoLink="web"/>
 
     <TextView
         android:id="@+id/listpubdate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FF0F0F0F"
+        android:textColor="@color/lighttextcolor"
         android:layout_marginTop="8dp"
         android:textSize="12sp" />
 

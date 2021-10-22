@@ -2,19 +2,28 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.MyTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MyTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowBackground">@color/mybg</item>
+        <item name="android:colorControlActivated">@color/mybg</item>
+        <item name="colorControlHighlight">@color/mybg</item>
         <item name="android:actionMenuTextColor">@color/blackbg</item>
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
+        <item name="android:textColorPrimary">@color/lighttextcolor</item>
         <item name="colorAccent">@color/coloraccent</item>
         <item name="colorSecondary">?attr/colorPrimary</item>
         <item name="scrimBackground">@color/mtrl_scrim_color</item>
         <item name="snackbarButtonStyle">?attr/borderlessButtonStyle</item>
         <item name="spbStyle">@style/GNowProgressBar</item>
-
+        <item name="android:windowLightStatusBar">@bool/islightStatus</item>
     </style>
+
+    <style name="MyToolBar" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="android:textColorPrimary">@color/lighttextcolor</item>
+        <item name="colorControlNormal">@color/lighttextcolor</item>
+    </style>
+
     <style name="HomeButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">fill_parent</item>
@@ -34,7 +43,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:textColor">@color/lighttextcolor</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -43,7 +52,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:textColor">@color/lighttextcolor</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -52,7 +61,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:textColor">@color/lighttextcolor</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -165,6 +174,8 @@
     <style name="MyListViewTheme" parent="@android:style/Widget.Holo.ListView">
         <item name="android:textColor">@color/darkblue</item>
     </style>
+
+
 
 
 </resources>

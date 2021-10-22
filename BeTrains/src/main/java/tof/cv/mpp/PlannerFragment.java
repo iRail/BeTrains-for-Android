@@ -100,6 +100,52 @@ public class PlannerFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setAllBtnListener();
+
+        BottomAppBar bap = getActivity().findViewById(R.id.bar);
+
+        if (bap.getMenu().size() == 0)
+            bap.replaceMenu(R.menu.appbar);
+
+        bap.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.appbar_prev:
+                        if (getView().findViewById(R.id.progress) != null)
+                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        mDate.add(Calendar.HOUR, -1);
+                        updateActionBar();
+                        mySearchThread(getActivity());
+                        break;
+                    case R.id.appbar_next:
+                        if (getView().findViewById(R.id.progress) != null)
+                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        mDate.add(Calendar.HOUR, 1);
+                        updateActionBar();
+                        mySearchThread(getActivity());
+                        break;
+                    /*case R.id.appbar_mix:
+                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                        fillStations(tvArrival.getText().toString(),
+                                tvDeparture.getText().toString());
+                        mySearchThread(getActivity());
+                        break;*/
+                }
+                return false;
+            }
+        });
+        bap.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateTimeDialog();
+            }
+        });
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -150,8 +196,6 @@ public class PlannerFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
-        setAllBtnListener();
 
         String pStart = settings.getString("pStart", "Mons");
         String pStop = settings.getString("pStop", "Tournai");
@@ -285,11 +329,7 @@ public class PlannerFragment extends Fragment {
             ArrayList<Alert> singleAlert = checkSingleAlert(allConnections);
             ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), singleAlert);
             recyclerView.setAdapter(connAdapter);
-
-
             PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
-            if (bap.getMenu().size() == 0)
-                bap.replaceMenu(R.menu.appbar);
         } else {
             if (url != null && url.length() > 0) {
                 Log.e("CVE", "PAS DE RESULTATS");
@@ -308,53 +348,15 @@ public class PlannerFragment extends Fragment {
             if (allConnections != null) {
                 ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), checkSingleAlert(allConnections));
                 recyclerView.setAdapter(connAdapter);
-                //registerForContextMenu(getListView());
-                if (bap.getMenu().size() == 0)
-                    bap.inflateMenu(R.menu.appbar);
             } else {
                 fillWithTips();
             }
-
         }
-        bap.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.appbar_prev:
-                        if (getView().findViewById(R.id.progress) != null)
-                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                        mDate.add(Calendar.HOUR, -1);
-                        updateActionBar();
-                        mySearchThread(getActivity());
-                        break;
-                    case R.id.appbar_next:
-                        if (getView().findViewById(R.id.progress) != null)
-                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                        mDate.add(Calendar.HOUR, 1);
-                        updateActionBar();
-                        mySearchThread(getActivity());
-                        break;
-                    /*case R.id.appbar_mix:
-                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                        fillStations(tvArrival.getText().toString(),
-                                tvDeparture.getText().toString());
-                        mySearchThread(getActivity());
-                        break;*/
-                }
-                return false;
-            }
-        });
-        bap.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDateTimeDialog();
-            }
-        });
     }
 
     private ArrayList<Alert> checkSingleAlert(Connections allConnections) {
 
-        if(allConnections.connection.get(0).getAlerts()==null)
+        if (allConnections.connection.get(0).getAlerts() == null)
             return null;
 
         ArrayList<Alert> toReturn = allConnections.connection.get(0).getAlerts().getAlertlist();
@@ -480,7 +482,6 @@ public class PlannerFragment extends Fragment {
 
     //DatabaseReference ref;
     private void mySearchThread(final Activity a) {
-        Log.e("CVE", "SEARCH");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         int score = sp.getInt("searchGame", 0) + 1;
         sp.edit().putInt("searchGame", score).commit();

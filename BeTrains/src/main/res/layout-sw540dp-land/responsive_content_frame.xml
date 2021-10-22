@@ -6,8 +6,9 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"
-        app:itemTextColor="@color/state_list"
-        app:itemIconTint="@color/state_list"
+        android:background="@color/navbg"
+        app:itemTextColor="@color/nav"
+        app:itemIconTint="@color/nav"
         android:layout_width="@dimen/drawer_size"
         android:layout_height="match_parent"
         app:headerLayout="@layout/nav_header"

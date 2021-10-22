@@ -19,7 +19,6 @@
             android:id="@+id/progress"
             android:layout_width="match_parent"
             android:layout_height="12dp"
-
             android:indeterminate="true" />
     </RelativeLayout>
 
@@ -30,6 +29,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="false">
@@ -38,6 +38,7 @@
                 android:id="@+id/collapse_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:theme="@style/MyToolBar"
                 android:fitsSystemWindows="false"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -107,15 +108,6 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <include layout="@layout/colorstrip" />
 
-    <TextView
-        android:id="@+id/last_message"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/action_bar_tint"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:textColor="#FF000000" />
 
 </LinearLayout>

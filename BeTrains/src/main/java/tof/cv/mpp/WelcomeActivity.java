@@ -54,7 +54,6 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.responsive_content_frame);
         setProgressBarIndeterminateVisibility(false);
 
-        // setSupportActionBar((BottomAppBar)findViewById(R.id.bar));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 
@@ -65,12 +64,14 @@ public class WelcomeActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
         navigationView.getMenu().clear();
 
-        drawerLayout =(DrawerLayout)  findViewById(R.id.drawer);
+        drawerLayout = findViewById(R.id.drawer);
 
         if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
             navigationView.inflateMenu(R.menu.nav);
         else
             navigationView.inflateMenu(R.menu.nav_nogps);
+
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         if (drawerLayout != null)
             setupDrawer();

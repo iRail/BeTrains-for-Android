@@ -5,70 +5,82 @@
     android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:transitionName="bg">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/timeline"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingBottom="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="8dp">
 
-        <TextView
-            android:id="@+id/departtime"
-            style="@style/TextElementBig"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="00:00"
-            android:transitionName="daparture" />
-
-        <TextView
-            android:id="@+id/delayD"
-            style="@style/TextElementBig"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="+X'"
-            android:textColor="@color/red"
-          />
-
-
+            android:layout_weight="1">
 
             <TextView
-                android:id="@+id/duration"
+                android:id="@+id/departtime"
                 style="@style/TextElementBig"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="normal"
-                tool:text="xxhxx"/>
+                android:text="00:00"
+                android:transitionName="daparture" />
 
+            <TextView
+                android:id="@+id/delayD"
+                style="@style/TextElementBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="+X'"
+                android:textColor="@color/red" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
-            android:id="@+id/arrivaltime"
+            android:id="@+id/duration"
             style="@style/TextElementBig"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="99:99"
-            android:transitionName="arrival" />
+            android:layout_weight="1"
+            android:textStyle="normal"
+            tool:text="xxhxx" />
 
-        <TextView
-            android:id="@+id/delayA"
-            style="@style/TextElementBig"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="+X'"
-            android:textColor="@color/red" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/arrivaltime"
+                style="@style/TextElementBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99:99"
+                android:transitionName="arrival" />
+
+            <TextView
+                android:id="@+id/delayA"
+                style="@style/TextElementBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="+X'"
+                android:textColor="@color/red" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <LinearLayout
         android:id="@+id/secondline"
@@ -81,12 +93,12 @@
             android:id="@+id/departure"
             style="@style/TextElement"
             android:layout_width="wrap_content"
-            android:minWidth="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
-            android:textColor="@color/lighttextcolor"
             android:background="@drawable/circle"
             android:gravity="center"
+            android:minWidth="24dp"
+            android:textColor="@color/lighttextcolor2"
             tool:text="*" />
 
 
@@ -102,8 +114,8 @@
             android:id="@+id/numberoftrainsll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal" />
 
         <TextView
@@ -112,11 +124,11 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/lighttextcolor"
             android:background="@drawable/circle"
-
             android:gravity="center"
+
             android:singleLine="true"
+            android:textColor="@color/lighttextcolor2"
             tool:text="X" />
     </LinearLayout>
 
@@ -170,8 +182,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:gravity="center"
-                tool:text="departure"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tool:text="departure" />
 
             <View
                 android:layout_width="wrap_content"
@@ -197,8 +209,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:gravity="center"
-                tool:text="arrival"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tool:text="arrival" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

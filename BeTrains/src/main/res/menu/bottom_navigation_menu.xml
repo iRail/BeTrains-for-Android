@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_train"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_plan"
+        android:title="@string/app_name"/>
+    <item
+        android:id="@+id/nav_chat"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_chat"
+        android:title="@string/activity_label_chat"/>
+    <item
+        android:id="@+id/nav_notif"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_notif"
+        android:title="@string/activity_label_notif"/>
+</menu>

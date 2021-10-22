@@ -4,17 +4,37 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/drawable/circle.xml" value="0.221875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/drawable/drawer_selected_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/drawable/ripple.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-land/fragment_info_train.xml" value="0.15123456790123457" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-sw540dp-land/responsive_content_frame.xml" value="0.1" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_chat.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_info_station.xml" value="0.15443840579710144" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_info_train.xml" value="0.15443840579710144" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_planner.xml" value="0.1" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_welcome.xml" value="0.1" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/atrain.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/closest.xml" value="0.1171875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/colorstrip.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/datetimepicker.xml" value="0.18177083333333333" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_chat.xml" value="0.1171875" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_compensation.xml" value="0.1171875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_info_station.xml" value="0.15443840579710144" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_info_train.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_notif_list.xml" value="0.33" />
-        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_planner.xml" value="0.1" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_planner.xml" value="0.2713841368584759" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_twitter.xml" value="0.1171875" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/responsive_content_frame.xml" value="0.1" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_achieve.xml" value="0.1171875" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_connection_detail.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_info_train_alert.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_menu.xml" value="0.1" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_message.xml" value="0.16869300911854104" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_planner.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_rss.xml" value="0.1" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/menu/appbar.xml" value="0.18703703703703703" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/menu/bottom_navigation_menu.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/BeTrains-for-Android/BeTrains/src/main/res/menu/nav.xml" value="0.17685185185185184" />
       </map>
     </option>
   </component>
@@ -64,7 +84,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

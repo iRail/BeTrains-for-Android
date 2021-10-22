@@ -68,7 +68,6 @@ public class NotifFragment extends Fragment {
                 }
                 Bundle params = new Bundle();
                 mFirebaseAnalytics.logEvent("ButtonNotif", params);
-                Log.e("CVE","NOTIF "+notif);
                 if (notif > 0) {
                     NotificationManagerCompat.from(getContext()).cancel(0);
                     notif = 0;

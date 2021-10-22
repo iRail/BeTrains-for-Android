@@ -3,8 +3,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/root"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
@@ -27,13 +27,13 @@
                 style="@android:style/TextAppearance.Large"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/selectorbutton"
                 android:layout_weight="1"
+                android:background="@drawable/selectorbutton"
                 android:ellipsize="middle"
                 android:gravity="center"
-                android:singleLine="true"
                 android:padding="8dp"
-                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:textColor="@color/lighttextcolor2"
                 tools:text="City START" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:background="@drawable/selectorbutton"
                 android:gravity="center"
                 android:text=">&lt;"
-                android:textColor="@android:color/white"
+                android:textColor="@color/lighttextcolor2"
                 android:textStyle="bold" />
 
             <TextView
@@ -55,18 +55,18 @@
                 android:background="@drawable/selectorbutton"
                 android:ellipsize="middle"
                 android:gravity="center"
-                android:singleLine="true"
                 android:padding="8dp"
-                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:textColor="@color/lighttextcolor2"
                 tools:text="City STOP" />
 
         </LinearLayout>
 
 
         <RelativeLayout
+            android:id="@+id/bottomPart"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:id="@+id/bottomPart"
             android:gravity="center">
 
             <include layout="@layout/colorstrip" />
@@ -75,41 +75,41 @@
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:indeterminate="true" />
+                android:indeterminate="true"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/singlealertcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/singlealertcard"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/primarycolor"
-            android:visibility="gone"
             android:elevation="12dp"
-            android:transitionName="bg">
+            android:transitionName="bg"
+            android:visibility="gone">
+
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
                 android:id="@+id/singlealert"
-                android:layout_gravity="center"
-                android:textColor="@android:color/white"
                 style="@style/TextAppearance.AppCompat.Medium"
-                android:textStyle="bold"
-                android:padding="12dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="*** ALERT ****"/>
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:textColor="@color/lighttextcolor2"
+                android:textStyle="bold"
+                tools:text="*** ALERT ****" />
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="fill_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="wrap_content"
-            />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </LinearLayout>
 
 
@@ -122,17 +122,19 @@
         app:fabAlignmentMode="center"
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_menu_time"
+        app:navigationIconTint="@color/lighttextcolor2"
         app:theme="@style/ThemeOverlay.MaterialComponents.Dark" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="#FFFF0000"
+        app:backgroundTint="@color/fab"
         app:layout_anchor="@id/bar"
         app:layout_scrollFlags="scroll|enterAlways"
         app:rippleColor="#FFFF8888"
-        app:srcCompat="@drawable/ic_fab_search" />
+        app:srcCompat="@drawable/ic_fab_search"
+        app:tint="@color/darktextcolor" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -72,17 +72,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(c, DetailActivity.class);
-                intent.putExtra("connection", new Gson().toJson(conn));
-                Pair<View, String> p1 = Pair.create(view.findViewById(R.id.bg), "bg");
-
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(c, p1);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    c.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(c).toBundle());//, options.toBundle());
-                } else
-                    c.startActivity(intent);
-                c.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);*/
                 holder.card.setVisibility((holder.card.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
             }
         });
@@ -106,10 +95,10 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
                 if (text.endsWith("<br/>"))
                     text = text.substring(0, text.length() - 5);
-                if (text.length() > 0){
+                if (text.length() > 0) {
                     holder.alertText.setVisibility(View.VISIBLE);
                     holder.alertText.setText(Html.fromHtml(text));
-                }else
+                } else
                     holder.alertText.setVisibility(View.GONE);
 
             } else {
@@ -151,17 +140,12 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 }
             });
 
-            holder.departure
-                    .setText(conn.getDeparture().getPlatform());
-
-           // if (conn.getDeparture().getPlatforminfo() != null && conn.getDeparture().getPlatforminfo().normal == 0)
-               holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.departure.setText(conn.getDeparture().getPlatform());
+            holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
 
 
             holder.arrival.setText(conn.getArrival().getPlatform());
-
-            //if (conn.getArrival().getPlatforminfo() != null && conn.getArrival().getPlatforminfo().normal == 0)
-                holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
 
             holder.triptime.setText(Html.fromHtml(
                     " <b>"

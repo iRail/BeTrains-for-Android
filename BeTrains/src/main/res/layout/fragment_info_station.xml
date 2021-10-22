@@ -25,7 +25,7 @@
             android:id="@+id/my_awesome_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+            app:theme="@style/MyToolBar"
             android:minHeight="?attr/actionBarSize" />
 
         <ImageButton
@@ -56,6 +56,7 @@
             android:id="@+id/Button_prev"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            app:tint="@color/lighttextcolor2"
             android:background="?android:attr/selectableItemBackground"
             android:src="@android:drawable/ic_media_previous" />
 
@@ -67,15 +68,16 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
+            android:textColor="@color/lighttextcolor2"
             android:padding="8dp"
             android:text="@string/loading"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
         <ImageButton
             android:id="@+id/Button_next"
             android:layout_width="48dp"
+            android:textColor="@color/lighttextcolor2"
             android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackground"
             android:src="@android:drawable/ic_media_next" />

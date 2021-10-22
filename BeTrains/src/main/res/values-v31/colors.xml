@@ -11,14 +11,23 @@
 		License.
 	-->
 <resources>
-    <color name="primarycolor">@android:color/system_accent2_400</color>
+    <color name="primarycolor">@android:color/system_neutral1_50</color>
     <color name="primarydarkcolor">@color/primarycolor</color>
 
     <color name="list_bg">@android:color/system_accent1_0</color>
-    <color name="lightcolor">@android:color/system_accent2_200</color>
+    <color name="lightcolor">@android:color/system_neutral1_100</color>
     <color name="lighttextcolor">@android:color/system_accent2_700</color>
+    <color name="lighttextcolor2">@android:color/system_accent2_700</color>
+    <color name="darktextcolor">@android:color/system_accent2_800</color>
 
     <color name="card_bg">@android:color/system_neutral1_50</color>
 
+    <color name="fab">@android:color/system_accent1_50</color>
+    <color name="nav">@android:color/system_accent2_800</color>
+    <color name="navbg">@color/primarycolor</color>
+
+
     <color name="background_tabs">@android:color/system_neutral1_100</color>
+
+    <color name="bottomappbar">@color/lighttextcolor</color>
 </resources>

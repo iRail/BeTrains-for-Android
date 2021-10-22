@@ -3,6 +3,8 @@ package tof.cv.mpp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -16,6 +18,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class InfoTrainActivity extends AppCompatActivity {
 
@@ -24,7 +29,7 @@ public class InfoTrainActivity extends AppCompatActivity {
     long timestamp;
     String fromTo;
     String name;
-    AHBottomNavigation bottomNavigation;
+    BottomNavigationView bottomNavigation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class InfoTrainActivity extends AppCompatActivity {
             fragment.displayInfo(name, fromTo, timestamp);
 
 
-        bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+        bottomNavigation =  findViewById(R.id.bottom_nav);
 
         final int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
@@ -64,11 +69,28 @@ public class InfoTrainActivity extends AppCompatActivity {
 
         if (bottomNavigation != null) {
 
-            AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.app_name, R.drawable.ic_nav_plan, R.color.primarycolor);
+            bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.nav_train:
+                            mViewPager.setCurrentItem(0);
+                            break;
+                        case R.id.nav_chat:
+                            mViewPager.setCurrentItem(1);
+                            break;
+                        case R.id.nav_notif:
+                            mViewPager.setCurrentItem(2);
+                            break;
+                    }
+
+                    return true;
+                }
+            });
+
+           /* AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.app_name, R.drawable.ic_nav_plan, R.color.primarycolor);
             item1.setTitle(name.replace("BE.NMBS.",""));
-
             AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.activity_label_chat, R.drawable.ic_nav_chat, R.color.primarycolor);
-
             AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.activity_label_notif, R.drawable.ic_nav_notif, R.color.primarycolor);
 
             bottomNavigation.addItem(item1);
@@ -122,13 +144,14 @@ public class InfoTrainActivity extends AppCompatActivity {
                     public void onPageScrollStateChanged(int state) {
 
                     }
-                });
+                });*/
         }
     }
 
     public void setChatBadge(int i) {
-        if (bottomNavigation != null)
-            bottomNavigation.setNotification(""+i, 1);
+        BadgeDrawable badge = bottomNavigation.getOrCreateBadge(R.id.nav_chat);
+        badge.setVisible(true);
+        badge.setNumber(i);
     }
 
     @Override

@@ -11,7 +11,7 @@
         android:id="@+id/my_awesome_toolbar"
         android:layout_height="wrap_content"
         android:background="@color/primarycolor"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/MyToolBar"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize" />
 

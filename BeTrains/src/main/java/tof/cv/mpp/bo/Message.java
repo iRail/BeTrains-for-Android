@@ -7,7 +7,7 @@ public class Message {
     }
 
     public String getTrain_id() {
-        return train_id;
+        return train_id.replace("BE.NMBS.","");
     }
 
     public String getEntry_date() {

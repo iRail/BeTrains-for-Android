@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_gravity="center"
     xmlns:tool="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -17,7 +18,7 @@
         android:padding="8dp"
         tool:text="Titre"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
+        android:textColor="@color/lighttextcolor2"
         android:textStyle="bold" />
 
 
@@ -36,13 +37,15 @@
     <TextView
         android:id="@+id/emptychat"
         style="@style/TextElement"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent"
         android:text="@string/loading" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/send_layout"
         android:layout_width="fill_parent"
+        android:padding="8dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
@@ -53,11 +56,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/chat_send"
-            android:textColor="@android:color/white" />
+            android:text="@string/chat_send" />
     </LinearLayout>
 </LinearLayout>

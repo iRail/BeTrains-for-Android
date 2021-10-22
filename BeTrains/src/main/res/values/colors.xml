@@ -21,6 +21,14 @@
     <color name="action_bar_tint">#FFbbbbbb</color>
     <color name="mybg">@color/list_bg</color>
     <color name="title_background">#ff999999</color>
+    <color name="fab">#FFFF0000</color>
+    <color name="nav">@color/darkblue</color>
+    <color name="navbg">#FFFFFF</color>
+
+    <color name="lighttextcolor">@color/darkblue</color>
+    <color name="lighttextcolor2">@android:color/white</color>
+    <color name="darktextcolor">@android:color/white</color>
+
 
     <color name="buttons">#cc000000</color>
 

@@ -174,7 +174,7 @@ public class ChatFragment extends Fragment {
     }
 
     public void update() {
-        // Log.e("CVE", "TRAIN: " + trainId);
+        Log.e("CVE", "TRAIN: " + trainId);
         final RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
 
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();

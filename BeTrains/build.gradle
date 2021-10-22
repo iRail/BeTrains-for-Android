@@ -26,8 +26,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 6622
-        versionName "4.10.07"
+        versionCode 6624
+        versionName "4.10.09"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -80,9 +80,9 @@ dependencies {
     implementation "com.google.android.gms:play-services-games:16.0.0"
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
 
-    implementation 'com.google.android.material:material:1.5.0-alpha03'
+    implementation 'com.google.android.material:material:1.5.0-alpha04'
 
-    implementation 'androidx.appcompat:appcompat:1.4.0-alpha03'
+    implementation 'androidx.appcompat:appcompat:1.4.0-beta01'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
@@ -93,7 +93,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:19.2.0"
 
     implementation 'com.google.firebase:firebase-database:20.0.2'
-    implementation 'com.google.firebase:firebase-core:19.0.1'
+    implementation 'com.google.firebase:firebase-core:19.0.2'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
 
@@ -104,7 +104,6 @@ dependencies {
     implementation 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     implementation 'com.koushikdutta.ion:ion:3.1.0'
     implementation 'com.aurelhubert:ahbottomnavigation:1.3.3'
-    implementation 'com.google.firebase:firebase-core:19.0.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'

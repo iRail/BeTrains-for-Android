@@ -4,16 +4,14 @@
 
     <item
         android:id="@+id/appbar_prev"
-        android:showAsAction="always"
         app:showAsAction="always"
-        android:iconTint="@color/action_bar_tint"
+        app:iconTint="@color/lighttextcolor2"
         android:icon="@drawable/ic_prev"
         android:title="@string/appbar_prev" />
     <item
         android:id="@+id/appbar_next"
-        android:showAsAction="always"
         app:showAsAction="always"
-        android:iconTint="@color/action_bar_tint"
+        app:iconTint="@color/lighttextcolor2"
         android:icon="@drawable/ic_next"
         android:title="@string/appbar_next" />
 
