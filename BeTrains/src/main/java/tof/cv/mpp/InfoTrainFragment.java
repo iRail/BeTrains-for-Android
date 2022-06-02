@@ -163,7 +163,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("prefnl", false))
             lan = "NL";
 
-        final String url = "http://api.irail.be/vehicle.php/?id=" + vehicle
+        final String url = "https://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + lan + dateTime + "&format=JSON&alerts=true";
 
         Log.e("CVE","URL: "+url);
@@ -403,7 +403,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
             dateTime = "&date=" + formattedDate + "&time=" + formattedTime;
         }
 
-        final String url = "http://api.irail.be/vehicle.php/?id=" + id
+        final String url = "https://api.irail.be/vehicle.php/?id=" + id
                 + "&lang=" + langue + dateTime + "&format=JSON&fast=true";
 
         Log.e("CVE","URL: "+url);

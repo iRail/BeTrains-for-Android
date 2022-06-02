@@ -220,7 +220,7 @@ public class StationPickerActivity extends AppCompatActivity implements
                 if (delta > 10 * DateUtils.DAY_IN_MILLIS || !finalLangue.contentEquals(mPrefs.getString("stationsLan", ""))) {
                     Log.e("CVE","cas1");
                     Ion.with(getActivity())
-                            .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
+                            .load("https://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
                             .as(new TypeToken<StationLocationApi>() {
                             })
                             .setCallback(new FutureCallback<StationLocationApi>() {
@@ -240,7 +240,7 @@ public class StationPickerActivity extends AppCompatActivity implements
                 }
             } else
                 Ion.with(getActivity())
-                        .load("http://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
+                        .load("https://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
                                 .as(new TypeToken<StationLocationApi>() {
                                 })
                                 .setCallback(new FutureCallback<StationLocationApi>() {

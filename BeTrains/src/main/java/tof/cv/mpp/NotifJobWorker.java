@@ -33,7 +33,7 @@ public class NotifJobWorker extends Worker {
 
         trainId =getInputData().getString("id");
 
-        final String url = "http://api.irail.be/vehicle.php/?id=" + trainId
+        final String url = "https://api.irail.be/vehicle.php/?id=" + trainId
                 + "&lang=" + getApplicationContext().getString(R.string.url_lang) + "&format=JSON&alerts=true";
         Ion.with(getApplicationContext()).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {

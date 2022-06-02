@@ -307,7 +307,7 @@ public class ClosestFragment extends ListFragment {
             Log.e("CVE", "Time With JSON from cache: " + (System.currentTimeMillis() - startTime));
         } else
             Ion.with(getActivity())
-                    .load("http://api.irail.be/stations.php?format=json")
+                    .load("https://api.irail.be/stations.php?format=json")
                     .as(new TypeToken<StationLocationApi>() {
                     })
                     .setCallback(new FutureCallback<StationLocationApi>() {
@@ -553,7 +553,7 @@ public class ClosestFragment extends ListFragment {
 
         try {
             Ion.with(getActivity())
-                    .load("http://api.irail.be/stations.php?format=json")
+                    .load("https://api.irail.be/stations.php?format=json")
                     .as(new TypeToken<StationLocationApi>() {
                     })
                     .setCallback(new FutureCallback<StationLocationApi>() {

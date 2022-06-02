@@ -583,7 +583,7 @@ public class GameFragment extends BaseGameFragment implements
 
         final CardView ll = getView().findViewById(id);
 
-        String url = "http://api.irail.be/liveboard.php/?station="
+        String url = "https://api.irail.be/liveboard.php/?station="
                 + station.getStation().replace(" ", "%20") + "&format=JSON&fast=true";
         Ion.with(getActivity()).load(url).as(new TypeToken<Station>() {
         }).setCallback(new FutureCallback<Station>() {

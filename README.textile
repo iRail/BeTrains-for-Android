@@ -1,12 +1,10 @@
 h2. BeTrains ?
 
-BeTrains is an open sourced Android application based on the iRail api (http://api.irail.be).
+BeTrains is an open sourced Android application based on the iRail api (https://api.irail.be).
 
 This application is an alternative to the official SNCB/NMBS and Railtime (official trains company in Belgium), aiming to be really lighter, following the Android guidelines, and more intuitive and user friendly.
 
 !https://github.com/iRail/BeTrains-for-Android/raw/master/screen.png(Screenshot)!
-
-"By Waza_Be(Android dev)":http://wazabe.github.io/
 
 h2. How to install ?
 
