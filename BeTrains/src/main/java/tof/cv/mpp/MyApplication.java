@@ -1,7 +1,5 @@
 package tof.cv.mpp;
 
-import android.app.Application;
-
 import androidx.multidex.MultiDexApplication;
 
 import com.google.android.material.color.DynamicColors;

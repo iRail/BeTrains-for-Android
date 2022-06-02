@@ -85,10 +85,11 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 if (conn.getAlerts().getAlertlist() != null)
                     for (Alert anAlert : conn.getAlerts().getAlertlist()) {
                         boolean toDel = false;
-                        for (Alert aSingleAlert : singleAlert) {
-                            if (aSingleAlert.getHeader().contentEquals(anAlert.getHeader()))
-                                toDel = true;
-                        }
+                        if (singleAlert != null)
+                            for (Alert aSingleAlert : singleAlert) {
+                                if (aSingleAlert.getHeader().contentEquals(anAlert.getHeader()))
+                                    toDel = true;
+                            }
                         if (!toDel)
                             text += anAlert.getHeader() + "<br/>";
                     }
@@ -551,23 +552,23 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                         Ion.with(c).load("https://api.irail.be/composition.php?id=" + aVia.getVehicle() + "&format=json#")
                                 .as(new TypeToken<TrainComposition>() {
                                 }).setCallback(new FutureCallback<TrainComposition>() {
-                            @Override
-                            public void onCompleted(Exception e, TrainComposition result) {
-                                // Log.e("CVE", "Ion " + result);
-                                if (result != null && result.composition != null) {
-                                    if (result.composition.segments.segment.get(0).composition != null) {
-                                        //Log.e("CVE", "ADDDD");
-                                        cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);
-                                        displayComposition(result.composition.segments.segment.get(0).composition,
-                                                aVia.getVehicle(),
-                                                lltrains.getChildAt(position), aVia, prevTimeFinal);
+                                    @Override
+                                    public void onCompleted(Exception e, TrainComposition result) {
+                                        // Log.e("CVE", "Ion " + result);
+                                        if (result != null && result.composition != null) {
+                                            if (result.composition.segments.segment.get(0).composition != null) {
+                                                //Log.e("CVE", "ADDDD");
+                                                cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);
+                                                displayComposition(result.composition.segments.segment.get(0).composition,
+                                                        aVia.getVehicle(),
+                                                        lltrains.getChildAt(position), aVia, prevTimeFinal);
+                                            }
+                                        } else
+                                            displayComposition(null,
+                                                    aVia.getVehicle(),
+                                                    lltrains.getChildAt(position), aVia, prevTimeFinal);
                                     }
-                                } else
-                                    displayComposition(null,
-                                            aVia.getVehicle(),
-                                            lltrains.getChildAt(position), aVia, prevTimeFinal);
-                            }
-                        });
+                                });
                     else {
                         // Log.e("CVE", "CACHE " + aMap.getKey());
                         displayComposition(composition,
@@ -595,21 +596,21 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 Ion.with(c).load("https://api.irail.be/composition.php?id=" + co.getArrival().getVehicle() + "&format=json#")
                         .as(new TypeToken<TrainComposition>() {
                         }).setCallback(new FutureCallback<TrainComposition>() {
-                    @Override
-                    public void onCompleted(Exception e, TrainComposition result) {
-                        if (result != null && result.composition != null) {
-                            if (result.composition.segments.segment.get(0).composition != null) {
-                                cacheComposition(co.getArrival().getVehicle(), result.composition.segments.segment.get(0).composition);
-                                displayComposition(result.composition.segments.segment.get(0).composition,
-                                        co.getArrival().getVehicle(),
-                                        lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
+                            @Override
+                            public void onCompleted(Exception e, TrainComposition result) {
+                                if (result != null && result.composition != null) {
+                                    if (result.composition.segments.segment.get(0).composition != null) {
+                                        cacheComposition(co.getArrival().getVehicle(), result.composition.segments.segment.get(0).composition);
+                                        displayComposition(result.composition.segments.segment.get(0).composition,
+                                                co.getArrival().getVehicle(),
+                                                lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
+                                    }
+                                } else
+                                    displayComposition(null,
+                                            co.getArrival().getVehicle(),
+                                            lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
                             }
-                        } else
-                            displayComposition(null,
-                                    co.getArrival().getVehicle(),
-                                    lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
-                    }
-                });
+                        });
             else {
                 displayComposition(lastCompo,
                         co.getArrival().getVehicle(),

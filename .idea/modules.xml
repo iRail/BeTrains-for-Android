@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BeTrains-for-Android.iml" filepath="$PROJECT_DIR$/BeTrains-for-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.iml" filepath="$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.main.iml" filepath="$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/BeTrains/BeTrains-for-Android.BeTrains.unitTest.iml" />
     </modules>
   </component>
 </project>
