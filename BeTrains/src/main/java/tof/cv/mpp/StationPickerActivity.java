@@ -84,13 +84,6 @@ public class StationPickerActivity extends AppCompatActivity implements
 
         setContentView(R.layout.fragment_tab_picker);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    123);
-        }
-
         TITLES =  new String[]{
                 getString(R.string.station_picker_title_belgium),
                 getString(R.string.station_picker_title_favorite)};
