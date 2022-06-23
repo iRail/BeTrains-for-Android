@@ -26,8 +26,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 6628
-        versionName "4.11"
+        versionCode 6630
+        versionName "4.13"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -101,7 +101,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.etsy.android.grid:library:1.0.4'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'com.github.castorflex.smoothprogressbar:library:1.1.0'

@@ -104,7 +104,6 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         registerForContextMenu(recyclerView);
 
 
-
         swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeContainer);
         if (swipeContainer != null) {
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -166,7 +165,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         final String url = "https://api.irail.be/vehicle.php/?id=" + vehicle
                 + "&lang=" + lan + dateTime + "&format=JSON&alerts=true";
 
-        Log.e("CVE","URL: "+url);
+        Log.e("CVE", "URL: " + url);
 
         Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Vehicle>() {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
@@ -198,26 +197,26 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                   double maxLon = 0;
                                                   double delta = 0.05;
 
-                                                  boolean trainRunning=true;
+                                                  boolean trainRunning = true;
 
                                                   myMap.clear();
                                                   try {
                                                       for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
 
-                                                              myMap.addMarker(new MarkerOptions()
-                                                                      .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
-                                                                      .anchor(0.5f, 0.5f)
-                                                                      .icon(BitmapDescriptorFactory.fromResource(aStop.hasLeft() ?
-                                                                              R.drawable.stop :
-                                                                              R.drawable.stopt)));
+                                                          myMap.addMarker(new MarkerOptions()
+                                                                  .position(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()))
+                                                                  .anchor(0.5f, 0.5f)
+                                                                  .icon(BitmapDescriptorFactory.fromResource(aStop.hasLeft() ?
+                                                                          R.drawable.stop :
+                                                                          R.drawable.stopt)));
 
                                                           if (aStop.hasLeft()) {
                                                               rectOptions.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
                                                               rectOptionsTranspa.getPoints().clear();
                                                               rectOptionsTranspa.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
-                                                          } else{
+                                                          } else {
                                                               rectOptionsTranspa.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
-                                                                trainRunning=false;
+                                                              trainRunning = false;
                                                           }
 
 
@@ -234,9 +233,9 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                               minLon = aStop.getStationInfo().getLocationX();
                                                       }
 
-                                                      myMap.addPolyline(rectOptions.color(Color.rgb( 0, 0, 255)));
+                                                      myMap.addPolyline(rectOptions.color(Color.rgb(0, 0, 255)));
 
-                                                      myMap.addPolyline(rectOptionsTranspa.color(Color.rgb( 150, 150, 150)));
+                                                      myMap.addPolyline(rectOptionsTranspa.color(Color.rgb(150, 150, 150)));
 
                                                       LatLngBounds bounds = new LatLngBounds(
                                                               new LatLng(minLat - delta, minLon - delta), new LatLng(maxLat + delta, maxLon + delta));
@@ -254,9 +253,10 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
                                               } else {
                                                   if (e != null) {
-                                                      Toast.makeText(getActivity(), e.getLocalizedMessage(),
+                                                      Toast.makeText(getActivity(), "ERROR: "+e.getLocalizedMessage(),
                                                               Toast.LENGTH_LONG).show();
-                                                      getActivity().finish();
+                                                      if (getActivity() != null)
+                                                          getActivity().finish();
                                                   } else {
                                                       if (result.getHeaders().code() == 502) {
                                                           AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -284,11 +284,14 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                               }
                                                           });
                                                           builder.create().show();
-                                                      }else{
-                                                          recyclerView.setVisibility(View.GONE);
-                                                          TextView tv = getView().findViewById(R.id.empty_view);
-                                                          tv.setVisibility(View.VISIBLE);
-                                                          tv.setText(currentVehicle.message);
+                                                      } else {
+                                                          if (currentVehicle != null && currentVehicle.message != null) {
+                                                              recyclerView.setVisibility(View.GONE);
+                                                              TextView tv = getView().findViewById(R.id.empty_view);
+                                                              tv.setVisibility(View.VISIBLE);
+                                                              tv.setText(currentVehicle.message);
+                                                          }
+
                                                       }
 
                                                   }
@@ -406,7 +409,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         final String url = "https://api.irail.be/vehicle.php/?id=" + id
                 + "&lang=" + langue + dateTime + "&format=JSON&fast=true";
 
-        Log.e("CVE","URL: "+url);
+        Log.e("CVE", "URL: " + url);
 
         Ion.with(this).load(url).asString().setCallback(new FutureCallback<String>() {
             @Override
