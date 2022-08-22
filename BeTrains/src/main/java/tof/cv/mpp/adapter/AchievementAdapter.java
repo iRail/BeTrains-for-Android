@@ -38,7 +38,7 @@ public class AchievementAdapter extends ArrayAdapter<Achievement> {
         }
         Achievement item = getItem(position);
         ImageView iv = (ImageView) row.findViewById(R.id.achPic);
-        im.loadImage(iv, (item.getState() == Achievement.STATE_UNLOCKED) ? item.getUnlockedImageUri() : item.getRevealedImageUri(), R.drawable.icon);
+        im.loadImage(iv, (item.getState() == Achievement.STATE_UNLOCKED) ? item.getUnlockedImageUri() : item.getRevealedImageUri(), R.drawable.ic_launcher_mono);
 
         TextView tvScore = (TextView) row
                 .findViewById(R.id.achDesc);

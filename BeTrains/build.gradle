@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId "tof.cv.mpp"
         minSdkVersion 19
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 6630
         versionName "4.13"
         vectorDrawables.useSupportLibrary = true

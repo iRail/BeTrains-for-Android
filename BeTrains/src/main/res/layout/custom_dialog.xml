@@ -1,6 +1,6 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image"
-    android:src="@drawable/icon"
+    android:src="@drawable/ic_launcher_mono"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dip" />

@@ -18,6 +18,6 @@
         android:minWidth="180dip"
         android:minHeight="110dip"
         android:initialLayout="@layout/widget_layout"
-        android:previewImage="@drawable/icon"
+        android:previewImage="@drawable/ic_launcher_mono"
         android:widgetCategory="keyguard|home_screen">
 </appwidget-provider>

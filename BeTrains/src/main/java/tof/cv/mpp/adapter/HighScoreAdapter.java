@@ -37,7 +37,7 @@ public class HighScoreAdapter extends ArrayAdapter<LeaderboardScore>{
         }
         LeaderboardScore item = getItem(position);
         ImageView iv = (ImageView) row.findViewById(R.id.profilePic);
-        im.loadImage(iv, item.getScoreHolder().getHiResImageUri(),R.drawable.icon);
+        im.loadImage(iv, item.getScoreHolder().getHiResImageUri(),R.drawable.ic_launcher_mono);
 
         TextView tvScore = (TextView) row
                 .findViewById(R.id.userPoints);

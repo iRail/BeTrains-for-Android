@@ -28,7 +28,7 @@
                 android:padding="2dp"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/icon"
+                android:src="@drawable/ic_launcher_mono"
                 android:background="@drawable/appwidget14_button_left"/>
 
         <LinearLayout

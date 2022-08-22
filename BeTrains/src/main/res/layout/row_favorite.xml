@@ -8,7 +8,7 @@
         android:layout_width="64dip"
         android:layout_height="64dip"
         android:layout_marginRight="12dip"
-        android:src="@drawable/icon" />
+        android:src="@drawable/ic_launcher_mono" />
 
     <TextView
         android:id="@+id/firstLine"
