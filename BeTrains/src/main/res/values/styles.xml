@@ -20,8 +20,8 @@
     </style>
 
     <style name="MyToolBar" parent="ThemeOverlay.MaterialComponents.Dark">
-        <item name="android:textColorPrimary">@color/lighttextcolor</item>
-        <item name="colorControlNormal">@color/lighttextcolor</item>
+        <item name="android:textColorPrimary">@color/lighttextcolor2</item>
+        <item name="colorControlNormal">@color/lighttextcolor2</item>
     </style>
 
     <style name="HomeButton">
