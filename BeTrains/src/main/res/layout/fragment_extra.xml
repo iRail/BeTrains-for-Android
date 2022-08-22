@@ -5,7 +5,6 @@
     android:id="@+id/layout_root"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#fff3f3f3"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     tools:context=".WelcomeActivity">
@@ -48,8 +47,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="10dip"
+                style="@style/TextElement"
                 android:text="Android - Applications\n+32 (0)485/03.99.49\nchristophe.versieux@gmail.com"
-                android:textColor="#ff777777" />
 
 
             <ImageView
@@ -87,7 +86,7 @@
                 android:gravity="center"
                 android:padding="10dip"
                 android:text="In collaboration with:"
-                android:textColor="#ff777777" />
+                   style="@style/TextElement"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,7 +106,7 @@
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="Sph1re:\nGraphic &amp; Design"
-                    android:textColor="#ff777777" />
+                       style="@style/TextElement"/>
 
             </LinearLayout>
 
@@ -129,7 +128,7 @@
                     android:gravity="center"
                     android:padding="10dip"
                     android:text="Cookicons:\nPremium Material Iconography"
-                    android:textColor="#ff777777" />
+                       style="@style/TextElement"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -159,7 +158,7 @@
                 android:gravity="center"
                 android:padding="10dip"
                 android:text="OPEN SOURCE LICENSES/CREDITS"
-                android:textColor="#ff777777" />
+                   style="@style/TextElement"/>
 
             <TextView
                 android:layout_width="fill_parent"
@@ -168,7 +167,7 @@
                 android:padding="10dip"
                 android:text="All train data: irail.be: https://docs.irail.be/
 \n\nTrain icons: http://www.mlgtraffic.net/\n(Creative Commons Attribution-Non commercial-Share Alike 3.0 License.)"
-                android:textColor="#ff777777" />
+                   style="@style/TextElement"/>
         </LinearLayout>
         </androidx.cardview.widget.CardView>
 
