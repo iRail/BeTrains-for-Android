@@ -3,6 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root"
+
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="true"
@@ -10,7 +11,7 @@
     tools:context=".WelcomeActivity">
 
     <LinearLayout
-
+        android:paddingTop="12dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="true"
@@ -48,7 +49,7 @@
                 android:gravity="center"
                 android:padding="10dip"
                 style="@style/TextElement"
-                android:text="Android - Applications\n+32 (0)485/03.99.49\nchristophe.versieux@gmail.com"
+                android:text="Android - Applications\n+32 (0)485/03.99.49\nchristophe.versieux@gmail.com"/>
 
 
             <ImageView
