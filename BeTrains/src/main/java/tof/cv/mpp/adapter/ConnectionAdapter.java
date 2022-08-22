@@ -220,7 +220,11 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                     holder.lltrains.addView(v);
                 }
 
-            holder.loadicon(Long.valueOf(conn.getDeparture().getTime()));
+            try {
+                holder.loadicon(Long.valueOf(conn.getDeparture().getTime()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             if (conn.getOccupancy() != null) {
                 holder.occupancy.setVisibility(View.VISIBLE);
