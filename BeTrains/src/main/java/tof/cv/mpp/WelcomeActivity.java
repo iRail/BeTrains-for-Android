@@ -114,9 +114,6 @@ public class WelcomeActivity extends AppCompatActivity {
             case 5:
                 mContent = new ClosestFragment();
                 break;
-            case 6:
-                mContent = new GameFragment();
-                break;
             default:
                 mContent = new PlannerFragment();
                 close = getString(R.string.activity_label_planner);
@@ -152,9 +149,6 @@ public class WelcomeActivity extends AppCompatActivity {
                         break;
                     case R.id.navigation_item_closest:
                         mContent = new ClosestFragment();
-                        break;
-                    case R.id.navigation_item_game:
-                        mContent = new GameFragment();
                         break;
                     case R.id.navigation_item_comp:
                         mContent = new CompensationFragment();

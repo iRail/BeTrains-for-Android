@@ -174,5 +174,6 @@
     <string name="action_goto_favorites">Favoris</string>
     <string name="channel_name">Suivi des trains</string>
     <string name="channel_description">Quand vous surveillez un train</string>
+    <string name="settings_locale">Changer la langue</string>
 
 </resources>

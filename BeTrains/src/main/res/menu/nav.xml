@@ -28,10 +28,6 @@
             android:icon="@drawable/ic_nav_closest"
             android:title="@string/nav_drawer_closest"/>
         <item
-            android:id="@+id/navigation_item_game"
-            android:icon="@drawable/ic_nav_game"
-            android:title="@string/nav_drawer_game"/>
-        <item
             android:id="@+id/navigation_item_extras"
             android:icon="@drawable/ic_nav_extras"
             android:title="@string/nav_drawer_extras"/>

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     compileOptions {
@@ -26,8 +26,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode 6630
-        versionName "4.13"
+        versionCode 6634
+        versionName "4.14.2"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -71,30 +71,25 @@ buildscript {
     }
 }
 dependencies {
-    implementation 'androidx.work:work-runtime:2.8.0-alpha02'
     ext.googleVersion = '28.0.0-alpha1'
-    implementation('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
-        // exclusion is not necessary, but generally a good idea.
-        exclude group: 'com.google.android', module: 'support-v4'
-    }
-    implementation "com.google.android.gms:play-services-games:16.0.0"
+
+    implementation 'androidx.work:work-runtime:2.8.0-alpha03'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
 
-    implementation 'com.google.android.material:material:1.7.0-alpha02'
+    implementation 'com.google.android.material:material:1.7.0-beta01'
 
-    implementation 'androidx.appcompat:appcompat:1.6.0-alpha04'
+    implementation 'androidx.appcompat:appcompat:1.6.0-beta01'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-
-    implementation "com.google.android.gms:play-services-maps:18.0.2"
-    implementation "com.google.android.gms:play-services-location:19.0.1"
+    implementation "com.google.android.gms:play-services-maps:18.1.0"
+    implementation "com.google.android.gms:play-services-location:20.0.0"
     implementation "com.google.android.gms:play-services-auth:20.2.0"
 
     implementation 'com.google.firebase:firebase-database:20.0.5'
-    implementation 'com.google.firebase:firebase-core:21.0.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.5'
+    implementation 'com.google.firebase:firebase-core:21.1.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.7'
 
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-crashlytics'
@@ -102,20 +97,15 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.picasso:picasso:2.8'
-    implementation 'com.etsy.android.grid:library:1.0.4'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     implementation 'com.koushikdutta.ion:ion:3.1.0'
-    implementation 'com.aurelhubert:ahbottomnavigation:1.3.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
-
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    implementation "com.sergivonavi:materialbanner:1.2.0"
 
     implementation 'com.android.support:multidex:1.0.3'
 }

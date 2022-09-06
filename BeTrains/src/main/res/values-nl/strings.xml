@@ -157,5 +157,6 @@
     <string name="action_goto_favorites">Favs</string>
     <string name="channel_name">Train Watching</string>
     <string name="channel_description">When you want to look for a specific train</string>
+    <string name="settings_locale">Kies uw taal</string>
 
 </resources>

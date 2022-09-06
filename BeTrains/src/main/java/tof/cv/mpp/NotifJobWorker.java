@@ -39,10 +39,8 @@ public class NotifJobWorker extends Worker {
         }).withResponse().setCallback(new FutureCallback<Response<Vehicle>>() {
             @Override
             public void onCompleted(Exception e, Response<Vehicle> result) {
-
                 if (result == null)
                     return;
-
                 Utils.createNotif(result, trainId, getApplicationContext());
 
             }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/planner_da_entries"
+        android:entryValues="@array/planner_da_values"
+        android:key="@string/key_planner_da"
+        android:summary="@string/settings_planner_da_summary"
+        android:title="@string/settings_planner_da" />
+
+    <Preference
+        android:key="preflocale"
+      android:title="@string/settings_locale" />
+
+    <ListPreference
+        android:entries="@array/menu_pref"
+        android:entryValues="@array/menu_values"
+        android:key="@string/key_activity"
+        android:summary="@string/settings_general_first_screen_summary"
+        android:title="@string/settings_general_first_screen" />
+
+</PreferenceScreen>

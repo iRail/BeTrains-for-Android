@@ -1,21 +1,17 @@
 package tof.cv.mpp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.material.badge.BadgeDrawable;
