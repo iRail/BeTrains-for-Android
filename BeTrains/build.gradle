@@ -26,8 +26,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode 6635
-        versionName "4.14.3"
+        versionCode 6636
+        versionName "4.14.3b"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -53,7 +53,6 @@ allprojects {
         maven {
             url "https://maven.google.com"
         }
-        maven { url "https://raw.github.com/teragence/android-sdk/mvn-rep" }
         maven {
             url 'https://ci.android.com/builds/submitted/6052626/androidx_snapshot/latest/repository/'
         }
