@@ -59,7 +59,7 @@
                 android:textColor="@color/lighttextcolor2"
                 tools:text="City STOP" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/singlealertcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,6 +68,9 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="8dp"
+                android:checkable="true"
+                app:checkedIcon="@drawable/ic_alert"
+                app:checkedIconTint="@color/darktextcolor"
                 android:backgroundTint="@color/fab"
                 android:elevation="12dp"
                 android:transitionName="bg"
@@ -85,7 +88,7 @@
                     android:textColor="@color/darktextcolor"
                     android:textStyle="bold"
                     tools:text="*** ALERT ****" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

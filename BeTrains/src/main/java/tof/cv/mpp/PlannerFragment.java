@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -404,6 +405,7 @@ public class PlannerFragment extends Fragment {
         Linkify.addLinks(s, Linkify.ALL);
 
         String finalHtml = html;
+        ((MaterialCardView)getView().findViewById(R.id.singlealertcard)).setChecked(true);
         getView().findViewById(R.id.singlealertcard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
