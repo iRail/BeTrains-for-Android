@@ -10,9 +10,10 @@
         android:id="@+id/my_awesome_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@color/primarycolor"
         android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.MaterialComponents.Dark"/>
+        app:theme="@style/MyToolBar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -88,7 +89,7 @@
                     android:padding="8dp"
                     android:text="@string/loading"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/lighttextcolor2" />
 
 
                 <ImageButton

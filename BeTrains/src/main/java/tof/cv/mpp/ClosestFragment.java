@@ -1,5 +1,6 @@
 package tof.cv.mpp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,8 +17,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+
 import androidx.fragment.app.ListFragment;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,7 +86,7 @@ public class ClosestFragment extends ListFragment {
         setHasOptionsMenu(true);
 
         try {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_closest);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.nav_drawer_closest);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,8 +158,8 @@ public class ClosestFragment extends ListFragment {
                     case 1:
                         try {
                             Uri uri = Uri.parse("google.navigation:q="
-                                    + ((double) clicked.getLat() ) + ","
-                                    + ((double) clicked.getLon() ));
+                                    + ((double) clicked.getLat()) + ","
+                                    + ((double) clicked.getLon()));
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
                         } catch (ActivityNotFoundException e) {
@@ -171,9 +174,9 @@ public class ClosestFragment extends ListFragment {
                             Intent i = new Intent(
                                     android.content.Intent.ACTION_VIEW, Uri
                                     .parse("geo:0,0?q="
-                                            + (clicked.getLat() )
+                                            + (clicked.getLat())
                                             + ","
-                                            + (clicked.getLon() )
+                                            + (clicked.getLon())
                                             + " (" + clicked.getStation()
                                             + ")"));
 
@@ -214,13 +217,12 @@ public class ClosestFragment extends ListFragment {
         }
     }
 
-    private class MyGPSLocationListener implements LocationListener
-
-    {
+    private class MyGPSLocationListener implements LocationListener {
 
         public void onLocationChanged(final Location loc) {
             Log.v(TAG, "GPS");
-            locationManager.removeUpdates(locationNetworkListener);
+            if (locationManager != null)
+                locationManager.removeUpdates(locationNetworkListener);
             if (loc != null) {
                 // GPS Location is considered as the best
                 // We can of course improve that.
@@ -249,9 +251,7 @@ public class ClosestFragment extends ListFragment {
 
     }
 
-    private class MyNetworkLocationListener implements LocationListener
-
-    {
+    private class MyNetworkLocationListener implements LocationListener {
 
         public void onLocationChanged(final Location loc) {
 
@@ -479,6 +479,7 @@ public class ClosestFragment extends ListFragment {
     /**
      * Each time I come back in the activity, I listen to GPS
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onResume() {
         super.onResume();
@@ -560,7 +561,7 @@ public class ClosestFragment extends ListFragment {
                         @Override
                         public void onCompleted(Exception e, StationLocationApi apiList) {
 
-                            if(apiList == null || apiList.station == null){
+                            if (apiList == null || apiList.station == null) {
                                 m_ProgressDialog.hide();
                                 return;
                             }

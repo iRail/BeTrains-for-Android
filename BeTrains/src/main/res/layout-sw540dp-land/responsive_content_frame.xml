@@ -27,13 +27,11 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/my_awesome_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primarycolor"
-                android:minHeight="?attr/actionBarSize"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
+                app:theme="@style/MyToolBar"
+                android:id="@+id/toolbar"
+                android:background="@color/primarycolor"/>
 
             <FrameLayout
                 android:id="@+id/content_frame"
@@ -51,4 +49,3 @@
 
 
 </LinearLayout>
-

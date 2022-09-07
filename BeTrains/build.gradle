@@ -26,8 +26,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode 6634
-        versionName "4.14.2"
+        versionCode 6635
+        versionName "4.14.3"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -76,7 +76,7 @@ dependencies {
     implementation 'androidx.work:work-runtime:2.8.0-alpha03'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
 
-    implementation 'com.google.android.material:material:1.7.0-beta01'
+    implementation 'com.google.android.material:material:1.8.0-alpha01'
 
     implementation 'androidx.appcompat:appcompat:1.6.0-beta01'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -85,11 +85,11 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-maps:18.1.0"
     implementation "com.google.android.gms:play-services-location:20.0.0"
-    implementation "com.google.android.gms:play-services-auth:20.2.0"
+    implementation "com.google.android.gms:play-services-auth:20.3.0"
 
-    implementation 'com.google.firebase:firebase-database:20.0.5'
-    implementation 'com.google.firebase:firebase-core:21.1.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.7'
+    implementation 'com.google.firebase:firebase-database:20.0.6'
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.8'
 
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-crashlytics'

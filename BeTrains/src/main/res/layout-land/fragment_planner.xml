@@ -11,23 +11,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/Ly_Pannel_Sup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:paddingBottom="56dp"
             android:background="@color/primarycolor"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_start"
                 style="@android:style/TextAppearance.Large"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/selectorbutton"
                 android:ellipsize="middle"
                 android:gravity="center"
@@ -39,7 +39,7 @@
             <TextView
                 android:id="@+id/mybuttonInvert"
                 android:layout_width="48dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/selectorbutton"
                 android:gravity="center"
                 android:text=">&lt;"
@@ -49,9 +49,8 @@
             <TextView
                 android:id="@+id/tv_stop"
                 style="@android:style/TextAppearance.Large"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/selectorbutton"
                 android:ellipsize="middle"
                 android:gravity="center"
@@ -60,16 +59,47 @@
                 android:textColor="@color/lighttextcolor2"
                 tools:text="City STOP" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/singlealertcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/fab"
+                android:elevation="12dp"
+                android:transitionName="bg"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/singlealert"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="12dp"
+                    android:ellipsize="middle"
+                    android:singleLine="true"
+                    android:textColor="@color/darktextcolor"
+                    android:textStyle="bold"
+                    tools:text="*** ALERT ****" />
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
+        <include
+            layout="@layout/colorstrip"
+            android:layout_width="3dp"
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:id="@+id/bottomPart"
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
             android:gravity="center">
 
-            <include layout="@layout/colorstrip" />
 
             <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
                 android:id="@+id/progress"
@@ -79,39 +109,21 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/singlealertcard"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/fab"
-            android:elevation="12dp"
-            android:transitionName="bg"
-            android:visibility="gone">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/singlealert"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="12dp"
-                android:ellipsize="middle"
-                android:textColor="@color/darktextcolor"
-                android:textStyle="bold"
-                android:singleLine="true"
-                tools:text="*** ALERT ****" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="fill_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="match_parent"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </LinearLayout>
 
 
@@ -123,7 +135,7 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/primarycolor"
         app:fabAlignmentMode="center"
-
+        app:hideOnScroll="false"
         app:navigationIcon="@drawable/ic_menu_time"
         app:navigationIconTint="@color/lighttextcolor2"
         app:theme="@style/ThemeOverlay.MaterialComponents.Dark" />
@@ -134,7 +146,7 @@
         android:layout_height="wrap_content"
         app:backgroundTint="@color/fab"
         app:layout_anchor="@id/bar"
-
+        app:hideOnScroll="false"
         app:rippleColor="#FFFF8888"
         app:srcCompat="@drawable/ic_fab_search"
         app:tint="@color/darktextcolor" />
