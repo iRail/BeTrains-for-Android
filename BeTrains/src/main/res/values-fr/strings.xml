@@ -175,5 +175,6 @@
     <string name="channel_name">Suivi des trains</string>
     <string name="channel_description">Quand vous surveillez un train</string>
     <string name="settings_locale">Changer la langue</string>
-
+    <string name="notif_refused" >Vous n\'avez pas autorisé les notifications pour cette application</string>
+    <string name="gotosettings" >Ouvrir les paramètres</string>
 </resources>

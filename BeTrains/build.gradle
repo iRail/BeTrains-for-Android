@@ -24,10 +24,10 @@ android {
     }
     defaultConfig {
         applicationId "tof.cv.mpp"
-        minSdkVersion 19
+        minSdkVersion 29
         targetSdkVersion 33
-        versionCode 6636
-        versionName "4.14.3b"
+        versionCode 6639
+        versionName "4.14.5"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -72,12 +72,12 @@ buildscript {
 dependencies {
     ext.googleVersion = '28.0.0-alpha1'
 
-    implementation 'androidx.work:work-runtime:2.8.0-alpha03'
+    implementation 'androidx.work:work-runtime:2.8.0-alpha04'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
 
     implementation 'com.google.android.material:material:1.8.0-alpha01'
 
-    implementation 'androidx.appcompat:appcompat:1.6.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'

@@ -663,11 +663,8 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
     private void displayComposition(TrainComposition.Composition.Segments.Segment.SegmentComposition composition,
                                     String name, View v, Via aVia, long prevtime) {
-        //boolean i1 = false;
-        //boolean i2 = false;
-
+        
         if (v == null || v.findViewById(R.id.train_name) == null) {
-            // Log.e("CVE",name);
             return;
         }
 
@@ -691,11 +688,11 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         }
 
         if (composition.units.unit.size() > 1) {
-            MaterialType type = composition.units.
-                    unit.get(1).materialType;
-            type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(1).seatsFirstClass);
-            v.findViewById(R.id.trainicon).setVisibility(View.GONE);
             try {
+                MaterialType type = composition.units.
+                        unit.get(1).materialType;
+                type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(1).seatsFirstClass);
+                v.findViewById(R.id.trainicon).setVisibility(View.GONE);
                 String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
                 // Log.e("CVE", "WAGON: " + path);
                 InputStream ims = c.getAssets().open(path);
@@ -708,14 +705,13 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 ex.printStackTrace();
                 return;
             }
-
         }
-
-        MaterialType type = composition.units.
-                unit.get(0).materialType;
-        type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(0).seatsFirstClass);
-        v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
+        
         try {
+            MaterialType type = composition.units.
+                    unit.get(0).materialType;
+            type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(0).seatsFirstClass);
+            v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
             String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
             //Log.e("CVE", "LOCO: " + path);
             InputStream ims = c.getAssets().open(path);
@@ -728,9 +724,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             ex.printStackTrace();
             return;
         }
-        // v.setVisibility((i1 || i2) ? View.VISIBLE : View.GONE);
-
-
     }
 
     private void startStationInfoActivity(String station, String time, String id) {

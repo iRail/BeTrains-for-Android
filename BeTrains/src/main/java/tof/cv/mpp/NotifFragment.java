@@ -1,41 +1,32 @@
 package tof.cv.mpp;
 
+import android.Manifest;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.work.Data;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
-
-import android.util.Log;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.gms.location.Geofence;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.work.Data;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.Response;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
-import tof.cv.mpp.Utils.Utils;
-import tof.cv.mpp.bo.StationLocation;
-import tof.cv.mpp.bo.Vehicle;
-
-import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 
 public class NotifFragment extends Fragment {
 
@@ -47,8 +38,36 @@ public class NotifFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View v,@Nullable Bundle savedInstanceState) {
-        super.onViewCreated(v,savedInstanceState);
+    public void onResume() {
+        super.onResume();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            notif = ((NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE)).getActiveNotifications().length;
+            if (notif > 0)
+                ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.cancel));
+            else
+                ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.ok));
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                getContext(),
+                android.Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED){
+            getView().findViewById(R.id.buttonnotif).setVisibility(View.GONE);
+            getView().findViewById(R.id.textnotif).setVisibility(View.GONE);
+        }
+        else
+        {
+            Toast.makeText(getActivity(), R.string.notif_refused, Toast.LENGTH_LONG).show();
+            //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS}, 0);
+            getView().findViewById(R.id.buttonnotif).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.textnotif).setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View v, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
 
@@ -58,11 +77,21 @@ public class NotifFragment extends Fragment {
                 ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.cancel));
         }
 
+
+
+        getView().findViewById(R.id.buttonnotif).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", getContext().getPackageName(), null));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
         getView().findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Bundle myExtrasBundle = new Bundle();
-               // myExtrasBundle.putString("id", trainId);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     notif = ((NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE)).getActiveNotifications().length;
                 }
@@ -87,8 +116,9 @@ public class NotifFragment extends Fragment {
                     if (getView() != null)
                         ((Button) getView().findViewById(R.id.button)).setText(getString(R.string.cancel));
                 }
-
             }
+
+
         });
     }
 

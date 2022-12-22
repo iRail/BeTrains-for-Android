@@ -158,5 +158,7 @@
     <string name="channel_name">Train Watching</string>
     <string name="channel_description">When you want to look for a specific train</string>
     <string name="settings_locale">Kies uw taal</string>
+    <string name="notif_refused" >Please enable notification permission for this app</string>
+    <string name="gotosettings" >Open Settings</string>
 
 </resources>

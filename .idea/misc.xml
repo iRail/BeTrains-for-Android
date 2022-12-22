@@ -45,13 +45,14 @@
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-land/fragment_planner.xml" value="0.1" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-land/responsive_content_frame.xml" value="0.2447089947089947" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-land/row_planner.xml" value="0.1675485008818342" />
-        <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-sw540dp-land/responsive_content_frame.xml" value="0.12717536813922356" />
+        <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout-sw540dp-land/responsive_content_frame.xml" value="0.5" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_planner.xml" value="0.18206521739130435" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/activity_welcome.xml" value="0.18206521739130435" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/datetimepicker.xml" value="0.1703125" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_extra.xml" value="0.33" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_info_station.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_info_train.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_notif_list.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/fragment_planner.xml" value="0.1" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/responsive_content_frame.xml" value="0.18206521739130435" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_achieve.xml" value="0.2890625" />
@@ -59,6 +60,7 @@
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_planner.xml" value="0.225" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/layout/row_tip.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/menu/nav.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/menu/navigation_rail_menu.xml" value="0.1484375" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.139" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/xml-v33/activity_planner_preferences.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/chris/StudioProjects/BeTrains-for-Android/BeTrains/src/main/res/xml/activity_planner_preferences.xml" value="0.33" />

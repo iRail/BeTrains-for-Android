@@ -290,7 +290,7 @@ public class Utils {
         PendingIntent openPendingIntent = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             openPendingIntent = PendingIntent.getActivity(c, 0,
-                    openIntent,  PendingIntent.FLAG_IMMUTABLE);
+                    openIntent,  PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
         }else{
             openPendingIntent = PendingIntent.getActivity(c, 0,
                     openIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
