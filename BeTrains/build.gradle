@@ -71,29 +71,29 @@ buildscript {
 dependencies {
     ext.googleVersion = '28.0.0-alpha1'
 
-    implementation 'androidx.work:work-runtime:2.8.0-alpha04'
+    implementation 'androidx.work:work-runtime:2.8.0-rc01'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
 
-    implementation 'com.google.android.material:material:1.8.0-alpha01'
+    implementation 'com.google.android.material:material:1.8.0-rc01'
 
-    implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     implementation "com.google.android.gms:play-services-maps:18.1.0"
     implementation "com.google.android.gms:play-services-location:20.0.0"
-    implementation "com.google.android.gms:play-services-auth:20.3.0"
+    implementation "com.google.android.gms:play-services-auth:20.4.0"
 
-    implementation 'com.google.firebase:firebase-database:20.0.6'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:21.0.8'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
 
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'com.github.castorflex.smoothprogressbar:library:1.1.0'
@@ -106,6 +106,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation "androidx.preference:preference:1.2.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

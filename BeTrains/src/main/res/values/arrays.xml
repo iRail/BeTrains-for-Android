@@ -6,10 +6,8 @@
         <item>Chat</item>
         <item>Starred</item>
         <item>Closest stations</item>
-        <item>Game</item>
     </string-array>
-    <string-array name="menu_values"
-        translatable="false">
+    <string-array name="menu_values" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -47,6 +45,16 @@
         <item>Check-in</item>
         <item>This week</item>
         <item>Achievements</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
     </string-array>
 
 </resources>

@@ -17,11 +17,19 @@
         <item name="snackbarButtonStyle">?attr/borderlessButtonStyle</item>
         <item name="spbStyle">@style/GNowProgressBar</item>
         <item name="android:windowLightStatusBar">@bool/islightStatus</item>
+        <!-- snip -->
+        <item name="alertDialogTheme">@style/AppTheme.MyOldAlertDialog</item>
     </style>
 
-    <style name="MyToolBar" parent="ThemeOverlay.MaterialComponents.Dark">
-        <item name="android:textColorPrimary">@color/lighttextcolor2</item>
-        <item name="colorControlNormal">@color/lighttextcolor2</item>
+    <style name="AppTheme.MyOldAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="dialogCornerRadius">28dp</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+        <item name="android:layout">@layout/m3_alert_dialog</item>
+    </style>
+
+    <style name="MyToolBar" parent="ThemeOverlay.Material3">
+
     </style>
 
     <style name="HomeButton">
@@ -38,7 +46,16 @@
 
 
 
-    <style name="TextElementBig" parent="@android:style/TextAppearance.Holo.Large">
+    <style name="TextElementBig" parent="@android:style/TextAppearance.Material.Large">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/lighttextcolor2</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="TextElementMid" parent="@android:style/TextAppearance.Material.Medium">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -47,16 +64,7 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="TextElementMid" parent="@android:style/TextAppearance.Holo.Medium">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/lighttextcolor</item>
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="TextElement" parent="@android:style/TextAppearance.Holo">
+    <style name="TextElement" parent="@android:style/TextAppearance.Material">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -82,7 +90,7 @@
     </style>
 
     <style name="PagerTitleStripTextAppearance">
-        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:textColor">@color/lighttextcolor</item>
         <item name="android:textSize">16sp</item>
     </style>
 

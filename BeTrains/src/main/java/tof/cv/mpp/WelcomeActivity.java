@@ -11,9 +11,11 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -105,31 +107,38 @@ public class WelcomeActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-
+        int id;
         switch (pos) {
             case 1:
                 mContent = new PlannerFragment();
+                id=0;
                 break;
             case 2:
                 mContent = new TrafficFragment();
+                id=1;
                 break;
             case 3:
                 mContent = new ChatFragment();
+                id=2;
                 break;
             case 4:
                 mContent = new StarredFragment();
+                id=4;
                 break;
             case 5:
                 mContent = new ClosestFragment();
+                id=5;
                 break;
             default:
                 mContent = new PlannerFragment();
+                id=0;
                 close = getString(R.string.activity_label_planner);
                 break;
         }
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, mContent).commit();
+        navigationView.getMenu().getItem(id).setChecked(true);
 
     }
 
@@ -171,6 +180,10 @@ public class WelcomeActivity extends AppCompatActivity {
                 break;
             case R.id.navigation_item_extras:
                 mContent = new ExtraFragment();
+                break;
+            case R.id.navigation_item_settings:
+                startActivity(new Intent(this,
+                        SettingsActivity.class));
                 break;
             default:
                 mContent = new PlannerFragment();

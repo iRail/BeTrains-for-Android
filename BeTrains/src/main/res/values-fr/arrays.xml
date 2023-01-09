@@ -7,7 +7,6 @@
         <item>Chat</item>
         <item>Favoris</item>
         <item>A proximité</item>
-        <item>Le Jeu</item>
     </string-array>
     <string-array name="planner_da_entries">
         <item>Depart</item>

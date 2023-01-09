@@ -279,9 +279,6 @@ public class PlannerFragment extends Fragment {
                 .setIcon(R.drawable.ic_menu_star_add)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, MENU_PREF, Menu.NONE, R.string.action_settings)
-                .setIcon(R.drawable.ic_menu_preferences)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
     }
 
     @Override
@@ -299,16 +296,10 @@ public class PlannerFragment extends Fragment {
                 startActivity(new Intent(getActivity(), StarredActivity.class));
                 return true;
             case (MENU_PREF):
-                if (Build.VERSION.SDK_INT >= 11)
                     startActivity(new Intent(getActivity(),
                             MyPreferenceActivity.class).putExtra(
                             PreferenceActivity.EXTRA_SHOW_FRAGMENT,
                             Prefs2Fragment.class.getName()));
-                else {
-                    startActivity(new Intent(getActivity(),
-                            MyPreferenceActivity.class));
-                }
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -581,8 +572,8 @@ public class PlannerFragment extends Fragment {
 
     private void updateActionBar() {
         try {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(
+            //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(
                     Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
         } catch (Exception e) {
             e.printStackTrace();

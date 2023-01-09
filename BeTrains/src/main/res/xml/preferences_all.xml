@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/planner_da_entries"
+        android:entryValues="@array/planner_da_values"
+        android:key="@string/key_planner_da"
+        android:summary="@string/settings_planner_da_summary"
+        android:title="@string/settings_planner_da" />
+
+    <PreferenceCategory android:title="@string/settings_chat_title" >
+
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="prefnl"
+        android:summary="@string/settings_general_force_dutch_subtext"
+        android:title="@string/settings_general_force_dutch" />
+
+    <ListPreference
+        android:entries="@array/menu_pref"
+        android:entryValues="@array/menu_values"
+        android:key="@string/key_activity"
+        android:summary="@string/settings_general_first_screen_summary"
+        android:title="@string/settings_general_first_screen" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_chat_title" >
+        <Preference
+            android:key="login"
+            android:icon="@drawable/glogo"
+            android:title="Inscription avec Google"
+            android:summary="@string/pref_google"
+            />
+
+        <EditTextPreference
+            android:title="@string/settings_chat_pseudo"
+            android:key="prefname"/>
+
+        <CheckBoxPreference
+            android:title="@string/pref_hide_google"
+            android:summary="@string/pref_hide_google_sum"
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="hidepic"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_chat_status" >
+
+        <Preference
+            android:title="@string/pref_status_donator"
+            android:summary="@string/pref_status_donator_sum"
+            android:defaultValue="false"
+            android:key="donator"/>
+
+        <Preference
+            android:title="@string/pref_status_beta"
+            android:summary="@string/pref_status_beta_sum"
+            android:defaultValue="false"
+            android:key="beta"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
