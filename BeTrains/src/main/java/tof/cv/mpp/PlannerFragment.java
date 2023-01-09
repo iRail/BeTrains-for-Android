@@ -1,8 +1,6 @@
 package tof.cv.mpp;
 
 import android.app.Activity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -21,21 +19,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
@@ -113,33 +105,30 @@ public class PlannerFragment extends Fragment {
         if (bap.getMenu().size() == 0)
             bap.replaceMenu(R.menu.appbar);
 
-        bap.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.appbar_prev:
-                        if (getView().findViewById(R.id.progress) != null)
-                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                        mDate.add(Calendar.HOUR, -1);
-                        updateActionBar();
-                        mySearchThread(getActivity());
-                        break;
-                    case R.id.appbar_next:
-                        if (getView().findViewById(R.id.progress) != null)
-                            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                        mDate.add(Calendar.HOUR, 1);
-                        updateActionBar();
-                        mySearchThread(getActivity());
-                        break;
-                    /*case R.id.appbar_mix:
+        bap.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.appbar_prev:
+                    if (getView().findViewById(R.id.progress) != null)
                         getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                        fillStations(tvArrival.getText().toString(),
-                                tvDeparture.getText().toString());
-                        mySearchThread(getActivity());
-                        break;*/
-                }
-                return false;
+                    mDate.add(Calendar.HOUR, -1);
+                    updateActionBar();
+                    mySearchThread(getActivity());
+                    break;
+                case R.id.appbar_next:
+                    if (getView().findViewById(R.id.progress) != null)
+                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                    mDate.add(Calendar.HOUR, 1);
+                    updateActionBar();
+                    mySearchThread(getActivity());
+                    break;
+                /*case R.id.appbar_mix:
+                    getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                    fillStations(tvArrival.getText().toString(),
+                            tvDeparture.getText().toString());
+                    mySearchThread(getActivity());
+                    break;*/
             }
+            return false;
         });
         bap.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

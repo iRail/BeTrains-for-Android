@@ -17,10 +17,13 @@ import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.navigationrail.NavigationRailView;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,6 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private Fragment mContent;
     public DrawerLayout drawerLayout = null;
     NavigationView navigationView;
+    NavigationRailView navigationRail;
     String close;
     /**
      * Called when the activity is first created.
@@ -62,23 +66,27 @@ public class WelcomeActivity extends AppCompatActivity {
         //settings.edit().putBoolean("beta",true).apply();
 
         navigationView = findViewById(R.id.navigation);
-        navigationView.getMenu().clear();
 
-        drawerLayout = findViewById(R.id.drawer);
+        if (navigationView != null) {
+            navigationView.getMenu().clear();
+            drawerLayout = findViewById(R.id.drawer);
+            if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
+                navigationView.inflateMenu(R.menu.nav);
+            else
+                navigationView.inflateMenu(R.menu.nav_nogps);
 
-        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
-            navigationView.inflateMenu(R.menu.nav);
-        else
-            navigationView.inflateMenu(R.menu.nav_nogps);
+            navigationView.getMenu().getItem(0).setChecked(true);
 
-        navigationView.getMenu().getItem(0).setChecked(true);
+            if (drawerLayout != null)
+                setupDrawer();
 
-        if (drawerLayout != null)
-            setupDrawer();
-
-
-        if (navigationView != null)
             setupNavigation();
+        }
+
+
+        if (navigationRail != null)
+            setupRail();
+
 
         int pos = Integer.valueOf(settings.getString(
                 getString(R.string.key_activity), "1"));
@@ -125,49 +133,54 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    private void setupNavigation() {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(final MenuItem menuItem) {
-                if (drawerLayout != null)
-                    drawerLayout.closeDrawers();
-
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_item_plan:
-                        mContent = new PlannerFragment();
-                        break;
-                    case R.id.navigation_item_iss:
-                        mContent = new TrafficFragment();
-                        break;
-                    case R.id.navigation_item_chat:
-                        mContent = new ChatFragment();
-                        break;
-                    case R.id.navigation_item_star:
-                        mContent = new StarredFragment();
-                        break;
-                    case R.id.navigation_item_closest:
-                        mContent = new ClosestFragment();
-                        break;
-                    case R.id.navigation_item_comp:
-                        mContent = new CompensationFragment();
-                        break;
-                    case R.id.navigation_item_extras:
-                        mContent = new ExtraFragment();
-                        break;
-                    default:
-                        mContent = new PlannerFragment();
-                        close = getString(R.string.activity_label_planner);
-                        break;
-                }
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, mContent).addToBackStack("").commit();
-
-                return true;
-            }
+    private void setupRail() {
+        navigationRail.setOnItemSelectedListener(item -> {
+            navigateToItem(item);
+            return true;
         });
+    }
+
+    private void setupNavigation() {
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            if (drawerLayout != null)
+                drawerLayout.closeDrawers();
+            navigateToItem(menuItem);
+            return true;
+        });
+    }
+
+    public void navigateToItem(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_item_plan:
+                mContent = new PlannerFragment();
+                break;
+            case R.id.navigation_item_iss:
+                mContent = new TrafficFragment();
+                break;
+            case R.id.navigation_item_chat:
+                mContent = new ChatFragment();
+                break;
+            case R.id.navigation_item_star:
+                mContent = new StarredFragment();
+                break;
+            case R.id.navigation_item_closest:
+                mContent = new ClosestFragment();
+                break;
+            case R.id.navigation_item_comp:
+                mContent = new CompensationFragment();
+                break;
+            case R.id.navigation_item_extras:
+                mContent = new ExtraFragment();
+                break;
+            default:
+                mContent = new PlannerFragment();
+                close = getString(R.string.activity_label_planner);
+                break;
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, mContent).addToBackStack("").commit();
+
     }
 
     private void setupDrawer() {

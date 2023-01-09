@@ -12,14 +12,14 @@
         android:background="@color/primarycolor"
         android:orientation="horizontal" >
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title"
+            android:textColor="@color/lighttextcolor2"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="#FFF"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
             android:text="@string/closest_wait_gps"
@@ -72,6 +72,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingRight="8dp"
             android:text="@string/closest_open_gps" />
     </LinearLayout>
 

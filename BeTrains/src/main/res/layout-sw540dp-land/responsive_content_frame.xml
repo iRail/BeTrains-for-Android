@@ -4,10 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.navigationrail.NavigationRailView
-        android:id="@+id/navigation_rail"
-        android:layout_width="123dp"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation"
+        android:background="@color/navbg"
+        app:itemTextColor="@color/nav"
+        app:itemIconTint="@color/nav"
+        android:layout_width="@dimen/drawer_size"
         android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav" />
 
     <androidx.cardview.widget.CardView
@@ -22,7 +26,7 @@
 
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:theme="@style/MyToolBar"

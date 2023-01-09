@@ -85,6 +85,7 @@
 		lancement est assez lent.\nNe vous inquiétez pas, les prochaines
 		recherches seront instantanées.</string>
     <string name="closest_wait_gps">Attente du GPS</string>
+    <string name="closest_ok_gps">Location OK</string>
     <string name="closest_update_gps">Mise à jour:\n%sm</string>
     <string name="closest_downloading">Téléchargement de la liste des gares</string>
     <string name="closest_looking">Tri des résultats</string>

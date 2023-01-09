@@ -73,6 +73,7 @@
 		functie wilt gebruiken. Voor een keer zullen we de lijst moeten
 		initialiseren. De volgende keer zal dit proces sneller verlopen.</string>
     <string name="closest_wait_gps">Wachten op GPS fix.</string>
+    <string name="closest_ok_gps">Location OK</string>
     <string name="closest_update_gps">Update:\n%sm</string>
     <string name="closest_downloading">Stationslijst aan het downloaden</string>
     <string name="closest_looking">Dichtste station aan het zoeken</string>

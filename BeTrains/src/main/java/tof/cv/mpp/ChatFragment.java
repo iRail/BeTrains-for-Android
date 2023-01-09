@@ -45,6 +45,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
+
 import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.adapter.MessageViewHolder;
@@ -55,7 +56,16 @@ import tof.cv.mpp.view.LetterTileProvider;
 public class ChatFragment extends Fragment {
 
     /**
-     * Called when the activity is first created.
+     * Called when the activity is first    <com.google.android.material.floatingactionbutton.FloatingActionButton
+     * android:id="@+id/fab"
+     * android:layout_width="wrap_content"
+     * android:layout_height="wrap_content"
+     * app:backgroundTint="@color/fab"
+     * app:hideOnScroll="false"
+     * app:layout_anchor="@id/bar"
+     * app:rippleColor="#FFFF8888"
+     * app:srcCompat="@drawable/ic_fab_search"
+     * app:tint="@color/darktextcolor" /> created.
      */
     FirebaseRecyclerAdapter mFirebaseAdapter;
     private TextView mTitleText;
@@ -90,9 +100,8 @@ public class ChatFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mTitleText = (TextView) getView().findViewById(R.id.pseudo);
-        btnSend = (Button) getView().findViewById(R.id.send);
+        mTitleText = getView().findViewById(R.id.pseudo);
+        btnSend = getView().findViewById(R.id.send);
         messageTxtField = getView().findViewById(
                 R.id.yourmessage);
 
@@ -116,7 +125,7 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
                 if (posted) {
                     Toast.makeText(getActivity(),
-                            R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
+                                    R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
                             .show();
                 } else {
                     String pseudo = PreferenceManager
@@ -175,6 +184,10 @@ public class ChatFragment extends Fragment {
 
     public void update() {
         Log.e("CVE", "TRAIN: " + trainId);
+        if (trainId == null)
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.activity_label_chat);
+        else
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("" + trainId);
         final RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
 
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
@@ -347,13 +360,9 @@ public class ChatFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-        if (trainId != null)
-            mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
-                    getActivity()).getString("prefname", "Anonymous")
-                    + " - " + trainId.replace("BE.NMBS.",""));
-        else
-            mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
-                    getActivity()).getString("prefname", "Anonymous"));
+
+        mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
+                getActivity()).getString("prefname", "Anonymous"));
 
         LinearLayout mSendLayout = (LinearLayout) getView().findViewById(
                 R.id.send_layout);

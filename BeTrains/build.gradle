@@ -9,18 +9,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
+        resources {
+            excludes += ['META-INF/LICENSE.txt', 'META-INF/DEPENDENCIES']
+        }
     }
+
     signingConfigs {
         debug {
             storeFile file("key_tof162debug")
 
         }
-    }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
     }
     defaultConfig {
         applicationId "tof.cv.mpp"
@@ -39,10 +38,10 @@ android {
             zipAlignEnabled false
         }
     }
-
-    lintOptions {
+    lint {
         abortOnError false
     }
+    namespace 'tof.cv.mpp'
 
 
 }

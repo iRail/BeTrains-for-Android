@@ -1,108 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/Ly_Pannel_Sup"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:background="@color/primarycolor"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/Ly_Pannel_Sup"
-            android:layout_width="0dp"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:paddingBottom="56dp"
-            android:background="@color/primarycolor"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_start"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selectorbutton"
+            android:ellipsize="middle"
             android:gravity="center"
-            android:orientation="vertical">
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/lighttextcolor2"
+            tools:text="City START" />
 
-            <TextView
-                android:id="@+id/tv_start"
-                style="@android:style/TextAppearance.Large"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selectorbutton"
-                android:ellipsize="middle"
-                android:gravity="center"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/lighttextcolor2"
-                tools:text="City START" />
+        <TextView
+            android:id="@+id/mybuttonInvert"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selectorbutton"
+            android:gravity="center"
+            android:text=">&lt;"
+            android:textColor="@color/lighttextcolor2"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/mybuttonInvert"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selectorbutton"
-                android:gravity="center"
-                android:text=">&lt;"
-                android:textColor="@color/lighttextcolor2"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_stop"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selectorbutton"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/lighttextcolor2"
+            tools:text="City STOP" />
 
-            <TextView
-                android:id="@+id/tv_stop"
-                style="@android:style/TextAppearance.Large"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selectorbutton"
-                android:ellipsize="middle"
-                android:gravity="center"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/lighttextcolor2"
-                tools:text="City STOP" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/singlealertcard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/fab"
+            android:elevation="12dp"
+            android:transitionName="bg"
+            android:visibility="gone"
+            app:checkedIconTint="@color/darktextcolor">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/singlealertcard"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/singlealert"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="8dp"
-                android:checkable="true"
-                app:checkedIcon="@drawable/ic_alert"
-                app:checkedIconTint="@color/darktextcolor"
-                android:backgroundTint="@color/fab"
-                android:elevation="12dp"
-                android:transitionName="bg"
-                android:visibility="gone">
+                android:ellipsize="middle"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="@color/darktextcolor"
+                android:textStyle="bold"
+                tools:text="*** ALERT ****" />
+        </com.google.android.material.card.MaterialCardView>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/singlealert"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="12dp"
-                    android:ellipsize="middle"
-                    android:singleLine="true"
-                    android:textColor="@color/darktextcolor"
-                    android:textStyle="bold"
-                    tools:text="*** ALERT ****" />
-            </com.google.android.material.card.MaterialCardView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
 
-        </LinearLayout>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="86dp">
 
-        <include
-            layout="@layout/colorstrip"
-            android:layout_width="3dp"
-            android:layout_height="wrap_content" />
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bar"
+                style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:backgroundTint="@color/primarycolor"
+                app:fabAlignmentMode="center"
+                app:hideOnScroll="false"
+                app:navigationIcon="@drawable/ic_menu_time"
+                app:navigationIconTint="@color/lighttextcolor2"
+                app:theme="@style/ThemeOverlay.MaterialComponents.Dark" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/fab"
+                app:hideOnScroll="false"
+                app:layout_anchor="@id/bar"
+                app:rippleColor="#FFFF8888"
+                app:srcCompat="@drawable/ic_fab_search"
+                app:tint="@color/darktextcolor" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/bottomPart"
-            android:layout_width="3dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
             android:gravity="center">
 
+            <include layout="@layout/colorstrip" />
 
             <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
                 android:id="@+id/progress"
@@ -112,47 +147,16 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="fill_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="match_parent"
-                />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </LinearLayout>
 
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bar"
-        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:backgroundTint="@color/primarycolor"
-        app:fabAlignmentMode="center"
-        app:hideOnScroll="false"
-        app:navigationIcon="@drawable/ic_menu_time"
-        app:navigationIconTint="@color/lighttextcolor2"
-        app:theme="@style/ThemeOverlay.MaterialComponents.Dark" />
+</LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@color/fab"
-        app:layout_anchor="@id/bar"
-        app:hideOnScroll="false"
-        app:rippleColor="#FFFF8888"
-        app:srcCompat="@drawable/ic_fab_search"
-        app:tint="@color/darktextcolor" />
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

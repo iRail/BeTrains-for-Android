@@ -36,11 +36,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -219,6 +221,9 @@ public class ClosestFragment extends ListFragment {
 
     private class MyGPSLocationListener implements LocationListener {
 
+        DecimalFormat df = new DecimalFormat();
+
+
         public void onLocationChanged(final Location loc) {
             Log.v(TAG, "GPS");
             if (locationManager != null)
@@ -226,11 +231,12 @@ public class ClosestFragment extends ListFragment {
             if (loc != null) {
                 // GPS Location is considered as the best
                 // We can of course improve that.
+                df.setMaximumFractionDigits(2);
                 bestLocationFound = loc;
                 btnUpdate.setVisibility(View.VISIBLE);
                 btnUpdate.setText(getActivity().getString(
-                        R.string.closest_update_gps, loc.getAccuracy()));
-
+                        R.string.closest_update_gps, df.format(loc.getAccuracy())));
+                ((MaterialTextView)getView().findViewById(R.id.tv_title)).setText(R.string.closest_ok_gps);
                 if (!threadLock)
                     notifyList(false);
 
@@ -252,14 +258,17 @@ public class ClosestFragment extends ListFragment {
     }
 
     private class MyNetworkLocationListener implements LocationListener {
+        DecimalFormat df = new DecimalFormat();
 
         public void onLocationChanged(final Location loc) {
 
             if (loc != null && btnUpdate != null && getActivity() != null) {
+                df.setMaximumFractionDigits(2);
                 bestLocationFound = loc;
                 btnUpdate.setVisibility(View.VISIBLE);
                 btnUpdate.setText(getActivity().getString(
-                        R.string.closest_update_gps, loc.getAccuracy()));
+                        R.string.closest_update_gps, df.format(loc.getAccuracy())));
+                ((MaterialTextView)getView().findViewById(R.id.tv_title)).setText(R.string.closest_ok_gps);
                 if (!threadLock)
                     notifyList(false);
             }
@@ -483,7 +492,6 @@ public class ClosestFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "RESUME");
         String txt = "";
         locationManager = (LocationManager) getActivity().getSystemService(
                 Context.LOCATION_SERVICE);

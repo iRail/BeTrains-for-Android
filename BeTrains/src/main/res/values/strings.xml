@@ -135,6 +135,7 @@
 
     <!-- Closest station -->
     <string name="closest_wait_gps">Waiting for GPS position</string>
+    <string name="closest_ok_gps">Location OK</string>
     <string name="closest_tuto_gps">Please enable GPS to get a position.</string>
     <string name="closest_open_gps">Open GPS settings</string>
     <string name="closest_first_download">The station list download will start. This might take a wile if it is the first time.</string>
