@@ -123,11 +123,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 break;
             case 4:
                 mContent = new StarredFragment();
-                id=4;
+                id=-1;
                 break;
             case 5:
                 mContent = new ClosestFragment();
-                id=5;
+                id=4;
                 break;
             default:
                 mContent = new PlannerFragment();
@@ -138,6 +138,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, mContent).commit();
+        if(id>=0)
         navigationView.getMenu().getItem(id).setChecked(true);
 
     }

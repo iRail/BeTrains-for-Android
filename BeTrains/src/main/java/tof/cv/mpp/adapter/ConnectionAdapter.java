@@ -161,17 +161,18 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
             holder.container.removeAllViews();
             if (holder.numberoftrains != null) { //
-                if (conn.getVias() != null && conn.getVias().via != null && conn.getVias().via.size() > 1) {
+                if (conn.getVias() != null && conn.getVias().via != null && conn.getVias().via.size() >= 1) {
                     holder.numberoftrainsll.removeAllViews();
                     holder.numberoftrainsll.setVisibility(View.VISIBLE);
 
                     holder.numberoftrains.setVisibility(View.GONE);
 
                     LayoutInflater inflater = (LayoutInflater) holder.numberoftrainsll.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View v = inflater.inflate(R.layout.atrain, null);
+                    holder.numberoftrainsll.addView(v);
                     for (Via avia : conn.getVias().via) {
-                        View v = inflater.inflate(R.layout.atrain, null);
+                        v = inflater.inflate(R.layout.atrain, null);
                         holder.numberoftrainsll.addView(v);
-
                     }
 
                 } else {
