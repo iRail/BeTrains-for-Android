@@ -27,6 +27,7 @@
 
     <application
         android:name=".MyApplication"
+        android:enableOnBackInvokedCallback="true"
         android:banner="@drawable/drawerlogo"
         android:configChanges="keyboardHidden|orientation"
         android:icon="@mipmap/ic_launcher"

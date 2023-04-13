@@ -100,7 +100,7 @@
 
     <!-- Traffic issues -->
     <string name="issues_empty">No traffic issues</string>
-
+    <string name="route_planner_num_trains">Trains:</string>
     <!-- Chat -->
     <string name="chat_no_message">No messages</string>
     <string name="chat_load_messages">Load more messages</string>

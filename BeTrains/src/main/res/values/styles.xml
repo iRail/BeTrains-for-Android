@@ -28,10 +28,6 @@
         <item name="android:layout">@layout/m3_alert_dialog</item>
     </style>
 
-    <style name="MyToolBar" parent="ThemeOverlay.Material3">
-
-    </style>
-
     <style name="HomeButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">fill_parent</item>
@@ -51,7 +47,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/lighttextcolor2</item>
+        <item name="android:textColor">@color/darkblue</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -183,7 +179,8 @@
         <item name="android:textColor">@color/darkblue</item>
     </style>
 
-
-
+    <style name="MyToolBar" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
+        <item name="android:textColorPrimary">@color/lighttextcolor2</item>
+    </style>
 
 </resources>
