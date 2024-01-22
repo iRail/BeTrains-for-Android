@@ -24,7 +24,6 @@
 
     <integer name="num_cols">1</integer>
 
-    <dimen name="colorstrip_height">6dip</dimen>
     <dimen name="title_height">45dip</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>

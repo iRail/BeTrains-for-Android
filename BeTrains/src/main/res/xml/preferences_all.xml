@@ -12,7 +12,7 @@
     <PreferenceCategory android:title="@string/settings_chat_title" >
 
 
-    <CheckBoxPreference
+       <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="prefnl"
         android:summary="@string/settings_general_force_dutch_subtext"
@@ -40,7 +40,7 @@
             android:title="@string/settings_chat_pseudo"
             android:key="prefname"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:title="@string/pref_hide_google"
             android:summary="@string/pref_hide_google_sum"
             android:defaultValue="false"

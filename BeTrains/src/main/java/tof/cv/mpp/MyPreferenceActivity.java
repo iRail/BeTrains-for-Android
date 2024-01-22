@@ -53,13 +53,7 @@ import static android.content.ContentValues.TAG;
 public class MyPreferenceActivity extends PreferenceActivity implements
         OnSharedPreferenceChangeListener {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-
-        //this.getActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
     protected boolean isValidFragment(String fragmentName) {
         return true;
@@ -91,10 +85,39 @@ public class MyPreferenceActivity extends PreferenceActivity implements
             if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("beta", false))
                 getPreferenceScreen().findPreference("beta").setEnabled(false);
 
-            if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("google", false))
+            if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("google", false)){
                 getPreferenceScreen().findPreference("hidepic").setEnabled(true);
-            String pic = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("profilepic", "");
+                getPreferenceScreen().findPreference("login").setTitle(R.string.deleteaccount);
+                getPreferenceScreen().findPreference("login").setSummary(R.string.deleteaccountsum);
+            }
 
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+
+            mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+            getPreferenceScreen().findPreference("login").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    if( GoogleSignIn.getLastSignedInAccount(getContext()) == null){
+                        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                        startActivityForResult(signInIntent, RC_SIGN_IN);
+                    } else {
+                        mGoogleSignInClient.signOut();
+                        android.preference.PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("google",false)
+                                .putString("profilepic","").putString("prefname","").commit();
+                        Intent intent = getActivity().getIntent();
+                        getActivity().finish();
+                        startActivity(intent);
+                    }
+
+                    return false;
+                }
+            });
+
+
+            String pic = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("profilepic", "");
             if (pic.length() > 0) {
                 Target target = new Target() {
                     @Override
@@ -144,26 +167,6 @@ public class MyPreferenceActivity extends PreferenceActivity implements
             });
         }
 
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build();
-
-            mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-            getPreferenceScreen().findPreference("login").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, RC_SIGN_IN);
-                    return false;
-                }
-            });
-        }
 
         private void setSummary(final EditTextPreference etPref) {
 
@@ -317,25 +320,7 @@ public class MyPreferenceActivity extends PreferenceActivity implements
         }
     }
 
-    /**
-     * This fragment shows the preferences for the third header.
-     */
-    public static class Prefs3Fragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
 
-            // Can retrieve arguments from headers XML.
-            Log.i("args", "Arguments: " + getArguments());
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.activity_twitter_preferences);
-        }
-
-        protected boolean isValidFragment(String fragmentName) {
-            return true;
-        }
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,

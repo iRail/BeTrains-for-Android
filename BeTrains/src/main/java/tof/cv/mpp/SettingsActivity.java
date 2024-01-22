@@ -2,6 +2,7 @@ package tof.cv.mpp;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,6 +15,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -179,13 +184,43 @@ public class SettingsActivity extends AppCompatActivity implements
 
             if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("google", false))
                 getPreferenceScreen().findPreference("hidepic").setEnabled(true);
+
+            if (android.preference.PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("google", false)){
+                getPreferenceScreen().findPreference("hidepic").setEnabled(true);
+                getPreferenceScreen().findPreference("login").setTitle(R.string.deleteaccount);
+                getPreferenceScreen().findPreference("login").setSummary(R.string.deleteaccountsum);
+            }
+
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+
+            mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+            getPreferenceScreen().findPreference("login").setOnPreferenceClickListener(preference -> {
+                if( GoogleSignIn.getLastSignedInAccount(getContext()) == null){
+                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                    sinigninLauncher.launch(signInIntent);
+                    //startActivityForResult(signInIntent, RC_SIGN_IN);
+                }else {
+                    mGoogleSignInClient.signOut();
+                    android.preference.PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("google",false)
+                            .putString("profilepic","").putString("prefname","").commit();
+                    Intent intent = getActivity().getIntent();
+                    getActivity().finish();
+                    startActivity(intent);
+                }
+
+                return false;
+            });
+
             String pic = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("profilepic", "");
 
             if (pic.length() > 0) {
                 Target target = new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        getPreferenceScreen().findPreference("hidepic").setIcon(new BitmapDrawable(getResources(), bitmap));
+                        getPreferenceScreen().findPreference("prefname").setIcon(new BitmapDrawable(getResources(), bitmap));
                     }
 
                     @Override
@@ -231,35 +266,19 @@ public class SettingsActivity extends AppCompatActivity implements
 
         }
 
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-
-            // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-            if (requestCode == RC_SIGN_IN) {
-                // The Task returned from this call is always completed, no need to attach
-                // a listener.
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                handleSignInResult(task);
-            }
-        }
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build();
-
-            mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-            getPreferenceScreen().findPreference("login").setOnPreferenceClickListener(preference -> {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-                return false;
-            });
-        }
+        // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+        ActivityResultLauncher<Intent> sinigninLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                            handleSignInResult(task);
+                        }
+                    }
+                });
 
 
 

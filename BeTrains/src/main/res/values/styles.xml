@@ -15,7 +15,6 @@
         <item name="colorSecondary">?attr/colorPrimary</item>
         <item name="scrimBackground">@color/mtrl_scrim_color</item>
         <item name="snackbarButtonStyle">?attr/borderlessButtonStyle</item>
-        <item name="spbStyle">@style/GNowProgressBar</item>
         <item name="android:windowLightStatusBar">@bool/islightStatus</item>
         <!-- snip -->
         <item name="alertDialogTheme">@style/AppTheme.MyOldAlertDialog</item>
@@ -119,23 +118,6 @@
         <item name="colorAccent">@color/coloraccent</item>
 
     </style>
-
-
-    <style name="GNowProgressBar" parent="SmoothProgressBar">
-        <item name="spb_stroke_separator_length">0dp</item>
-        <item name="spb_sections_count">3</item>
-        <item name="spb_speed">3.4</item>
-        <item name="spb_progressiveStart_speed">3.4</item>
-        <item name="spb_progressiveStop_speed">3.4</item>
-        <item name="spb_interpolator">spb_interpolator_acceleratedecelerate</item>
-        <item name="spb_mirror_mode">false</item>
-        <item name="spb_reversed">false</item>
-        <item name="spb_gradients">true</item>
-        <item name="spb_colors">@array/belgian_colors</item>
-        <item name="spb_progressiveStart_activated">false</item>
-    </style>
-
-
 
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">

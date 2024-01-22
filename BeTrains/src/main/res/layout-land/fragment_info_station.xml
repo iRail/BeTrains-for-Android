@@ -17,17 +17,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="6dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient"
         android:gravity="center">
 
-        <include layout="@layout/colorstrip" />
 
-        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+        <!-- Linear progress indicator -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progress"
             android:layout_width="match_parent"
-            android:layout_height="12dp"
-
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:indeterminateAnimationType="contiguous"
+            app:indicatorColor="@array/belgian_colors"
             android:indeterminate="true" />
+
     </RelativeLayout>
 
     <LinearLayout

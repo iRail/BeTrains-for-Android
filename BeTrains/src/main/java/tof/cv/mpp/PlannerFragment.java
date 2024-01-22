@@ -548,7 +548,7 @@ public class PlannerFragment extends Fragment {
 
                     fillData(finalUrl);
                     if (getView().findViewById(R.id.progress) != null)
-                        getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                        getView().findViewById(R.id.progress).setVisibility(View.INVISIBLE);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

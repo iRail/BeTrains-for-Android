@@ -12,7 +12,7 @@
             android:title="@string/settings_chat_pseudo"
             android:key="prefname"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:title="@string/pref_hide_google"
             android:summary="@string/pref_hide_google_sum"
             android:defaultValue="false"

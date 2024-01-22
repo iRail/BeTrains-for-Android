@@ -176,7 +176,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
                                               if (result != null) {
                                                   currentVehicle = result.getResult();
-                                                  getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                                                  getView().findViewById(R.id.progress).setVisibility(View.INVISIBLE);
                                                   getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
                                               }
 

@@ -161,5 +161,7 @@
     <string name="settings_locale">Kies uw taal</string>
     <string name="notif_refused" >Please enable notification permission for this app</string>
     <string name="gotosettings" >Open Settings</string>
+    <string name="deleteaccount">DELETE ALL MY DATA</string>
+    <string name="deleteaccountsum">Remove my account from the app</string>
 
 </resources>

@@ -178,4 +178,6 @@
     <string name="settings_locale">Changer la langue</string>
     <string name="notif_refused" >Vous n\'avez pas autorisé les notifications pour cette application</string>
     <string name="gotosettings" >Ouvrir les paramètres</string>
+    <string name="deleteaccount">EFFACER MES DONNEES</string>
+    <string name="deleteaccountsum">Retire le compte Google de l\'application</string>
 </resources>

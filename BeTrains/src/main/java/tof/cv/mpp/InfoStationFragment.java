@@ -110,9 +110,6 @@ public class InfoStationFragment extends ListFragment {
         nextButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
 
-                // pd = ProgressDialog.show(getActivity(), "",
-                //         getString(R.string.txt_patient), true);
-
                 timestamp += (60 * 60 * 1000);
                 searchThread();
             }
@@ -120,9 +117,6 @@ public class InfoStationFragment extends ListFragment {
 
         prevButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-
-                // pd = ProgressDialog.show(getActivity(), "",
-                //         getString(R.string.txt_patient), true);
 
                 timestamp -= (60 * 60 * 1000);
                 searchThread();
@@ -202,7 +196,7 @@ public class InfoStationFragment extends ListFragment {
             @Override
             public void onCompleted(Exception e, Station result) {
                 currentStation = result;
-                getView().findViewById(R.id.progress).setVisibility(View.GONE);
+                getView().findViewById(R.id.progress).setVisibility(View.INVISIBLE);
                 // if (pd != null)
                 //     pd.dismiss();
                 if (swipeContainer != null)

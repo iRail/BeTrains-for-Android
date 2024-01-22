@@ -16,14 +16,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/lighttextcolor"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+        />
 
     <TextView
         android:id="@+id/message"
         android:maxWidth="356dp"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:textColor="@color/lighttextcolor"
