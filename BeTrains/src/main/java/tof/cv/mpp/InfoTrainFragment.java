@@ -162,7 +162,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
         if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("prefnl", false))
             lan = "NL";
 
-        final String url = "https://api.irail.be/vehicle.php/?id=" + vehicle
+        final String url = "https://api.irail.be/v1/vehicle/?id=" + vehicle
                 + "&lang=" + lan + dateTime + "&format=JSON&alerts=true";
 
         Log.e("CVE", "URL: " + url);
@@ -253,7 +253,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
                                               } else {
                                                   if (e != null) {
-                                                      Toast.makeText(getActivity(), "ERROR: "+e.getLocalizedMessage(),
+                                                      Toast.makeText(getActivity(), "ERROR: " + e.getLocalizedMessage(),
                                                               Toast.LENGTH_LONG).show();
                                                       if (getActivity() != null)
                                                           getActivity().finish();
@@ -288,6 +288,8 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                           if (currentVehicle != null && currentVehicle.message != null) {
                                                               recyclerView.setVisibility(View.GONE);
                                                               TextView tv = getView().findViewById(R.id.empty_view);
+                                                              if (tv == null)
+                                                                  return;
                                                               tv.setVisibility(View.VISIBLE);
                                                               tv.setText(currentVehicle.message);
                                                           }

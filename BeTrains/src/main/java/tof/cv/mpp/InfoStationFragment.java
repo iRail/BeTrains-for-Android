@@ -183,11 +183,11 @@ public class InfoStationFragment extends ListFragment {
 
         String url = "";
         if (id != null && id.length() > 0)
-            url = "https://api.irail.be/liveboard.php/?id="
+            url = "https://api.irail.be/v1/liveboard/?id="
                     + id + dateTime
                     + "&format=JSON&fast=true" + "&lang=" + langue + "&alerts=true";
         else
-            url = "https://api.irail.be/liveboard.php/?station="
+            url = "https://api.irail.be/v1/liveboard/?station="
                     + stationString.replace(" ", "%20") + dateTime
                     + "&format=JSON&fast=true" + "&lang=" + langue + "&alerts=true";
 

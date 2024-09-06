@@ -603,7 +603,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                         }).setCallback(new FutureCallback<TrainComposition>() {
                             @Override
                             public void onCompleted(Exception e, TrainComposition result) {
-                                if (result != null && result.composition != null) {
+                                if (result != null && result.composition != null && result.composition.segments != null && result.composition.segments.segment.size() >0) {
                                     if (result.composition.segments.segment.get(0).composition != null) {
                                         cacheComposition(co.getArrival().getVehicle(), result.composition.segments.segment.get(0).composition);
                                         displayComposition(result.composition.segments.segment.get(0).composition,

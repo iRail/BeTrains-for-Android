@@ -7,15 +7,14 @@
         app:showAsAction="always"
         app:iconTint="@color/lighttextcolor2"
         android:icon="@drawable/ic_prev"
-        android:title="@string/appbar_prev" />
+        android:title="@string/appbar_prev"
+        android:layout_alignParentRight="true"/>
     <item
         android:id="@+id/appbar_next"
         app:showAsAction="always"
         app:iconTint="@color/lighttextcolor2"
         android:icon="@drawable/ic_next"
-        android:title="@string/appbar_next" />
-
-
-
+        android:title="@string/appbar_next"
+        android:layout_alignParentRight="true"/>
 
 </menu>

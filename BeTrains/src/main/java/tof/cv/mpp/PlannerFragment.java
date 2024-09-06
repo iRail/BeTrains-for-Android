@@ -3,7 +3,6 @@ package tof.cv.mpp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -518,7 +517,7 @@ public class PlannerFragment extends Fragment {
         url = url.replace(" ", "%20");
 
 
-        url = "https://api.irail.be/connections.php?to=" + url;
+        url = "https://api.irail.be/v1/connections/?to=" + url;
         Log.e("CVE", "Search " + url);
 
         final String finalUrl = url;
