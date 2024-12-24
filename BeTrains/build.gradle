@@ -24,8 +24,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 29
         targetSdkVersion 34
-        versionCode 6652
-        versionName "4.16.1"
+        versionCode 6653
+        versionName "4.16.2"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }

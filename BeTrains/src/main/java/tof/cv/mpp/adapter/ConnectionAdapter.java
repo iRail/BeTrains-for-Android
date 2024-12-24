@@ -108,7 +108,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
 
             String delayStr = " +"
-                    + (Integer.valueOf(conn.getDeparture().getDelay()) / 60)
+                    + ( Integer.valueOf(conn.getDeparture().getDelay()) / 60)
                     + "'";
             if (!conn.getDeparture().getDelay().contentEquals("0"))
                 holder.delayD.setText(delayStr);
