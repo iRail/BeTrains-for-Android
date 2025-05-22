@@ -511,7 +511,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         TextView arrivaltime;
         ImageView occupancy;
         TextView numberoftrains;
-        LinearLayoutCompat numberoftrainsll;
+        LinearLayout numberoftrainsll;
         TextView alertText;
         LinearLayout container;
         LinearLayout lltrains;

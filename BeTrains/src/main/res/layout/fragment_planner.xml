@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,31 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Top Panel -->
         <LinearLayout
             android:id="@+id/Ly_Pannel_Sup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primarycolor"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="8dp">
+            android:paddingBottom="8dp"
+            android:gravity="center_vertical">
 
-            <TextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_start"
-                style="@android:style/TextAppearance.Large"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/selectorbutton"
                 android:ellipsize="middle"
                 android:gravity="center"
                 android:padding="8dp"
+                android:background="@drawable/selectorbutton"
                 android:singleLine="true"
                 android:textColor="@color/lighttextcolor2"
                 tools:text="City START" />
@@ -39,18 +38,18 @@
             <TextView
                 android:id="@+id/mybuttonInvert"
                 android:layout_width="48dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/selectorbutton"
                 android:gravity="center"
                 android:text=">&lt;"
                 android:textColor="@color/lighttextcolor2"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_stop"
-                style="@android:style/TextAppearance.Large"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/selectorbutton"
                 android:ellipsize="middle"
@@ -59,89 +58,106 @@
                 android:singleLine="true"
                 android:textColor="@color/lighttextcolor2"
                 tools:text="City STOP" />
-
         </LinearLayout>
 
-
-        <RelativeLayout
+        <!-- Progress Indicator -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient"
-            android:gravity="center">
+            android:visibility="invisible"
+            android:indeterminate="true"
+            app:indeterminateAnimationType="contiguous"
+            app:indicatorColor="@array/belgian_colors"
+            android:background="@drawable/gradient" />
 
-
-            <!-- Linear progress indicator -->
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"
-                app:indeterminateAnimationType="contiguous"
-                app:indicatorColor="@array/belgian_colors"
-                android:indeterminate="true" />
-
-        </RelativeLayout>
-
+        <!-- Alert Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/singlealertcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:checkable="true"
-            app:checkedIcon="@drawable/ic_alert"
-            app:checkedIconTint="@color/darktextcolor"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="8dp"
             android:backgroundTint="@color/fab"
+            android:checkable="true"
             android:elevation="12dp"
             android:transitionName="bg"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:checkedIcon="@drawable/ic_alert"
+            app:checkedIconTint="@color/darktextcolor">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/singlealert"
-                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginEnd="16dp"
                 android:padding="12dp"
                 android:ellipsize="middle"
+                android:singleLine="true"
                 android:textColor="@color/darktextcolor"
                 android:textStyle="bold"
-                android:singleLine="true"
                 tools:text="*** ALERT ****" />
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Recycler View -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </LinearLayout>
 
-
-    <com.google.android.material.bottomappbar.BottomAppBar
+    <!-- Floating Toolbar -->
+    <com.google.android.material.floatingtoolbar.FloatingToolbarLayout
         android:id="@+id/bar"
-        style="@style/Widget.Material3.BottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:backgroundTint="@color/primarycolor"
-        app:fabAlignmentMode="center"
-        app:navigationIcon="@drawable/ic_menu_time"
-        app:navigationIconTint="@color/lighttextcolor2"
-        app:theme="@style/ThemeOverlay.MaterialComponents.Dark" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/fab"
-        app:layout_anchor="@id/bar"
-        app:rippleColor="#FFFF8888"
-        app:srcCompat="@drawable/ic_fab_search"
-        app:tint="@color/darktextcolor" />
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/primarycolor"
+        app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior">
 
+        <com.google.android.material.overflow.OverflowLinearLayout
+            android:id="@+id/floating_toolbar_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:backgroundTint="@color/primarycolor">
 
+            <Button
+                android:id="@+id/appbar_prev"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_prev"
+                app:iconTint="@color/toolbariconcolor" />
+
+            <Button
+                android:id="@+id/appbar_time"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_menu_time"
+                app:iconTint="@color/toolbariconcolor" />
+
+            <Button
+                android:id="@+id/appbar_next"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_next"
+                app:iconTint="@color/toolbariconcolor" />
+
+            <Button
+                android:id="@+id/fab"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:backgroundTint="@color/fab"
+                app:icon="@drawable/ic_fab_search"
+                app:iconTint="@color/darktextcolor"
+                app:rippleColor="#FFFF8888" />
+        </com.google.android.material.overflow.OverflowLinearLayout>
+    </com.google.android.material.floatingtoolbar.FloatingToolbarLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

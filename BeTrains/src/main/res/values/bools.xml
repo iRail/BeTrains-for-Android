@@ -6,5 +6,5 @@
     <bool name="sncb">true</bool>
     <bool name="navetteurs">false</bool>
     <bool name="tablet_layout">false</bool>
-    <bool name="islightStatus">true</bool>
+    <bool name="islightStatus">false</bool>
 </resources>

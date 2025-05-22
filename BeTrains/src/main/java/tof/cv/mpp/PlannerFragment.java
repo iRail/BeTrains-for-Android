@@ -18,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +39,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -47,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
@@ -98,43 +103,6 @@ public class PlannerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setAllBtnListener();
-
-        BottomAppBar bap = getActivity().findViewById(R.id.bar);
-
-        if (bap.getMenu().size() == 0)
-            bap.replaceMenu(R.menu.appbar);
-
-        bap.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.appbar_prev:
-                    if (getView().findViewById(R.id.progress) != null)
-                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                    mDate.add(Calendar.HOUR, -1);
-                    updateActionBar();
-                    mySearchThread(getActivity());
-                    break;
-                case R.id.appbar_next:
-                    if (getView().findViewById(R.id.progress) != null)
-                        getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                    mDate.add(Calendar.HOUR, 1);
-                    updateActionBar();
-                    mySearchThread(getActivity());
-                    break;
-                /*case R.id.appbar_mix:
-                    getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                    fillStations(tvArrival.getText().toString(),
-                            tvDeparture.getText().toString());
-                    mySearchThread(getActivity());
-                    break;*/
-            }
-            return false;
-        });
-        bap.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDateTimeDialog();
-            }
-        });
     }
 
     @Override
@@ -214,7 +182,7 @@ public class PlannerFragment extends Fragment {
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
 
-        ((BottomAppBar) getActivity().findViewById(R.id.bar)).setHideOnScroll(true);
+        // ((BottomAppBar) getActivity().findViewById(R.id.bar)).setHideOnScroll(true);
     }
 
     public void doSearch() {
@@ -234,18 +202,13 @@ public class PlannerFragment extends Fragment {
     }
 
     private void setAllBtnListener() {
-        TextView btnInvert = requireView().findViewById(R.id.mybuttonInvert);
-        btnInvert.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                fillStations(tvArrival.getText().toString(),
-                        tvDeparture.getText().toString());
-            }
-        });
+        MaterialTextView btnInvert = requireView().findViewById(R.id.mybuttonInvert);
+        btnInvert.setOnClickListener(v -> fillStations(tvArrival.getText().toString(),
+                tvDeparture.getText().toString()));
 
         tvDeparture.setOnClickListener(v -> {
             Intent i = new Intent(getActivity(),
                     StationPickerActivity.class);
-
             departureActivityResultLauncher.launch(i);
 
         });
@@ -257,9 +220,29 @@ public class PlannerFragment extends Fragment {
             arrivalActivityLauncher.launch(i);
         });
 
-        FloatingActionButton fab = getActivity().findViewById(
+        Button fab = getActivity().findViewById(
                 R.id.fab);
         fab.setOnClickListener(v -> doSearch());
+
+        getView().findViewById(R.id.appbar_prev).setOnClickListener(v -> {
+            if (getView().findViewById(R.id.progress) != null)
+                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+            mDate.add(Calendar.HOUR, -1);
+            updateActionBar();
+            mySearchThread(getActivity());
+        });
+
+        getView().findViewById(R.id.appbar_next).setOnClickListener(v -> {
+            if (getView().findViewById(R.id.progress) != null)
+                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+            mDate.add(Calendar.HOUR, 1);
+            updateActionBar();
+            mySearchThread(getActivity());
+        });
+
+        getView().findViewById(R.id.appbar_time).setOnClickListener(v -> {
+            showDateTimeDialog();
+        });
 
 
     }
@@ -295,10 +278,10 @@ public class PlannerFragment extends Fragment {
                 startActivity(new Intent(getActivity(), StarredActivity.class));
                 return true;
             case (MENU_PREF):
-                    startActivity(new Intent(getActivity(),
-                            MyPreferenceActivity.class).putExtra(
-                            PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-                            Prefs2Fragment.class.getName()));
+                startActivity(new Intent(getActivity(),
+                        MyPreferenceActivity.class).putExtra(
+                        PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                        Prefs2Fragment.class.getName()));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -306,7 +289,7 @@ public class PlannerFragment extends Fragment {
     }
 
     private void fillData(final String url) {
-        BottomAppBar bap = getActivity().findViewById(R.id.bar);
+        // BottomAppBar bap = getActivity().findViewById(R.id.bar);
 
         if (allConnections != null && allConnections.connection != null) {
             ArrayList<Alert> singleAlert = checkSingleAlert(allConnections);
@@ -384,13 +367,13 @@ public class PlannerFragment extends Fragment {
         Linkify.addLinks(s, Linkify.ALL);
 
         String finalHtml = html;
-        ((MaterialCardView)getView().findViewById(R.id.singlealertcard)).setChecked(true);
+        ((MaterialCardView) getView().findViewById(R.id.singlealertcard)).setChecked(true);
         getView().findViewById(R.id.singlealertcard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog d = new MaterialAlertDialogBuilder(getContext())
                         .setMessage(Html.fromHtml(finalHtml))
-                        .setPositiveButton(R.string.ok,null ).create();
+                        .setPositiveButton(R.string.ok, null).create();
                 d.show();
             }
         });
@@ -560,13 +543,7 @@ public class PlannerFragment extends Fragment {
 
     private void showDateTimeDialog() {
 
-        final DateTimePicker mDateTimeDialog = new DateTimePicker(getActivity(), this);
-        final String timeS = android.provider.Settings.System.getString(
-                getActivity().getContentResolver(),
-                android.provider.Settings.System.TIME_12_24);
-        final boolean is24h = !(timeS == null || timeS.equals("12"));
-        mDateTimeDialog.setIs24HourView(is24h);
-        mDateTimeDialog.show();
+        DateTimePicker.show(requireContext(), this);
     }
 
     private void updateActionBar() {

@@ -21,6 +21,8 @@
 
     <color name="mybg">@android:color/system_accent1_1000</color>
 
+    <color name="toolbariconcolor">@android:color/system_accent2_200</color>
+
     <color name="list_bg">@android:color/system_accent1_1000</color>
     <color name="list_bg_ripple">@android:color/system_accent2_700</color>
 

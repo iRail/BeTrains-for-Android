@@ -23,9 +23,9 @@
             />
 
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tv_start"
-            style="@android:style/TextAppearance.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selectorbutton"
@@ -46,9 +46,9 @@
             android:textColor="@color/lighttextcolor2"
             android:textStyle="bold" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tv_stop"
-            style="@android:style/TextAppearance.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selectorbutton"
@@ -98,29 +98,58 @@
             android:layout_width="match_parent"
             android:layout_height="86dp">
 
-            <com.google.android.material.bottomappbar.BottomAppBar
-                android:id="@+id/bar"
-                style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:backgroundTint="@color/primarycolor"
-                app:fabAlignmentMode="center"
-                app:hideOnScroll="false"
-                app:navigationIcon="@drawable/ic_menu_time"
-                app:navigationIconTint="@color/lighttextcolor2"
-                app:theme="@style/ThemeOverlay.MaterialComponents.Dark" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/fab"
-                app:hideOnScroll="false"
-                app:layout_anchor="@id/bar"
-                app:rippleColor="#FFFF8888"
-                app:srcCompat="@drawable/ic_fab_search"
-                app:tint="@color/darktextcolor" />
+                <!-- floating toolbar sample content -->
+                <LinearLayout
+                    android:id="@+id/floating_toolbar_child"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/primarycolor"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/appbar_prev"
+                        app:iconTint="@color/toolbariconcolor"
+                        style="?attr/materialIconButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_prev"
+                        app:layout_overflowIcon="@drawable/ic_prev" />
+
+                    <Button
+                        android:id="@+id/appbar_time"
+
+                        style="?attr/materialIconButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:iconTint="@color/toolbariconcolor"
+                        app:icon="@drawable/ic_menu_time"
+                        app:layout_overflowIcon="@drawable/ic_menu_time" />
+
+                    <Button
+                        android:id="@+id/appbar_next"
+                        style="?attr/materialIconButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_next"
+                        app:iconTint="@color/toolbariconcolor"
+                        app:layout_overflowIcon="@drawable/ic_next"
+                        app:layout_overflowText="@string/appbar_next" />
+
+                    <Button
+                        style="?attr/materialIconButtonStyle"
+                        android:id="@+id/fab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/fab"
+                        app:icon="@drawable/ic_fab_search"
+                        app:iconTint="@color/darktextcolor"
+                        app:rippleColor="#FFFF8888"
+                        />
+
+                </LinearLayout>
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 

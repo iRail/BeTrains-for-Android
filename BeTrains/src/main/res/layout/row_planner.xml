@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,8 +10,8 @@
     android:focusable="true"
     android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingTop="16dp"
     android:paddingRight="16dp"
+    android:paddingTop="16dp"
     android:transitionName="bg">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -25,7 +25,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/departtime"
@@ -52,14 +53,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="normal"
-            tool:text="xxhxx" />
+            tools:text="xxhxx" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_weight="1"
             android:gravity="end"
-            android:layout_weight="1">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/arrivaltime"
@@ -98,8 +99,7 @@
             android:gravity="center"
             android:minWidth="24dp"
             android:textColor="@color/lighttextcolor2"
-            tool:text="*" />
-
+            tools:text="*" />
 
         <TextView
             android:id="@+id/numberoftrains"
@@ -107,9 +107,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tool:text="Train" />
+            tools:text="Train" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/numberoftrainsll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -125,10 +125,9 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/circle"
             android:gravity="center"
-
             android:singleLine="true"
             android:textColor="@color/lighttextcolor2"
-            tool:text="X" />
+            tools:text="X" />
     </LinearLayout>
 
     <LinearLayout
@@ -147,7 +146,6 @@
         android:textColor="@android:color/holo_red_dark"
         android:visibility="gone" />
 
-
     <ImageView
         android:id="@+id/occupancy"
         android:layout_width="24dp"
@@ -159,10 +157,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/card_bg"
         android:elevation="12dp"
         android:transitionName="bg"
@@ -182,13 +180,12 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:textStyle="bold"
-                tool:text="departure" />
+                tools:text="departure" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
-
 
             <LinearLayout
                 android:id="@+id/lltrains"
@@ -199,7 +196,6 @@
                 <include layout="@layout/row_connection_detail" />
             </LinearLayout>
 
-
             <TextView
                 android:id="@+id/arrivalname"
                 style="@style/TextElementMid"
@@ -209,9 +205,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:textStyle="bold"
-                tool:text="arrival" />
+                tools:text="arrival" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
 </LinearLayout>

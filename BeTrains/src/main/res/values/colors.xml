@@ -29,6 +29,8 @@
     <color name="lighttextcolor2">@android:color/white</color>
     <color name="darktextcolor">@android:color/white</color>
 
+    <color name="toolbariconcolor">@android:color/white</color>
+
 
     <color name="buttons">#cc000000</color>
 
