@@ -24,8 +24,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 29
         targetSdkVersion 35
-        versionCode 6653
-        versionName "4.16.2"
+        versionCode 6655
+        versionName "4.17.001"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -66,39 +66,39 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.4'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:4.0.0'
     }
 }
 dependencies {
 
-    implementation 'androidx.work:work-runtime:2.10.1'
+    implementation 'androidx.work:work-runtime:2.10.2'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
-    implementation 'com.google.android.material:material:1.14.0-alpha01'
+    implementation 'com.google.android.material:material:1.14.0-alpha03'
 
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
 
     implementation "com.google.android.gms:play-services-maps:19.2.0"
     implementation "com.google.android.gms:play-services-location:21.3.0"
-    implementation "com.google.android.gms:play-services-auth:21.3.0"
+    implementation "com.google.android.gms:play-services-auth:21.4.0"
 
-    implementation 'com.google.firebase:firebase-database:21.0.0'
+    implementation 'com.google.firebase:firebase-database:22.0.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:23.2.1'
-    implementation platform('com.google.firebase:firebase-bom:33.14.0')
+    implementation 'com.google.firebase:firebase-auth:24.0.0'
+    implementation platform('com.google.firebase:firebase-bom:34.0.0')
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
 
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.google.code.gson:gson:2.13.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'com.koushikdutta.ion:ion:3.1.0'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation "androidx.preference:preference:1.2.1"

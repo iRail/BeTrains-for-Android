@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment"
-    android:name="tof.cv.mpp.InfoStationFragment"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-</fragment>
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="tof.cv.mpp.InfoStationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

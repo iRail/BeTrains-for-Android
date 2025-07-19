@@ -16,7 +16,11 @@ public class Via {
     }
 
 	public String getTimeBetween() {
-		return timeBetween;
+		long durationSeconds = Math.abs(Long.parseLong(departure.getTime()) - Long.parseLong(arrival.getTime()));
+		long minutes = durationSeconds / 60;
+		return minutes + "'";
+
+
 	}
 
 	public String getName() {

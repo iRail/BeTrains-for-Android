@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -108,7 +109,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
 
             String delayStr = " +"
-                    + ( Integer.valueOf(conn.getDeparture().getDelay()) / 60)
+                    + (Integer.valueOf(conn.getDeparture().getDelay()) / 60)
                     + "'";
             if (!conn.getDeparture().getDelay().contentEquals("0"))
                 holder.delayD.setText(delayStr);
@@ -201,23 +202,13 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             if (conn.getVias() != null && conn.getVias().via != null)
                 for (final Via aVia : conn.getVias().via) {
                     v = inflater.inflate(R.layout.row_via_station, null);
-                    v.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startStationInfoActivity(aVia.getDeparture().getStation(), aVia.getArrival().getTime(), aVia.getStationInfo().getId());
-                        }
-                    });
+                    v.setOnClickListener(view -> startStationInfoActivity(aVia.getDeparture().getStation(), aVia.getArrival().getTime(), aVia.getStationInfo().getId()));
 
                     holder.lltrains.addView(v);
 
 
                     v = inflater.inflate(R.layout.row_connection_detail, null);
-                    v.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startTrainInfoActivity(aVia.getDeparture().getVehicle());
-                        }
-                    });
+                    v.setOnClickListener(view -> startTrainInfoActivity(aVia.getDeparture().getVehicle()));
                     holder.lltrains.addView(v);
                 }
 
@@ -603,7 +594,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                         }).setCallback(new FutureCallback<TrainComposition>() {
                             @Override
                             public void onCompleted(Exception e, TrainComposition result) {
-                                if (result != null && result.composition != null && result.composition.segments != null && result.composition.segments.segment.size() >0) {
+                                if (result != null && result.composition != null && result.composition.segments != null && result.composition.segments.segment.size() > 0) {
                                     if (result.composition.segments.segment.get(0).composition != null) {
                                         cacheComposition(co.getArrival().getVehicle(), result.composition.segments.segment.get(0).composition);
                                         displayComposition(result.composition.segments.segment.get(0).composition,
@@ -655,16 +646,15 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         ((TextView) stationRow.findViewById(R.id.tv_station))
                 .setText(aVia.getName());
 
-        ((TextView) stationRow.findViewById(R.id.tv_duration))
-                .setText("("
-                        + Utils.formatDate(aVia.getTimeBetween(),
-                        true, false) + ")");
+        if (aVia.getTimeBetween() != null)
+            ((TextView) stationRow.findViewById(R.id.tv_duration))
+                    .setText("("+ aVia.getTimeBetween()+ ")");
 
     }
 
     private void displayComposition(TrainComposition.Composition.Segments.Segment.SegmentComposition composition,
                                     String name, View v, Via aVia, long prevtime) {
-        
+
         if (v == null || v.findViewById(R.id.train_name) == null) {
             return;
         }
@@ -707,7 +697,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 return;
             }
         }
-        
+
         try {
             MaterialType type = composition.units.
                     unit.get(0).materialType;
