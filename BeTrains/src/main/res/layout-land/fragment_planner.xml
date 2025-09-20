@@ -105,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:backgroundTint="@color/primarycolor"
                     android:orientation="horizontal">
 
@@ -112,16 +113,15 @@
                         android:id="@+id/appbar_prev"
                         app:iconTint="@color/toolbariconcolor"
                         style="?attr/materialIconButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="52dp"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_prev"
                         app:layout_overflowIcon="@drawable/ic_prev" />
 
                     <Button
                         android:id="@+id/appbar_time"
-
                         style="?attr/materialIconButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="52dp"
                         android:layout_height="wrap_content"
                         app:iconTint="@color/toolbariconcolor"
                         app:icon="@drawable/ic_menu_time"
@@ -130,23 +130,23 @@
                     <Button
                         android:id="@+id/appbar_next"
                         style="?attr/materialIconButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="52dp"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_next"
                         app:iconTint="@color/toolbariconcolor"
                         app:layout_overflowIcon="@drawable/ic_next"
                         app:layout_overflowText="@string/appbar_next" />
 
-                    <Button
-                        style="?attr/materialIconButtonStyle"
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fab"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:elevation="4dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_fab_search"
+                        app:tint="@color/darktextcolor"
                         android:backgroundTint="@color/fab"
-                        app:icon="@drawable/ic_fab_search"
-                        app:iconTint="@color/darktextcolor"
-                        app:rippleColor="#FFFF8888"
-                        />
+                        app:rippleColor="#FFFF8888" />
 
                 </LinearLayout>
 

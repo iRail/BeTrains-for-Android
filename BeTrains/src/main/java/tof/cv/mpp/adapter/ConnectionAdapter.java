@@ -109,7 +109,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
 
             String delayStr = " +"
-                    + (Integer.valueOf(conn.getDeparture().getDelay()) / 60)
+                    + Math.abs((Integer.valueOf(conn.getDeparture().getDelay()) / 60))
                     + "'";
             if (!conn.getDeparture().getDelay().contentEquals("0"))
                 holder.delayD.setText(delayStr);
@@ -117,7 +117,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 holder.delayD.setText("");
 
             delayStr = " +"
-                    + (Integer.valueOf(conn.getArrival().getDelay()) / 60)
+                    + Math.abs((Integer.valueOf(conn.getArrival().getDelay()) / 60))
                     + "'";
             if (!conn.getArrival().getDelay().contentEquals("0"))
                 holder.delayA.setText(delayStr);
@@ -551,18 +551,22 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                                     @Override
                                     public void onCompleted(Exception e, TrainComposition result) {
                                         // Log.e("CVE", "Ion " + result);
-                                        if (result != null && result.composition != null) {
-                                            if (result.composition.segments.segment.get(0).composition != null) {
-                                                //Log.e("CVE", "ADDDD");
-                                                cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);
-                                                displayComposition(result.composition.segments.segment.get(0).composition,
+                                        try {
+                                            if (result != null && result.composition != null) {
+                                                if (result.composition.segments.segment.get(0).composition != null) {
+                                                    //Log.e("CVE", "ADDDD");
+                                                    cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);
+                                                    displayComposition(result.composition.segments.segment.get(0).composition,
+                                                            aVia.getVehicle(),
+                                                            lltrains.getChildAt(position), aVia, prevTimeFinal);
+                                                }
+                                            } else
+                                                displayComposition(null,
                                                         aVia.getVehicle(),
                                                         lltrains.getChildAt(position), aVia, prevTimeFinal);
-                                            }
-                                        } else
-                                            displayComposition(null,
-                                                    aVia.getVehicle(),
-                                                    lltrains.getChildAt(position), aVia, prevTimeFinal);
+                                        } catch (Exception ex) {
+
+                                        }
                                     }
                                 });
                     else {

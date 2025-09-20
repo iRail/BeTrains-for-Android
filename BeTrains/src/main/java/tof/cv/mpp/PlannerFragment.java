@@ -220,7 +220,7 @@ public class PlannerFragment extends Fragment {
             arrivalActivityLauncher.launch(i);
         });
 
-        Button fab = getActivity().findViewById(
+        FloatingActionButton fab = getActivity().findViewById(
                 R.id.fab);
         fab.setOnClickListener(v -> doSearch());
 
