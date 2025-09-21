@@ -552,7 +552,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                                     public void onCompleted(Exception e, TrainComposition result) {
                                         // Log.e("CVE", "Ion " + result);
                                         try {
-                                            if (result != null && result.composition != null) {
+                                            if (result != null && result.composition != null && !result.composition.segments.segment.isEmpty()) {
                                                 if (result.composition.segments.segment.get(0).composition != null) {
                                                     //Log.e("CVE", "ADDDD");
                                                     cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);

@@ -196,11 +196,10 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                   double minLon = 180;
                                                   double maxLon = 0;
                                                   double delta = 0.05;
-
-                                                  boolean trainRunning = true;
-
                                                   myMap.clear();
+
                                                   try {
+
                                                       for (Vehicle.VehicleStop aStop : currentVehicle.getVehicleStops().getVehicleStop()) {
 
                                                           myMap.addMarker(new MarkerOptions()
@@ -216,7 +215,7 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
                                                               rectOptionsTranspa.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
                                                           } else {
                                                               rectOptionsTranspa.add(new LatLng(aStop.getStationInfo().getLocationY(), aStop.getStationInfo().getLocationX()));
-                                                              trainRunning = false;
+
                                                           }
 
 
@@ -231,20 +230,36 @@ public class InfoTrainFragment extends Fragment implements OnMapReadyCallback {
 
                                                           if (minLon > aStop.getStationInfo().getLocationX())
                                                               minLon = aStop.getStationInfo().getLocationX();
+
+
                                                       }
 
-                                                      myMap.addPolyline(rectOptions.color(Color.rgb(0, 0, 255)));
 
+                                                      myMap.addPolyline(rectOptions.color(Color.rgb(0, 0, 255)));
                                                       myMap.addPolyline(rectOptionsTranspa.color(Color.rgb(150, 150, 150)));
 
                                                       LatLngBounds bounds = new LatLngBounds(
                                                               new LatLng(minLat - delta, minLon - delta), new LatLng(maxLat + delta, maxLon + delta));
 
+
                                                       myMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
 
-                                                      //myMap.addMarker(new MarkerOptions()
-                                                      //        .position(new LatLng(currentVehicle.getVehicleInfo().locationY,currentVehicle.getVehicleInfo().locationX))
-                                                      //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                                                      /*
+                                                      LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                                      Log.i("CVE","minLat "+minLat);
+                                                      Log.i("CVE","minLon "+minLon);
+                                                      Log.i("CVE","maxLat "+maxLat);
+                                                      Log.i("CVE","maxLon "+maxLon);
+
+                                                      //the include method will calculate the min and max bound.
+                                                      builder.include(new LatLng(minLat, minLon));
+                                                      builder.include(new LatLng(maxLat, maxLon));
+
+                                                      final LatLngBounds bounds = builder.build();
+                                                      myMap.setLatLngBoundsForCameraTarget(bounds);
+*/
+
+
                                                   } catch (Exception e1) {
                                                       //map crashing, probably custom ROM
                                                       e1.printStackTrace();

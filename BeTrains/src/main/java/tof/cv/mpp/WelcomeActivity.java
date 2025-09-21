@@ -111,35 +111,35 @@ public class WelcomeActivity extends AppCompatActivity {
         switch (pos) {
             case 1:
                 mContent = new PlannerFragment();
-                id=0;
+                id = 0;
                 break;
             case 2:
                 mContent = new TrafficFragment();
-                id=1;
+                id = 1;
                 break;
             case 3:
                 mContent = new ChatFragment();
-                id=2;
+                id = 2;
                 break;
             case 4:
                 mContent = new StarredFragment();
-                id=-1;
+                id = -1;
                 break;
             case 5:
                 mContent = new ClosestFragment();
-                id=4;
+                id = 4;
                 break;
             default:
                 mContent = new PlannerFragment();
-                id=0;
+                id = 0;
                 close = getString(R.string.activity_label_planner);
                 break;
         }
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, mContent).commit();
-        if(id>=0)
-        navigationView.getMenu().getItem(id).setChecked(true);
+        if (id >= 0)
+            navigationView.getMenu().getItem(id).setChecked(true);
 
     }
 
@@ -359,17 +359,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    public void onPlusClick(View v) {
-        String url = "https://plus.google.com/b/108315424589085456181/108315424589085456181/posts";
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
-    }
 
     public void onMailClick(View v) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"christophe.versieux@gmail.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"christophe.versieux+betrains@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android");
         startActivity(Intent.createChooser(intent, "Mail"));
     }

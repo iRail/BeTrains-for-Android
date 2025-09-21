@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/list_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -77,6 +78,7 @@
         <ImageButton
             android:id="@+id/Button_next"
             android:layout_width="48dp"
+            app:tint="@color/lighttextcolor2"
             android:textColor="@color/lighttextcolor2"
             android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackground"

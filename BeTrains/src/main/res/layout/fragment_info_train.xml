@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:map="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
+    android:background="@color/list_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -57,9 +58,8 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     map:cameraTargetLat="50.5039"
                     map:cameraTargetLng="4.4699"
-                    map:cameraZoom="13"
-                    map:liteMode="true"
-                    map:mapType="satellite" />
+                    map:cameraZoom="7"
+                    map:mapType="terrain" />
 
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

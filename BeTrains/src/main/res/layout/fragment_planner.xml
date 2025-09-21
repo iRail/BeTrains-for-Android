@@ -128,6 +128,7 @@
                 android:id="@+id/bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/primarycolor"
                 android:elevation="4dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_margin="16dp"
@@ -140,19 +141,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:backgroundTint="@color/primarycolor">
+                    android:gravity="center_vertical">
 
                     <Button
                         android:id="@+id/appbar_prev"
                         style="?attr/materialIconButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@null"
                         app:icon="@drawable/ic_prev"
                         app:iconTint="@color/toolbariconcolor" />
 
                     <Button
                         android:id="@+id/appbar_time"
+                        android:background="@null"
                         style="?attr/materialIconButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,6 +165,7 @@
                         android:id="@+id/appbar_next"
                         style="?attr/materialIconButtonStyle"
                         android:layout_width="wrap_content"
+                        android:background="@null"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_next"
                         app:iconTint="@color/toolbariconcolor" />
