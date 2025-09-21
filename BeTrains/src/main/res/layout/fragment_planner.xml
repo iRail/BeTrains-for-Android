@@ -148,13 +148,13 @@
                         style="?attr/materialIconButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
+                        android:backgroundTint="@color/primarycolor"
                         app:icon="@drawable/ic_prev"
                         app:iconTint="@color/toolbariconcolor" />
 
                     <Button
                         android:id="@+id/appbar_time"
-                        android:background="@null"
+                        android:backgroundTint="@color/primarycolor"
                         style="?attr/materialIconButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                         android:id="@+id/appbar_next"
                         style="?attr/materialIconButtonStyle"
                         android:layout_width="wrap_content"
-                        android:background="@null"
+                        android:backgroundTint="@color/primarycolor"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_next"
                         app:iconTint="@color/toolbariconcolor" />

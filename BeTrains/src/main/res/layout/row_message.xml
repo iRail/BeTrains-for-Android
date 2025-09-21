@@ -1,102 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingRight="8dp"
-    android:paddingBottom="8dp">
+    android:paddingVertical="12dp"
+    android:paddingHorizontal="16dp"
+    android:foreground="?attr/selectableItemBackgroundBorderless">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <!-- Profile picture -->
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginRight="8dp"
-        app:civ_border_color="#FFF"
-        app:civ_border_width="2dp" />
+        android:layout_marginEnd="12dp"
+        app:civ_border_color="?attr/colorPrimary"
+        app:civ_border_width="1.5dp"
+/>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <!-- Message container -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/nickname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/darkblue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/trainid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dip"
-                android:textColor="@color/darkblue"
-                android:textStyle="italic" />
-        </LinearLayout>
+        android:layout_weight="1"
+        android:minHeight="48dp"
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/donator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="8dp"
-                android:text="@string/pref_status_donator"
-                android:textColor="@color/darkblue"
-                android:textSize="11sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/beta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="8dp"
-                android:text="@string/pref_status_beta"
-                android:textColor="@color/darkblue"
-                android:textSize="11sp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/messagebody"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="2dip"
-            android:autoLink="web"
-            android:textColor="@color/darkblue"
-            tool:text="BODY" />
-
-        <ImageView
-            android:contentDescription="IMAGE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:id="@+id/image"/>
+            android:orientation="vertical"
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/darkblue"
-            android:textSize="11sp" />
+            <!-- Header row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                    android:textColor="?attr/colorOnSurface"
+                    tools:text="Username" />
+
+                <TextView
+                    android:id="@+id/trainid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="italic"
+                    tools:text="T42" />
+            </LinearLayout>
+
+            <!-- Status labels -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/donator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/pref_status_donator"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                    android:textColor="?attr/colorTertiary"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/beta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/pref_status_beta"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                    android:textColor="?attr/colorTertiary"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Message body -->
+            <TextView
+                android:id="@+id/messagebody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:autoLink="web"
+                android:lineSpacingExtra="2dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                android:textColor="?attr/colorOnSurface"
+                tools:text="This is a chat message with expressive Material styling." />
+
+            <!-- Attached image -->
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone" />
+
+            <!-- Timestamp -->
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="17:04" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 </LinearLayout>

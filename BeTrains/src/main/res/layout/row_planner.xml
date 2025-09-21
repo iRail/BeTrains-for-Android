@@ -160,6 +160,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
+        app:cardCornerRadius="25dp"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/card_bg"
         android:elevation="12dp"

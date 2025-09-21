@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:padding="16dp"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical" >
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    style="@style/Widget.Material3.CardView.Elevated"
+    android:strokeWidth="1"
+    android:strokeColor="?attr/colorOutline">
 
-    <TextView
-        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-        android:id="@+id/listtitle"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:paddingBottom="8dp"
-        android:textColor="@color/lighttextcolor" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:ellipsize="marquee"
-        android:textColor="@color/lighttextcolor"
-        android:autoLink="web"/>
+        <TextView
+            android:id="@+id/listtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TITLE"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textColor="?attr/colorOnSurface"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:letterSpacing="0.01"
+            android:paddingBottom="8dp" />
 
-    <TextView
-        android:id="@+id/listpubdate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/lighttextcolor"
-        android:layout_marginTop="8dp"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem Ipsum"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:lineSpacingExtra="2dp"
+            android:autoLink="web"
+            android:paddingBottom="12dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/listpubdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="17/09/2025 16:04"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+            android:textColor="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -70,7 +71,7 @@ public class ChatFragment extends Fragment {
     FirebaseRecyclerAdapter mFirebaseAdapter;
     private TextView mTitleText;
     private Button btnSend;
-    private CoolEditText messageTxtField;
+    private TextInputEditText messageTxtField;
     private final String TAG = "MessagesTrain.java";
     private boolean posted = false;
     String trainId;

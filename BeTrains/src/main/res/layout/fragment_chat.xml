@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center"
     xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/list_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/pseudo"
@@ -21,45 +21,66 @@
         android:textColor="@color/lighttextcolor2"
         android:textStyle="bold" />
 
-
     <include layout="@layout/colorstrip" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="6dip"
-        android:paddingRight="6dip"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
         android:scrollbars="vertical" />
 
     <TextView
         android:id="@+id/emptychat"
         style="@style/TextElement"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="match_parent"
         android:text="@string/loading" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/send_layout"
-        android:layout_width="fill_parent"
-        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:padding="4dp"
+        android:background="@color/primarycolor"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
-        <tof.cv.mpp.view.CoolEditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/yourmessage"
-            android:layout_width="0dip"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/message_input_layout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/yourmessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSend"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLines="4"
+                android:scrollHorizontally="false" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/send"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chat_send" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:minWidth="56dp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_send"
+            app:iconGravity="textStart"
+            app:iconTint="?attr/colorOnPrimary" />
     </LinearLayout>
 </LinearLayout>

@@ -1,9 +1,7 @@
 package tof.cv.mpp.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.drm.DrmStore;
 import android.net.Uri;
 import android.provider.Settings;
 import android.text.Html;
@@ -11,8 +9,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,90 +23,87 @@ import java.util.Date;
 import tof.cv.mpp.R;
 import tof.cv.mpp.bo.Perturbations;
 
+public class TrafficAdapter extends RecyclerView.Adapter<TrafficAdapter.ViewHolder> {
 
-public class TrafficAdapter extends ArrayAdapter<Perturbations.Perturbation> {
+    private final Context context;
+    private final ArrayList<Perturbations.Perturbation> items;
+    private final LayoutInflater inflater;
 
-    private LayoutInflater myLayoutInflater;
-    ArrayList<Perturbations.Perturbation> items;
-    Activity c;
-
-    public TrafficAdapter(Activity context, int textViewResourceId, Perturbations list, LayoutInflater layoutInflater) {
-        super(context, textViewResourceId, list.disturbance);
-        this.myLayoutInflater = layoutInflater;
+    public TrafficAdapter(Context context, Perturbations list) {
+        this.context = context;
         this.items = list.disturbance;
-        this.c = context;
+        this.inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.row_rss, parent, false);
+        return new ViewHolder(view);
+    }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        // return super.getView(position, convertView, parent);
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Perturbations.Perturbation item = items.get(position);
 
-        View row = convertView;
+        holder.listTitle.setText(item.title);
 
-        if (row == null) {
-            row = myLayoutInflater.inflate(R.layout.row_rss, parent, false);
-        }
+        Date d = new Date(item.timestamp * 1000);
+        String pubDate = formatDate(d, true);
+        holder.listPubdate.setText(pubDate);
 
-        row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(items.get(position).link));
-                    c.startActivity(i);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        holder.message.setText(Html.fromHtml(item.description));
+
+        holder.itemView.setOnClickListener(v -> {
+            try {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(item.link));
+                context.startActivity(i);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-
-        TextView listTitle = row.findViewById(R.id.listtitle);
-        listTitle.setText(item.title);
-
-        TextView listPubdate = row
-                .findViewById(R.id.listpubdate);
-
-        Date d = new Date();
-        d.setTime(item.timestamp*1000);
-        String pubDate = formatDate(d, true);
-        //Todo: Parse the text date to display in user locale.
-        listPubdate.setText(pubDate);
-
-        TextView message = (TextView) row
-                .findViewById(R.id.message);
-        message.setText(Html.fromHtml(item.description));
-        return row;
     }
 
-    public String formatDate(Date date, boolean withTime) {
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView listTitle;
+        TextView listPubdate;
+        TextView message;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            listTitle = itemView.findViewById(R.id.listtitle);
+            listPubdate = itemView.findViewById(R.id.listpubdate);
+            message = itemView.findViewById(R.id.message);
+        }
+    }
+
+    private String formatDate(Date date, boolean withTime) {
         String result = "";
         DateFormat dateFormat;
 
         if (date != null) {
             try {
-                String format = Settings.System.getString(c.getContentResolver(), Settings.System.DATE_FORMAT);
+                String format = Settings.System.getString(context.getContentResolver(), Settings.System.DATE_FORMAT);
                 if (TextUtils.isEmpty(format)) {
-                    dateFormat = android.text.format.DateFormat.getDateFormat(c);
+                    dateFormat = android.text.format.DateFormat.getDateFormat(context);
                 } else {
                     dateFormat = new SimpleDateFormat(format);
                 }
                 result = dateFormat.format(date);
 
                 if (withTime) {
-                    dateFormat = android.text.format.DateFormat.getTimeFormat(c);
+                    dateFormat = android.text.format.DateFormat.getTimeFormat(context);
                     result += " " + dateFormat.format(date);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
         return result;
     }
 }
-	
-

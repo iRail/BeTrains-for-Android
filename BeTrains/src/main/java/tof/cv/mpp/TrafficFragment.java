@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
-
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -20,7 +22,7 @@ import tof.cv.mpp.adapter.TrafficAdapter;
 import tof.cv.mpp.bo.Perturbations;
 
 
-public class TrafficFragment extends ListFragment {
+public class TrafficFragment extends Fragment {
     protected static final String TAG = "ActivityTraffic";
     private String lang;
 
@@ -58,9 +60,12 @@ public class TrafficFragment extends ListFragment {
                     Log.e("CVE", "" + result);
                     if (result != null) {
                         if (result.disturbance != null) {
-                            TrafficAdapter adapter = new TrafficAdapter(getActivity(),
-                                    R.layout.row_rss, result, getLayoutInflater());
-                            setListAdapter(adapter);
+                            RecyclerView recyclerView = getView().findViewById(R.id.recycler);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            TrafficAdapter adapter = new TrafficAdapter(getContext(), result);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
                         } else
                             ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.issues_empty);
 
