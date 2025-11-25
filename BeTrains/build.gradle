@@ -5,13 +5,13 @@ android {
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8/Users/cve/StudioProjects/BeTrains-for-Android/BeTrains/key_tof162 alias
     }
     packagingOptions {
         resources {
             excludes += ['META-INF/LICENSE.txt', 'META-INF/DEPENDENCIES']
         }
-    }
+    }/Users/cve/StudioProjects/BeTrains-for-Android/BeTrains/key_tof162
 
     signingConfigs {
         debug {
@@ -24,8 +24,8 @@ android {
         applicationId "tof.cv.mpp"
         minSdkVersion 29
         targetSdkVersion 36
-        versionCode 6660
-        versionName "4.17.005"
+        versionCode 6661
+        versionName "4.18.000"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }

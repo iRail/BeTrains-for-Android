@@ -305,10 +305,16 @@ public class ChatFragment extends Fragment {
                 if (itemCount > 0) {
                     if (getActivity() instanceof InfoTrainActivity)
                         ((InfoTrainActivity) getActivity()).setChatBadge(itemCount);
-                    if (messagesEmpty != null)
+                    if (messagesEmpty != null){
                         messagesEmpty.setVisibility(View.GONE);
+                        getView().findViewById(R.id.recyclerview).setVisibility(View.VISIBLE);
+                        getView().findViewById(R.id.send_layout).setVisibility(View.VISIBLE);
+                    }
+
                 } else if (messagesEmpty != null) {
                     messagesEmpty.setVisibility(View.VISIBLE);
+                    getView().findViewById(R.id.recyclerview).setVisibility(View.GONE);
+                    getView().findViewById(R.id.send_layout).setVisibility(View.GONE);
                     messagesEmpty.setText(R.string.chat_no_message);
                 }
             }
