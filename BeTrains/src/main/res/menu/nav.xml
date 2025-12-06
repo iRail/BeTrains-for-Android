@@ -28,14 +28,15 @@
             android:id="@+id/navigation_item_closest"
             android:icon="@drawable/ic_nav_closest"
             android:title="@string/nav_drawer_closest"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_bottom">
+
         <item
             android:id="@+id/navigation_item_extras"
             android:icon="@drawable/ic_nav_extras"
             android:title="@string/nav_drawer_extras"/>
-    </group>
-
-    <group android:checkableBehavior="none"
-        android:id="@+id/menu_bottom">
 
         <item
             android:id="@+id/navigation_item_settings"

@@ -88,7 +88,7 @@
             app:checkedIcon="@drawable/ic_alert"
             app:checkedIconTint="@color/darktextcolor">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/singlealert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

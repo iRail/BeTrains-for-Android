@@ -5,13 +5,13 @@ android {
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8/Users/cve/StudioProjects/BeTrains-for-Android/BeTrains/key_tof162 alias
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
         resources {
             excludes += ['META-INF/LICENSE.txt', 'META-INF/DEPENDENCIES']
         }
-    }/Users/cve/StudioProjects/BeTrains-for-Android/BeTrains/key_tof162
+    }
 
     signingConfigs {
         debug {
@@ -42,6 +42,7 @@ android {
     namespace 'tof.cv.mpp'
     buildFeatures {
         buildConfig true
+        viewBinding true
     }
 
 

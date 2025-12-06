@@ -109,6 +109,15 @@
     <style name="NavDrawer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="itemShapeAppearanceOverlay">@style/ShapeAppearance.App.Corner.Medium</item>
+        <item name="itemShapeFillColor">@color/navbg</item>
+    </style>
+
+    <style name="ShapeAppearance.App.Corner.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
     <style name="Theme.MyBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">

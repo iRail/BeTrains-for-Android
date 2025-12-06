@@ -33,12 +33,16 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.view.LetterTileProvider;
 
 //import com.teragence.client.SdkControls;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity
+        implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     private Fragment mContent;
     public DrawerLayout drawerLayout = null;
@@ -62,17 +66,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //settings.edit().putBoolean("beta",true).apply();
+        // settings.edit().putBoolean("beta",true).apply();
 
         navigationView = findViewById(R.id.navigation);
 
         if (navigationView != null) {
             navigationView.getMenu().clear();
             drawerLayout = findViewById(R.id.drawer);
-            if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
+            if (GoogleApiAvailability.getInstance()
+                    .isGooglePlayServicesAvailable(WelcomeActivity.this) == ConnectionResult.SUCCESS)
                 navigationView.inflateMenu(R.menu.nav);
             else
                 navigationView.inflateMenu(R.menu.nav_nogps);
@@ -85,10 +89,8 @@ public class WelcomeActivity extends AppCompatActivity {
             setupNavigation();
         }
 
-
         if (navigationRail != null)
             setupRail();
-
 
         int pos = Integer.valueOf(settings.getString(
                 getString(R.string.key_activity), "1"));
@@ -163,31 +165,39 @@ public class WelcomeActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case R.id.navigation_item_plan:
                 mContent = new PlannerFragment();
+                setTitle(R.string.app_name);
                 break;
             case R.id.navigation_item_iss:
                 mContent = new TrafficFragment();
+                setTitle(R.string.nav_drawer_issues);
                 break;
             case R.id.navigation_item_chat:
                 mContent = new ChatFragment();
+                setTitle(R.string.nav_drawer_chat);
                 break;
             case R.id.navigation_item_star:
                 mContent = new StarredFragment();
+                setTitle(R.string.activity_label_starred);
                 break;
             case R.id.navigation_item_closest:
                 mContent = new ClosestFragment();
+                setTitle(R.string.nav_drawer_closest);
                 break;
             case R.id.navigation_item_comp:
                 mContent = new CompensationFragment();
+                setTitle(R.string.nav_drawer_compensation);
                 break;
             case R.id.navigation_item_extras:
                 mContent = new ExtraFragment();
+                setTitle(R.string.nav_drawer_extras);
                 break;
             case R.id.navigation_item_settings:
-                startActivity(new Intent(this,
-                        SettingsActivity.class));
+                mContent = new SettingsFragment();
+                setTitle(R.string.action_settings);
                 break;
             default:
                 mContent = new PlannerFragment();
+                setTitle(R.string.app_name);
                 close = getString(R.string.activity_label_planner);
                 break;
         }
@@ -229,7 +239,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit().putBoolean("navigation_drawer_learned", true).apply();
+                PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this).edit()
+                        .putBoolean("navigation_drawer_learned", true).apply();
             }
 
             @Override
@@ -276,14 +287,15 @@ public class WelcomeActivity extends AppCompatActivity {
                                         .setShortLabel(item)
                                         .setLongLabel(item + " - " + itemTwo)
                                         .setIcon(
-                                                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ?
-                                                        Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
-                                                        : Icon.createWithBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
-                                        )
+                                                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                                        ? Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(item,
+                                                                item, tileSize, tileSize))
+                                                        : Icon.createWithBitmap(tileProvider.getLetterTile(item, item,
+                                                                tileSize, tileSize)))
                                         .setIntent(i.setAction(""))
                                         .build();
                             } catch (Exception e) {
-                                //TODO Why is ID null here? To investigate
+                                // TODO Why is ID null here? To investigate
                                 e.printStackTrace();
                             }
                             break;
@@ -296,10 +308,11 @@ public class WelcomeActivity extends AppCompatActivity {
                                     .setShortLabel(item)
                                     .setLongLabel(item)
                                     .setIcon(
-                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ?
-                                                    Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(numbers, numbers, tileSize, tileSize))
-                                                    : Icon.createWithBitmap(tileProvider.getLetterTile(numbers, numbers, tileSize, tileSize))
-                                    )
+                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                                    ? Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(numbers,
+                                                            numbers, tileSize, tileSize))
+                                                    : Icon.createWithBitmap(tileProvider.getLetterTile(numbers, numbers,
+                                                            tileSize, tileSize)))
                                     .setIntent(i.setAction(""))
                                     .build();
                             break;
@@ -308,16 +321,16 @@ public class WelcomeActivity extends AppCompatActivity {
                             i.putExtra("Departure", item);
                             i.putExtra("Arrival", itemTwo);
 
-
                             shortcut = new ShortcutInfo.Builder(this, item + " - " + itemTwo)
                                     .setShortLabel(item + " - " + itemTwo)
                                     .setLongLabel(item + " - " + itemTwo)
                                     .setIcon(
-                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ?
-                                                    Icon.createWithAdaptiveBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
-                                                    : Icon.createWithBitmap(tileProvider.getLetterTile(item, item, tileSize, tileSize))
-                                    )
-                                    //.setIntent(i)
+                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                                    ? Icon.createWithAdaptiveBitmap(
+                                                            tileProvider.getLetterTile(item, item, tileSize, tileSize))
+                                                    : Icon.createWithBitmap(
+                                                            tileProvider.getLetterTile(item, item, tileSize, tileSize)))
+                                    // .setIntent(i)
                                     .setIntent(i.setAction(""))
                                     .build();
 
@@ -332,7 +345,6 @@ public class WelcomeActivity extends AppCompatActivity {
             } finally {
                 mCursor.close();
             }
-
 
             mDbHelper.close();
         }
@@ -349,6 +361,22 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+        final Bundle args = pref.getExtras();
+        final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
+                getClassLoader(),
+                pref.getFragment());
+        fragment.setArguments(args);
+        fragment.setTargetFragment(caller, 0);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(null)
+                .commit();
+        setTitle(pref.getTitle());
+        return true;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         try {
@@ -359,15 +387,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-
     public void onMailClick(View v) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"christophe.versieux+betrains@gmail.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "christophe.versieux+betrains@gmail.com" });
         intent.putExtra(Intent.EXTRA_SUBJECT, "BeTrains Android");
         startActivity(Intent.createChooser(intent, "Mail"));
     }
-
 
     public void onGuiardClick(View v) {
         Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
@@ -379,5 +405,10 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
         marketLaunch.setData(Uri.parse("http://cookicons.co/"));
         startActivity(marketLaunch);
+    }
+
+    public void onWhatsAppClick(View v) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/33622280414"));
+        startActivity(browserIntent);
     }
 }

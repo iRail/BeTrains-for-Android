@@ -28,8 +28,11 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"
         android:background="@color/navbg"
-        app:itemTextColor="@color/nav"
-        app:itemIconTint="@color/nav"
+        app:itemTextColor="@color/nav_item_text_color"
+        app:itemIconTint="@color/nav_item_icon_color"
+        app:itemBackground="@drawable/nav_item_background"
+        app:itemHorizontalPadding="12dp"
+        app:itemIconPadding="12dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

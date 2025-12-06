@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
+import androidx.core.view.MenuProvider;
+import androidx.lifecycle.Lifecycle;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
@@ -61,12 +63,13 @@ import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
 import tof.cv.mpp.view.DateTimePicker;
+import tof.cv.mpp.databinding.FragmentPlannerBinding;
 
 public class PlannerFragment extends Fragment {
 
-    RecyclerView recyclerView;
+    private FragmentPlannerBinding binding;
 
-    //boolean isDebug = false;
+    // boolean isDebug = false;
     private static final int MENU_DT = 0;
     private static final int MENU_FAV = 1;
     private static final int MENU_PREF = 2;
@@ -78,14 +81,18 @@ public class PlannerFragment extends Fragment {
     public static String abDatePattern = "EEE dd MMM";
     public static String abTimePattern = "HH:mm";
 
-    private static Connections allConnections = new Connections();
+    private static final String PREF_START = "pStart";
+    private static final String PREF_STOP = "pStop";
+    private static final String PREF_SEARCH_GAME = "searchGame";
+    private static final String PREF_NL = "prefnl";
+    private static final String PREF_CACHED = "cached";
+    private static final String DEFAULT_START = "Mons";
+    private static final String DEFAULT_STOP = "Tournai";
 
-    private TextView tvDeparture;
-    private TextView tvArrival;
+    private static Connections allConnections = new Connections();
 
     private static SharedPreferences settings;
     private SharedPreferences.Editor editor;
-
 
     private static final int ACTIVITY_DISPLAY = 0;
     private static final int ACTIVITY_STOP = 1;
@@ -95,8 +102,15 @@ public class PlannerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_planner, null);
+            Bundle savedInstanceState) {
+        binding = FragmentPlannerBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -117,8 +131,9 @@ public class PlannerFragment extends Fragment {
                         String gare = result.getData().getStringExtra("GARE");
                         assert gare != null;
                         if (!gare.contentEquals("")) {
-                            tvArrival.setText(gare);
-                            editor.putString("pStop", gare);
+                            binding.tvStop.setText(gare);
+                            binding.tvStop.setText(gare);
+                            editor.putString(PREF_STOP, gare);
                             editor.commit();
                         }
                     }
@@ -132,8 +147,9 @@ public class PlannerFragment extends Fragment {
                         String gare = result.getData().getStringExtra("GARE");
                         assert gare != null;
                         if (!gare.contentEquals("")) {
-                            tvDeparture.setText(gare);
-                            editor.putString("pStart", gare);
+                            binding.tvStart.setText(gare);
+                            binding.tvStart.setText(gare);
+                            editor.putString(PREF_START, gare);
                             editor.commit();
                         }
                     }
@@ -147,18 +163,52 @@ public class PlannerFragment extends Fragment {
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = settings.edit();
         mDate = Calendar.getInstance();
-        setHasOptionsMenu(true);
+        mDate = Calendar.getInstance();
 
-        tvDeparture = getView().findViewById(R.id.tv_start);
-        tvArrival = getView().findViewById(R.id.tv_stop);
-        recyclerView = getView().findViewById(R.id.recyclerview);
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.action_goto_favorites)
+                        .setIcon(R.drawable.ic_menu_star)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+                menu.add(Menu.NONE, MENU_FAV_ADD, Menu.NONE, R.string.action_add_to_favorites)
+                        .setIcon(R.drawable.ic_menu_star_add)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case (MENU_DT):
+                        showDateTimeDialog();
+                        return true;
+                    case (MENU_FAV_ADD):
+                        Utils.addAsStarred(binding.tvStart.getText().toString(), binding.tvStop
+                                .getText().toString(), 3, getActivity());
+                        startActivity(new Intent(getActivity(), StarredActivity.class));
+                        return true;
+                    case (MENU_FAV):
+                        startActivity(new Intent(getActivity(), StarredActivity.class));
+                        return true;
+                    case (MENU_PREF):
+                        startActivity(new Intent(getActivity(),
+                                MyPreferenceActivity.class).putExtra(
+                                        PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                                        Prefs2Fragment.class.getName()));
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        binding.recyclerview.setLayoutManager(layoutManager);
+        binding.recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        String pStart = settings.getString("pStart", "Mons");
-        String pStop = settings.getString("pStop", "Tournai");
+        String pStart = settings.getString(PREF_START, DEFAULT_START);
+        String pStop = settings.getString(PREF_STOP, DEFAULT_STOP);
 
         if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null)
             try {
@@ -167,7 +217,6 @@ public class PlannerFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
 
         fillStations(pStart, pStop);
 
@@ -186,34 +235,30 @@ public class PlannerFragment extends Fragment {
     }
 
     public void doSearch() {
-        if (getView().findViewById(R.id.progress) != null)
-            getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-        mySearchThread(this.getActivity());
+        if (binding.progress != null)
+            binding.progress.setVisibility(View.VISIBLE);
+        performSearch(getActivity());
     }
 
     public void fillStations(String departure, String arrival) {
-        tvDeparture = requireView().findViewById(R.id.tv_start);
-        tvArrival = requireView().findViewById(R.id.tv_stop);
-
         if (departure != null && arrival != null) {
-            tvDeparture.setText(departure);
-            tvArrival.setText(arrival);
+            binding.tvStart.setText(departure);
+            binding.tvStop.setText(arrival);
         }
     }
 
     private void setAllBtnListener() {
-        MaterialTextView btnInvert = requireView().findViewById(R.id.mybuttonInvert);
-        btnInvert.setOnClickListener(v -> fillStations(tvArrival.getText().toString(),
-                tvDeparture.getText().toString()));
+        binding.mybuttonInvert.setOnClickListener(v -> fillStations(binding.tvStop.getText().toString(),
+                binding.tvStart.getText().toString()));
 
-        tvDeparture.setOnClickListener(v -> {
+        binding.tvStart.setOnClickListener(v -> {
             Intent i = new Intent(getActivity(),
                     StationPickerActivity.class);
             departureActivityResultLauncher.launch(i);
 
         });
 
-        tvArrival.setOnClickListener(v -> {
+        binding.tvStop.setOnClickListener(v -> {
             Intent i = new Intent(getActivity(),
                     StationPickerActivity.class);
 
@@ -224,68 +269,26 @@ public class PlannerFragment extends Fragment {
                 R.id.fab);
         fab.setOnClickListener(v -> doSearch());
 
-        getView().findViewById(R.id.appbar_prev).setOnClickListener(v -> {
-            if (getView().findViewById(R.id.progress) != null)
-                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        binding.appbarPrev.setOnClickListener(v -> {
+            if (binding.progress != null)
+                binding.progress.setVisibility(View.VISIBLE);
             mDate.add(Calendar.HOUR, -1);
             updateActionBar();
-            mySearchThread(getActivity());
+            performSearch(getActivity());
         });
 
-        getView().findViewById(R.id.appbar_next).setOnClickListener(v -> {
-            if (getView().findViewById(R.id.progress) != null)
-                getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        binding.appbarNext.setOnClickListener(v -> {
+            if (binding.progress != null)
+                binding.progress.setVisibility(View.VISIBLE);
             mDate.add(Calendar.HOUR, 1);
             updateActionBar();
-            mySearchThread(getActivity());
+            performSearch(getActivity());
         });
 
-        getView().findViewById(R.id.appbar_time).setOnClickListener(v -> {
+        binding.appbarTime.setOnClickListener(v -> {
             showDateTimeDialog();
         });
 
-
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-       /* menu.add(Menu.NONE, MENU_DT, Menu.NONE, R.string.action_change_datetime)
-                .setIcon(R.drawable.ic_menu_time)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);*/
-        menu.add(Menu.NONE, MENU_FAV, Menu.NONE, R.string.action_goto_favorites)
-                .setIcon(R.drawable.ic_menu_star)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
-        menu.add(Menu.NONE, MENU_FAV_ADD, Menu.NONE, R.string.action_add_to_favorites)
-                .setIcon(R.drawable.ic_menu_star_add)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case (MENU_DT):
-                showDateTimeDialog();
-                return true;
-            case (MENU_FAV_ADD):
-                Utils.addAsStarred(tvDeparture.getText().toString(), tvArrival
-                        .getText().toString(), 3, getActivity());
-                startActivity(new Intent(getActivity(), StarredActivity.class));
-                return true;
-            case (MENU_FAV):
-                startActivity(new Intent(getActivity(), StarredActivity.class));
-                return true;
-            case (MENU_PREF):
-                startActivity(new Intent(getActivity(),
-                        MyPreferenceActivity.class).putExtra(
-                        PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-                        Prefs2Fragment.class.getName()));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void fillData(final String url) {
@@ -293,9 +296,12 @@ public class PlannerFragment extends Fragment {
 
         if (allConnections != null && allConnections.connection != null) {
             ArrayList<Alert> singleAlert = checkSingleAlert(allConnections);
-            ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), singleAlert);
-            recyclerView.setAdapter(connAdapter);
-            PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().putString("cached", new Gson().toJson(allConnections)).commit();
+            ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(),
+                    singleAlert);
+            binding.recyclerview.setAdapter(connAdapter);
+            binding.recyclerview.setAdapter(connAdapter);
+            PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit()
+                    .putString(PREF_CACHED, new Gson().toJson(allConnections)).commit();
         } else {
             if (url != null && url.length() > 0) {
                 Log.e("CVE", "PAS DE RESULTATS");
@@ -307,13 +313,14 @@ public class PlannerFragment extends Fragment {
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
 
-
-            allConnections = Utils.getCachedConnections(PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("cached", ""));
-            //allConnections.connection.get(0).removeAlerts();
+            allConnections = Utils.getCachedConnections(
+                    PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(PREF_CACHED, ""));
+            // allConnections.connection.get(0).removeAlerts();
 
             if (allConnections != null) {
-                ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), checkSingleAlert(allConnections));
-                recyclerView.setAdapter(connAdapter);
+                ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(),
+                        checkSingleAlert(allConnections));
+                binding.recyclerview.setAdapter(connAdapter);
             } else {
                 fillWithTips();
             }
@@ -358,17 +365,16 @@ public class PlannerFragment extends Fragment {
         if (textAlert.endsWith("<br/>"))
             textAlert = textAlert.substring(0, textAlert.length() - 5);
 
+        binding.singlealertcard.setVisibility(View.VISIBLE);
 
-        getView().findViewById(R.id.singlealertcard).setVisibility(View.VISIBLE);
-
-        ((TextView) getView().findViewById(R.id.singlealert)).setText(Html.fromHtml(textAlert));
+        binding.singlealert.setText(Html.fromHtml(textAlert));
 
         final SpannableString s = new SpannableString(html); // msg should have url to enable clicking
         Linkify.addLinks(s, Linkify.ALL);
 
         String finalHtml = html;
-        ((MaterialCardView) getView().findViewById(R.id.singlealertcard)).setChecked(true);
-        getView().findViewById(R.id.singlealertcard).setOnClickListener(new View.OnClickListener() {
+        binding.singlealertcard.setChecked(true);
+        binding.singlealertcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog d = new MaterialAlertDialogBuilder(getContext())
@@ -377,7 +383,6 @@ public class PlannerFragment extends Fragment {
                 d.show();
             }
         });
-
 
         return toReturn;
     }
@@ -407,19 +412,18 @@ public class PlannerFragment extends Fragment {
         map.put("title", getString(R.string.intro_tip_d));
         list.add(map);
 
-        recyclerView.setAdapter(new TipAdapter(list));
+        binding.recyclerview.setAdapter(new TipAdapter(list));
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenuInfo menuInfo) {
+            ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        //Log.d(TAG, "requestCode is: " + requestCode);
+        // Log.d(TAG, "requestCode is: " + requestCode);
 
         switch (requestCode) {
             case ACTIVITY_DISPLAY:
@@ -438,42 +442,82 @@ public class PlannerFragment extends Fragment {
 
     public void onPause() {
         super.onPause();
-        String start = tvDeparture.getText().toString();
-        String stop = tvArrival.getText().toString();
+        String start = binding.tvStart.getText().toString();
+        String stop = binding.tvStop.getText().toString();
         if (!start.contentEquals("") && !start.contentEquals("")) {
-            editor.putString("pStart", start);
-            editor.putString("pStop", stop);
+            editor.putString(PREF_START, start);
+            editor.putString(PREF_STOP, stop);
             editor.commit();
         }
 
     }
 
-    //DatabaseReference ref;
-    private void mySearchThread(final Activity a) {
+    // DatabaseReference ref;
+    private void performSearch(final Activity a) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int score = sp.getInt("searchGame", 0) + 1;
-        sp.edit().putInt("searchGame", score).commit();
+        int score = sp.getInt(PREF_SEARCH_GAME, 0) + 1;
+        sp.edit().putInt(PREF_SEARCH_GAME, score).commit();
 
-        String myStart;
-        String myArrival;
-        myStart = tvDeparture.getText().toString();
-        myArrival = tvArrival.getText().toString();
+        String myStart = binding.tvStart.getText().toString();
+        String myArrival = binding.tvStop.getText().toString();
 
-        String langue = getString(R.string.url_lang);
-        if (settings.getBoolean("prefnl", false))
-            langue = "NL";
+        String lang = getString(R.string.url_lang);
+        if (settings.getBoolean(PREF_NL, false))
+            lang = "NL";
 
-        String dA = "depart";
+        String timeSel = "depart";
         if (settings.getString(getString(R.string.key_planner_da), "1")
                 .contentEquals("2"))
-            dA = "arrive";
+            timeSel = "arrive";
 
+        String url = buildSearchUrl(myStart, myArrival, lang, timeSel);
+        Log.e("CVE", "Search " + url);
+
+        final String finalUrl = url;
+        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android")
+                .as(new TypeToken<Connections>() {
+                }).setCallback(new FutureCallback<Connections>() {
+                    @Override
+                    public void onCompleted(Exception e, Connections result) {
+                        handleSearchResponse(e, result, finalUrl);
+                    }
+                });
+    }
+
+    private void handleSearchResponse(Exception e, Connections result, String finalUrl) {
+        if (e != null) {
+            e.printStackTrace();
+        }
+
+        allConnections = result;
+
+        if (allConnections == null) {
+            if (getActivity() != null)
+
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getActivity(), R.string.txt_error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+        }
+
+        try {
+
+            fillData(finalUrl);
+            if (binding.progress != null)
+                binding.progress.setVisibility(View.INVISIBLE);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private String buildSearchUrl(String start, String arrival, String lang, String timeSel) {
         String year = "" + (mDate.get(Calendar.YEAR) - 2000);
         String month = "" + (mDate.get(Calendar.MONTH) + 1);
         String day = "" + mDate.get(Calendar.DAY_OF_MONTH);
         String hour = Utils.formatDate(mDate.getTime(), "HH");
         String minutes = Utils.formatDate(mDate.getTime(), "mm");
-
 
         if (day.length() == 1)
             day = "0" + day;
@@ -483,63 +527,21 @@ public class PlannerFragment extends Fragment {
         if (month.contentEquals("13"))
             month = "01";
 
-        String url = "";
-        try {
-            url = URLEncoder.encode(myArrival, "UTF-8") + "&from=" + URLEncoder.encode(myStart, "UTF-8") + "&date=" + day + month
-                    + year + "&time=" + hour + minutes + "&timeSel="
-                    + dA + "&lang=" + langue
-                    + "&typeOfTransport=train&format=json&fast=true&alerts=true";
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            url = myArrival + "&from=" + myStart + "&date=" + day + month
-                    + year + "&time=" + hour + minutes + "&timeSel="
-                    + dA + "&lang=" + langue
-                    + "&typeOfTransport=train&format=json&fast=true&alerts=true";
-        }
-
-        url = url.replace(" ", "%20");
-
-
-        url = "https://api.irail.be/v1/connections/?to=" + url;
-        Log.e("CVE", "Search " + url);
-
-        final String finalUrl = url;
-        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android").as(new TypeToken<Connections>() {
-        }).setCallback(new FutureCallback<Connections>() {
-            @Override
-            public void onCompleted(Exception e, Connections result) {
-                if (e != null) {
-                    //ref.push().setValue(new LogCVE("NULL","",finalUrl,""));
-                    e.printStackTrace();
-                }
-
-                allConnections = result;
-
-                if (allConnections == null) {
-                    if (getActivity() != null)
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(getActivity(), R.string.txt_error,
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
-                }
-
-                try {
-
-                    fillData(finalUrl);
-                    if (getView().findViewById(R.id.progress) != null)
-                        getView().findViewById(R.id.progress).setVisibility(View.INVISIBLE);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-
-
+        return android.net.Uri.parse("https://api.irail.be/v1/connections/")
+                .buildUpon()
+                .appendQueryParameter("to", arrival)
+                .appendQueryParameter("from", start)
+                .appendQueryParameter("date", day + month + year)
+                .appendQueryParameter("time", hour + minutes)
+                .appendQueryParameter("timeSel", timeSel)
+                .appendQueryParameter("lang", lang)
+                .appendQueryParameter("typeOfTransport", "train")
+                .appendQueryParameter("format", "json")
+                .appendQueryParameter("fast", "true")
+                .appendQueryParameter("alerts", "true")
+                .build()
+                .toString();
     }
-
 
     private void showDateTimeDialog() {
 
@@ -548,9 +550,11 @@ public class PlannerFragment extends Fragment {
 
     private void updateActionBar() {
         try {
-            //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+            // ((AppCompatActivity)
+            // getActivity()).getSupportActionBar().setTitle(R.string.app_name);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(
-                    Utils.formatDate(mDate.getTime(), abDatePattern) + " - " + Utils.formatDate(mDate.getTime(), abTimePattern));
+                    Utils.formatDate(mDate.getTime(), abDatePattern) + " - "
+                            + Utils.formatDate(mDate.getTime(), abTimePattern));
         } catch (Exception e) {
             e.printStackTrace();
         }
