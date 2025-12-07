@@ -8,6 +8,7 @@ import android.preference.PreferenceActivity;
 import androidx.preference.PreferenceManager;
 import androidx.core.view.MenuProvider;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
@@ -20,9 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,29 +29,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import tof.cv.mpp.MyPreferenceActivity.Prefs2Fragment;
 import tof.cv.mpp.Utils.Utils;
@@ -62,12 +50,14 @@ import tof.cv.mpp.adapter.TipAdapter;
 import tof.cv.mpp.bo.Alert;
 import tof.cv.mpp.bo.Connection;
 import tof.cv.mpp.bo.Connections;
-import tof.cv.mpp.view.DateTimePicker;
 import tof.cv.mpp.databinding.FragmentPlannerBinding;
+import tof.cv.mpp.view.DateTimePicker;
+import tof.cv.mpp.viewmodel.PlannerViewModel;
 
-public class PlannerFragment extends Fragment {
+public class PlannerFragment extends Fragment implements ConnectionAdapter.CompositionRequestCallback {
 
     private FragmentPlannerBinding binding;
+    private PlannerViewModel viewModel;
 
     // boolean isDebug = false;
     private static final int MENU_DT = 0;
@@ -89,8 +79,6 @@ public class PlannerFragment extends Fragment {
     private static final String DEFAULT_START = "Mons";
     private static final String DEFAULT_STOP = "Tournai";
 
-    private static Connections allConnections = new Connections();
-
     private static SharedPreferences settings;
     private SharedPreferences.Editor editor;
 
@@ -100,8 +88,10 @@ public class PlannerFragment extends Fragment {
     ActivityResultLauncher<Intent> arrivalActivityLauncher;
     ActivityResultLauncher<Intent> departureActivityResultLauncher;
 
+    private ConnectionAdapter connAdapter;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentPlannerBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -117,11 +107,16 @@ public class PlannerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setAllBtnListener();
+        if (connAdapter != null) {
+            connAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(PlannerViewModel.class);
 
         arrivalActivityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -131,7 +126,6 @@ public class PlannerFragment extends Fragment {
                         String gare = result.getData().getStringExtra("GARE");
                         assert gare != null;
                         if (!gare.contentEquals("")) {
-                            binding.tvStop.setText(gare);
                             binding.tvStop.setText(gare);
                             editor.putString(PREF_STOP, gare);
                             editor.commit();
@@ -148,7 +142,6 @@ public class PlannerFragment extends Fragment {
                         assert gare != null;
                         if (!gare.contentEquals("")) {
                             binding.tvStart.setText(gare);
-                            binding.tvStart.setText(gare);
                             editor.putString(PREF_START, gare);
                             editor.commit();
                         }
@@ -162,7 +155,6 @@ public class PlannerFragment extends Fragment {
 
         settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = settings.edit();
-        mDate = Calendar.getInstance();
         mDate = Calendar.getInstance();
 
         requireActivity().addMenuProvider(new MenuProvider() {
@@ -220,8 +212,16 @@ public class PlannerFragment extends Fragment {
 
         fillStations(pStart, pStop);
 
+        setupViewModelObservers();
+
         try {
-            fillData("");
+            Connections cached = Utils.getCachedConnections(
+                    PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(PREF_CACHED, ""));
+            if (cached != null) {
+                setupAdapter(cached);
+            } else {
+                fillWithTips();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -230,14 +230,38 @@ public class PlannerFragment extends Fragment {
 
         if (getActivity().getIntent().hasExtra("Departure") && getActivity().getIntent().hasExtra("Arrival"))
             doSearch();
+    }
 
-        // ((BottomAppBar) getActivity().findViewById(R.id.bar)).setHideOnScroll(true);
+    private void setupViewModelObservers() {
+        viewModel.getConnections().observe(getViewLifecycleOwner(), connections -> {
+            if (connections != null) {
+                setupAdapter(connections);
+                PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit()
+                        .putString(PREF_CACHED, new Gson().toJson(connections)).commit();
+            }
+        });
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if (binding.progress != null) {
+                binding.progress.setVisibility(isLoading ? View.VISIBLE : View.INVISIBLE);
+            }
+        });
+
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            if (error != null && !error.isEmpty()) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        viewModel.getCompositions().observe(getViewLifecycleOwner(), compositions -> {
+            if (connAdapter != null) {
+                connAdapter.updateCompositions(compositions);
+            }
+        });
     }
 
     public void doSearch() {
-        if (binding.progress != null)
-            binding.progress.setVisibility(View.VISIBLE);
-        performSearch(getActivity());
+        performSearch();
     }
 
     public void fillStations(String departure, String arrival) {
@@ -270,19 +294,15 @@ public class PlannerFragment extends Fragment {
         fab.setOnClickListener(v -> doSearch());
 
         binding.appbarPrev.setOnClickListener(v -> {
-            if (binding.progress != null)
-                binding.progress.setVisibility(View.VISIBLE);
             mDate.add(Calendar.HOUR, -1);
             updateActionBar();
-            performSearch(getActivity());
+            performSearch();
         });
 
         binding.appbarNext.setOnClickListener(v -> {
-            if (binding.progress != null)
-                binding.progress.setVisibility(View.VISIBLE);
             mDate.add(Calendar.HOUR, 1);
             updateActionBar();
-            performSearch(getActivity());
+            performSearch();
         });
 
         binding.appbarTime.setOnClickListener(v -> {
@@ -291,45 +311,16 @@ public class PlannerFragment extends Fragment {
 
     }
 
-    private void fillData(final String url) {
-        // BottomAppBar bap = getActivity().findViewById(R.id.bar);
-
+    private void setupAdapter(Connections allConnections) {
         if (allConnections != null && allConnections.connection != null) {
             ArrayList<Alert> singleAlert = checkSingleAlert(allConnections);
-            ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(),
-                    singleAlert);
+            connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(), singleAlert, this);
             binding.recyclerview.setAdapter(connAdapter);
-            binding.recyclerview.setAdapter(connAdapter);
-            PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit()
-                    .putString(PREF_CACHED, new Gson().toJson(allConnections)).commit();
-        } else {
-            if (url != null && url.length() > 0) {
-                Log.e("CVE", "PAS DE RESULTATS");
-
-                String message = getString(R.string.txt_error);
-                if (allConnections != null && allConnections.message != null && allConnections.message.length() > 0) {
-                    message = allConnections.message;
-                }
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-
-            allConnections = Utils.getCachedConnections(
-                    PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(PREF_CACHED, ""));
-            // allConnections.connection.get(0).removeAlerts();
-
-            if (allConnections != null) {
-                ConnectionAdapter connAdapter = new ConnectionAdapter(allConnections.connection, getActivity(),
-                        checkSingleAlert(allConnections));
-                binding.recyclerview.setAdapter(connAdapter);
-            } else {
-                fillWithTips();
-            }
         }
     }
 
     private ArrayList<Alert> checkSingleAlert(Connections allConnections) {
-
-        if (allConnections.connection.get(0).getAlerts() == null)
+        if (allConnections.connection.isEmpty() || allConnections.connection.get(0).getAlerts() == null)
             return null;
 
         ArrayList<Alert> toReturn = allConnections.connection.get(0).getAlerts().getAlertlist();
@@ -369,7 +360,7 @@ public class PlannerFragment extends Fragment {
 
         binding.singlealert.setText(Html.fromHtml(textAlert));
 
-        final SpannableString s = new SpannableString(html); // msg should have url to enable clicking
+        final SpannableString s = new SpannableString(html);
         Linkify.addLinks(s, Linkify.ALL);
 
         String finalHtml = html;
@@ -388,10 +379,7 @@ public class PlannerFragment extends Fragment {
     }
 
     public void fillWithTips() {
-
         List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-
-        // fill the map with data
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("tip", getString(R.string.intro_tip_a_title));
         map.put("title", getString(R.string.intro_tip_a));
@@ -423,19 +411,14 @@ public class PlannerFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        // Log.d(TAG, "requestCode is: " + requestCode);
-
         switch (requestCode) {
             case ACTIVITY_DISPLAY:
-                fillData("");
-                break;
             case ACTIVITY_STOP:
-                fillData("");
+                performSearch();
                 break;
 
             default:
                 break;
-
         }
 
     }
@@ -452,8 +435,7 @@ public class PlannerFragment extends Fragment {
 
     }
 
-    // DatabaseReference ref;
-    private void performSearch(final Activity a) {
+    private void performSearch() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         int score = sp.getInt(PREF_SEARCH_GAME, 0) + 1;
         sp.edit().putInt(PREF_SEARCH_GAME, score).commit();
@@ -473,43 +455,7 @@ public class PlannerFragment extends Fragment {
         String url = buildSearchUrl(myStart, myArrival, lang, timeSel);
         Log.e("CVE", "Search " + url);
 
-        final String finalUrl = url;
-        Ion.with(this).load(url).userAgent("WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android")
-                .as(new TypeToken<Connections>() {
-                }).setCallback(new FutureCallback<Connections>() {
-                    @Override
-                    public void onCompleted(Exception e, Connections result) {
-                        handleSearchResponse(e, result, finalUrl);
-                    }
-                });
-    }
-
-    private void handleSearchResponse(Exception e, Connections result, String finalUrl) {
-        if (e != null) {
-            e.printStackTrace();
-        }
-
-        allConnections = result;
-
-        if (allConnections == null) {
-            if (getActivity() != null)
-
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(getActivity(), R.string.txt_error,
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-        }
-
-        try {
-
-            fillData(finalUrl);
-            if (binding.progress != null)
-                binding.progress.setVisibility(View.INVISIBLE);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
+        viewModel.search(url);
     }
 
     private String buildSearchUrl(String start, String arrival, String lang, String timeSel) {
@@ -550,13 +496,18 @@ public class PlannerFragment extends Fragment {
 
     private void updateActionBar() {
         try {
-            // ((AppCompatActivity)
-            // getActivity()).getSupportActionBar().setTitle(R.string.app_name);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(
                     Utils.formatDate(mDate.getTime(), abDatePattern) + " - "
                             + Utils.formatDate(mDate.getTime(), abTimePattern));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCompositionNeeded(String vehicleId) {
+        if (viewModel != null) {
+            viewModel.loadComposition(vehicleId);
         }
     }
 }

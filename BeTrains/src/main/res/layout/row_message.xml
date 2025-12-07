@@ -5,28 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingVertical="12dp"
-    android:paddingHorizontal="16dp"
-    android:foreground="?attr/selectableItemBackgroundBorderless">
+    android:paddingVertical="8dp"
+    android:paddingHorizontal="16dp">
 
     <!-- Profile picture -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        app:civ_border_color="?attr/colorPrimary"
-        app:civ_border_width="1.5dp"
-/>
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        app:civ_border_color="@color/coloraccent"
+        app:civ_border_width="1dp" />
 
     <!-- Message container -->
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bubble_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:minHeight="48dp"
-        app:cardElevation="1dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant">
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/card_bg">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
 
                 <TextView
                     android:id="@+id/nickname"
@@ -48,8 +48,9 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkblue"
                     tools:text="Username" />
 
                 <TextView
@@ -57,8 +58,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                    android:textColor="?attr/colorPrimary"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textStyle="italic"
                     tools:text="T42" />
             </LinearLayout>
@@ -68,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="2dp">
+                android:layout_marginBottom="2dp">
 
                 <TextView
                     android:id="@+id/donator"
@@ -76,8 +77,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="@string/pref_status_donator"
-                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
-                    android:textColor="?attr/colorTertiary"
+                    android:textSize="10sp"
+                    android:textColor="@color/coloraccent"
                     android:visibility="gone" />
 
                 <TextView
@@ -86,8 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="@string/pref_status_beta"
-                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
-                    android:textColor="?attr/colorTertiary"
+                    android:textSize="10sp"
+                    android:textColor="@color/coloraccent"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -96,13 +97,11 @@
                 android:id="@+id/messagebody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
                 android:autoLink="web"
                 android:lineSpacingExtra="2dp"
-                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                tools:text="This is a chat message with expressive Material styling." />
+                android:textSize="15sp"
+                android:textColor="@color/darkblue"
+                tools:text="This is a chat message." />
 
             <!-- Attached image -->
             <ImageView
@@ -111,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/app_name"
                 android:visibility="gone" />
@@ -120,11 +120,12 @@
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:textSize="10sp"
+                android:textColor="?android:attr/textColorSecondary"
                 tools:text="17:04" />
 
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

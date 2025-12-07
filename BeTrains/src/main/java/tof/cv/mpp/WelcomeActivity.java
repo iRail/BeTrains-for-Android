@@ -33,6 +33,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -42,7 +43,7 @@ import tof.cv.mpp.view.LetterTileProvider;
 //import com.teragence.client.SdkControls;
 
 public class WelcomeActivity extends AppCompatActivity
-        implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+        implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, FragmentManager.OnBackStackChangedListener {
 
     private Fragment mContent;
     public DrawerLayout drawerLayout = null;
@@ -142,6 +143,8 @@ public class WelcomeActivity extends AppCompatActivity
                 .replace(R.id.content_frame, mContent).commit();
         if (id >= 0)
             navigationView.getMenu().getItem(id).setChecked(true);
+
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
 
     }
 
@@ -410,5 +413,31 @@ public class WelcomeActivity extends AppCompatActivity
     public void onWhatsAppClick(View v) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/33622280414"));
         startActivity(browserIntent);
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        updateDrawerSelection();
+    }
+
+    private void updateDrawerSelection() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        if (currentFragment instanceof PlannerFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_plan);
+        } else if (currentFragment instanceof TrafficFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_iss);
+        } else if (currentFragment instanceof ChatFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_chat);
+        } else if (currentFragment instanceof StarredFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_star);
+        } else if (currentFragment instanceof ClosestFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_closest);
+        } else if (currentFragment instanceof CompensationFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_comp);
+        } else if (currentFragment instanceof ExtraFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_extras);
+        } else if (currentFragment instanceof SettingsFragment) {
+            navigationView.setCheckedItem(R.id.navigation_item_settings);
+        }
     }
 }

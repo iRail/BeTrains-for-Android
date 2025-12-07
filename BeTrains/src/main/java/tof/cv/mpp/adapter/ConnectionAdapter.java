@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tof.cv.mpp.InfoStationActivity;
 import tof.cv.mpp.InfoTrainActivity;
@@ -50,11 +38,26 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     List<Connection> connection;
     Activity c;
     ArrayList<Alert> singleAlert;
+    CompositionRequestCallback callback;
 
-    public ConnectionAdapter(List<Connection> connection, Activity a, ArrayList<Alert> singleAlert) {
+    private Map<String, TrainComposition.Composition.Segments.Segment.SegmentComposition> compositions = new HashMap<>();
+
+    public interface CompositionRequestCallback {
+        void onCompositionNeeded(String vehicleId);
+    }
+
+    public ConnectionAdapter(List<Connection> connection, Activity a, ArrayList<Alert> singleAlert,
+            CompositionRequestCallback callback) {
         this.connection = connection;
         this.c = a;
         this.singleAlert = singleAlert;
+        this.callback = callback;
+    }
+
+    public void updateCompositions(
+            Map<String, TrainComposition.Composition.Segments.Segment.SegmentComposition> newCompositions) {
+        this.compositions.putAll(newCompositions);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -62,195 +65,220 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     public ConnectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_planner, parent, false);
-        ConnectionViewHolder vh = new ConnectionViewHolder(v);
-        return vh;
+        return new ConnectionViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ConnectionViewHolder holder, int position) {
-        //if (position != 0) return;
         final Connection conn = connection.get(position);
+
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.card.setVisibility((holder.card.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
+                boolean isExpanded = holder.card.getVisibility() == View.VISIBLE;
+                holder.card.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+                if (!isExpanded) {
+                    requestCompositionsForConnection(conn);
+                }
             }
         });
 
         if (conn != null) {
-            holder.co = conn;
-            if (conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
-                holder.alertText.setVisibility(View.VISIBLE);
-                String text = "";
-
-                if (conn.getAlerts().getAlertlist() != null)
-                    for (Alert anAlert : conn.getAlerts().getAlertlist()) {
-                        boolean toDel = false;
-                        if (singleAlert != null)
-                            for (Alert aSingleAlert : singleAlert) {
-                                if (aSingleAlert.getHeader().contentEquals(anAlert.getHeader()))
-                                    toDel = true;
-                            }
-                        if (!toDel)
-                            text += anAlert.getHeader() + "<br/>";
-                    }
-
-                if (text.endsWith("<br/>"))
-                    text = text.substring(0, text.length() - 5);
-                if (text.length() > 0) {
-                    holder.alertText.setVisibility(View.VISIBLE);
-                    holder.alertText.setText(Html.fromHtml(text));
-                } else
-                    holder.alertText.setVisibility(View.GONE);
-
-            } else {
-                holder.alertText.setVisibility(View.GONE);
-            }
-
-
-            String delayStr = " +"
-                    + Math.abs((Integer.valueOf(conn.getDeparture().getDelay()) / 60))
-                    + "'";
-            if (!conn.getDeparture().getDelay().contentEquals("0"))
-                holder.delayD.setText(delayStr);
-            else
-                holder.delayD.setText("");
-
-            delayStr = " +"
-                    + Math.abs((Integer.valueOf(conn.getArrival().getDelay()) / 60))
-                    + "'";
-            if (!conn.getArrival().getDelay().contentEquals("0"))
-                holder.delayA.setText(delayStr);
-            else
-                holder.delayA.setText("");
-
-            holder.departureName.setText(conn.getDeparture().getStation());
-            holder.departureName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startStationInfoActivity(
-                            conn.getDeparture().getStation(), conn.getDeparture().getTime(), conn.getDeparture().getStationInfo().getId());
-                }
-            });
-
-            holder.arrivalName.setText(conn.getArrival().getStation());
-            holder.arrivalName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startStationInfoActivity(
-                            conn.getArrival().getStation(), conn.getArrival().getTime(), conn.getArrival().getStationInfo().getId());
-                }
-            });
-
-            holder.departure.setText(conn.getDeparture().getPlatform());
-            holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
-
-
-            holder.arrival.setText(conn.getArrival().getPlatform());
-            holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
-
-            holder.triptime.setText(Html.fromHtml(
-                    " <b>"
-                            + Utils.formatDate(conn.getDuration(), true, false)
-                            + "</b>"));
-
-            holder.departtime.setText(conn.getDeparture().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getDeparture()
-                    .getTime(), false, false));
-
-            holder.arrivaltime.setText(conn.getArrival().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>") : Utils.formatDate(conn.getArrival()
-                    .getTime(), false, false));
-
-            holder.container.removeAllViews();
-            if (holder.numberoftrains != null) { //
-                if (conn.getVias() != null && conn.getVias().via != null && conn.getVias().via.size() >= 1) {
-                    holder.numberoftrainsll.removeAllViews();
-                    holder.numberoftrainsll.setVisibility(View.VISIBLE);
-
-                    holder.numberoftrains.setVisibility(View.GONE);
-
-                    LayoutInflater inflater = (LayoutInflater) holder.numberoftrainsll.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View v = inflater.inflate(R.layout.atrain, null);
-                    holder.numberoftrainsll.addView(v);
-                    for (Via avia : conn.getVias().via) {
-                        v = inflater.inflate(R.layout.atrain, null);
-                        holder.numberoftrainsll.addView(v);
-                    }
-
-                } else {
-                    holder.numberoftrains.setVisibility(View.VISIBLE);
-                    holder.numberoftrainsll.setVisibility(View.GONE);
-
-                    holder.numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn
-                            .getDeparture().getVehicle())));
-                }
-
-            }
-
-            int i = 1;
-            LayoutInflater inflater = (LayoutInflater) holder.lltrains.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            holder.lltrains.removeAllViews();
-
-            View v = inflater.inflate(R.layout.row_connection_detail, null);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startTrainInfoActivity(conn.getDeparture().getVehicle());
-                }
-            });
-            holder.lltrains.addView(v);
-
-            if (conn.getVias() != null && conn.getVias().via != null)
-                for (final Via aVia : conn.getVias().via) {
-                    v = inflater.inflate(R.layout.row_via_station, null);
-                    v.setOnClickListener(view -> startStationInfoActivity(aVia.getDeparture().getStation(), aVia.getArrival().getTime(), aVia.getStationInfo().getId()));
-
-                    holder.lltrains.addView(v);
-
-
-                    v = inflater.inflate(R.layout.row_connection_detail, null);
-                    v.setOnClickListener(view -> startTrainInfoActivity(aVia.getDeparture().getVehicle()));
-                    holder.lltrains.addView(v);
-                }
-
-            try {
-                holder.loadicon(Long.valueOf(conn.getDeparture().getTime()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (conn.getOccupancy() != null) {
-                holder.occupancy.setVisibility(View.VISIBLE);
-
-                switch (conn.getOccupancy().getName()) {
-                    case Occupancy.UNKNOWN:
-                        holder.occupancy.setVisibility(View.GONE);
-                        break;
-                    case Occupancy.HIGH:
-                        holder.occupancy.setImageResource(R.drawable.ic_occupancy_high);
-                        break;
-                    case Occupancy.MEDIUM:
-                        holder.occupancy.setImageResource(R.drawable.ic_occupancy_medium);
-                        break;
-                    case Occupancy.LOW:
-                        holder.occupancy.setImageResource(R.drawable.ic_occupancy_low);
-                        break;
-                    default:
-                        holder.occupancy.setVisibility(View.GONE);
-                }
-            } else
-                holder.occupancy.setVisibility(View.GONE);
-
+            bindBasicInfo(holder, conn);
+            bindAlerts(holder, conn);
+            bindOccupancy(holder, conn);
+            bindExpandedDetails(holder, conn);
         }
+    }
+
+    private void requestCompositionsForConnection(Connection conn) {
+        if (conn.getVias() != null && conn.getVias().via != null) {
+            for (Via via : conn.getVias().via) {
+                if (!compositions.containsKey(via.getVehicle())) {
+                    callback.onCompositionNeeded(via.getVehicle());
+                }
+            }
+        }
+
+        if (conn.getDeparture() != null && !compositions.containsKey(conn.getDeparture().getVehicle())) {
+            // Not usually needed if no vias, but logic handles it
+        }
+
+        if (conn.getArrival() != null && !compositions.containsKey(conn.getArrival().getVehicle())) {
+            callback.onCompositionNeeded(conn.getArrival().getVehicle());
+        }
+    }
+
+    private void bindBasicInfo(ConnectionViewHolder holder, Connection conn) {
+        String delayStr = " +" + Math.abs((Integer.valueOf(conn.getDeparture().getDelay()) / 60)) + "'";
+        holder.delayD.setText(!conn.getDeparture().getDelay().contentEquals("0") ? delayStr : "");
+
+        delayStr = " +" + Math.abs((Integer.valueOf(conn.getArrival().getDelay()) / 60)) + "'";
+        holder.delayA.setText(!conn.getArrival().getDelay().contentEquals("0") ? delayStr : "");
+
+        holder.departureName.setText(conn.getDeparture().getStation());
+        holder.departureName.setOnClickListener(v -> startStationInfoActivity(
+                conn.getDeparture().getStation(), conn.getDeparture().getTime(),
+                conn.getDeparture().getStationInfo().getId()));
+
+        holder.arrivalName.setText(conn.getArrival().getStation());
+        holder.arrivalName.setOnClickListener(v -> startStationInfoActivity(
+                conn.getArrival().getStation(), conn.getArrival().getTime(),
+                conn.getArrival().getStationInfo().getId()));
+
+        holder.departure.setText(conn.getDeparture().getPlatform());
+        holder.departure.setTypeface(Typeface.DEFAULT_BOLD);
+
+        holder.arrival.setText(conn.getArrival().getPlatform());
+        holder.arrival.setTypeface(Typeface.DEFAULT_BOLD);
+
+        holder.triptime.setText(Html.fromHtml(" <b>" + Utils.formatDate(conn.getDuration(), true, false) + "</b>"));
+
+        holder.departtime.setText(conn.getDeparture().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>")
+                : Utils.formatDate(conn.getDeparture().getTime(), false, false));
+        holder.arrivaltime.setText(conn.getArrival().isCancelled() ? Html.fromHtml("<font color=\"red\">XXXX</font>")
+                : Utils.formatDate(conn.getArrival().getTime(), false, false));
+
+        holder.numberoftrainsll.removeAllViews();
+        if (conn.getVias() != null && conn.getVias().via != null && !conn.getVias().via.isEmpty()) {
+            holder.numberoftrainsll.setVisibility(View.VISIBLE);
+            holder.numberoftrains.setVisibility(View.GONE);
+
+            LayoutInflater inflater = LayoutInflater.from(holder.numberoftrainsll.getContext());
+            holder.numberoftrainsll.addView(inflater.inflate(R.layout.atrain, holder.numberoftrainsll, false));
+            for (Via avia : conn.getVias().via) {
+                holder.numberoftrainsll.addView(inflater.inflate(R.layout.atrain, holder.numberoftrainsll, false));
+            }
+        } else {
+            holder.numberoftrains.setVisibility(View.VISIBLE);
+            holder.numberoftrainsll.setVisibility(View.GONE);
+            holder.numberoftrains.setText(Html.fromHtml(Utils.getTrainId(conn.getDeparture().getVehicle())));
+        }
+    }
+
+    private void bindAlerts(ConnectionViewHolder holder, Connection conn) {
+        if (conn.getAlerts() != null && conn.getAlerts().getNumber() > 0) {
+            String text = "";
+            if (conn.getAlerts().getAlertlist() != null)
+                for (Alert anAlert : conn.getAlerts().getAlertlist()) {
+                    boolean toDel = false;
+                    if (singleAlert != null)
+                        for (Alert aSingleAlert : singleAlert) {
+                            if (aSingleAlert.getHeader().contentEquals(anAlert.getHeader()))
+                                toDel = true;
+                        }
+                    if (!toDel)
+                        text += anAlert.getHeader() + "<br/>";
+                }
+
+            if (text.endsWith("<br/>"))
+                text = text.substring(0, text.length() - 5);
+
+            if (text.length() > 0) {
+                holder.alertText.setVisibility(View.VISIBLE);
+                holder.alertText.setText(Html.fromHtml(text));
+            } else
+                holder.alertText.setVisibility(View.GONE);
+
+        } else {
+            holder.alertText.setVisibility(View.GONE);
+        }
+    }
+
+    private void bindOccupancy(ConnectionViewHolder holder, Connection conn) {
+        if (conn.getOccupancy() != null) {
+            holder.occupancy.setVisibility(View.VISIBLE);
+            switch (conn.getOccupancy().getName()) {
+                case Occupancy.HIGH:
+                    holder.occupancy.setImageResource(R.drawable.ic_occupancy_high);
+                    break;
+                case Occupancy.MEDIUM:
+                    holder.occupancy.setImageResource(R.drawable.ic_occupancy_medium);
+                    break;
+                case Occupancy.LOW:
+                    holder.occupancy.setImageResource(R.drawable.ic_occupancy_low);
+                    break;
+                default:
+                    holder.occupancy.setVisibility(View.GONE);
+            }
+        } else {
+            holder.occupancy.setVisibility(View.GONE);
+        }
+    }
+
+    private void bindExpandedDetails(ConnectionViewHolder holder, Connection conn) {
+        holder.lltrains.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(holder.lltrains.getContext());
+
+        long startTime = Long.valueOf(conn.getDeparture().getTime());
+
+        // First Train View
+        View firstTrainView = inflater.inflate(R.layout.row_connection_detail, holder.lltrains, false);
+        firstTrainView.setOnClickListener(view -> startTrainInfoActivity(conn.getDeparture().getVehicle()));
+        holder.lltrains.addView(firstTrainView);
+
+        if (conn.getVias() != null && conn.getVias().via != null) {
+
+            // Train 1: Depart -> first Via
+            String firstVehicleId = conn.getDeparture().getVehicle();
+            // Original logic used "aVia.getVehicle()" for EACH loop iteration.
+            // It seems "aVia.getVehicle()" represents the train ARRIVING at the via?
+            // "aVia.getDeparture().getVehicle()" represents the train DEPARTING from the
+            // via?
+            // Let's assume standard logic:
+
+            // The first LOOP iteration in original:
+            // "getCompositionFromCache(aVia.getVehicle())"
+            // "displayComposition(..., lltrains.getChildAt(position), aVia, prevTimeFinal)"
+
+            // So indeed, the first view we added (Train 1) is populated by the first Via's
+            // "Vehicle" property?
+            // Or maybe Via.getVehicle() IS the first train.
+
+            long prevTime = startTime;
+
+            for (Via via : conn.getVias().via) {
+                // Populate the LAST added train view (Train arriving at this Via)
+                String vehicleId = via.getVehicle();
+                TrainComposition.Composition.Segments.Segment.SegmentComposition output = compositions.get(vehicleId);
+
+                View currentTrainView = holder.lltrains.getChildAt(holder.lltrains.getChildCount() - 1);
+                displayComposition(output, vehicleId, currentTrainView, via, prevTime);
+
+                // Add Station View
+                View vStation = inflater.inflate(R.layout.row_via_station, holder.lltrains, false);
+                vStation.setOnClickListener(view -> startStationInfoActivity(via.getDeparture().getStation(),
+                        via.getArrival().getTime(), via.getStationInfo().getId()));
+                holder.lltrains.addView(vStation);
+                loadStations(vStation, via);
+
+                // Add Next Train View (Departing from this Via)
+                View vNextTrain = inflater.inflate(R.layout.row_connection_detail, holder.lltrains, false);
+                vNextTrain.setOnClickListener(view -> startTrainInfoActivity(via.getDeparture().getVehicle()));
+                holder.lltrains.addView(vNextTrain);
+
+                prevTime = Long.valueOf(via.getDeparture().getTime());
+            }
+        }
+
+        // Final Train (from last station/start to Arrival)
+        // Original logic: "getCompositionFromCache(co.getArrival().getVehicle())"
+
+        String lastVehicle = conn.getArrival().getVehicle();
+        TrainComposition.Composition.Segments.Segment.SegmentComposition lastCompo = compositions.get(lastVehicle);
+
+        long endTime = ((conn.getVias() == null || conn.getVias().via.size() == 0) ? conn.getDeparture().getTimeLong()
+                : conn.getVias().via.get(conn.getVias().via.size() - 1).getDeparture().getTimeLong());
+        long lastDuration = conn.getArrival().getTimeLong() - endTime;
+
+        displayComposition(lastCompo, lastVehicle, holder.lltrains.getChildAt(holder.lltrains.getChildCount() - 1),
+                null, lastDuration);
     }
 
     @Override
     public int getItemCount() {
         return connection.size();
     }
-
-    //AUTHOR: Bertware : https://github.com/hyperrail/hyperrail-for-android
-    // Credits to him.
-
 
     private MaterialType convert(String parentType, String subType, String orientation, int firstClassSeats) {
         if (parentType.startsWith("HLE")) {
@@ -297,32 +325,23 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 switch (subType) {
                     case "BXAA":
                     case "BXCT":
-                        // 134/117 2nd class, LIKELY steering cabin
                         newSubType = "BDX";
                         break;
                     case "BYU":
-                        // BU + Y
                         break;
                     case "BUH":
-                        // BU + H
                     case "BDUH":
-                        // BUH + D
                     case "BAU":
-                        // Mixed 1st/2nd class
                     case "BU":
-                        // 140/133 2nd class
                         newSubType = "B";
                         break;
                     case "AU":
-                        // 124/133 1st class
                         newSubType = "A";
                         break;
                     case "BDU":
-                        // 102/145 2nd class w/ luggage and bike storage
                         newSubType = "BD";
                         break;
                     case "BDAU":
-                        // 1st/2nd class w/ luggage and bike storage
                         newSubType = "ABD";
                         break;
                 }
@@ -414,7 +433,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             case "AM80M":
                 newParentType = "AM80";
                 switch (subType) {
-                    // B, BX, ABDX,
                     case "A":
                     case "C":
                         if (firstClassSeats > 0) {
@@ -441,7 +459,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             case "AM96P":
                 newParentType = "AM96";
                 switch (subType) {
-                    // B, BX, ABDX,
                     case "A":
                     case "C":
                         if (firstClassSeats > 0) {
@@ -465,7 +482,6 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         switch (parentType) {
             case "HLE18":
-                // NMBS doesn't distinguish between the old and new gen. All the old gen vehicles are out of service.
                 newParentType += "II";
                 newSubType = "";
                 break;
@@ -482,13 +498,11 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
                 break;
             case "HLE21":
             case "HLE27":
-                newSubType = "";//OR U???
-
+                newSubType = "";
         }
 
         return new MaterialType(newParentType, newSubType, orientation);
     }
-
 
     class ConnectionViewHolder extends RecyclerView.ViewHolder {
         TextView delayD;
@@ -508,9 +522,8 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
         LinearLayout lltrains;
         View parent;
         CardView card;
-        Connection co;
 
-        private ConnectionViewHolder(@NonNull View v) {
+        ConnectionViewHolder(@NonNull View v) {
             super(v);
             container = v.findViewById(R.id.viacontainer);
             delayD = v.findViewById(R.id.delayD);
@@ -529,135 +542,37 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
             lltrains = v.findViewById(R.id.lltrains);
             card = v.findViewById(R.id.card);
             this.parent = v;
-
-
         }
-
-        private void loadicon(long prevTime) {
-
-            int i = 0;
-            if (co.getVias() != null && co.getVias().via != null) {
-                for (final Via aVia : co.getVias().via) {
-
-
-                    final TrainComposition.Composition.Segments.Segment.SegmentComposition composition =
-                            getCompositionFromCache(aVia.getVehicle());
-                    final int position = i;
-                    final long prevTimeFinal = prevTime;
-                    if (composition == null)
-                        Ion.with(c).load("https://api.irail.be/composition.php?id=" + aVia.getVehicle() + "&format=json#")
-                                .as(new TypeToken<TrainComposition>() {
-                                }).setCallback(new FutureCallback<TrainComposition>() {
-                                    @Override
-                                    public void onCompleted(Exception e, TrainComposition result) {
-                                        // Log.e("CVE", "Ion " + result);
-                                        try {
-                                            if (result != null && result.composition != null && !result.composition.segments.segment.isEmpty()) {
-                                                if (result.composition.segments.segment.get(0).composition != null) {
-                                                    //Log.e("CVE", "ADDDD");
-                                                    cacheComposition(aVia.getVehicle(), result.composition.segments.segment.get(0).composition);
-                                                    displayComposition(result.composition.segments.segment.get(0).composition,
-                                                            aVia.getVehicle(),
-                                                            lltrains.getChildAt(position), aVia, prevTimeFinal);
-                                                }
-                                            } else
-                                                displayComposition(null,
-                                                        aVia.getVehicle(),
-                                                        lltrains.getChildAt(position), aVia, prevTimeFinal);
-                                        } catch (Exception ex) {
-
-                                        }
-                                    }
-                                });
-                    else {
-                        // Log.e("CVE", "CACHE " + aMap.getKey());
-                        displayComposition(composition,
-                                aVia.getVehicle(),
-                                lltrains.getChildAt(i), aVia, prevTime);
-                    }
-                    i++;
-                    loadStations(lltrains.getChildAt(i), aVia);
-                    i++;
-                    prevTime = Long.valueOf(aVia.getDeparture().getTime());
-                }
-
-            }
-
-            final TrainComposition.Composition.Segments.Segment.SegmentComposition lastCompo =
-                    getCompositionFromCache(co.getArrival().getVehicle());
-
-            long start = co.getArrival().getTimeLong();
-            long end = 0;
-            end = ((co.getVias() == null || co.getVias().via.size() == 0) ? co.getDeparture().getTimeLong() : co.getVias().via.get(co.getVias().via.size() - 1).getDeparture().getTimeLong());
-
-            final long lastDuration = start - end;
-
-            if (lastCompo == null)
-                Ion.with(c).load("https://api.irail.be/composition.php?id=" + co.getArrival().getVehicle() + "&format=json#")
-                        .as(new TypeToken<TrainComposition>() {
-                        }).setCallback(new FutureCallback<TrainComposition>() {
-                            @Override
-                            public void onCompleted(Exception e, TrainComposition result) {
-                                if (result != null && result.composition != null && result.composition.segments != null && result.composition.segments.segment.size() > 0) {
-                                    if (result.composition.segments.segment.get(0).composition != null) {
-                                        cacheComposition(co.getArrival().getVehicle(), result.composition.segments.segment.get(0).composition);
-                                        displayComposition(result.composition.segments.segment.get(0).composition,
-                                                co.getArrival().getVehicle(),
-                                                lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
-                                    }
-                                } else
-                                    displayComposition(null,
-                                            co.getArrival().getVehicle(),
-                                            lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
-                            }
-                        });
-            else {
-                displayComposition(lastCompo,
-                        co.getArrival().getVehicle(),
-                        lltrains.getChildAt(lltrains.getChildCount() - 1), null, lastDuration);
-            }
-        }
-
     }
 
     private void loadStations(View stationRow, Via aVia) {
         if (stationRow == null)
             return;
 
-        TextView tvArrival = ((TextView) stationRow
-                .findViewById(R.id.tv_arrival_platform));
+        TextView tvArrival = stationRow.findViewById(R.id.tv_arrival_platform);
         tvArrival.setText(aVia.getArrival().getPlatform());
 
         if (aVia.getArrival().getPlatforminfo() != null && aVia.getArrival().getPlatforminfo().normal == 0)
-            tvArrival
-                    .setText("!" + tvArrival.getText() + "!");
+            tvArrival.setText("!" + tvArrival.getText() + "!");
 
-        TextView tvDeparture = ((TextView) stationRow
-                .findViewById(R.id.tv_departure_platform));
+        TextView tvDeparture = stationRow.findViewById(R.id.tv_departure_platform);
         tvDeparture.setText(aVia.getDeparture().getPlatform());
 
         if (aVia.getDeparture().getPlatforminfo() != null && aVia.getDeparture().getPlatforminfo().normal == 0)
-            tvDeparture
-                    .setText("!" + tvDeparture.getText() + "!");
-
+            tvDeparture.setText("!" + tvDeparture.getText() + "!");
 
         ((TextView) stationRow.findViewById(R.id.tv_arrival_time))
-                .setText(Utils.formatDate(aVia.getArrival()
-                        .getTime(), false, false));
+                .setText(Utils.formatDate(aVia.getArrival().getTime(), false, false));
         ((TextView) stationRow.findViewById(R.id.tv_departure_time))
-                .setText(Utils.formatDate(aVia.getDeparture()
-                        .getTime(), false, false));
-        ((TextView) stationRow.findViewById(R.id.tv_station))
-                .setText(aVia.getName());
+                .setText(Utils.formatDate(aVia.getDeparture().getTime(), false, false));
+        ((TextView) stationRow.findViewById(R.id.tv_station)).setText(aVia.getName());
 
         if (aVia.getTimeBetween() != null)
-            ((TextView) stationRow.findViewById(R.id.tv_duration))
-                    .setText("("+ aVia.getTimeBetween()+ ")");
-
+            ((TextView) stationRow.findViewById(R.id.tv_duration)).setText("(" + aVia.getTimeBetween() + ")");
     }
 
     private void displayComposition(TrainComposition.Composition.Segments.Segment.SegmentComposition composition,
-                                    String name, View v, Via aVia, long prevtime) {
+            String name, View v, Via aVia, long prevtime) {
 
         if (v == null || v.findViewById(R.id.train_name) == null) {
             return;
@@ -665,16 +580,14 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         ((TextView) v.findViewById(R.id.train_name)).setText(name.replace("BE.NMBS.", ""));
 
-        if (aVia != null)
-            ((TextView) v.findViewById(R.id.tv_duration))
-                    .setText(Utils.formatDate(
-                            (Long.valueOf(aVia.getArrival().getTime()) - prevtime),
-                            true, false));
-        else
-            ((TextView) v.findViewById(R.id.tv_duration))
-                    .setText(Utils.formatDate(
-                            (Long.valueOf(prevtime)),
-                            true, false));
+        long duration = 0;
+        if (aVia != null) {
+            duration = Long.valueOf(aVia.getArrival().getTime()) - prevtime;
+        } else {
+            duration = prevtime; // In the call for last segment, "prevtime" arg is actually duration
+        }
+
+        ((TextView) v.findViewById(R.id.tv_duration)).setText(Utils.formatDate(duration, true, false));
 
         if (composition == null) {
             v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
@@ -684,40 +597,36 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         if (composition.units.unit.size() > 1) {
             try {
-                MaterialType type = composition.units.
-                        unit.get(1).materialType;
-                type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(1).seatsFirstClass);
+                MaterialType type = composition.units.unit.get(1).materialType;
+                type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation,
+                        composition.units.unit.get(1).seatsFirstClass);
                 v.findViewById(R.id.trainicon).setVisibility(View.GONE);
-                String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
-                // Log.e("CVE", "WAGON: " + path);
+                String path = "trains/SNCB_" + type.parent_type
+                        + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
                 InputStream ims = c.getAssets().open(path);
                 Drawable d = Drawable.createFromStream(ims, null);
                 ((ImageView) v.findViewById(R.id.trainicon)).setImageDrawable(d);
                 ims.close();
                 v.findViewById(R.id.trainicon).setVisibility(View.VISIBLE);
-                //i1 = true;
             } catch (Exception ex) {
                 ex.printStackTrace();
-                return;
             }
         }
 
         try {
-            MaterialType type = composition.units.
-                    unit.get(0).materialType;
-            type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation, composition.units.unit.get(0).seatsFirstClass);
+            MaterialType type = composition.units.unit.get(0).materialType;
+            type = convert(type.parent_type, type.sub_type.toUpperCase(), type.orientation,
+                    composition.units.unit.get(0).seatsFirstClass);
             v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
-            String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "") + "_R.GIF";
-            //Log.e("CVE", "LOCO: " + path);
+            String path = "trains/SNCB_" + type.parent_type + (type.sub_type.length() > 0 ? ("_" + type.sub_type) : "")
+                    + "_R.GIF";
             InputStream ims = c.getAssets().open(path);
             Drawable d = Drawable.createFromStream(ims, null);
             ((ImageView) v.findViewById(R.id.trainiconloco)).setImageDrawable(d);
             ims.close();
             v.findViewById(R.id.trainiconloco).setVisibility(View.VISIBLE);
-            // i2 = true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return;
         }
     }
 
@@ -731,72 +640,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
     private void startTrainInfoActivity(String vehicle) {
         Intent i = new Intent(c, InfoTrainActivity.class);
-        //i.putExtra("fromto", getDeparture() + " - " + getArrival());
         i.putExtra("Name", vehicle);
         c.startActivity(i);
     }
-
-    private void cacheComposition(String trainId, TrainComposition.Composition.Segments.Segment.SegmentComposition composition) {
-
-        try {
-            File file = new File(c.getCacheDir() + File.separator + "composition" + File.separator + trainId + ".cache");
-
-            if (!file.getParentFile().exists())
-                file.getParentFile().mkdirs();
-
-            if (!file.exists())
-                file.createNewFile();
-
-            FileOutputStream stream = new FileOutputStream(file);
-            try {
-                stream.write(new Gson().toJson(composition).getBytes());
-            } finally {
-                stream.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private TrainComposition.Composition.Segments.Segment.SegmentComposition getCompositionFromCache(String trainId) {
-
-        try {
-            File file = new File(c.getCacheDir() + File.separator + "composition" + File.separator + trainId + ".cache");
-
-            if (file.exists()) {
-                Calendar time = Calendar.getInstance();
-                time.add(Calendar.HOUR, -24);
-                //I store the required attributes here and delete them
-                Date lastModified = new Date(file.lastModified());
-                if (lastModified.before(time.getTime())) {
-                    //Log.e("CVE", "FILE IS TOO OLD, DELETE IT");
-                    file.delete();
-                    return null;
-                } //else
-                //Log.e("CVE", "FILE IS UP TO DATE");
-            } else
-                return null;
-
-            int length = (int) file.length();
-
-            byte[] bytes = new byte[length];
-
-            FileInputStream in = new FileInputStream(file);
-            try {
-                in.read(bytes);
-            } finally {
-                in.close();
-            }
-
-            String contents = new String(bytes);
-            //Log.e("CVE", "I got:  " + contents);
-            return new Gson().fromJson(contents, TrainComposition.Composition.Segments.Segment.SegmentComposition.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-
-
-    }
-
 }

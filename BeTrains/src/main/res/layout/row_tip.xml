@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="16dip"
+        app:tint="@color/darkblue"
         app:srcCompat="@drawable/tip" />
 
     <LinearLayout

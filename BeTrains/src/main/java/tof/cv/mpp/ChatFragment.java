@@ -1,6 +1,5 @@
 package tof.cv.mpp;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -57,7 +56,8 @@ import tof.cv.mpp.view.LetterTileProvider;
 public class ChatFragment extends Fragment {
 
     /**
-     * Called when the activity is first    <com.google.android.material.floatingactionbutton.FloatingActionButton
+     * Called when the activity is first
+     * <com.google.android.material.floatingactionbutton.FloatingActionButton
      * android:id="@+id/fab"
      * android:layout_width="wrap_content"
      * android:layout_height="wrap_content"
@@ -70,8 +70,8 @@ public class ChatFragment extends Fragment {
      */
     FirebaseRecyclerAdapter mFirebaseAdapter;
     private TextView mTitleText;
-    private Button btnSend;
-    private TextInputEditText messageTxtField;
+    private FloatingActionButton btnSend;
+    private EditText messageTxtField;
     private final String TAG = "MessagesTrain.java";
     private boolean posted = false;
     String trainId;
@@ -79,13 +79,12 @@ public class ChatFragment extends Fragment {
     Resources res;
     int tileSize;
 
-
     private static final int MENU_FILTER = 0;
     private static final int MENU_PROFILE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chat, null);
     }
 
@@ -94,7 +93,6 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
-
 
     }
 
@@ -122,11 +120,11 @@ public class ChatFragment extends Fragment {
     }
 
     private void setBtnSendListener() {
-        btnSend.setOnClickListener(new Button.OnClickListener() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (posted) {
                     Toast.makeText(getActivity(),
-                                    R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
+                            R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
                             .show();
                 } else {
                     String pseudo = PreferenceManager
@@ -159,18 +157,19 @@ public class ChatFragment extends Fragment {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
         String pic = "";
-        if (getContext() != null && !PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("hidepic", false))
+        if (getContext() != null
+                && !PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("hidepic", false))
             pic = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("profilepic", "");
 
         String user_id = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("prefmail", "");
         boolean donator = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("donator", false);
         boolean beta = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("beta", false);
 
-
         if (user_id.endsWith("@cloudtestlabaccounts.com"))
             Toast.makeText(getActivity(), "Hello Bot", Toast.LENGTH_LONG).show();
         else
-            ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic, user_id, donator, beta));
+            ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic,
+                    user_id, donator, beta));
 
         update();
         View view = getActivity().getCurrentFocus();
@@ -192,14 +191,14 @@ public class ChatFragment extends Fragment {
         final RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
 
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
-        Query ref2 = trainId == null ? ref.limitToLast(99) : ref.orderByChild("train_id")
-                .equalTo(trainId).limitToLast(99);
+        Query ref2 = trainId == null ? ref.limitToLast(99)
+                : ref.orderByChild("train_id")
+                        .equalTo(trainId).limitToLast(99);
 
         res = getResources();
         tileSize = res.getDimensionPixelSize(R.dimen.letter_tile_size);
 
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
-                MessageViewHolder>(
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(
                 Message.class,
                 R.layout.row_message,
                 MessageViewHolder.class,
@@ -207,7 +206,7 @@ public class ChatFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder,
-                                              final Message message, int position) {
+                    final Message message, int position) {
                 viewHolder.getNickname().setText(message.getUser_name());
 
                 if (message.getUser_message() != null & message.getUser_message().contains("http")) {
@@ -227,7 +226,8 @@ public class ChatFragment extends Fragment {
                 viewHolder.getMessagebody().setText(message.getUser_message());
 
                 if (message.getEntry_date().contains(":"))
-                    viewHolder.getTime().setText(message.getEntry_date().substring(0, message.getEntry_date().lastIndexOf(":")));
+                    viewHolder.getTime()
+                            .setText(message.getEntry_date().substring(0, message.getEntry_date().lastIndexOf(":")));
                 else
                     viewHolder.getTime().setText(message.getEntry_date());
 
@@ -248,10 +248,10 @@ public class ChatFragment extends Fragment {
                 else {
 
                     final LetterTileProvider tileProvider = new LetterTileProvider(getContext());
-                    final Bitmap letterTile = tileProvider.getLetterTile(message.getUser_name(), message.getUser_name(), tileSize, tileSize);
+                    final Bitmap letterTile = tileProvider.getLetterTile(message.getUser_name(), message.getUser_name(),
+                            tileSize, tileSize);
                     viewHolder.iv.setImageBitmap(letterTile);
                 }
-
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -294,7 +294,7 @@ public class ChatFragment extends Fragment {
 
             @Override
             protected void onDataChanged() {
-                if (getActivity() == null)
+                if (getActivity() == null || getView()==null)
                     return;
 
                 int itemCount = mMessageRecyclerView.getAdapter().getItemCount();
@@ -305,7 +305,7 @@ public class ChatFragment extends Fragment {
                 if (itemCount > 0) {
                     if (getActivity() instanceof InfoTrainActivity)
                         ((InfoTrainActivity) getActivity()).setChatBadge(itemCount);
-                    if (messagesEmpty != null){
+                    if (messagesEmpty != null) {
                         messagesEmpty.setVisibility(View.GONE);
                         getView().findViewById(R.id.recyclerview).setVisibility(View.VISIBLE);
                         getView().findViewById(R.id.send_layout).setVisibility(View.VISIBLE);
@@ -371,7 +371,7 @@ public class ChatFragment extends Fragment {
         mTitleText.setText(PreferenceManager.getDefaultSharedPreferences(
                 getActivity()).getString("prefname", "Anonymous"));
 
-        LinearLayout mSendLayout = (LinearLayout) getView().findViewById(
+        View mSendLayout = getView().findViewById(
                 R.id.send_layout);
 
         if (trainId == null) {
@@ -380,7 +380,6 @@ public class ChatFragment extends Fragment {
 
         update();
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -410,7 +409,7 @@ public class ChatFragment extends Fragment {
                 alert.setPositiveButton(R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
-                                                int whichButton) {
+                                    int whichButton) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(DbAdapterConnection.KEY_NAME,
                                         input.getText().toString());
@@ -425,7 +424,7 @@ public class ChatFragment extends Fragment {
                 alert.setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
-                                                int whichButton) {
+                                    int whichButton) {
                             }
                         });
 
@@ -435,8 +434,8 @@ public class ChatFragment extends Fragment {
                 if (Build.VERSION.SDK_INT >= 11)
                     startActivity(new Intent(getActivity(),
                             MyPreferenceActivity.class).putExtra(
-                            PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-                            Prefs1Fragment.class.getName()));
+                                    PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                                    Prefs1Fragment.class.getName()));
                 else {
                     startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
                 }
