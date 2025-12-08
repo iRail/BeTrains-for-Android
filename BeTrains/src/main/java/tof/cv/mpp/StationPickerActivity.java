@@ -2,16 +2,13 @@ package tof.cv.mpp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputEditText;
 
-import android.Manifest;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -52,8 +49,7 @@ import tof.cv.mpp.adapter.IndexAdapter;
 import tof.cv.mpp.bo.StationLocation;
 import tof.cv.mpp.bo.StationLocationApi;
 
-public class StationPickerActivity extends AppCompatActivity implements
-        ViewPager.OnPageChangeListener {
+public class StationPickerActivity extends AppCompatActivity {
 
     MyAdapter mAdapter;
     ViewPager mPager;
@@ -66,13 +62,10 @@ public class StationPickerActivity extends AppCompatActivity implements
 
     protected static String[] TITLES;
 
-    // , "EUROPE"
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 
         super.onSaveInstanceState(outState);
-        // getSupportFragmentManager().putFragment(outState,
-        // StationFavListFragment.class.getName(), f);
     }
 
     /**
@@ -95,7 +88,10 @@ public class StationPickerActivity extends AppCompatActivity implements
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
-        mPager.setOnPageChangeListener(this);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mPager);
+
         mDbHelper = new DbAdapterConnection(this);
 
     }
@@ -115,7 +111,6 @@ public class StationPickerActivity extends AppCompatActivity implements
 
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenuInfo menuInfo) {
-            // super.onCreateContextMenu(menu, v, menuInfo);
             menu.add(0, ADD_EUROPE_ID, 0, R.string.action_add_to_favorites);
         }
 
@@ -165,7 +160,6 @@ public class StationPickerActivity extends AppCompatActivity implements
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-            // System.out.println("DO NOTHING!");
 
         }
 
@@ -176,14 +170,9 @@ public class StationPickerActivity extends AppCompatActivity implements
 
         ArrayList<StationLocation> stationList;
 
-        /**
-         * When creating, retrieve this instance's number from its arguments.
-         */
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            // mNum = getArguments() != null ? getArguments().getInt("num") : 1;
             View v = null;
             v = inflater.inflate(R.layout.fragment_station_picker, container,
                     false);
@@ -198,7 +187,6 @@ public class StationPickerActivity extends AppCompatActivity implements
             final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             String langue = getString(R.string.url_lang);
-            // There is a setting to force dutch when Android is in English.
             if (mPrefs.getBoolean("prefnl", false))
                 langue = "nl";
             final String finalLangue = langue;
@@ -208,10 +196,7 @@ public class StationPickerActivity extends AppCompatActivity implements
                 stationList = cache.station;
                 refreshList(finalLangue.contentEquals("en"));
                 long delta = System.currentTimeMillis() - mPrefs.getLong("stationsDate", 0);
-                Log.e("CVE","Vide");
-                //Force update
                 if (delta > 10 * DateUtils.DAY_IN_MILLIS || !finalLangue.contentEquals(mPrefs.getString("stationsLan", ""))) {
-                    Log.e("CVE","cas1");
                     Ion.with(getActivity())
                             .load("https://api.irail.be/stations.php?format=json&lang="+finalLangue).setTimeout(1200)
                             .as(new TypeToken<StationLocationApi>() {
@@ -219,7 +204,6 @@ public class StationPickerActivity extends AppCompatActivity implements
                             .setCallback(new FutureCallback<StationLocationApi>() {
                                 @Override
                                 public void onCompleted(Exception e, StationLocationApi apiList) {
-                                    Log.e("CVE"+apiList,""+apiList);
                                     if (apiList != null && apiList.station != null) {
                                         SharedPreferences.Editor ed = mPrefs.edit();
                                         Gson gson = new Gson();
@@ -241,8 +225,6 @@ public class StationPickerActivity extends AppCompatActivity implements
                                     public void onCompleted(Exception e, StationLocationApi apiList) {
                                         if (e != null && e.getMessage() != null)
                                             Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG);
-
-                                        Log.e("CVE"+apiList,""+apiList);
 
                                         if (apiList != null && apiList.station != null) {
                                             SharedPreferences.Editor ed = mPrefs.edit();
@@ -284,7 +266,7 @@ public class StationPickerActivity extends AppCompatActivity implements
                     android.R.layout.simple_list_item_1, list);
 
 
-            EditText filterText = (EditText) getActivity().findViewById(
+            TextInputEditText filterText = (TextInputEditText) getActivity().findViewById(
                     R.id.search_box);
             FilterTextWatcher filterTextWatcher = new FilterTextWatcher(a);
             if (filterText != null) {
@@ -339,26 +321,7 @@ public class StationPickerActivity extends AppCompatActivity implements
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-/*
-            if (mReady && mDialogText != null && firstVisibleItem >0) {
-                try {
-                    char firstLetter = view.getItemAtPosition(firstVisibleItem)
-                            .toString().charAt(0);
 
-                    if (!mShowing && firstLetter != mPrevLetter) {
-                        mShowing = true;
-                        mDialogText.setVisibility(View.VISIBLE);
-                    }
-                    mDialogText.setText(((Character) firstLetter).toString());
-                    mHandler.removeCallbacks(mRemoveWindow);
-                    mHandler.postDelayed(mRemoveWindow, 1000);
-                    mPrevLetter = firstLetter;
-                } catch (Exception e) {
-
-                }
-
-            }
-*/
         }
 
     }
@@ -367,10 +330,6 @@ public class StationPickerActivity extends AppCompatActivity implements
 
         Cursor mCursor;
 
-        /**
-         * Create a new instance of CountingFragment, providing "num" as an
-         * argument.
-         */
         static StationFavListFragment newInstance() {
             f = new StationFavListFragment();
             return f;
@@ -380,10 +339,6 @@ public class StationPickerActivity extends AppCompatActivity implements
         public void onPause() {
             super.onPause();
         }
-
-        /**
-         * When creating, retrieve this instance's number from its arguments.
-         */
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -494,27 +449,6 @@ public class StationPickerActivity extends AppCompatActivity implements
         public CharSequence getPageTitle(int position) {
             return TITLES[position % TITLES.length];
         }
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset,
-                               int positionOffsetPixels) {
-        // Log.i("","SCROLLED "+position);
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if (position == 1) {
-            f.updateList();
-        }
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        // Log.i("","CHANGED "+state);
-
     }
 
 }

@@ -95,14 +95,18 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".StationPickerActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android.configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".MyPreferenceActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_label_settings"
             android:theme="@style/Theme.MyABTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- <service android:name=".GeofenceTransitionsIntentService"/> -->
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ProfileSettingsActivity"
+            android:theme="@style/Theme.MyTheme" />
+        <!-- <service android:name=".GeofenceTransitionsIntentService"/> -->
         <provider
             android:name="tof.cv.search.SearchProvider"
             android:authorities="tof.cv.search.SearchProvider"

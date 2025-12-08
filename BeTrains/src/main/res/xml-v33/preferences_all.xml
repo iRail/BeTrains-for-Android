@@ -16,11 +16,13 @@
 
     <PreferenceCategory app:title="General">
 
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="prefnl"
-            android:summary="@string/settings_general_force_dutch_subtext"
-            android:title="@string/settings_general_force_dutch" />
+        <Preference
+            android:key="preflocale"
+            android:title="@string/settings_locale"
+            android:summary="Change app language (Android 13+)">
+            <intent android:action="android.settings.APP_LOCALE_SETTINGS"
+                    android:data="package:tof.cv.mpp" />
+        </Preference>
 
         <ListPreference
             android:entries="@array/menu_pref"

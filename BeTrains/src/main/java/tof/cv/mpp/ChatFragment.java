@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
@@ -18,9 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,36 +40,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
 
-import tof.cv.mpp.MyPreferenceActivity.Prefs1Fragment;
 import tof.cv.mpp.Utils.DbAdapterConnection;
 import tof.cv.mpp.adapter.MessageViewHolder;
 import tof.cv.mpp.bo.Message;
-import tof.cv.mpp.view.CoolEditText;
 import tof.cv.mpp.view.LetterTileProvider;
 
 public class ChatFragment extends Fragment {
 
-    /**
-     * Called when the activity is first
-     * <com.google.android.material.floatingactionbutton.FloatingActionButton
-     * android:id="@+id/fab"
-     * android:layout_width="wrap_content"
-     * android:layout_height="wrap_content"
-     * app:backgroundTint="@color/fab"
-     * app:hideOnScroll="false"
-     * app:layout_anchor="@id/bar"
-     * app:rippleColor="#FFFF8888"
-     * app:srcCompat="@drawable/ic_fab_search"
-     * app:tint="@color/darktextcolor" /> created.
-     */
     FirebaseRecyclerAdapter mFirebaseAdapter;
     private TextView mTitleText;
     private FloatingActionButton btnSend;
     private EditText messageTxtField;
-    private final String TAG = "MessagesTrain.java";
-    private boolean posted = false;
     String trainId;
     DatabaseReference ref;
     Resources res;
@@ -84,16 +62,14 @@ public class ChatFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chat, null);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -101,8 +77,7 @@ public class ChatFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mTitleText = getView().findViewById(R.id.pseudo);
         btnSend = getView().findViewById(R.id.send);
-        messageTxtField = getView().findViewById(
-                R.id.yourmessage);
+        messageTxtField = getView().findViewById(R.id.yourmessage);
 
         setBtnSendListener();
         update();
@@ -116,46 +91,23 @@ public class ChatFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void setBtnSendListener() {
         btnSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (posted) {
-                    Toast.makeText(getActivity(),
-                            R.string.chat_send_err_max_messages, Toast.LENGTH_LONG)
-                            .show();
-                } else {
-                    String pseudo = PreferenceManager
-                            .getDefaultSharedPreferences(getActivity())
-                            .getString("prefname", "Anonymous");
-                    if (pseudo.contentEquals("Anonymous"))
-                        Toast.makeText(
-                                getActivity(),
-                                R.string.chat_send_err_username,
-                                Toast.LENGTH_LONG).show();
-                    else if (messageTxtField.getText().toString()
-                            .contentEquals(""))
-                        Toast.makeText(getActivity(), R.string.chat_send_err_empty,
-                                Toast.LENGTH_LONG).show();
-                    else {
-                        postMessage(pseudo);
-                    }
+                if (messageTxtField.getText().toString().isEmpty())
+                    Toast.makeText(getActivity(), R.string.chat_send_err_empty, Toast.LENGTH_LONG).show();
+                else {
+                    postMessage(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("prefname", "Anonymous"));
                 }
-
             }
-
         });
-
     }
 
     private void postMessage(final String pseudo) {
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
-
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
+        String formattedDate = df.format(Calendar.getInstance().getTime());
         String pic = "";
         if (getContext() != null
                 && !PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("hidepic", false))
@@ -165,11 +117,8 @@ public class ChatFragment extends Fragment {
         boolean donator = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("donator", false);
         boolean beta = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("beta", false);
 
-        if (user_id.endsWith("@cloudtestlabaccounts.com"))
-            Toast.makeText(getActivity(), "Hello Bot", Toast.LENGTH_LONG).show();
-        else
-            ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic,
-                    user_id, donator, beta));
+        ref.push().setValue(new Message(pseudo, messageTxtField.getText().toString(), formattedDate, trainId, pic,
+                user_id, donator, beta));
 
         update();
         View view = getActivity().getCurrentFocus();
@@ -179,11 +128,9 @@ public class ChatFragment extends Fragment {
         }
         messageTxtField.setText("");
         messageTxtField.clearFocus();
-
     }
 
     public void update() {
-        Log.e("CVE", "TRAIN: " + trainId);
         if (trainId == null)
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.activity_label_chat);
         else
@@ -192,8 +139,7 @@ public class ChatFragment extends Fragment {
 
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
         Query ref2 = trainId == null ? ref.limitToLast(99)
-                : ref.orderByChild("train_id")
-                        .equalTo(trainId).limitToLast(99);
+                : ref.orderByChild("train_id").equalTo(trainId).limitToLast(99);
 
         res = getResources();
         tileSize = res.getDimensionPixelSize(R.dimen.letter_tile_size);
@@ -206,14 +152,13 @@ public class ChatFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder,
-                    final Message message, int position) {
+                                              final Message message, int position) {
                 viewHolder.getNickname().setText(message.getUser_name());
 
-                if (message.getUser_message() != null & message.getUser_message().contains("http")) {
+                if (message.getUser_message() != null && message.getUser_message().contains("http")) {
                     List<String> extractedUrls = extractUrls(message.getUser_message());
 
                     for (String url : extractedUrls) {
-
                         if (url.endsWith(".gif")) {
                             message.setUserMessage(message.getUser_message().replace(url, ""));
                             Glide.with(viewHolder.image).load(url).into(viewHolder.image);
@@ -246,7 +191,6 @@ public class ChatFragment extends Fragment {
                 if (message.pic_url != null && message.pic_url.length() > 0)
                     Picasso.get().load(message.pic_url).into(viewHolder.iv);
                 else {
-
                     final LetterTileProvider tileProvider = new LetterTileProvider(getContext());
                     final Bitmap letterTile = tileProvider.getLetterTile(message.getUser_name(), message.getUser_name(),
                             tileSize, tileSize);
@@ -294,7 +238,7 @@ public class ChatFragment extends Fragment {
 
             @Override
             protected void onDataChanged() {
-                if (getActivity() == null || getView()==null)
+                if (getActivity() == null || getView() == null)
                     return;
 
                 int itemCount = mMessageRecyclerView.getAdapter().getItemCount();
@@ -310,7 +254,6 @@ public class ChatFragment extends Fragment {
                         getView().findViewById(R.id.recyclerview).setVisibility(View.VISIBLE);
                         getView().findViewById(R.id.send_layout).setVisibility(View.VISIBLE);
                     }
-
                 } else if (messagesEmpty != null) {
                     messagesEmpty.setVisibility(View.VISIBLE);
                     getView().findViewById(R.id.recyclerview).setVisibility(View.GONE);
@@ -320,49 +263,18 @@ public class ChatFragment extends Fragment {
             }
         };
 
-        AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
-
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount) {
-                Log.e("CVEADAPTER", "onItemRangeChanged ");
-            }
-
-            @Override
-            public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-                Log.e("CVEADAPTER", "onItemRangeMoved ");
-            }
-
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-                Log.e("CVEADAPTER", "onItemRangeChanged ");
-            }
-
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-            }
-
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                Log.e("CVEADAPTER", "onItemRangeRemoved ");
-            }
-
-        };
-
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-
-        mFirebaseAdapter.registerAdapterDataObserver(mObserver);
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mFirebaseAdapter.cleanup();
+        if (mFirebaseAdapter != null)
+            mFirebaseAdapter.cleanup();
     }
 
     public void onResume() {
@@ -397,11 +309,9 @@ public class ChatFragment extends Fragment {
         switch (item.getItemId()) {
             case MENU_FILTER:
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
                 alert.setTitle(R.string.chat_action_filter);
                 alert.setMessage(R.string.chat_filter_message);
 
-                // Set an EditText view to get user input
                 final EditText input = new EditText(getActivity());
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 alert.setView(input);
@@ -409,7 +319,7 @@ public class ChatFragment extends Fragment {
                 alert.setPositiveButton(R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
-                                    int whichButton) {
+                                                int whichButton) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(DbAdapterConnection.KEY_NAME,
                                         input.getText().toString());
@@ -417,32 +327,23 @@ public class ChatFragment extends Fragment {
                                         ChatActivity.class);
                                 mIntent.putExtras(bundle);
                                 startActivity(mIntent);
-
                             }
                         });
 
                 alert.setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
-                                    int whichButton) {
+                                                int whichButton) {
                             }
                         });
 
                 alert.show();
                 return true;
             case MENU_PROFILE:
-                if (Build.VERSION.SDK_INT >= 11)
-                    startActivity(new Intent(getActivity(),
-                            MyPreferenceActivity.class).putExtra(
-                                    PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-                                    Prefs1Fragment.class.getName()));
-                else {
-                    startActivity(new Intent(getActivity(), MyPreferenceActivity.class));
-                }
+                startActivity(new Intent(getActivity(), ProfileSettingsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

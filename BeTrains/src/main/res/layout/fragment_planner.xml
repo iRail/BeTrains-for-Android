@@ -1,192 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <!-- Floating Toolbar -->
-
-
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/planner_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <!-- Top Panel -->
-        <LinearLayout
-            android:id="@+id/Ly_Pannel_Sup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primarycolor"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp">
+        <!-- Floating Toolbar -->
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/tv_start"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/selectorbutton"
-                android:ellipsize="middle"
-                android:gravity="center"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/lighttextcolor2"
-                tools:text="City START" />
-
-            <TextView
-                android:id="@+id/mybuttonInvert"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selectorbutton"
-                android:gravity="center"
-                android:text=">&lt;"
-                android:textColor="@color/lighttextcolor2"
-                android:textStyle="bold" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/tv_stop"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/selectorbutton"
-                android:ellipsize="middle"
-                android:gravity="center"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/lighttextcolor2"
-                tools:text="City STOP" />
-        </LinearLayout>
-
-        <!-- Progress Indicator -->
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradient"
-            android:indeterminate="true"
-            android:visibility="invisible"
-            app:indeterminateAnimationType="contiguous"
-            app:indicatorColor="@array/belgian_colors" />
-
-        <!-- Alert Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/singlealertcard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/fab"
-            android:checkable="true"
-            android:elevation="12dp"
-            android:transitionName="bg"
-            android:visibility="gone"
-            app:checkedIcon="@drawable/ic_alert"
-            app:checkedIconTint="@color/darktextcolor">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/singlealert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:ellipsize="middle"
-                android:padding="12dp"
-                android:singleLine="true"
-                android:textColor="@color/darktextcolor"
-                android:textStyle="bold"
-                tools:text="*** ALERT ****" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Recycler View -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/floating_bar_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior"
->
 
         <LinearLayout
-            android:id="@+id/toolbar_buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_centerVertical="true">
-            <com.google.android.material.floatingtoolbar.FloatingToolbarLayout
-                android:id="@+id/bar"
-                android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Top Panel -->
+            <LinearLayout
+                android:id="@+id/Ly_Pannel_Sup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/primarycolor"
-                android:elevation="4dp"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="16dp"
-                app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior"
-                android:orientation="horizontal">  <!-- Assuming FloatingToolbarLayout can take orientation -->
+                android:background="@color/primarycolor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tv_start"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectorbutton"
+                    android:ellipsize="middle"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/lighttextcolor2"
+                    tools:text="City START" />
 
-                <com.google.android.material.overflow.OverflowLinearLayout
-                    android:id="@+id/floating_toolbar_child"
+                <TextView
+                    android:id="@+id/mybuttonInvert"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selectorbutton"
+                    android:gravity="center"
+                    android:text=">&lt;"
+                    android:textColor="@color/lighttextcolor2"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tv_stop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectorbutton"
+                    android:ellipsize="middle"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/lighttextcolor2"
+                    tools:text="City STOP" />
+            </LinearLayout>
+
+            <!-- Progress Indicator -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:indeterminateAnimationType="contiguous"
+                app:indicatorColor="@array/belgian_colors" />
+
+            <!-- Alert Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/singlealertcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/fab"
+                android:checkable="true"
+                android:elevation="12dp"
+                android:transitionName="bg"
+                android:visibility="gone"
+                app:checkedIcon="@drawable/ic_alert"
+                app:checkedIconTint="@color/darktextcolor">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/singlealert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="middle"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/darktextcolor"
+                    android:textStyle="bold"
+                    tools:text="*** ALERT ****" />
+            </com.google.android.material.card.MaterialCardView>
 
-                    <Button
-                        android:id="@+id/appbar_prev"
-                        style="?attr/materialIconButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/primarycolor"
-                        app:icon="@drawable/ic_prev"
-                        app:iconTint="@color/toolbariconcolor" />
-
-                    <Button
-                        android:id="@+id/appbar_time"
-                        android:backgroundTint="@color/primarycolor"
-                        style="?attr/materialIconButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:icon="@drawable/ic_menu_time"
-                        app:iconTint="@color/toolbariconcolor" />
-
-                    <Button
-                        android:id="@+id/appbar_next"
-                        style="?attr/materialIconButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:backgroundTint="@color/primarycolor"
-                        android:layout_height="wrap_content"
-                        app:icon="@drawable/ic_next"
-                        app:iconTint="@color/toolbariconcolor" />
-
-                </com.google.android.material.overflow.OverflowLinearLayout>
-
-            </com.google.android.material.floatingtoolbar.FloatingToolbarLayout>
+            <!-- Recycler View -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+        <RelativeLayout
+            android:id="@+id/floating_bar_container"
             android:layout_width="wrap_content"
-            android:elevation="4dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/toolbar_buttons"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_fab_search"
-            app:tint="@color/darktextcolor"
-            android:backgroundTint="@color/fab"
-            app:rippleColor="#FFFF8888" />
-    </RelativeLayout>
+            android:layout_gravity="bottom|center_horizontal"
+            app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <LinearLayout
+                android:id="@+id/toolbar_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingtoolbar.FloatingToolbarLayout
+                    android:id="@+id/bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/primarycolor"
+                    android:elevation="4dp"
+                    android:orientation="horizontal"
+                    app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior">  <!-- Assuming FloatingToolbarLayout can take orientation -->
+
+
+                    <com.google.android.material.overflow.OverflowLinearLayout
+                        android:id="@+id/floating_toolbar_child"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/appbar_prev"
+                            style="?attr/materialIconButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/primarycolor"
+                            app:icon="@drawable/ic_prev"
+                            app:iconTint="@color/toolbariconcolor" />
+
+                        <Button
+                            android:id="@+id/appbar_time"
+                            style="?attr/materialIconButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/primarycolor"
+                            app:icon="@drawable/ic_menu_time"
+                            app:iconTint="@color/toolbariconcolor" />
+
+                        <Button
+                            android:id="@+id/appbar_next"
+                            style="?attr/materialIconButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/primarycolor"
+                            app:icon="@drawable/ic_next"
+                            app:iconTint="@color/toolbariconcolor" />
+
+                    </com.google.android.material.overflow.OverflowLinearLayout>
+
+                </com.google.android.material.floatingtoolbar.FloatingToolbarLayout>
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/toolbar_buttons"
+                android:backgroundTint="@color/fab"
+                android:elevation="4dp"
+                android:src="@drawable/ic_fab_search"
+                app:rippleColor="#FFFF8888"
+                app:tint="@color/darktextcolor" />
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

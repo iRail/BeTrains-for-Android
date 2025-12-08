@@ -5,11 +5,13 @@
     <style name="Theme.MyTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowBackground">@color/mybg</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:colorControlActivated">@color/mybg</item>
         <item name="colorControlHighlight">@color/mybg</item>
         <item name="android:actionMenuTextColor">@color/blackbg</item>
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarydarkcolor</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/lighttextcolor</item>
         <item name="colorAccent">@color/coloraccent</item>
         <item name="colorSecondary">?attr/colorPrimary</item>
