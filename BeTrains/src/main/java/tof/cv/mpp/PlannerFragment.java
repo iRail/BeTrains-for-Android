@@ -248,8 +248,9 @@ public class PlannerFragment extends Fragment implements ConnectionAdapter.Compo
         });
 
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null && !error.isEmpty()) {
-                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+            if (error != null && !error.isEmpty() && getContext() != null) {
+                Log.e("CVE", error);
+                showErrorDialog(error);
             }
         });
 
@@ -496,9 +497,10 @@ public class PlannerFragment extends Fragment implements ConnectionAdapter.Compo
 
     private void updateActionBar() {
         try {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(
-                    Utils.formatDate(mDate.getTime(), abDatePattern) + " - "
-                            + Utils.formatDate(mDate.getTime(), abTimePattern));
+            String date = Utils.formatDate(mDate.getTime(), abDatePattern) + " - "
+                    + Utils.formatDate(mDate.getTime(), abTimePattern);
+            String capitalized = date.substring(0, 1).toUpperCase() + date.substring(1);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(capitalized);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -509,5 +511,99 @@ public class PlannerFragment extends Fragment implements ConnectionAdapter.Compo
         if (viewModel != null) {
             viewModel.loadComposition(vehicleId);
         }
+    }
+
+    private void showErrorDialog(String error) {
+        String title = "Error";
+        StringBuilder html = new StringBuilder();
+
+        try {
+            // Strip Java exception prefix
+            String msg = error;
+            if (msg.contains("IOException:")) {
+                msg = msg.substring(msg.indexOf("IOException:") + "IOException:".length()).trim();
+            }
+
+            // Extract HTTP code
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("HTTP\\s*(\\d+)").matcher(msg);
+            if (m.find()) {
+                title = "HTTP " + m.group(1);
+                msg = msg.substring(m.end()).trim();
+                if (msg.startsWith(":"))
+                    msg = msg.substring(1).trim();
+            }
+
+            // Check for HTML first (CSS braces would confuse JSON detection)
+            if (msg.contains("<!DOCTYPE") || msg.contains("<html")) {
+                // Inject dark mode CSS
+                String darkCss = "<style>@media(prefers-color-scheme:dark){body{color:#fff!important;background:transparent!important}*{color:inherit!important}}</style>";
+                String styledMsg = msg.replaceFirst("(<head[^>]*>)", "$1" + darkCss);
+                if (styledMsg.equals(msg))
+                    styledMsg = darkCss + msg;
+
+                android.webkit.WebView webView = new android.webkit.WebView(requireContext());
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                    webView.getSettings().setForceDark(android.webkit.WebSettings.FORCE_DARK_AUTO);
+                }
+                webView.loadDataWithBaseURL(null, styledMsg, "text/html", "UTF-8", null);
+                webView.setBackgroundColor(0x00000000);
+
+                // Wrap in a layout with a header label
+                android.widget.LinearLayout layout = new android.widget.LinearLayout(requireContext());
+                layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+                layout.setPadding(48, 24, 48, 0);
+
+                android.widget.TextView header = new android.widget.TextView(requireContext());
+                header.setText("Response from iRail.be (" + title + "):");
+                header.setTextSize(12);
+                header.setAlpha(0.7f);
+                header.setPadding(0, 0, 0, 16);
+                layout.addView(header);
+
+                int heightPx = (int) (300 * getResources().getDisplayMetrics().density);
+                webView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
+                        android.widget.LinearLayout.LayoutParams.MATCH_PARENT, heightPx));
+                layout.addView(webView);
+
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setIcon(R.drawable.ic_alert)
+                        .setTitle("iRail.be")
+                        .setView(layout)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            } else {
+                // Try JSON
+                int jsonStart = msg.indexOf('{');
+                if (jsonStart >= 0) {
+                    String jsonStr = msg.substring(jsonStart);
+                    org.json.JSONObject json = new org.json.JSONObject(jsonStr);
+                    java.util.Iterator<String> keys = json.keys();
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        if (key.equals("stackTrace") || key.equals("at"))
+                            continue;
+                        String label = key.substring(0, 1).toUpperCase()
+                                + key.substring(1).replaceAll("([A-Z])", " $1").trim();
+                        html.append("<b>").append(label).append("</b><br/>")
+                                .append(json.getString(key)).append("<br/><br/>");
+                    }
+                } else if (!msg.isEmpty()) {
+                    html.append(msg);
+                } else {
+                    html.append("An unexpected error occurred.");
+                }
+            }
+        } catch (Exception e) {
+            html.append(error);
+        }
+
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setIcon(R.drawable.ic_alert)
+                .setTitle(title)
+                .setMessage(Html.fromHtml(html.toString().trim(), Html.FROM_HTML_MODE_COMPACT))
+                .setPositiveButton("OK", null)
+                .show();
     }
 }

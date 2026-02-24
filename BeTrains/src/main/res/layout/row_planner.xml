@@ -150,7 +150,9 @@
         android:id="@+id/occupancy"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:gravity="center" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:alpha="0.35" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"

@@ -17,11 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import tof.cv.mpp.InfoStationActivity;
 import tof.cv.mpp.InfoTrainActivity;
@@ -41,6 +45,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     CompositionRequestCallback callback;
 
     private Map<String, TrainComposition.Composition.Segments.Segment.SegmentComposition> compositions = new HashMap<>();
+    private final Set<Integer> expandedPositions = new HashSet<>();
 
     public interface CompositionRequestCallback {
         void onCompositionNeeded(String vehicleId);
@@ -57,7 +62,9 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     public void updateCompositions(
             Map<String, TrainComposition.Composition.Segments.Segment.SegmentComposition> newCompositions) {
         this.compositions.putAll(newCompositions);
-        notifyDataSetChanged();
+        for (int pos : expandedPositions) {
+            notifyItemChanged(pos);
+        }
     }
 
     @NonNull
@@ -72,14 +79,18 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     public void onBindViewHolder(@NonNull final ConnectionViewHolder holder, int position) {
         final Connection conn = connection.get(position);
 
-        holder.parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isExpanded = holder.card.getVisibility() == View.VISIBLE;
-                holder.card.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
-                if (!isExpanded) {
-                    requestCompositionsForConnection(conn);
-                }
+        boolean isExpanded = expandedPositions.contains(position);
+        holder.card.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+        holder.parent.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (expandedPositions.contains(pos)) {
+                expandedPositions.remove(pos);
+                holder.card.setVisibility(View.GONE);
+            } else {
+                expandedPositions.add(pos);
+                holder.card.setVisibility(View.VISIBLE);
+                requestCompositionsForConnection(conn);
             }
         });
 
@@ -186,9 +197,10 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
     }
 
     private void bindOccupancy(ConnectionViewHolder holder, Connection conn) {
-        if (conn.getOccupancy() != null) {
+        Occupancy occ = conn.getDeparture() != null ? conn.getDeparture().getOccupancy() : null;
+        if (occ != null && occ.getName() != null) {
             holder.occupancy.setVisibility(View.VISIBLE);
-            switch (conn.getOccupancy().getName()) {
+            switch (occ.getName()) {
                 case Occupancy.HIGH:
                     holder.occupancy.setImageResource(R.drawable.ic_occupancy_high);
                     break;
@@ -589,11 +601,15 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.Co
 
         ((TextView) v.findViewById(R.id.tv_duration)).setText(Utils.formatDate(duration, true, false));
 
+        LinearProgressIndicator progress = v.findViewById(R.id.composition_progress);
         if (composition == null) {
             v.findViewById(R.id.trainiconloco).setVisibility(View.GONE);
             v.findViewById(R.id.trainicon).setVisibility(View.GONE);
+            progress.show();
             return;
         }
+
+        progress.hide();
 
         if (composition.units.unit.size() > 1) {
             try {

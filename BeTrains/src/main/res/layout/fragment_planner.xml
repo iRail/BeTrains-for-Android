@@ -111,6 +111,8 @@
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="80dp"
+                android:clipToPadding="false"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
@@ -118,8 +120,7 @@
             android:id="@+id/floating_bar_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior">
+            android:layout_gravity="bottom|center_horizontal">
 
             <LinearLayout
                 android:id="@+id/toolbar_buttons"
@@ -137,8 +138,7 @@
                     android:layout_margin="16dp"
                     android:backgroundTint="@color/primarycolor"
                     android:elevation="4dp"
-                    android:orientation="horizontal"
-                    app:layout_behavior="com.google.android.material.behavior.HideViewOnScrollBehavior">  <!-- Assuming FloatingToolbarLayout can take orientation -->
+                    android:orientation="horizontal">  <!-- Assuming FloatingToolbarLayout can take orientation -->
 
 
                     <com.google.android.material.overflow.OverflowLinearLayout

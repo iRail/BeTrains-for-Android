@@ -42,7 +42,7 @@ public class Vehicle {
         return timestamp;
     }
 
-    public class VehicleStops {
+    public static class VehicleStops {
 
         private ArrayList<VehicleStop> stop;
 
@@ -61,13 +61,12 @@ public class Vehicle {
         Station.StationInfo stationinfo;
 
         PlatformInfo platforminfo;
+
         public PlatformInfo getPlatforminfo() {
             return platforminfo;
         }
 
-
-
-        public boolean isCancelled(){
+        public boolean isCancelled() {
             return "1".contentEquals(canceled);
         }
 
@@ -84,19 +83,19 @@ public class Vehicle {
         }
 
         public boolean hasLeft() {
-            return left==1;
+            return left == 1;
         }
 
         public String getDelay() {
-            return ""+delay;
+            return "" + delay;
         }
 
         public int getDelayinMin() {
-            return delay/60;
+            return delay / 60;
         }
 
         public String getStatus() {
-            if (delay==0)
+            if (delay == 0)
                 return "";
 
             return "+" + delay / 60 + "'";

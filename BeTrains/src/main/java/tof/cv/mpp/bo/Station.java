@@ -1,8 +1,6 @@
 package tof.cv.mpp.bo;
 
-
 import java.util.ArrayList;
-
 
 public class Station {
 
@@ -21,7 +19,7 @@ public class Station {
     private String version;
     private StationDepartures departures;
     private String canceled = "";
-
+    private Occupancy occupancy;
 
     public String getVersion() {
         return version;
@@ -63,6 +61,10 @@ public class Station {
         return this.vehicle;
     }
 
+    public Occupancy getOccupancy() {
+        return occupancy;
+    }
+
     public String getDirection() {
         return "this.direction";
     }
@@ -71,7 +73,7 @@ public class Station {
         return stationinfo;
     }
 
-    public class StationInfo {
+    public static class StationInfo {
         public String id;
         private double locationX;
         private double locationY;
@@ -89,7 +91,7 @@ public class Station {
         }
     }
 
-    public class StationDepartures {
+    public static class StationDepartures {
 
         private ArrayList<StationDeparture> departure;
 
@@ -98,7 +100,7 @@ public class Station {
         }
     }
 
-    public class StationDeparture {
+    public static class StationDeparture {
         private String station;
         private long time;
         private String delay;
@@ -116,7 +118,6 @@ public class Station {
         public PlatformInfo getPlatforminfo() {
             return platforminfo;
         }
-
 
         public Alerts getAlerts() {
             return alerts;

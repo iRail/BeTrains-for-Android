@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -48,7 +49,7 @@ import tof.cv.mpp.view.LetterTileProvider;
 
 public class ChatFragment extends Fragment {
 
-    FirebaseRecyclerAdapter mFirebaseAdapter;
+    FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
     private TextView mTitleText;
     private FloatingActionButton btnSend;
     private EditText messageTxtField;
@@ -56,13 +57,14 @@ public class ChatFragment extends Fragment {
     DatabaseReference ref;
     Resources res;
     int tileSize;
+    RecyclerView mMessageRecyclerView;
 
     private static final int MENU_FILTER = 0;
     private static final int MENU_PROFILE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chat, null);
     }
 
@@ -99,7 +101,8 @@ public class ChatFragment extends Fragment {
                 if (messageTxtField.getText().toString().isEmpty())
                     Toast.makeText(getActivity(), R.string.chat_send_err_empty, Toast.LENGTH_LONG).show();
                 else {
-                    postMessage(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("prefname", "Anonymous"));
+                    postMessage(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("prefname",
+                            "Anonymous"));
                 }
             }
         });
@@ -135,7 +138,7 @@ public class ChatFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.activity_label_chat);
         else
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("" + trainId);
-        final RecyclerView mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
+        mMessageRecyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
 
         ref = FirebaseDatabase.getInstance().getReference().child("chat").getRef();
         Query ref2 = trainId == null ? ref.limitToLast(99)
@@ -144,15 +147,23 @@ public class ChatFragment extends Fragment {
         res = getResources();
         tileSize = res.getDimensionPixelSize(R.dimen.letter_tile_size);
 
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(
-                Message.class,
-                R.layout.row_message,
-                MessageViewHolder.class,
-                ref2) {
+        FirebaseRecyclerOptions<Message> options = new FirebaseRecyclerOptions.Builder<Message>()
+                .setQuery(ref2, Message.class)
+                .build();
+
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.row_message, parent, false);
+                return new MessageViewHolder(view);
+            }
 
             @Override
-            protected void populateViewHolder(MessageViewHolder viewHolder,
-                                              final Message message, int position) {
+            protected void onBindViewHolder(@NonNull MessageViewHolder viewHolder,
+                    int position, @NonNull final Message message) {
                 viewHolder.getNickname().setText(message.getUser_name());
 
                 if (message.getUser_message() != null && message.getUser_message().contains("http")) {
@@ -200,7 +211,6 @@ public class ChatFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                         if (trainId == null) {
                             Bundle bundle = new Bundle();
                             bundle.putString(DbAdapterConnection.KEY_NAME,
@@ -222,26 +232,12 @@ public class ChatFragment extends Fragment {
                 });
             }
 
-            public List<String> extractUrls(String text) {
-                List<String> containedUrls = new ArrayList<String>();
-                String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
-                Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
-                Matcher urlMatcher = pattern.matcher(text);
-
-                while (urlMatcher.find()) {
-                    containedUrls.add(text.substring(urlMatcher.start(0),
-                            urlMatcher.end(0)));
-                }
-
-                return containedUrls;
-            }
-
             @Override
-            protected void onDataChanged() {
+            public void onDataChanged() {
                 if (getActivity() == null || getView() == null)
                     return;
 
-                int itemCount = mMessageRecyclerView.getAdapter().getItemCount();
+                int itemCount = getItemCount();
 
                 TextView messagesEmpty = (TextView) getActivity().findViewById(
                         R.id.emptychat);
@@ -268,13 +264,26 @@ public class ChatFragment extends Fragment {
         mLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+        mFirebaseAdapter.startListening();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mFirebaseAdapter != null)
+            mFirebaseAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mFirebaseAdapter != null)
+            mFirebaseAdapter.stopListening();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mFirebaseAdapter != null)
-            mFirebaseAdapter.cleanup();
     }
 
     public void onResume() {
@@ -306,44 +315,56 @@ public class ChatFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case MENU_FILTER:
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle(R.string.chat_action_filter);
-                alert.setMessage(R.string.chat_filter_message);
+        if (item.getItemId() == MENU_FILTER) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setTitle(R.string.chat_action_filter);
+            alert.setMessage(R.string.chat_filter_message);
 
-                final EditText input = new EditText(getActivity());
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                alert.setView(input);
+            final EditText input = new EditText(getActivity());
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+            alert.setView(input);
 
-                alert.setPositiveButton(R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(DbAdapterConnection.KEY_NAME,
-                                        input.getText().toString());
-                                Intent mIntent = new Intent(getActivity(),
-                                        ChatActivity.class);
-                                mIntent.putExtras(bundle);
-                                startActivity(mIntent);
-                            }
-                        });
+            alert.setPositiveButton(R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                int whichButton) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(DbAdapterConnection.KEY_NAME,
+                                    input.getText().toString());
+                            Intent mIntent = new Intent(getActivity(),
+                                    ChatActivity.class);
+                            mIntent.putExtras(bundle);
+                            startActivity(mIntent);
+                        }
+                    });
 
-                alert.setNegativeButton(R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
-                            }
-                        });
+            alert.setNegativeButton(R.string.cancel,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                int whichButton) {
+                        }
+                    });
 
-                alert.show();
-                return true;
-            case MENU_PROFILE:
-                startActivity(new Intent(getActivity(), ProfileSettingsActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            alert.show();
+            return true;
+        } else if (item.getItemId() == MENU_PROFILE) {
+            startActivity(new Intent(getActivity(), ProfileSettingsActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static List<String> extractUrls(String text) {
+        List<String> containedUrls = new ArrayList<String>();
+        String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+        Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
+        Matcher urlMatcher = pattern.matcher(text);
+
+        while (urlMatcher.find()) {
+            containedUrls.add(text.substring(urlMatcher.start(0),
+                    urlMatcher.end(0)));
+        }
+
+        return containedUrls;
     }
 }

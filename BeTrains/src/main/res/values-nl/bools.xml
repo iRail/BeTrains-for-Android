@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <bool name="nmbs">true</bool>
-    <bool name="sncb">false</bool>
-    <bool name="navetteurs">false</bool>
-</resources>

@@ -43,7 +43,8 @@ import tof.cv.mpp.view.LetterTileProvider;
 //import com.teragence.client.SdkControls;
 
 public class WelcomeActivity extends AppCompatActivity
-        implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, FragmentManager.OnBackStackChangedListener {
+        implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+        FragmentManager.OnBackStackChangedListener {
 
     private Fragment mContent;
     public DrawerLayout drawerLayout = null;
@@ -165,44 +166,35 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     public void navigateToItem(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.navigation_item_plan:
-                mContent = new PlannerFragment();
-                setTitle(R.string.app_name);
-                break;
-            case R.id.navigation_item_iss:
-                mContent = new TrafficFragment();
-                setTitle(R.string.nav_drawer_issues);
-                break;
-            case R.id.navigation_item_chat:
-                mContent = new ChatFragment();
-                setTitle(R.string.nav_drawer_chat);
-                break;
-            case R.id.navigation_item_star:
-                mContent = new StarredFragment();
-                setTitle(R.string.activity_label_starred);
-                break;
-            case R.id.navigation_item_closest:
-                mContent = new ClosestFragment();
-                setTitle(R.string.nav_drawer_closest);
-                break;
-            case R.id.navigation_item_comp:
-                mContent = new CompensationFragment();
-                setTitle(R.string.nav_drawer_compensation);
-                break;
-            case R.id.navigation_item_extras:
-                mContent = new ExtraFragment();
-                setTitle(R.string.nav_drawer_extras);
-                break;
-            case R.id.navigation_item_settings:
-                mContent = new SettingsFragment();
-                setTitle(R.string.action_settings);
-                break;
-            default:
-                mContent = new PlannerFragment();
-                setTitle(R.string.app_name);
-                close = getString(R.string.activity_label_planner);
-                break;
+        int id = menuItem.getItemId();
+        if (id == R.id.navigation_item_plan) {
+            mContent = new PlannerFragment();
+            setTitle(R.string.app_name);
+        } else if (id == R.id.navigation_item_iss) {
+            mContent = new TrafficFragment();
+            setTitle(R.string.nav_drawer_issues);
+        } else if (id == R.id.navigation_item_chat) {
+            mContent = new ChatFragment();
+            setTitle(R.string.nav_drawer_chat);
+        } else if (id == R.id.navigation_item_star) {
+            mContent = new StarredFragment();
+            setTitle(R.string.activity_label_starred);
+        } else if (id == R.id.navigation_item_closest) {
+            mContent = new ClosestFragment();
+            setTitle(R.string.nav_drawer_closest);
+        } else if (id == R.id.navigation_item_comp) {
+            mContent = new CompensationFragment();
+            setTitle(R.string.nav_drawer_compensation);
+        } else if (id == R.id.navigation_item_extras) {
+            mContent = new ExtraFragment();
+            setTitle(R.string.nav_drawer_extras);
+        } else if (id == R.id.navigation_item_settings) {
+            mContent = new SettingsFragment();
+            setTitle(R.string.action_settings);
+        } else {
+            mContent = new PlannerFragment();
+            setTitle(R.string.app_name);
+            close = getString(R.string.activity_label_planner);
         }
 
         getSupportFragmentManager().beginTransaction()

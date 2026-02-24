@@ -5,22 +5,22 @@ import java.util.ArrayList;
 public class TrainComposition {
     public Composition composition;
 
-    public class Composition {
+    public static class Composition {
         public Segments segments;
 
-        public class Segments {
+        public static class Segments {
             public ArrayList<Segment> segment;
 
-            public class Segment {
+            public static class Segment {
                 public SegmentComposition composition;
 
-                public class SegmentComposition {
+                public static class SegmentComposition {
                     public Units units;
 
-                    public class Units {
+                    public static class Units {
                         public ArrayList<Unit> unit;
 
-                        public class Unit {
+                        public static class Unit {
                             public int seatsFirstClass;
                             public MaterialType materialType;
                         }

@@ -63,15 +63,15 @@ public class Utils {
                 float accuracy = location.getAccuracy();
                 long time = location.getTime();
 
-                //Log.i("", (new Date(time)).toString() + location.getProvider().toString());
+                // Log.i("", (new Date(time)).toString() + location.getProvider().toString());
 
                 if ((time > bestTime && accuracy < bestAccuracy * 1.5)) {
                     bestResult = location;
                     bestAccuracy = accuracy;
                     bestTime = time;
-                    //Log.i("", "Ameliore: " + location.getProvider().toString());
+                    // Log.i("", "Ameliore: " + location.getProvider().toString());
                 } else {
-                    //Log.i("", "Ignore: " + location.getProvider().toString());
+                    // Log.i("", "Ignore: " + location.getProvider().toString());
                 }
 
                 if (bestResult == null) {
@@ -91,9 +91,8 @@ public class Utils {
         }
     }
 
-
     public static double distance(double sLat, double sLon, double eLat,
-                                  double eLon) {
+            double eLon) {
         double d2r = (Math.PI / 180);
 
         try {
@@ -111,7 +110,6 @@ public class Utils {
         return 0;
     }
 
-
     public static String getTimeFromDate(String dateFromAPI) {
         Date date;
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -119,7 +117,7 @@ public class Utils {
         try {
 
             date = new Date((Long.valueOf(dateFromAPI)) * 1000);
-            //Log.i("", "getMinutsFromDate: " + date.toString());
+            // Log.i("", "getMinutsFromDate: " + date.toString());
             return dateFormat.format(date);
         } catch (Exception e) {
             return dateFromAPI;
@@ -139,12 +137,11 @@ public class Utils {
     }
 
     public static String formatDate(String dateFromAPI, boolean isDuration,
-                                    boolean isDelay) {
+            boolean isDelay) {
 
         return formatDate(Long.valueOf(dateFromAPI), isDuration, isDelay);
 
     }
-
 
     public static String formatDateWidget(Date dateFromAPI) {
 
@@ -153,7 +150,7 @@ public class Utils {
     }
 
     public static String formatDate(long dateFromAPI, boolean isDuration,
-                                    boolean isDelay) {
+            boolean isDelay) {
         // TODO: Lot of tweaks, need to be cleaned
         Date date;
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -192,7 +189,7 @@ public class Utils {
         final int buffer_size = 1024;
         try {
             byte[] bytes = new byte[buffer_size];
-            for (; ; ) {
+            for (;;) {
                 int count = is.read(bytes, 0, buffer_size);
                 if (count == -1)
                     break;
@@ -208,7 +205,7 @@ public class Utils {
     }
 
     public static ArrayList<String> getFavFromDb(Activity context,
-                                                 DbAdapterConnection mDbHelper) {
+            DbAdapterConnection mDbHelper) {
         ArrayList<String> mArrayList = new ArrayList<String>();
         mDbHelper.open();
         Cursor mCursor = mDbHelper.fetchAllFavStations();
@@ -229,7 +226,7 @@ public class Utils {
     }
 
     public static void addAsStarred(String item, String item2, int type,
-                                    Context context) {
+            Context context) {
         // TYPE 1 = Station
         // TYPE 2 = Vehicle
         // TYPE 3 = Trip
@@ -277,7 +274,8 @@ public class Utils {
     public static int createNotif(Response<Vehicle> result, String trainId, Context c) {
         boolean hasLeft = false;
         try {
-            hasLeft = result.getResult().getVehicleStops().getVehicleStop().get(result.getResult().getVehicleStops().getVehicleStop().size() - 1).hasLeft();
+            hasLeft = result.getResult().getVehicleStops().getVehicleStop()
+                    .get(result.getResult().getVehicleStops().getVehicleStop().size() - 1).hasLeft();
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -290,27 +288,25 @@ public class Utils {
         PendingIntent openPendingIntent = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             openPendingIntent = PendingIntent.getActivity(c, 0,
-                    openIntent,  PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
-        }else{
+                    openIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        } else {
             openPendingIntent = PendingIntent.getActivity(c, 0,
-                    openIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+                    openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
         Intent dismissIntent = new Intent(c, NotifBroadcastReceiver.class);
         dismissIntent.setAction("ACTION_OPEN");
         dismissIntent.putExtra("id", trainId);
-        PendingIntent dismissPendingIntent =
-                null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            dismissPendingIntent = PendingIntent.getBroadcast(c, 0, dismissIntent, PendingIntent.FLAG_IMMUTABLE);
-        }else
-            dismissPendingIntent = PendingIntent.getBroadcast(c, 0, dismissIntent, 0);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(c, 0, dismissIntent,
+                PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(c, "TRAIN_WATCH")
                 .setSmallIcon(R.drawable.atrain)
                 .setContentIntent(openPendingIntent)
-                .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_open), openPendingIntent))
-                .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_dismiss), dismissPendingIntent));
+                .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_open),
+                        openPendingIntent))
+                .addAction(new NotificationCompat.Action(R.mipmap.ic_launcher, c.getString(R.string.notif_dismiss),
+                        dismissPendingIntent));
 
         int totaldelay = 0;
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
@@ -320,10 +316,12 @@ public class Utils {
                 if (!aStop.hasLeft()) {
                     if (aStop.getDelayinMin() > totaldelay)
                         totaldelay = aStop.getDelayinMin();
-                    style = style.addLine(aStop.getStation() + " - " + Utils.formatDate(aStop.getTime(), false, false) + " " + (aStop.delay == 0 ? "" : " +" + (aStop.getDelayinMin()) + "'"));
+                    style = style.addLine(aStop.getStation() + " - " + Utils.formatDate(aStop.getTime(), false, false)
+                            + " " + (aStop.delay == 0 ? "" : " +" + (aStop.getDelayinMin()) + "'"));
                 }
             }
-        mBuilder.setStyle(style).setContentTitle(trainId).setContentText(c.getString(R.string.totalDelay) + " " + totaldelay + "min")
+        mBuilder.setStyle(style).setContentTitle(trainId)
+                .setContentText(c.getString(R.string.totalDelay) + " " + totaldelay + "min")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).setOngoing(true);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(c);
 

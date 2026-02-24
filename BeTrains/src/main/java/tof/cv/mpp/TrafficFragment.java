@@ -2,8 +2,9 @@ package tof.cv.mpp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +12,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import tof.cv.mpp.adapter.TrafficAdapter;
 import tof.cv.mpp.bo.Perturbations;
-
 
 public class TrafficFragment extends Fragment {
     protected static final String TAG = "ActivityTraffic";
@@ -28,18 +31,19 @@ public class TrafficFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_traffic, null);
     }
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
@@ -49,37 +53,62 @@ public class TrafficFragment extends Fragment {
             lang = "nl";
         }
 
+        // Hide recycler initially
+        view.findViewById(R.id.recycler).setVisibility(View.GONE);
+
         String url = "https://api.irail.be/disturbances/?format=json&lang=" + lang;
-        Log.e("CVE", url);
-        Ion.with(this).load(url).as(new TypeToken<Perturbations>() {
-        }).setCallback(new FutureCallback<Perturbations>() {
-            @Override
-            public void onCompleted(Exception e, Perturbations result) {
 
-                try {
-                    Log.e("CVE", "" + result);
-                    if (result != null) {
-                        if (result.disturbance != null) {
-                            RecyclerView recyclerView = getView().findViewById(R.id.recycler);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            TrafficAdapter adapter = new TrafficAdapter(getContext(), result);
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setVisibility(View.VISIBLE);
-                            getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
-                        } else
-                            ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.issues_empty);
+        // Fetch data using HttpURLConnection (Ion is broken on SDK 36)
+        new Thread(() -> {
+            try {
+                URL apiUrl = new URL(url);
+                HttpURLConnection conn = (HttpURLConnection) apiUrl.openConnection();
+                conn.setRequestProperty("User-Agent", "WazaBe: BeTrains " + BuildConfig.VERSION_NAME + " for Android");
+                conn.setConnectTimeout(10000);
+                conn.setReadTimeout(10000);
 
+                int code = conn.getResponseCode();
+                if (code == 200) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                    reader.close();
 
-                    } else
-                        ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.check_connection);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    Perturbations result = new Gson().fromJson(sb.toString(), Perturbations.class);
+                    new Handler(Looper.getMainLooper()).post(() -> onDataLoaded(result));
+                } else {
+                    new Handler(Looper.getMainLooper()).post(() -> onDataLoaded(null));
                 }
-
-
+                conn.disconnect();
+            } catch (Exception ex) {
+                new Handler(Looper.getMainLooper()).post(() -> onDataLoaded(null));
             }
-        });
+        }).start();
+    }
 
+    private void onDataLoaded(Perturbations result) {
+        if (getView() == null)
+            return;
+
+        try {
+            if (result != null && result.disturbance != null) {
+                RecyclerView recyclerView = getView().findViewById(R.id.recycler);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                TrafficAdapter adapter = new TrafficAdapter(getContext(), result);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setVisibility(View.VISIBLE);
+                getView().findViewById(android.R.id.empty).setVisibility(View.GONE);
+            } else if (result != null) {
+                ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.issues_empty);
+            } else {
+                ((TextView) getView().findViewById(android.R.id.empty)).setText(R.string.check_connection);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -92,6 +121,5 @@ public class TrafficFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
 
 }
